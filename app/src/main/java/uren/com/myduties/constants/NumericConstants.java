@@ -1,0 +1,80 @@
+package uren.com.myduties.constants;
+
+public class NumericConstants {
+
+    public static final int GROUP_NAME_MAX_LENGTH = 25;
+    public static final int BIO_MAX_LENGTH = 250;
+
+    public static final int RESPONSE_OK = 1;
+
+    //Share video properties
+    public static final int MAX_VIDEO_DURATION = 15;
+    public static final int MAX_VIDEO_SIZE_IN_MB =  25;
+
+    public static final int MAX_IMAGE_SIZE_1MB =  1048576;
+    public static final int MAX_IMAGE_SIZE_1ANDHALFMB =  1572864;
+    public static final int MAX_IMAGE_SIZE_2ANDHALFMB =  2621440;
+    public static final int MAX_IMAGE_SIZE_5MB = 5242880;
+
+    //Photo Chosen items
+    public static final int CODE_GALLERY_POSITION = 0;
+    public static final int CODE_CAMERA_POSITION = 1;
+    public static final int CODE_SCREENSHOT_POSITION = 1;
+    public static final int CODE_PHOTO_REMOVE = 2;
+    public static final int CODE_VIDEO_REMOVE = 2;
+    public static final int CODE_PHOTO_EDIT = 3;
+    public static final int CODE_PLAY_VIDEO = 3;
+
+    //Phone num verify duration
+    public static final int VERIFY_PHONE_NUM_DURATION = 60;
+
+    //Feed paignation initial values
+    public static final int DEFAULT_FEED_PAGE_COUNT = 1;
+    public static final int DEFAULT_FEED_PERPAGE_COUNT = 15; // EN AZ 4 OLMALI.
+    public static final int DEFAULT_FEED_RADIUS = 5000; //metre cinsinden
+    public static int FILTERED_FEED_RADIUS = 5000; //metre cinsinden
+
+    //Get Follower initial values
+    public static final int DEFAULT_GET_FOLLOWER_PAGE_COUNT = 1;
+    public static final int DEFAULT_GET_FOLLOWER_PERPAGE_COUNT = 30; // EN AZ 4 OLMALI.
+
+    public static final int SHARE_TRY_COUNT = 2;
+
+    //Share
+    public static final int REQUEST_CODE_ENABLE_LOCATION = 3003;
+
+    //User posts gridView pagination
+    public static final int DEFAULT_PROFILE_GRIDVIEW_PAGE_COUNT = 1;
+    public static final int DEFAULT_PROFILE_GRIDVIEW_PERPAGE_COUNT = 30; // EN AZ 4 OLMALI.
+
+    //USER POST VIEW TYPE
+    public static final int USER_POST_VIEW_TYPE_GRID = 0;
+    public static final int USER_POST_VIEW_TYPE_LIST = 1;
+
+    public static final int MESSAGE_LIMIT_COUNT = 25;
+    public static final int REC_MAXITEM_LIMIT_COUNT = 50;
+
+    public final static int KEYBOARD_CHECK_VALUE = 200;
+
+    public final static int FCM_MAX_MESSAGE_LEN = 30;
+    public final static int MAX_ALLOWED_NOTIFICATION_SIZE = 4;
+
+    //Activity request codes
+    public final static int REQUEST_CODE_START_MESSAGE_LIST_ACTIVITY = 1001;
+
+    //FEED Exceptions
+    public static final int VIEW_RETRY = 0;
+    public static final int VIEW_NO_POST_FOUND = 1;
+    public static final int VIEW_LOCATION_SERVICE_ERROR = 2;
+    public static final int VIEW_LOCATION_PERMISSION = 3;
+    public static final int VIEW_SERVER_ERROR = 4;
+
+    //Orientation constants
+    public static final int ORIENTATION_LEFT_RIGHT = 0;
+    public static final int ORIENTATION_RIGHT_LEFT = 1;
+    public static final int ORIENTATION_TOPLEFT_BOTTOMRIGHT = 2;
+    public static final int ORIENTATION_BOTTOMRIGHT_TOPLEFT = 3;
+    public static final int ORIENTATION_TOP_BOTTOM = 4;
+    public static final int ORIENTATION_BOTTOM_TOP = 5;
+
+}

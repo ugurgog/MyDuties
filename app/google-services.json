@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "964563573223",
+    "firebase_url": "https://my-duties-4ed4b.firebaseio.com",
+    "project_id": "my-duties-4ed4b",
+    "storage_bucket": "my-duties-4ed4b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:964563573223:android:e58ac877cf5db58c",
+        "android_client_info": {
+          "package_name": "uren.com.myduties"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "964563573223-3il2jj45iqlq27kfa1kpmmkkmvisggsh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "uren.com.myduties",
+            "certificate_hash": "835135492279180c8c9d6517641665756f89cf21"
+          }
+        },
+        {
+          "client_id": "964563573223-tn2b3erqlmr2hilrcq4s661v1hvbv0i1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEU9Tt2wVerDi2lvcxG5B_6uB9xXhyX2I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "964563573223-tn2b3erqlmr2hilrcq4s661v1hvbv0i1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

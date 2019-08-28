@@ -1,0 +1,377 @@
+<resources>
+    <string name="app_name">My Duties</string>
+
+    <!-- App introduction variables-->
+    <string name="DUTY_TRACE">Task Tracking</string>
+    <string name="GROUP_DUTY">Group Task Tracing</string>
+    <string name="LOCATION_DUTY">Location Based Task Tracing</string>
+
+    <string name="DUTY_TRACE_DESC">You will be able to see the tasks assigned to you and receive notifications for unfinished tasks.</string>
+    <string name="GROUP_DUTY_DESC">You will be able to create groups for task assignments and make reminders for your group friends.</string>
+    <string name="LOCATION_DUTY_DESC">You will be able to receive notifications for the tasks you have forgotten with location definitions.</string>
+
+    <array name="tab_name">
+        <item>Home</item>
+        <item>Share</item>
+        <item>Profile</item>
+    </array>
+
+    <array name="gender">
+        <item>Man</item>
+        <item>Woman</item>
+        <item>Unspecified</item>
+    </array>
+
+    <array name="genderForServer">
+        <item>man</item>
+        <item>woman</item>
+        <item>unspecified</item>
+    </array>
+
+    <string name="search">Search</string>
+    <string name="FACEBOOK">FACEBOOK</string>
+    <string name="FACEBOOK_LOWER">Facebook</string>
+    <string name="CONTACTS">CONTACTS</string>
+    <string name="CONTACTS_LOWER">Contacts</string>
+    <string name="error">Error:</string>
+    <string name="errorUpper">ERROR</string>
+    <string name="addPersonToGroup">Add Friend to Group</string>
+    <string name="selectLeastOneFriend">You must choose at least 1 person!</string>
+    <string name="selectLeastOneGroup">You must choose at least 1 group!</string>
+    <string name="addFriendFirst">To create a group, you must have at least one follower!</string>
+    <string name="addGroupName">Add group name</string>
+    <string name="pleaseWriteGroupName">The group name cannot be empty!</string>
+    <string name="deviceHasNoCamera">Device has no camera!</string>
+    <string name="groupIsCreating">Group is composing...</string>
+    <string name="writeGroupName">Write group name...</string>
+    <string name="defineGroupNameAndIcon">Specify group name and icon</string>
+    <string name="participant"> participants</string>
+    <string name="constantItem">item</string>
+    <string name="adminText">  Administrator  </string>
+    <string name="selectPicture">Select Picture</string>
+    <string name="SELECT_VIDEO">Select Video</string>
+    <string name="openCamera">Open Camera</string>
+    <string name="openGallery">Open Gallery</string>
+    <string name="REMOVE_PHOTO">Remove photo</string>
+    <string name="REMOVE_VIDEO">Remove video</string>
+    <string name="EDIT">Edit</string>
+    <string name="PLAY">Play</string>
+    <string name="chooseProfilePhoto">Choose a profile photo</string>
+    <string name="CHOOSE_GROUP_PHOTO">Choose a group photo</string>
+    <string name="exitFromGroup">Exit From Group</string>
+    <string name="areYouSureExitFromGroup">Are you sure you want to leave the group?</string>
+    <string name="upperYes">YES</string>
+    <string name="upperNo">NO</string>
+    <string name="removeFromGroup">  Remove from the group</string>
+    <string name="viewTheProfile">  View the profile</string>
+    <string name="createdAt">Created at:</string>
+    <string name="completedAt">Completed at:</string>
+    <string name="changeAsAdmin">Make Group Admin</string>
+    <string name="pleaseAddShareItem">You must add video, picture or text to share!</string>
+    <string name="share">Share</string>
+    <string name="locationIsEmpty">Location information is required to share</string>
+    <string name="secondShort">sec</string>
+    <string name="profileUpdateSuccessful">Profile Update is Successful</string>
+    <string name="dragForDelete">Drag for Delete</string>
+    <string name="finish">Finish</string>
+    <string name="USE">Use</string>
+    <string name="detail">Detail</string>
+    <string name="searchGroup">Search Group</string>
+    <string name="GROUPS_LOADING">Groups loading...</string>
+    <string name="NEW_GROUP">Yeni Grup</string>
+
+    <string name="typeToAddText">Say something...</string>
+    <string name="UPDATING">Updating...</string>
+    <string name="EXPLORE_PEOPLE">Explore People</string>
+    <string name="VIEW_PENDING_REQUEST">View Pending Requests</string>
+    <string name="THERE_IS_NO_GROUP_CREATE_OR_INCLUDE">There is no group you created or included</string>
+    <string name="THERE_IS_NO_FACEFRIEND_WHO_USING_CATCHU">There is no Facebook friend who using My Duties</string>
+    <string name="PHONE_NUM">Phone Number</string>
+    <string name="SELECT_COUNTRY">Select Country</string>
+    <string name="COUNTRY_NAME">Country Name</string>
+    <string name="WRITE_PHONE_NUMBER">Write phone number</string>
+    <string name="PLEASE_WRITE_VERIFICATION_CODE">Enter the 6 digit confirmation code that we send this number : </string>
+    <string name="SEND_VERIFICATION_CODE_AGAIN">Send Code Again</string>
+    <string name="CHANGE_PHONE_NUMBER">Change Phone Number</string>
+    <string name="INVALID_VERIFICATION_CODE_ENTERED">Invalid verification code entered</string>
+    <string name="VERIFY">Verify</string>
+    <string name="REMAINING_TIME">Remaining Time : </string>
+    <string name="NOT_ENTERED_VERIFY_CODE_IN_TIME">You did not enter the code within the given time. Please send the code again!</string>
+    <string name="UPDATE_IS_SUCCESSFUL">Update is Successful</string>
+    <string name="THERE_IS_NO_SEARCH_RESULT">No results found.</string>
+    <string name="DEFAULT_POST_ERROR_MESSAGE">There was an error during the sharing, would you like to try again?</string>
+    <string name="GROUP_SETTINGS">Group Settings</string>
+    <string name="TAKE_SCREENSHOT">Take screenshot</string>
+    <string name="CIRCLE_THE_PROBLEM">Take the problem round</string>
+    <string name="SCREENSHOT">Take</string>
+    <string name="searchUser">Search user...</string>
+    <string name="IN_GROUP">In Group</string>
+    <string name="REMOVE">Remove</string>
+    <string name="REMOVE_FOLLOWER_TITLE">Remove Follower?</string>
+    <string name="REMOVE_FOLLOWER_MESSAGE">The information that you removed from the followers will not be forwarded to this user</string>
+    <string name="SEARCH_FOLLOWERS">Search followers...</string>
+    <string name="SEARCH_FOLLOWINGS">Search followings...</string>
+    <string name="USER_NOT_FOUND">User not found.</string>
+
+    <string name="REMOVE_BLOCK_PERSON">You need to unblock to be able to chat with this person!</string>
+    <string name="TO_BE_REMOVED_BLOCK_PERSON">You must be unblocked to communicate with this person!</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+
+    <string name="profile">Profile</string>
+    <string name="editProfile">Edit Profile</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="discard">Discard</string>
+    <string name="giveNewName">Write New Group Name</string>
+    <string name="groupPhotoChanging">Photo is changing...</string>
+    <string name="ok">OK</string>
+    <string name="next">Next</string>
+    <string name="close">Close</string>
+    <string name="sure_exit_not_saving_image">Are you want to exit without saving image?</string>
+    <string name="image_saved_successfully">Image Saved Successfully</string>
+    <string name="failed_to_save_image">Failed to save Image</string>
+    <string name="rateus">Rate Us</string>
+    <string name="commentFailed">Install an application market</string> 
+
+    <!-- Location Settings constants-->
+    <string name="gpsSettings">GPS Settings</string>
+    <string name="gpsSettingMessage">GPS is not enabled. Click on setting to enable and get location, please start app again after turning on GPS.</string>
+    <string name="settings">Settings</string>
+
+    <!-- Share tab item constants-->
+
+    <!-- Whose for will be shared -->
+    <string name="publicShareText">Public</string>
+    <string name="friendsShareText">Special</string>
+    <string name="groupsShareText">Groups</string>
+    <string name="justMeShareText">Just Me</string>
+    <string name="allFollowersShareText">All Followers</string>
+
+    <string name="PUBLIC_SHARE_DESC">You share everyone</string>
+    <string name="ALL_FOLLOWERS_SHARE_DESC">You share all followers</string>
+    <string name="JUSTME_SHARE_DESC">You share just yourself</string>
+
+    <string name="signOut">Sign Out</string>
+    <string name="followers">Followers</string>
+    <string name="followings">Followings</string>
+    <string name="follow">Follow</string>
+    <string name="following">Following</string>
+    <string name="invite">Invite</string>
+    <string name="request_sended">Request sent</string>
+    <string name="cancel_following">Remove from followings?</string>
+    <string name="ASKING_STOP_FOLLOWING">Are you sure you want to stop following?</string>
+    <string name="PENDING_REQUESTS">Pending Requests</string>
+    <string name="THERE_IS_NO_PENDING_REQUEST">There is no pending request</string>
+    <string name="CONTACT_INVITE_MESSAGE">Do you want to share in CatchU and follow your friends? You can download the application from this link:</string>
+    <string name="CONNECT_FACEBOOK">Connect Facebook</string>
+    <string name="INVITE_YOUR_FRIENDS">Invite Your Friends</string>
+    <string name="ADD_YOUR_FRIENDS">Add Your Friends</string>
+    <string name="FACEBOOK_FRIENDS">Facebook Friends</string>
+    <string name="ACCOUNT">Account</string>
+    <string name="CHANGE_PASSWORD">Change Password</string>
+    <string name="SUPPORT">Support</string>
+    <string name="HELP_CENTER">About App</string>
+    <string name="REPORT_PROBLEM">Report a Problem</string>
+    <string name="CONTACT_FRIENDS">Contact Friends</string>
+    <string name="PRIVATE_ACCOUNT">Private Account</string>
+    <string name="VERSION">Version</string> 
+    <string name="ABOUT_APP">CatchU: If you have any questions
+        or suggestions about the application, please write to us.
+    </string>
+    <string name="authoremail">catchuren@gmail.com</string> 
+
+    <!-- Change Password variables-->
+    <string name="CURRENT_PASSWORD">Current password</string>
+    <string name="NEW_PASSWORD">New password</string>
+    <string name="NEW_PASSWORD_AGAIN">New password, again</string>
+
+
+    <!-- Flash options-->
+
+
+    <!-- LoginActivity constants-->
+    // App fields
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="createAccount">Create Account</string>
+    <string name="forgetPassword">Forget Password?</string>
+    <string name="register">Register</string>
+    <string name="sendLink">Send Link</string>
+    <string name="forgetPassText">We will send a link to your mail address. You can renew your password.</string>
+    <string name="rememberMe">Remember Me</string>
+
+    <!-- User edit constants constants-->
+    <string name="PERSONAL_INFORMATION">Personal Information</string>
+    <string name="NAME">Name</string>
+    <string name="BIRTHDAY">Birthday</string>
+    <string name="PHONE">Phone</string>
+    <string name="GENDER">Gender</string>
+    <string name="WEBSITE">Website</string>
+
+    <!-- Time constants-->
+    <string name="seconds">seconds</string>
+    <string name="minutes">minutes</string>
+    <string name="hours">hours</string>
+    <string name="days">days</string>
+    <string name="weeks">weeks</string>
+    <string name="months">months</string>
+    <string name="years">years</string>
+
+    //Messages-Warnings
+    <string name="UNEXPECTED_ERROR">An unexpected error has occurred!</string>
+    <string name="UNKNOWN_ERROR">Operation failed!</string>
+    <string name="EMAIL_ERR_REQUIRED">Email can not be empty!</string>
+    <string name="EMAIL_ERR_INVALID">Please type a valid email address!</string>
+    <string name="PASSWORD_ERR_REQUIRED">Password can not be empty!</string>
+    <string name="PASSWORD_ERR_LENGTH">Password length must be at least 6!</string>
+    <string name="USERNAME_ERR_REQUIRED">Username can not be empty!</string>
+    <string name="CHECK_PASSWORD_VALIDATION_VALUE">The validation field is incorrect. Check again.</string>
+    <string name="COLLISION_EXCEPTION">E-mail is already registered, please try another one!</string>
+    <string name="INVALID_CREDENTIALS">Email or password is wrong!</string>
+    <string name="INVALID_USER">Invalid email address</string>
+    <string name="REGISTERING_USER">"Registering user.."</string>
+    <string name="LOGGING_USER">"Logging in user.."</string>
+    <string name="PLEASE_WAIT">"Please wait.."</string>
+    <string name="PASSWORD_LINK_SEND_SUCCESS">Renew password link has sent to your email address.</string>
+    <string name="PASSWORD_LINK_SEND_FAIL">Fail to send link, please tyr again.</string>
+    <string name="SHARE_IS_SUCCESSFUL">The share you just made was successful :) </string>
+    <string name="PASSWORD_IS_CHANGED">Password is changed</string>
+    <string name="CURRENT_PASSWORD_INCORRECT">Current password is incorrect</string>
+    <string name="ASK_FOR_REMOVE_ACCOUNT_PRIVACY">Do you want to remove the privacy of the account?</string>
+    <string name="ASK_FOR_MAKE_ACCOUNT_PRIVACY">Do you want to make your account private?</string>
+    <string name="SHARE_IS_UNSUCCESSFUL">Sorry, your share has not been successfully concluded :(</string>
+    <string name="CAN_YOU_SPECIFY_THE_PROBLEM">Can you specify the problem briefly?</string>
+    <string name="PROBLEM_NOTIFY_DESCRIPTION">You can help us by notifying us about the problem you have encountered or whether you want us to improve.</string>
+    <string name="REPORT_PROBLEM_OR_COMMENT">Report or comment</string>
+    <string name="FIND_FACEBOOK_FRIENDS">Find Facebook Friends</string>
+    <string name="YOU_CAN_FIND_FACEBOOK_FRIENDS">You can find facebook friends who are using Catchu</string>
+    <string name="GIVE_PERMISSION_TO_SEE_CONTACT_FRIENDS">You must grant access to your contacts to see your friends</string>
+    <string name="SOMETHING_WENT_WRONG">Something Went Wrong!</string>
+    <string name="GOT_IT">GOT IT</string>
+    <string name="CHECK_YOUR_INTERNET_CONNECTION">Please check your network connection!</string>
+    <string name="TRY_AGAIN_AFTER_CHECK_YOUR_NETWORK">Try again after checking your internet connection.</string>
+    <string name="TRY_AGAIN">Try Again</string>
+    <string name="SKIP">SKIP</string>
+    <string name="FORGOT_YOUR_PASSWORD">Forgot Your Password?</string>
+    <string name="ADVANCED_SETTINGS">Advanced Settings</string>
+    <string name="SEND">Send</string>
+    <string name="LET_POST_COMMENT">Allow comment</string>
+    <string name="THANKS_FOR_FEEDBACK">Thank you for your feedback. We will try to take action as soon as possible.</string>
+    <string name="COMMENT_SETTINGS">Comment Settings</string>
+    <string name="MAP_SETTINGS">Map Settings</string>
+    <string name="LOCATION_WILL_SEEN_ON_POST">Let the location appear</string>
+    <string name="COMMENT_SETTINGS_DESC">You can update this feature from the post settings after sharing</string>
+    <string name="LOCATION_SETTINGS_DESC">This feature cannot be updated after sharing</string>
+    <string name="SEND_MESSAGE">Send Message</string>
+    <string name="MESSAGES">My Messages</string>
+    <string name="TODAY">Today</string>
+    <string name="YESTERDAY">Yesterday</string>
+    <string name="BLOCK">Block</string>
+    <string name="UNBLOCK">Unblock</string>
+    <string name="REPORT_PERSON">Report</string>
+    <string name="YOU_HAVE_NEW_MESSAGES">You have new messages</string>
+    <string name="ACCEPT">Accept</string>
+    <string name="REJECT">Reject</string>
+    <string name="COMPLAIN_PERSON_TEXT">Can you briefly complain about this person?</string>
+    <string name="COMPLAIN_FEEDBACK">Action will be taken as soon as possible after reviewing your complaint.</string>
+
+    <string name="emptyFeed">There is no waiting task...</string>
+    <string name="there_is_no_completed_task">There is no completed task...</string>
+
+    <string name="needLocationPermission">To see posts CatchU should access your location. Please give location permission from Settings.</string>
+    <string name="likes">Likes</string>
+    <string name="comments">Comments</string>
+    <string name="loading">Loading...</string>
+    <string name="serverError">Server Error</string>
+    <string name="locationError">Can not access your location, please check your permission settings!</string>
+    <string name="swipeDownForRefresh">Swipe down for refresh</string>
+    <string name="unfollow">Unfollow</string>
+    <string name="disableComment">Disable comment</string>
+    <string name="enableComment">Enable comment</string>
+    <string name="report">Report...</string>
+    <string name="delete">Delete</string>
+    <string name="commentHint">What do you think?</string>
+    <string name="like">Like</string>
+    <string name="filterSettings">Filter Settings</string>
+    <string name="apply">Apply</string>
+    <string name="nearby">NEARBY</string>
+    <string name="meter">metre</string>
+    <string name="clearFilter">Clear</string>
+    <string name="now">Just now</string>
+    <string name="feedTypePublic">Public</string>
+    <string name="feedTypeCatched">Catch</string>
+    <string name="feedViewTypeGrid">Grid</string>
+    <string name="feedViewTypeList">List</string>
+    <string name="sharedPosts">Shared Posts</string>
+    <string name="caughtPosts">Catch Posts</string>
+    <string name="groupPosts">Group Posts</string>
+    <string name="deleteThisPost">Delete this Post?</string>
+    <string name="reportPostMessage">Do you want to report this post? We will check and take an action immediately.</string>
+    <string name="posts">Posts</string>
+    <string name="postsInfo">Public and posted around posts of user is shown here. Click post for details. </string>
+    <string name="emptyFeed2">No posts caught.</string>
+    <string name="notFound">Not Found.</string>
+    <string name="ABOUT_ME">About me</string>
+    <string name="ABOUT_ME_BIO">About me</string>
+    <string name="AGE">Age,</string>
+    <string name="direct_follow_notif_text">has started following you</string>
+    <string name="follow_request_notif_text">sent you a follow-up request</string>
+    <string name="wanna_take_screenshot">Would you like to take a screenshot of your complaint?</string>
+    <string name="CONTINUE">CONTINUE</string>
+
+    <string name="WRITE_YOUR_NAME">Type your name..</string>
+    <string name="WRITE_USERNAME">Type your username..</string>
+    <string name="WRITE_WEB_SITE">Type web address..</string>
+    <string name="WRITE_ABOUT_ME">Talk about yourself..</string>
+    <string name="WRITE_EMAIL">Type your email..</string>
+
+    <array name="months">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </array>
+
+    <!-- silinecek -->
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+
+    <string name="needLocationPermission2">To use CathcU enable location!</string>
+    <string name="locationSettings">Go: Settings > Connections > Location enable locatin.</string>
+
+
+    <string name="label_brush">Brush</string>
+    <string name="label_emoji">Emoji</string>
+    <string name="label_eraser">Eraser</string>
+    <string name="label_text">Text</string>
+    <string name="label_filter">Filter</string>
+
+    <string name="waiting_task">Waiting</string>
+    <string name="completed_task">Completed</string>
+    <string name="group_task">Group</string>
+
+    <string name="task_completed">Completed</string>
+    <string name="call_user">Call</string>
+    <string name="delete_task">Delete</string>
+
+    <string name="users_phone_not_defined">User\'s phone is not defined.</string>
+    <string name="sure_to_delete_waiting_task">Are you sure you want to delete the task?</string>
+    <string name="notify_user_when_waiting_task_deleted">When the incomplete task is deleted, the user who assigned the task will be notified.</string>
+    <string name="see_all_tasks">See all tasks -></string>
+
+
+    <string name="FCM_SERVER_KEY">AAAA4JR4Gec:APA91bGLWhwgn6JuvSPzJVWUw-LTiu3rW48ihDO--ulWaWja8s8f6M9v4fy_Y2pMOx8cqrB8NwzT-XB9cqfMpsYpgQ8yAksP6xK8A9rG5nOpbwUJQkr04xgG9aI4Qbf4P16XxuzMYvWv</string>
+
+
+
+</resources>

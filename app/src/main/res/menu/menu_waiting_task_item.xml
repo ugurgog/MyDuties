@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/changeAsCompleted"
+        android:orderInCategory="100"
+        android:title="@string/task_completed"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/callUser"
+        android:orderInCategory="100"
+        android:title="@string/call_user"
+        app:showAsAction="never" />
+
+</menu>
+
