@@ -37,7 +37,7 @@ import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.dataModelUtil.GroupDataUtil;
 import uren.com.myduties.utils.dataModelUtil.UserDataUtil;
 
-public class GroupTaskAdapter extends RecyclerView.Adapter{
+public class GroupTaskAdapter extends RecyclerView.Adapter {
 
     public static final int VIEW_PROG = 0;
     public static final int VIEW_ITEM = 1;
@@ -52,7 +52,7 @@ public class GroupTaskAdapter extends RecyclerView.Adapter{
     private User user;
 
     public GroupTaskAdapter(Activity activity, Context context,
-                                BaseFragment.FragmentNavigation fragmentNavigation, User user) {
+                            BaseFragment.FragmentNavigation fragmentNavigation, User user) {
         this.mActivity = activity;
         this.mContext = context;
         this.fragmentNavigation = fragmentNavigation;
@@ -61,7 +61,7 @@ public class GroupTaskAdapter extends RecyclerView.Adapter{
         this.user = user;
     }
 
-    public void setReturnCallback(ReturnCallback returnCallback){
+    public void setReturnCallback(ReturnCallback returnCallback) {
         this.returnCallback = returnCallback;
     }
 
@@ -178,7 +178,7 @@ public class GroupTaskAdapter extends RecyclerView.Adapter{
                                             User user = (User) object;
 
                                             try {
-                                                if(user != null && user.getPhone() != null){
+                                                if (user != null && user.getPhone() != null) {
                                                     String phoneNumber = user.getPhone().getDialCode() + user.getPhone().getPhoneNumber();
                                                     mContext.startActivity(new Intent(Intent.ACTION_DIAL,
                                                             Uri.fromParts("tel", phoneNumber, null)));
@@ -216,7 +216,7 @@ public class GroupTaskAdapter extends RecyclerView.Adapter{
             setTaskGroup();
         }
 
-        private void setTaskItems(){
+        private void setTaskItems() {
             //Task Description
             if (task.getTaskDesc() != null && !task.getTaskDesc().isEmpty()) {
                 txtDetail.setText(task.getTaskDesc());
@@ -234,13 +234,13 @@ public class GroupTaskAdapter extends RecyclerView.Adapter{
                 txtCompletedAt.setText(CommonUtils.getMessageTime(mContext, task.getCompletedTime()));
         }
 
-        private void setTaskAssignedFrom(){
+        private void setTaskAssignedFrom() {
             UserDBHelper.getUser(task.getAssignedFrom().getUserid(), new CompleteCallback() {
                 @Override
                 public void onComplete(Object object) {
                     User user = (User) object;
 
-                    if(user != null) {
+                    if (user != null) {
                         //profile picture
                         UserDataUtil.setProfilePicture(mContext, user.getProfilePhotoUrl(), user.getName(), user.getUsername()
                                 , txtProfilePic, imgProfilePic, true);
@@ -257,13 +257,13 @@ public class GroupTaskAdapter extends RecyclerView.Adapter{
             });
         }
 
-        private void setTaskGroup(){
+        private void setTaskGroup() {
             GroupDBHelper.getGroup(task.getGroup().getGroupid(), new CompleteCallback() {
                 @Override
                 public void onComplete(Object object) {
                     Group group = (Group) object;
 
-                    if(group != null){
+                    if (group != null) {
                         GroupDataUtil.setGroupPicture(mContext, group.getGroupPhotoUrl(),
                                 group.getName(), txtGroupPic, imgGroupPic);
 
@@ -284,10 +284,10 @@ public class GroupTaskAdapter extends RecyclerView.Adapter{
         return (taskList != null ? taskList.size() : 0);
     }
 
-    public void addAll(List<GroupTask> addedTaskList) {
-        if (addedTaskList != null) {
-            taskList.addAll(addedTaskList);
-            notifyItemRangeInserted(taskList.size(), taskList.size() + taskList.size());
+    public void addGroupTask(GroupTask groupTask) {
+        if(groupTask != null) {
+            taskList.add(groupTask);
+            notifyItemInserted(taskList.size() - 1);
         }
     }
 
@@ -303,12 +303,6 @@ public class GroupTaskAdapter extends RecyclerView.Adapter{
             taskList.remove(taskList.size() - 1);
             notifyItemRemoved(taskList.size());
         }
-    }
-
-    public void updatePostListItems(List<GroupTask> newTaskList) {
-        this.taskList.clear();
-        this.taskList.addAll(newTaskList);
-        notifyDataSetChanged();
     }
 
     public boolean isShowingProgressLoading() {

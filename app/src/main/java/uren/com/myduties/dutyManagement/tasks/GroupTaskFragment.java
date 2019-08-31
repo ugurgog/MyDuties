@@ -26,6 +26,7 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import uren.com.myduties.R;
+import uren.com.myduties.dbManagement.GroupTaskDBHelper;
 import uren.com.myduties.dbManagement.UserTaskDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.dutyManagement.NextActivity;
@@ -148,7 +149,7 @@ public class GroupTaskFragment extends BaseFragment {
         groupTaskAdapter.setReturnCallback(new ReturnCallback() {
             @Override
             public void OnReturn(Object object) {
-                List<Task> returnList = (ArrayList<Task>) object;
+                List<GroupTask> returnList = (ArrayList<GroupTask>) object;
                 if (returnList != null && returnList.size() == 0 )
                     showExceptionLayout(true, VIEW_NO_POST_FOUND);
             }
@@ -225,10 +226,11 @@ public class GroupTaskFragment extends BaseFragment {
 
     private void startGetGroupTasks() {
 
-        UserTaskDBHelper.getUserCompletedTasks(user, limitValue, new CompleteCallback() {
+
+        GroupTaskDBHelper.getGroupAllTasks(user, limitValue, new CompleteCallback() {
             @Override
             public void onComplete(Object object) {
-                setFetchData((List<GroupTask>)object);
+                setFetchData((GroupTask)object);
             }
 
             @Override
@@ -255,7 +257,7 @@ public class GroupTaskFragment extends BaseFragment {
         });
     }
 
-    private void setFetchData(List<GroupTask> taskList) {
+    private void setFetchData(GroupTask groupTask) {
 
         if (isFirstFetch) {
             isFirstFetch = false;
