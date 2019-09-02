@@ -1,8 +1,10 @@
 package uren.com.myduties.dutyManagement.tasks.adapters;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -22,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import uren.com.myduties.R;
+import uren.com.myduties.common.ShowSelectedPhotoFragment;
 import uren.com.myduties.dbManagement.GroupDBHelper;
 import uren.com.myduties.dbManagement.UserDBHelper;
 import uren.com.myduties.dbManagement.UserTaskDBHelper;
@@ -37,11 +40,11 @@ import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.dataModelUtil.GroupDataUtil;
 import uren.com.myduties.utils.dataModelUtil.UserDataUtil;
 
+import static uren.com.myduties.constants.StringConstants.CHAR_AMPERSAND;
+
 public class GroupTaskAdapter extends RecyclerView.Adapter {
 
-    public static final int VIEW_PROG = 0;
     public static final int VIEW_ITEM = 1;
-    public static final int VIEW_NULL = 2;
 
     private Activity mActivity;
     private Context mContext;
@@ -66,52 +69,31 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public int getItemViewType(int position) {
-        if (taskList.size() > 0 && position >= 0) {
-            return taskList.get(position) != null ? VIEW_ITEM : VIEW_PROG;
-        } else {
-            return VIEW_NULL;
-        }
-    }
-
-    @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         RecyclerView.ViewHolder viewHolder;
-        if (viewType == VIEW_ITEM) {
-            View itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.group_task_vert_list_item, parent, false);
-
-            viewHolder = new GroupTaskAdapter.MyViewHolder(itemView);
-        } else {
-            View v = LayoutInflater.from(parent.getContext()).inflate(
-                    R.layout.progressbar_item, parent, false);
-
-            viewHolder = new GroupTaskAdapter.ProgressViewHolder(v);
-        }
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.group_task_vert_list_item, parent, false);
+        viewHolder = new GroupTaskAdapter.MyViewHolder(itemView);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
-        if (holder instanceof GroupTaskAdapter.MyViewHolder) {
-            GroupTask task = taskList.get(position);
-            ((GroupTaskAdapter.MyViewHolder) holder).setData(task, position);
-        } else {
-            ((GroupTaskAdapter.ProgressViewHolder) holder).progressBar.setIndeterminate(true);
-        }
+        GroupTask task = taskList.get(position);
+        ((GroupTaskAdapter.MyViewHolder) holder).setData(task, position);
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
         ImageView imgProfilePic;
-        ImageView existLibImgv;
+        ImageView completedImgv;
         ImageView moreImgv;
         TextView txtProfilePic;
         TextView txtUserName;
         TextView txtDetail;
+        TextView tvWhoCompleted;
         CardView cardView;
         LinearLayout llcompleted;
         GroupTask task;
@@ -127,6 +109,10 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
 
         PopupMenu popupMenu = null;
 
+        User assignedFrom = null;
+        User whoCompleted = null;
+        Group taskGroup = null;
+
         public MyViewHolder(View view) {
             super(view);
 
@@ -141,7 +127,8 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
             txtCreateAt = view.findViewById(R.id.txtCreateAt);
             txtCompletedAt = view.findViewById(R.id.txtCompletedAt);
             llcompleted = view.findViewById(R.id.llcompleted);
-            existLibImgv = view.findViewById(R.id.existLibImgv);
+            completedImgv = view.findViewById(R.id.completedImgv);
+            tvWhoCompleted = view.findViewById(R.id.tvWhoCompleted);
 
             imgGroupPic = view.findViewById(R.id.imgGroupPic);
             txtGroupPic = view.findViewById(R.id.txtGroupPic);
@@ -149,15 +136,29 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
             tvSeeAllTasks = view.findViewById(R.id.tvSeeAllTasks);
 
             setListeners();
-            setPopupMenu();
-        }
-
-        private void setPopupMenu() {
-            popupMenu = new PopupMenu(mContext, moreImgv);
-            popupMenu.inflate(R.menu.menu_group_task_item);
         }
 
         private void setListeners() {
+            imgProfilePic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (assignedFrom != null && assignedFrom.getProfilePhotoUrl() != null &&
+                            !assignedFrom.getProfilePhotoUrl().isEmpty()) {
+                        fragmentNavigation.pushFragment(new ShowSelectedPhotoFragment(assignedFrom.getProfilePhotoUrl()));
+                    }
+                }
+            });
+
+            imgGroupPic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (taskGroup != null && taskGroup.getGroupPhotoUrl() != null &&
+                            !taskGroup.getGroupPhotoUrl().isEmpty()) {
+                        fragmentNavigation.pushFragment(new ShowSelectedPhotoFragment(taskGroup.getGroupPhotoUrl()));
+                    }
+                }
+            });
+
             moreImgv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -165,35 +166,28 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
                             switch (item.getItemId()) {
-                                case R.id.closeTask:
+                                case R.id.completeTask:
 
                                     // TODO: 2019-08-27
 
                                     break;
                                 case R.id.callUser:
 
-                                    UserDBHelper.getUser(task.getAssignedFrom().getUserid(), new CompleteCallback() {
-                                        @Override
-                                        public void onComplete(Object object) {
-                                            User user = (User) object;
-
-                                            try {
-                                                if (user != null && user.getPhone() != null) {
-                                                    String phoneNumber = user.getPhone().getDialCode() + user.getPhone().getPhoneNumber();
-                                                    mContext.startActivity(new Intent(Intent.ACTION_DIAL,
-                                                            Uri.fromParts("tel", phoneNumber, null)));
-                                                }
-                                            } catch (Exception e) {
-                                                CommonUtils.showToastShort(mContext, mContext.getResources().getString(R.string.users_phone_not_defined));
-                                                e.printStackTrace();
+                                    if (assignedFrom == null) {
+                                        UserDBHelper.getUser(task.getAssignedFrom().getUserid(), new CompleteCallback() {
+                                            @Override
+                                            public void onComplete(Object object) {
+                                                assignedFrom = (User) object;
+                                                callAssignedFromUser();
                                             }
-                                        }
 
-                                        @Override
-                                        public void onFailed(String message) {
-                                            CommonUtils.showToastShort(mContext, message);
-                                        }
-                                    });
+                                            @Override
+                                            public void onFailed(String message) {
+                                                CommonUtils.showToastShort(mContext, message);
+                                            }
+                                        });
+                                    }else
+                                        callAssignedFromUser();
 
                                     break;
                             }
@@ -205,6 +199,19 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
             });
         }
 
+        public void callAssignedFromUser() {
+            try {
+                if (assignedFrom != null && assignedFrom.getPhone() != null) {
+                    String phoneNumber = assignedFrom.getPhone().getDialCode() + assignedFrom.getPhone().getPhoneNumber();
+                    mContext.startActivity(new Intent(Intent.ACTION_DIAL,
+                            Uri.fromParts("tel", phoneNumber, null)));
+                }
+            } catch (Exception e) {
+                CommonUtils.showToastShort(mContext, mContext.getResources().getString(R.string.users_phone_not_defined));
+                e.printStackTrace();
+            }
+        }
+
         public void setData(GroupTask task, int position) {
 
             //her postID bir position ile entegre halde...
@@ -214,6 +221,54 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
             setTaskItems();
             setTaskAssignedFrom();
             setTaskGroup();
+            setCompletedTimeVal();
+            setWhoCompleted();
+            setCompletedImage();
+            setPopupMenu();
+        }
+
+        private void setCompletedImage() {
+            if (task.isCompleted())
+                completedImgv.setColorFilter(mContext.getResources().getColor(R.color.Green, null), PorterDuff.Mode.SRC_IN);
+            else
+                completedImgv.setColorFilter(mContext.getResources().getColor(R.color.Red, null), PorterDuff.Mode.SRC_IN);
+        }
+
+        private void setWhoCompleted() {
+            if (task.getWhoCompleted() == null || task.getWhoCompleted().getUserid() == null || task.getWhoCompleted().getUserid().isEmpty())
+                tvWhoCompleted.setVisibility(View.GONE);
+            else {
+                tvWhoCompleted.setVisibility(View.VISIBLE);
+
+                UserDBHelper.getUser(task.getWhoCompleted().getUserid(), new CompleteCallback() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onComplete(Object object) {
+
+                        whoCompleted = (User) object;
+                        if (whoCompleted != null) {
+                            if (whoCompleted.getName() != null)
+                                tvWhoCompleted.setText(whoCompleted.getName() + " " + mContext.getResources().getString(R.string.completed_this_task));
+                            else if (whoCompleted.getUsername() != null)
+                                tvWhoCompleted.setText(CHAR_AMPERSAND + whoCompleted.getUsername() + " " + mContext.getResources().getString(R.string.completed_this_task));
+                            else
+                                tvWhoCompleted.setVisibility(View.GONE);
+                        }
+                    }
+
+                    @Override
+                    public void onFailed(String message) {
+                        tvWhoCompleted.setVisibility(View.GONE);
+                    }
+                });
+            }
+        }
+
+        private void setCompletedTimeVal() {
+            if (task.getCompletedTime() != 0)
+                llcompleted.setVisibility(View.VISIBLE);
+            else
+                llcompleted.setVisibility(View.GONE);
         }
 
         private void setTaskItems() {
@@ -238,21 +293,23 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
             UserDBHelper.getUser(task.getAssignedFrom().getUserid(), new CompleteCallback() {
                 @Override
                 public void onComplete(Object object) {
-                    User user = (User) object;
+                    assignedFrom = (User) object;
 
-                    if (user != null) {
-                        //profile picture
-                        UserDataUtil.setProfilePicture(mContext, user.getProfilePhotoUrl(), user.getName(), user.getUsername()
-                                , txtProfilePic, imgProfilePic, true);
+                    //profile picture
+                    UserDataUtil.setProfilePicture(mContext, assignedFrom.getProfilePhotoUrl(), assignedFrom.getName(), assignedFrom.getUsername()
+                            , txtProfilePic, imgProfilePic, true);
 
-                        //username of user who assigned the task
-                        txtUserName.setText(UserDataUtil.getNameOrUsername(user.getName(), user.getUsername()));
-                    }
+                    //username of user who assigned the task
+                    txtUserName.setText(UserDataUtil.getNameOrUsername(assignedFrom.getName(), assignedFrom.getUsername()));
                 }
 
                 @Override
                 public void onFailed(String message) {
+                    //profile picture
+                    UserDataUtil.setProfilePicture(mContext, null, null, null, txtProfilePic, imgProfilePic, true);
 
+                    //username of user who assigned the task
+                    txtUserName.setText(UserDataUtil.getNameOrUsername(null, null));
                 }
             });
         }
@@ -261,13 +318,13 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
             GroupDBHelper.getGroup(task.getGroup().getGroupid(), new CompleteCallback() {
                 @Override
                 public void onComplete(Object object) {
-                    Group group = (Group) object;
+                    taskGroup = (Group) object;
 
-                    if (group != null) {
-                        GroupDataUtil.setGroupPicture(mContext, group.getGroupPhotoUrl(),
-                                group.getName(), txtGroupPic, imgGroupPic);
+                    if (taskGroup != null) {
+                        GroupDataUtil.setGroupPicture(mContext, taskGroup.getGroupPhotoUrl(),
+                                taskGroup.getName(), txtGroupPic, imgGroupPic);
 
-                        GroupDataUtil.setGroupName(group, txtGroupName);
+                        GroupDataUtil.setGroupName(taskGroup, txtGroupName);
                     }
                 }
 
@@ -277,6 +334,21 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
                 }
             });
         }
+
+        private void setPopupMenu() {
+            popupMenu = new PopupMenu(mContext, moreImgv);
+            popupMenu.inflate(R.menu.menu_group_task_item);
+
+            if(task.isCompleted())
+                popupMenu.getMenu().findItem(R.id.completeTask).setVisible(false);
+            else
+                popupMenu.getMenu().findItem(R.id.completeTask).setVisible(true);
+        }
+    }
+
+    public void updatePostListItems() {
+        this.taskList.clear();
+        notifyDataSetChanged();
     }
 
     @Override
@@ -285,37 +357,9 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
     }
 
     public void addGroupTask(GroupTask groupTask) {
-        if(groupTask != null) {
+        if (groupTask != null) {
             taskList.add(groupTask);
             notifyItemInserted(taskList.size() - 1);
         }
     }
-
-    public void addProgressLoading() {
-        if (getItemViewType(taskList.size() - 1) != VIEW_PROG) {
-            taskList.add(null);
-            notifyItemInserted(taskList.size() - 1);
-        }
-    }
-
-    public void removeProgressLoading() {
-        if (getItemViewType(taskList.size() - 1) == VIEW_PROG) {
-            taskList.remove(taskList.size() - 1);
-            notifyItemRemoved(taskList.size());
-        }
-    }
-
-    public boolean isShowingProgressLoading() {
-        return getItemViewType(taskList.size() - 1) == VIEW_PROG;
-    }
-
-    public static class ProgressViewHolder extends RecyclerView.ViewHolder {
-        public ProgressBar progressBar;
-
-        public ProgressViewHolder(View v) {
-            super(v);
-            progressBar = v.findViewById(R.id.progressBarLoading);
-        }
-    }
-
 }

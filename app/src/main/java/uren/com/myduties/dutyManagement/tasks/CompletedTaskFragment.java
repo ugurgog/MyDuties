@@ -26,6 +26,7 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import uren.com.myduties.R;
+import uren.com.myduties.common.ShowSelectedPhotoFragment;
 import uren.com.myduties.dbManagement.UserTaskDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.dutyManagement.tasks.adapters.CompletedTaskAdapter;

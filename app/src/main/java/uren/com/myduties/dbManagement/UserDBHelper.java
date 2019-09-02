@@ -100,6 +100,8 @@ public class UserDBHelper {
 
     public static void getUser(String userid, CompleteCallback completeCallback){
 
+        if(userid == null) return;
+
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(fb_child_users).child(userid);
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {

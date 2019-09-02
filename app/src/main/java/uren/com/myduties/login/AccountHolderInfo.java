@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.util.Map;
 
 import uren.com.myduties.R;
+import uren.com.myduties.dbManagement.UserDBHelper;
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.models.Phone;
 import uren.com.myduties.models.User;
@@ -71,40 +72,20 @@ public class AccountHolderInfo {
 
     private void getUserInfo() {
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(fb_child_users).child(getUserIdFromFirebase());
-
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        UserDBHelper.getUser(getUserIdFromFirebase(), new CompleteCallback() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onComplete(Object object) {
+                User user = (User) object;
 
-                if (dataSnapshot.getValue() != null) {
-
-                    Map<String, Object> maps = (Map) dataSnapshot.getValue();
-                    Map<String, Object> phoneMap = (Map) maps.get(fb_child_phone);
-
-                    user.setUserid(getUserIdFromFirebase());
-                    user.setProfilePhotoUrl((String) maps.get(fb_child_profilePhotoUrl));
-                    user.setUsername((String) maps.get(fb_child_username));
-                    user.setName((String) maps.get(fb_child_name));
-                    user.setEmail((String) maps.get(fb_child_email));
-
-                    try {
-                        Phone phone = new Phone();
-                        phone.setCountryCode((String) phoneMap.get(fb_child_countryCode));
-                        phone.setDialCode((String) phoneMap.get(fb_child_dialCode));
-                        phone.setPhoneNumber((long) phoneMap.get(fb_child_phoneNumber));
-                        user.setPhone(phone);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
+                if(user != null)
                     mCompleteCallback.onComplete(user);
-                }
+                else
+                    mCompleteCallback.onComplete(null);
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                mCompleteCallback.onFailed(databaseError.getMessage());
+            public void onFailed(String message) {
+                mCompleteCallback.onFailed(message);
             }
         });
     }

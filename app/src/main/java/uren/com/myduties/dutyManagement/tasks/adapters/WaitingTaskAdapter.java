@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import uren.com.myduties.R;
+import uren.com.myduties.common.ShowSelectedPhotoFragment;
 import uren.com.myduties.dbManagement.UserDBHelper;
 import uren.com.myduties.dbManagement.UserTaskDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
@@ -113,6 +114,7 @@ public class WaitingTaskAdapter extends RecyclerView.Adapter {
         LinearLayout profileMainLayout;
         TextView txtCreateAt;
         PopupMenu popupMenu = null;
+        User assignedFrom = null;
 
         public MyViewHolder(View view) {
             super(view);
@@ -136,6 +138,16 @@ public class WaitingTaskAdapter extends RecyclerView.Adapter {
         }
 
         private void setListeners() {
+            imgProfilePic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (assignedFrom != null && assignedFrom.getProfilePhotoUrl() != null &&
+                            !assignedFrom.getProfilePhotoUrl().isEmpty()) {
+                        fragmentNavigation.pushFragment(new ShowSelectedPhotoFragment(assignedFrom.getProfilePhotoUrl()));
+                    }
+                }
+            });
+
             moreImgv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -221,14 +233,14 @@ public class WaitingTaskAdapter extends RecyclerView.Adapter {
             UserDBHelper.getUser(task.getAssignedFrom().getUserid(), new CompleteCallback() {
                 @Override
                 public void onComplete(Object object) {
-                    User user = (User) object;
+                    assignedFrom = (User) object;
 
                     //profile picture
-                    UserDataUtil.setProfilePicture(mContext, user.getProfilePhotoUrl(), user.getName(), user.getUsername()
+                    UserDataUtil.setProfilePicture(mContext, assignedFrom.getProfilePhotoUrl(), assignedFrom.getName(), assignedFrom.getUsername()
                             , txtProfilePic, imgProfilePic, true);
 
                     //username of user who assigned the task
-                    txtUserName.setText(UserDataUtil.getNameOrUsername(user.getName(), user.getUsername()));
+                    txtUserName.setText(UserDataUtil.getNameOrUsername(assignedFrom.getName(), assignedFrom.getUsername()));
                 }
 
                 @Override

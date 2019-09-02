@@ -79,10 +79,9 @@ public class GroupTaskFragment extends BaseFragment {
     @BindView(R.id.txtNoItemFound)
     TextView txtNoItemFound;
 
-    private int limitValue;
     private boolean loading = true;
     private int pastVisibleItems, visibleItemCount, totalItemCount;
-    private List<GroupTask> taskList = new ArrayList<>();
+    //private List<GroupTask> taskList = new ArrayList<>();
     private static final int RECYCLER_VIEW_CACHE_COUNT = 10;
     private boolean pulledToRefresh = false;
     private boolean isFirstFetch = false;
@@ -111,7 +110,7 @@ public class GroupTaskFragment extends BaseFragment {
     }
 
     private void initVariables() {
-        limitValue = REC_MAXITEM_LIMIT_COUNT;
+
     }
 
     private void initListeners() {
@@ -124,7 +123,6 @@ public class GroupTaskFragment extends BaseFragment {
         setLayoutManager();
         setAdapter();
         setPullToRefresh();
-        setRecyclerViewScroll();
         setFeedRefreshListener();
     }
 
@@ -160,6 +158,7 @@ public class GroupTaskFragment extends BaseFragment {
         refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                groupTaskAdapter.updatePostListItems();
                 refreshFeed();
             }
         });
@@ -170,43 +169,6 @@ public class GroupTaskFragment extends BaseFragment {
         startGetGroupTasks();
     }
 
-    private void setRecyclerViewScroll() {
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                if (dy > 0) //check for scroll down
-                {
-                    visibleItemCount = mLayoutManager.getChildCount();
-                    totalItemCount = mLayoutManager.getItemCount();
-                    pastVisibleItems = mLayoutManager.findFirstVisibleItemPosition();
-
-                    if (loading) {
-                        //Do pagination.. i.e. fetch new data
-                        if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
-                            loading = false;
-                            limitValue = limitValue + REC_MAXITEM_LIMIT_COUNT;
-                            groupTaskAdapter.addProgressLoading();
-                            startGetGroupTasks();
-                        }
-                    }
-                }
-            }
-        });
-
-    }
-
-    /*public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-    public void onStop(){
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-*/
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -226,8 +188,7 @@ public class GroupTaskFragment extends BaseFragment {
 
     private void startGetGroupTasks() {
 
-
-        GroupTaskDBHelper.getGroupAllTasks(user, limitValue, new CompleteCallback() {
+        GroupTaskDBHelper.getGroupAllTasks(user, new CompleteCallback() {
             @Override
             public void onComplete(Object object) {
                 setFetchData((GroupTask)object);
@@ -237,22 +198,7 @@ public class GroupTaskFragment extends BaseFragment {
             public void onFailed(String message) {
                 loadingView.hide();
                 refresh_layout.setRefreshing(false);
-
-                if (taskList.size() > 0) {
-                    DialogBoxUtil.showErrorDialog(getContext(), Objects.requireNonNull(getContext()).getResources().getString(R.string.serverError), new InfoDialogBoxCallback() {
-                        @Override
-                        public void okClick() {
-
-                        }
-                    });
-                    showExceptionLayout(false, -1);
-                    if (groupTaskAdapter.isShowingProgressLoading()) {
-                        groupTaskAdapter.removeProgressLoading();
-                    }
-
-                } else {
-                    showExceptionLayout(true, VIEW_SERVER_ERROR);
-                }
+                showExceptionLayout(true, VIEW_SERVER_ERROR);
             }
         });
     }
@@ -263,32 +209,13 @@ public class GroupTaskFragment extends BaseFragment {
             isFirstFetch = false;
             loadingView.smoothToHide();
         }
-
-        if (taskList != null) {
-            if (taskList.size() == 0 ) {
-                showExceptionLayout(true, VIEW_NO_POST_FOUND);
-            } else {
-                showExceptionLayout(false, -1);
-            }
-            setUpRecyclerView(taskList);
-        }
-
+        setUpRecyclerView(groupTask);
         refresh_layout.setRefreshing(false);
     }
 
-    private void setUpRecyclerView(List<GroupTask> taskList1) {
-
+    private void setUpRecyclerView(GroupTask groupTask) {
         loading = true;
-        taskList.addAll(taskList1);
-
-        groupTaskAdapter.removeProgressLoading();
-
-        if (pulledToRefresh) {
-            groupTaskAdapter.updatePostListItems(taskList1);
-            pulledToRefresh = false;
-        } else {
-            groupTaskAdapter.addAll(taskList1);
-        }
+        groupTaskAdapter.addGroupTask(groupTask);
     }
 
     public void scrollRecViewInitPosition() {

@@ -3,12 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/closeTask"
-        android:orderInCategory="100"
-        android:title="@string/close"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/callUser"
         android:orderInCategory="100"
         android:title="@string/call_user"

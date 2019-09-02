@@ -367,7 +367,11 @@
     <string name="users_phone_not_defined">User\'s phone is not defined.</string>
     <string name="sure_to_delete_waiting_task">Are you sure you want to delete the task?</string>
     <string name="notify_user_when_waiting_task_deleted">When the incomplete task is deleted, the user who assigned the task will be notified.</string>
-    <string name="see_all_tasks">See all tasks -></string>
+    <string name="see_all_tasks">See all group tasks -></string>
+    <string name="group_with_twodot">Group:</string>
+    <string name="completed_this_task">completed this task</string>
+    <string name="undefined_user">Undefined User</string>
+
 
 
     <string name="FCM_SERVER_KEY">AAAA4JR4Gec:APA91bGLWhwgn6JuvSPzJVWUw-LTiu3rW48ihDO--ulWaWja8s8f6M9v4fy_Y2pMOx8cqrB8NwzT-XB9cqfMpsYpgQ8yAksP6xK8A9rG5nOpbwUJQkr04xgG9aI4Qbf4P16XxuzMYvWv</string>

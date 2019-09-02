@@ -347,7 +347,10 @@
     <string name="users_phone_not_defined">Kullanıcının telefonu tanımlı değil.</string>
     <string name="sure_to_delete_waiting_task">Görevi silmek istediğinize emin misiniz?</string>
     <string name="notify_user_when_waiting_task_deleted">Tamamlanmamış görev silindiğinde görevi atayan kullanıcıya bildirim gönderilecektir.</string>
-    <string name="see_all_tasks">Tüm görevleri gör</string>
+    <string name="see_all_tasks">Tüm grup görevlerini gör</string>
+    <string name="group_with_twodot">Grup:</string>
+    <string name="completed_this_task">bu görevi tamamladı</string>
+    <string name="undefined_user">Tanımsız Kullanıcı</string>
 
     <string name="FCM_SERVER_KEY">AAAA4JR4Gec:APA91bGLWhwgn6JuvSPzJVWUw-LTiu3rW48ihDO--ulWaWja8s8f6M9v4fy_Y2pMOx8cqrB8NwzT-XB9cqfMpsYpgQ8yAksP6xK8A9rG5nOpbwUJQkr04xgG9aI4Qbf4P16XxuzMYvWv</string>
 
