@@ -16,6 +16,8 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +36,8 @@ import static uren.com.myduties.constants.StringConstants.fb_child_completed;
 import static uren.com.myduties.constants.StringConstants.fb_child_completedtime;
 import static uren.com.myduties.constants.StringConstants.fb_child_email;
 import static uren.com.myduties.constants.StringConstants.fb_child_taskdesc;
+import static uren.com.myduties.constants.StringConstants.fb_child_type;
+import static uren.com.myduties.constants.StringConstants.fb_child_urgency;
 import static uren.com.myduties.constants.StringConstants.fb_child_users;
 import static uren.com.myduties.constants.StringConstants.fb_child_usertask;
 
@@ -42,6 +46,11 @@ public class UserTaskDBHelper {
     public static void getUserWaitingTasks(User assignedTo, int limitValue,
                                            final CompleteCallback completeCallback) {
         final List<Task> taskList = new ArrayList<>();
+
+        if(assignedTo == null || assignedTo.getUserid() == null){
+            completeCallback.onComplete(null);
+            return;
+        }
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance()
                 .getReference(fb_child_usertask).child(assignedTo.getUserid());
@@ -65,18 +74,20 @@ public class UserTaskDBHelper {
                         String taskDesc = (String) map.get(fb_child_taskdesc);
                         long assignedTime = (long) map.get(fb_child_assignedtime);
                         boolean closedVal = (boolean) map.get(fb_child_closed);
+                        boolean urgency  = (boolean) map.get(fb_child_urgency);
 
                         long completedTime = 0;
                         if (map.get(fb_child_completedtime) != null)
                             completedTime = (long) map.get(fb_child_completedtime);
 
                         String assignedFromId = (String) map.get(fb_child_assignedfromid);
+                        String type = (String) map.get(fb_child_type);
 
                         User assignedFrom = new User();
                         assignedFrom.setUserid(assignedFromId);
 
                         Task task = new Task(taskId, taskDesc, assignedFrom, completedVal,
-                                assignedTo, assignedTime, completedTime, closedVal);
+                                assignedTo, assignedTime, completedTime, closedVal, type, urgency);
                         taskList.add(task);
                     }
                 }
@@ -118,18 +129,20 @@ public class UserTaskDBHelper {
                     if (completedVal == true && closedVal == false) {
                         String taskDesc = (String) map.get(fb_child_taskdesc);
                         long assignedTime = (long) map.get(fb_child_assignedtime);
+                        boolean urgency  = (boolean) map.get(fb_child_urgency);
 
                         long completedTime = 0;
                         if (map.get(fb_child_completedtime) != null)
                             completedTime = (long) map.get(fb_child_completedtime);
 
                         String assignedFromId = (String) map.get(fb_child_assignedfromid);
+                        String type = (String) map.get(fb_child_type);
 
                         User assignedFrom = new User();
                         assignedFrom.setUserid(assignedFromId);
 
                         Task task = new Task(taskId, taskDesc, assignedFrom, completedVal,
-                                assignedTo, assignedTime, completedTime, closedVal);
+                                assignedTo, assignedTime, completedTime, closedVal, type, urgency);
                         taskList.add(task);
                     }
                 }
@@ -169,6 +182,8 @@ public class UserTaskDBHelper {
 
         values.put(fb_child_completed, task.isCompleted());
         values.put(fb_child_closed, task.isClosed());
+        values.put(fb_child_type, task.getType());
+        values.put(fb_child_urgency, task.isUrgency());
 
         databaseReference.updateChildren(values).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

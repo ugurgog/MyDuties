@@ -110,7 +110,7 @@ public class GroupTaskFragment extends BaseFragment {
     }
 
     private void initVariables() {
-
+        showExceptionLayout(true, VIEW_NO_POST_FOUND);
     }
 
     private void initListeners() {
@@ -144,14 +144,6 @@ public class GroupTaskFragment extends BaseFragment {
     private void setAdapter() {
         groupTaskAdapter = new GroupTaskAdapter(getActivity(), getContext(), mFragmentNavigation, user);
         recyclerView.setAdapter(groupTaskAdapter);
-        groupTaskAdapter.setReturnCallback(new ReturnCallback() {
-            @Override
-            public void OnReturn(Object object) {
-                List<GroupTask> returnList = (ArrayList<GroupTask>) object;
-                if (returnList != null && returnList.size() == 0 )
-                    showExceptionLayout(true, VIEW_NO_POST_FOUND);
-            }
-        });
     }
 
     private void setPullToRefresh() {
@@ -159,6 +151,7 @@ public class GroupTaskFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 groupTaskAdapter.updatePostListItems();
+                showExceptionLayout(true, VIEW_NO_POST_FOUND);
                 refreshFeed();
             }
         });
@@ -214,6 +207,7 @@ public class GroupTaskFragment extends BaseFragment {
     }
 
     private void setUpRecyclerView(GroupTask groupTask) {
+        showExceptionLayout(false, VIEW_NO_POST_FOUND);
         loading = true;
         groupTaskAdapter.addGroupTask(groupTask);
     }
@@ -242,7 +236,7 @@ public class GroupTaskFragment extends BaseFragment {
                 retryLayout.setVisibility(View.VISIBLE);
             } else if (viewType == VIEW_NO_POST_FOUND) {
                 noPostFoundLayout.setVisibility(View.VISIBLE);
-                txtNoItemFound.setText(getResources().getString(R.string.there_is_no_completed_task));
+                txtNoItemFound.setText(getResources().getString(R.string.there_is_no_group_task));
             }  else if (viewType == VIEW_SERVER_ERROR) {
                 serverError.setVisibility(View.VISIBLE);
             }

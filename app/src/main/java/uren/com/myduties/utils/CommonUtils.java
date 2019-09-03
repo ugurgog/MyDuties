@@ -14,6 +14,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -29,6 +30,8 @@ import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.text.DateFormat;
@@ -343,5 +346,23 @@ public class CommonUtils {
                 state_normal_drawable);
 
         return drawable;
+    }
+
+    public static void setTaskTypeImage(Context context, ImageView taskTypeImgv, String type, TaskTypeHelper taskTypeHelper) {
+        if(type == null || type.isEmpty()) return;
+        int typeVal = taskTypeHelper.getTypes().get(type);
+        Glide.with(context)
+                .load(typeVal)
+                .apply(RequestOptions.centerInsideTransform())
+                .into(taskTypeImgv);
+    }
+
+    public static void setUrgencyColor(Context mContext, boolean urgencyVal, View view){
+        if(urgencyVal)
+            view.setBackground(ShapeUtil.getShape(mContext.getResources().getColor(R.color.White, null),
+                    mContext.getResources().getColor(R.color.Red, null), GradientDrawable.RECTANGLE, 15, 3));
+        else
+            view.setBackground(ShapeUtil.getShape(mContext.getResources().getColor(R.color.White, null),
+                    mContext.getResources().getColor(R.color.White, null), GradientDrawable.RECTANGLE, 15, 3));
     }
 }

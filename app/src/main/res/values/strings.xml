@@ -280,6 +280,7 @@
 
     <string name="emptyFeed">There is no waiting task...</string>
     <string name="there_is_no_completed_task">There is no completed task...</string>
+    <string name="there_is_no_group_task">There is no group task...</string>
 
     <string name="needLocationPermission">To see posts CatchU should access your location. Please give location permission from Settings.</string>
     <string name="likes">Likes</string>
@@ -371,6 +372,11 @@
     <string name="group_with_twodot">Group:</string>
     <string name="completed_this_task">completed this task</string>
     <string name="undefined_user">Undefined User</string>
+    <string name="friends">Friends</string>
+
+    <string name="view_my_profile">View My Profile</string>
+    <string name="tasks_assigned_to_people">Tasks I assign to people</string>
+    <string name="tasks_assigned_to_groups">Tasks I assign to groups</string>
 
 
 

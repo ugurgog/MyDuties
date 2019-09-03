@@ -18,6 +18,12 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,12 +33,15 @@ import uren.com.myduties.common.ShowSelectedPhotoFragment;
 import uren.com.myduties.dbManagement.UserDBHelper;
 import uren.com.myduties.dbManagement.UserTaskDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
+import uren.com.myduties.evetBusModels.TaskTypeBus;
+import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.OnCompleteCallback;
 import uren.com.myduties.interfaces.ReturnCallback;
 import uren.com.myduties.models.Task;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.CommonUtils;
+import uren.com.myduties.utils.TaskTypeHelper;
 import uren.com.myduties.utils.dataModelUtil.UserDataUtil;
 
 public class WaitingTaskAdapter extends RecyclerView.Adapter {
@@ -47,6 +56,7 @@ public class WaitingTaskAdapter extends RecyclerView.Adapter {
     private BaseFragment.FragmentNavigation fragmentNavigation;
     private HashMap<String, Integer> taskPositionHashMap;
     private ReturnCallback returnCallback;
+    private TaskTypeHelper taskTypeHelper;
 
     public WaitingTaskAdapter(Activity activity, Context context,
                               BaseFragment.FragmentNavigation fragmentNavigation) {
@@ -55,6 +65,12 @@ public class WaitingTaskAdapter extends RecyclerView.Adapter {
         this.fragmentNavigation = fragmentNavigation;
         this.taskList = new ArrayList<>();
         this.taskPositionHashMap = new HashMap<>();
+        EventBus.getDefault().register(this);
+    }
+
+    @Subscribe(sticky = true)
+    public void taskTypeReceived(TaskTypeBus taskTypeBus){
+        taskTypeHelper = taskTypeBus.getTypeMap();
     }
 
     public void setReturnCallback(ReturnCallback returnCallback){
@@ -105,6 +121,7 @@ public class WaitingTaskAdapter extends RecyclerView.Adapter {
         View mView;
         ImageView imgProfilePic;
         ImageView moreImgv;
+        ImageView taskTypeImgv;
         TextView txtProfilePic;
         TextView txtUserName;
         TextView txtDetail;
@@ -128,6 +145,7 @@ public class WaitingTaskAdapter extends RecyclerView.Adapter {
             txtDetail = view.findViewById(R.id.txtDetail);
             profileMainLayout = view.findViewById(R.id.profileMainLayout);
             txtCreateAt = view.findViewById(R.id.txtCreateAt);
+            taskTypeImgv = view.findViewById(R.id.taskTypeImgv);
             setListeners();
             setPopupMenu();
         }
@@ -217,6 +235,8 @@ public class WaitingTaskAdapter extends RecyclerView.Adapter {
             this.task = task;
             this.position = position;
             taskPositionHashMap.put(task.getTaskId(), position);
+            setTaskTypeImage();
+            setUrgency();
 
             //Task Description
             if (task.getTaskDesc() != null && !task.getTaskDesc().isEmpty()) {
@@ -248,6 +268,14 @@ public class WaitingTaskAdapter extends RecyclerView.Adapter {
 
                 }
             });
+        }
+
+        private void setUrgency() {
+            CommonUtils.setUrgencyColor(mContext, task.isUrgency(), cardView);
+        }
+
+        private void setTaskTypeImage() {
+            CommonUtils.setTaskTypeImage(mContext, taskTypeImgv, task.getType(), taskTypeHelper);
         }
     }
 

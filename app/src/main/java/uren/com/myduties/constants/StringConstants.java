@@ -34,6 +34,7 @@ public class StringConstants {
     public static final String fb_child_dialCode = "dialCode";
     public static final String fb_child_phoneNumber = "phoneNumber";
     public static final String fb_child_whocompletedid = "whoCompletedId";
+    public static final String fb_child_urgency = "urgency";
 
     public static final String fb_child_adminid = "adminId";
     public static final String fb_child_groupphotourl = "groupPhotoUrl";

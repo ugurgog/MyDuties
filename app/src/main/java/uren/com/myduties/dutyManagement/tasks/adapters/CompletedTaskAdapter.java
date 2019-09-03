@@ -18,6 +18,12 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,12 +33,14 @@ import uren.com.myduties.common.ShowSelectedPhotoFragment;
 import uren.com.myduties.dbManagement.UserDBHelper;
 import uren.com.myduties.dbManagement.UserTaskDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
+import uren.com.myduties.evetBusModels.TaskTypeBus;
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.OnCompleteCallback;
 import uren.com.myduties.interfaces.ReturnCallback;
 import uren.com.myduties.models.Task;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.CommonUtils;
+import uren.com.myduties.utils.TaskTypeHelper;
 import uren.com.myduties.utils.dataModelUtil.UserDataUtil;
 
 public class CompletedTaskAdapter extends RecyclerView.Adapter {
@@ -48,6 +56,7 @@ public class CompletedTaskAdapter extends RecyclerView.Adapter {
     private HashMap<String, Integer> taskPositionHashMap;
     private ReturnCallback returnCallback;
     private User user;
+    private TaskTypeHelper taskTypeHelper;
 
     public CompletedTaskAdapter(Activity activity, Context context,
                               BaseFragment.FragmentNavigation fragmentNavigation, User user) {
@@ -57,6 +66,12 @@ public class CompletedTaskAdapter extends RecyclerView.Adapter {
         this.taskList = new ArrayList<>();
         this.taskPositionHashMap = new HashMap<>();
         this.user = user;
+        EventBus.getDefault().register(this);
+    }
+
+    @Subscribe(sticky = true)
+    public void taskTypeReceived(TaskTypeBus taskTypeBus){
+        taskTypeHelper = taskTypeBus.getTypeMap();
     }
 
     public void setReturnCallback(ReturnCallback returnCallback){
@@ -107,6 +122,7 @@ public class CompletedTaskAdapter extends RecyclerView.Adapter {
         View mView;
         ImageView imgProfilePic;
         ImageView moreImgv;
+        ImageView taskTypeImgv;
         TextView txtProfilePic;
         TextView txtUserName;
         TextView txtDetail;
@@ -132,6 +148,7 @@ public class CompletedTaskAdapter extends RecyclerView.Adapter {
             profileMainLayout = view.findViewById(R.id.profileMainLayout);
             txtCreateAt = view.findViewById(R.id.txtCreateAt);
             txtCompletedAt = view.findViewById(R.id.txtCompletedAt);
+            taskTypeImgv = view.findViewById(R.id.taskTypeImgv);
             setListeners();
             setPopupMenu();
         }
@@ -159,26 +176,6 @@ public class CompletedTaskAdapter extends RecyclerView.Adapter {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
                             switch (item.getItemId()) {
-                               /* case R.id.closeTask:
-
-                                    task.setClosed(true);
-
-                                    UserTaskDBHelper.addOrUpdateUserTask(task,false,  new OnCompleteCallback() {
-                                        @Override
-                                        public void OnCompleted() {
-                                            taskList.remove(position);
-                                            notifyItemRemoved(position);
-                                            notifyItemRangeChanged(position, getItemCount());
-                                            returnCallback.OnReturn(taskList);
-                                        }
-
-                                        @Override
-                                        public void OnFailed(String message) {
-                                            CommonUtils.showToastShort(mContext, message);
-                                        }
-                                    });
-
-                                    break;*/
                                 case R.id.callUser:
 
                                     UserDBHelper.getUser(task.getAssignedFrom().getUserid(), new CompleteCallback() {
@@ -220,6 +217,8 @@ public class CompletedTaskAdapter extends RecyclerView.Adapter {
             this.task = task;
             this.position = position;
             taskPositionHashMap.put(task.getTaskId(), position);
+            setTaskTypeImage();
+            setUrgency();
 
             //Task Description
             if (task.getTaskDesc() != null && !task.getTaskDesc().isEmpty()) {
@@ -255,6 +254,14 @@ public class CompletedTaskAdapter extends RecyclerView.Adapter {
 
                 }
             });
+        }
+
+        private void setTaskTypeImage() {
+            CommonUtils.setTaskTypeImage(mContext, taskTypeImgv, task.getType(), taskTypeHelper);
+        }
+
+        private void setUrgency() {
+            CommonUtils.setUrgencyColor(mContext, task.isUrgency(), cardView);
         }
     }
 

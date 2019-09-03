@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -118,6 +119,7 @@ public class MyTaskFragment extends BaseFragment implements View.OnClickListener
 
     private void initListeners() {
         llSearch.setOnClickListener(this);
+        //menuImgv.setOnClickListener(this);
     }
 
     private void setUpPager() {
@@ -160,6 +162,7 @@ public class MyTaskFragment extends BaseFragment implements View.OnClickListener
         if (view == llSearch) {
             mFragmentNavigation.pushFragment(SearchFragment.newInstance(), "");
         }
+
     }
 
     public void startProgressBar() {

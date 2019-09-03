@@ -262,6 +262,7 @@
 
     <string name="emptyFeed">Henüz size atanan bir görev bulunmuyor..</string>
     <string name="there_is_no_completed_task">Tamamlanan göreviniz bulunmuyor..</string>
+    <string name="there_is_no_group_task">Grup göreviniz bulunmuyor...</string>
 
     <string name="needLocationPermission">Paylaşımları görüntüleyebilmek için konumunuza erişmemiz gerekiyor. Lütfen Ayarlar\'dan konum izinlerini aktifleştirin.</string>
     <string name="likes">Beğeni</string>
@@ -351,6 +352,11 @@
     <string name="group_with_twodot">Grup:</string>
     <string name="completed_this_task">bu görevi tamamladı</string>
     <string name="undefined_user">Tanımsız Kullanıcı</string>
+    <string name="friends">Arkadaşlar</string>
+
+    <string name="view_my_profile">Profilimi Görüntüle</string>
+    <string name="tasks_assigned_to_people">Kişilere atadığım görevler</string>
+    <string name="tasks_assigned_to_groups">Gruplara atadığım görevler</string>
 
     <string name="FCM_SERVER_KEY">AAAA4JR4Gec:APA91bGLWhwgn6JuvSPzJVWUw-LTiu3rW48ihDO--ulWaWja8s8f6M9v4fy_Y2pMOx8cqrB8NwzT-XB9cqfMpsYpgQ8yAksP6xK8A9rG5nOpbwUJQkr04xgG9aI4Qbf4P16XxuzMYvWv</string>
 

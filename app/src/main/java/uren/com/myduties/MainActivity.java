@@ -25,6 +25,7 @@ import java.util.Objects;
 
 import io.fabric.sdk.android.Fabric;
 import uren.com.myduties.dutyManagement.NextActivity;
+import uren.com.myduties.evetBusModels.TaskTypeBus;
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.login.AccountHolderInfo;
@@ -36,6 +37,7 @@ import uren.com.myduties.models.User;
 import uren.com.myduties.utils.AnimationUtil;
 import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.ShapeUtil;
+import uren.com.myduties.utils.TaskTypeHelper;
 
 import static uren.com.myduties.constants.StringConstants.CHAR_E;
 import static uren.com.myduties.constants.StringConstants.LOGIN_USER;
@@ -146,6 +148,8 @@ public class MainActivity extends AppCompatActivity {
         } else {
             tryAgainButton.setVisibility(View.GONE);
             networkTryDesc.setVisibility(View.GONE);
+            TaskTypeHelper taskTypeHelper = new TaskTypeHelper();
+            EventBus.getDefault().postSticky(new TaskTypeBus(taskTypeHelper));
             startLoginProcess();
         }
     }

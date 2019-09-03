@@ -1,5 +1,7 @@
 package uren.com.myduties.dbManagement;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -13,6 +15,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +35,8 @@ import static uren.com.myduties.constants.StringConstants.fb_child_completed;
 import static uren.com.myduties.constants.StringConstants.fb_child_completedtime;
 import static uren.com.myduties.constants.StringConstants.fb_child_grouptask;
 import static uren.com.myduties.constants.StringConstants.fb_child_taskdesc;
+import static uren.com.myduties.constants.StringConstants.fb_child_type;
+import static uren.com.myduties.constants.StringConstants.fb_child_urgency;
 import static uren.com.myduties.constants.StringConstants.fb_child_usertask;
 import static uren.com.myduties.constants.StringConstants.fb_child_whocompletedid;
 
@@ -63,10 +68,13 @@ public class GroupTaskDBHelper {
 
                         boolean closedVal = (boolean) map.get(fb_child_closed);
 
-                        if(closedVal == false){
+                        if (closedVal == false) {
                             String taskDesc = (String) map.get(fb_child_taskdesc);
                             long assignedTime = (long) map.get(fb_child_assignedtime);
                             boolean completedVal = (boolean) map.get(fb_child_completed);
+                            boolean urgency = (boolean) map.get(fb_child_urgency);
+                            String type = (String) map.get(fb_child_type);
+
                             String whoCompId = (String) map.get(fb_child_whocompletedid);
 
                             String assignedFromId = (String) map.get(fb_child_assignedfromid);
@@ -79,7 +87,7 @@ public class GroupTaskDBHelper {
 
                             GroupTask groupTask = new GroupTask(taskId, taskDesc,
                                     new Group(groupId), assignedFrom, completedVal,
-                                    new User(whoCompId), assignedTime, completedTime, false);
+                                    new User(whoCompId), assignedTime, completedTime, false, type, urgency);
                             completeCallback.onComplete(groupTask);
                         }
                     }
@@ -93,8 +101,102 @@ public class GroupTaskDBHelper {
         }
     }
 
+    public static void getSingleGroupAllTasks(String groupId, CompleteCallback completeCallback) {
+        if (groupId == null) return;
+
+        List<GroupTask> groupTasks = new ArrayList<>();
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance()
+                .getReference(fb_child_grouptask).child(groupId);
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot outboundSnapshot : dataSnapshot.getChildren()) {
+
+                    String taskId = outboundSnapshot.getKey();
+
+                    Map<String, Object> map = (Map) outboundSnapshot.getValue();
+
+                    boolean closedVal = (boolean) map.get(fb_child_closed);
+                    String taskDesc = (String) map.get(fb_child_taskdesc);
+                    long assignedTime = (long) map.get(fb_child_assignedtime);
+                    boolean completedVal = (boolean) map.get(fb_child_completed);
+                    String whoCompId = (String) map.get(fb_child_whocompletedid);
+                    String type = (String) map.get(fb_child_type);
+                    boolean urgency = (boolean) map.get(fb_child_urgency);
+
+                    String assignedFromId = (String) map.get(fb_child_assignedfromid);
+                    User assignedFrom = new User();
+                    assignedFrom.setUserid(assignedFromId);
+
+                    long completedTime = 0;
+                    if (map.get(fb_child_completedtime) != null)
+                        completedTime = (long) map.get(fb_child_completedtime);
+
+                    GroupTask groupTask = new GroupTask(taskId, taskDesc,
+                            new Group(groupId), assignedFrom, completedVal,
+                            new User(whoCompId), assignedTime, completedTime, closedVal, type, urgency);
+                    groupTasks.add(groupTask);
+                }
+                completeCallback.onComplete(groupTasks);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                completeCallback.onFailed(databaseError.getMessage());
+            }
+        });
+    }
+
+    public static void getGroupTaskWithId(String taskid, String groupId, CompleteCallback completeCallback) {
+
+        if (taskid == null || groupId == null) return;
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance()
+                .getReference(fb_child_grouptask).child(groupId).child(taskid);
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                //String taskId = dataSnapshot.getKey();
+
+                Map<String, Object> map = (Map) dataSnapshot.getValue();
+
+                boolean closedVal = (boolean) map.get(fb_child_closed);
+                String taskDesc = (String) map.get(fb_child_taskdesc);
+                long assignedTime = (long) map.get(fb_child_assignedtime);
+                boolean completedVal = (boolean) map.get(fb_child_completed);
+                String whoCompId = (String) map.get(fb_child_whocompletedid);
+                String type = (String) map.get(fb_child_type);
+                boolean urgency = (boolean) map.get(fb_child_urgency);
+
+                String assignedFromId = (String) map.get(fb_child_assignedfromid);
+                User assignedFrom = new User();
+                assignedFrom.setUserid(assignedFromId);
+
+                long completedTime = 0;
+                if (map.get(fb_child_completedtime) != null)
+                    completedTime = (long) map.get(fb_child_completedtime);
+
+                GroupTask groupTask = new GroupTask(taskid, taskDesc,
+                        new Group(groupId), assignedFrom, completedVal,
+                        new User(whoCompId), assignedTime, completedTime, closedVal, type, urgency);
+                completeCallback.onComplete(groupTask);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                completeCallback.onFailed(databaseError.getMessage());
+            }
+        });
+
+    }
+
     public static void getGroupWaitingTasks(User user, int limitValue,
-                                        final CompleteCallback completeCallback) {
+                                            final CompleteCallback completeCallback) {
         final List<GroupTask> taskList = new ArrayList<>();
 
         if (user.getGroupIdList() == null || user.getGroupIdList().size() == 0)
@@ -120,10 +222,12 @@ public class GroupTaskDBHelper {
                         boolean completedVal = (boolean) map.get(fb_child_completed);
                         boolean closedVal = (boolean) map.get(fb_child_closed);
 
-                        if(!completedVal && !closedVal){
+                        if (!completedVal && !closedVal) {
                             String taskDesc = (String) map.get(fb_child_taskdesc);
                             long assignedTime = (long) map.get(fb_child_assignedtime);
                             String whoCompId = (String) map.get(fb_child_whocompletedid);
+                            String type = (String) map.get(fb_child_type);
+                            boolean urgency = (boolean) map.get(fb_child_urgency);
 
                             String assignedFromId = (String) map.get(fb_child_assignedfromid);
                             User assignedFrom = new User();
@@ -135,7 +239,7 @@ public class GroupTaskDBHelper {
 
                             GroupTask groupTask = new GroupTask(taskId, taskDesc,
                                     new Group(groupId), assignedFrom, completedVal,
-                                    new User(whoCompId), assignedTime, completedTime, closedVal);
+                                    new User(whoCompId), assignedTime, completedTime, closedVal, type, urgency);
                             completeCallback.onComplete(groupTask);
                         }
                     }
@@ -176,12 +280,14 @@ public class GroupTaskDBHelper {
                         boolean completedVal = (boolean) map.get(fb_child_completed);
                         boolean closedVal = (boolean) map.get(fb_child_closed);
 
-                        if(completedVal && !closedVal){
+                        if (completedVal && !closedVal) {
                             String taskDesc = (String) map.get(fb_child_taskdesc);
                             long assignedTime = (long) map.get(fb_child_assignedtime);
 
                             String assignedFromId = (String) map.get(fb_child_assignedfromid);
                             String whoCompletedId = (String) map.get(fb_child_whocompletedid);
+                            String type = (String) map.get(fb_child_type);
+                            boolean urgency = (boolean) map.get(fb_child_urgency);
 
                             long completedTime = 0;
                             if (map.get(fb_child_completedtime) != null)
@@ -189,7 +295,7 @@ public class GroupTaskDBHelper {
 
                             GroupTask groupTask = new GroupTask(taskId, taskDesc,
                                     new Group(groupId), new User(assignedFromId), completedVal,
-                                    new User(whoCompletedId), assignedTime, completedTime, closedVal);
+                                    new User(whoCompletedId), assignedTime, completedTime, closedVal,type, urgency);
                             completeCallback.onComplete(groupTask);
                         }
                     }
@@ -203,7 +309,8 @@ public class GroupTaskDBHelper {
         }
     }
 
-    public static void addOrUpdateGroupTask(GroupTask groupTask, boolean completedOk, final OnCompleteCallback onCompleteCallback) {
+    public static void addOrUpdateGroupTask(GroupTask groupTask, boolean completedOk,
+                                            final OnCompleteCallback onCompleteCallback) {
 
         if (groupTask == null) return;
         if (groupTask.getTaskId() == null || groupTask.getTaskId().isEmpty()) return;
@@ -221,6 +328,8 @@ public class GroupTaskDBHelper {
         if (groupTask.getAssignedTime() != 0)
             values.put(fb_child_assignedtime, groupTask.getAssignedTime());
 
+        Log.i("ServerValue.TIMESTAMP:", ServerValue.TIMESTAMP.toString());
+
         if (completedOk)
             values.put(fb_child_completedtime, ServerValue.TIMESTAMP);
 
@@ -229,6 +338,9 @@ public class GroupTaskDBHelper {
 
         values.put(fb_child_completed, groupTask.isCompleted());
         values.put(fb_child_closed, groupTask.isClosed());
+        values.put(fb_child_whocompletedid, groupTask.getWhoCompleted().getUserid());
+        values.put(fb_child_type, groupTask.getType());
+        values.put(fb_child_urgency, groupTask.isUrgency());
 
         databaseReference.updateChildren(values).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

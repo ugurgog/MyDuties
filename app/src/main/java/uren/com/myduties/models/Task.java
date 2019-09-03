@@ -7,15 +7,17 @@ public class Task {
     User assignedFrom;
     boolean completed;
     boolean closed;
+    boolean urgency;
     User assignedTo;
     long assignedTime;
     long completedTime;
+    String type;
 
     public Task() {
     }
 
     public Task(String taskId, String taskDesc, User assignedFrom, boolean completed, User assignedTo,
-                long assignedTime, long completedTime, boolean closed) {
+                long assignedTime, long completedTime, boolean closed, String type, boolean urgency) {
         this.taskId = taskId;
         this.taskDesc = taskDesc;
         this.assignedFrom = assignedFrom;
@@ -24,6 +26,8 @@ public class Task {
         this.assignedTime = assignedTime;
         this.completedTime = completedTime;
         this.closed = closed;
+        this.type = type;
+        this.urgency = urgency;
     }
 
     public String getTaskId() {
@@ -88,5 +92,21 @@ public class Task {
 
     public void setClosed(boolean closed) {
         this.closed = closed;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public boolean isUrgency() {
+        return urgency;
+    }
+
+    public void setUrgency(boolean urgency) {
+        this.urgency = urgency;
     }
 }

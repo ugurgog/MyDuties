@@ -130,11 +130,11 @@ public class UserDataUtil {
             if (picExist) {
                 imageShape = ShapeUtil.getShape(context.getResources().getColor(R.color.White, null),
                         context.getResources().getColor(R.color.DodgerBlue, null),
-                        GradientDrawable.OVAL, 50, 7);
+                        GradientDrawable.OVAL, 50, 3);
             } else {
                 imageShape = ShapeUtil.getShape(context.getResources().getColor(R.color.DodgerBlue, null),
                         context.getResources().getColor(R.color.DodgerBlue, null),
-                        GradientDrawable.OVAL, 50, 7);
+                        GradientDrawable.OVAL, 50, 3);
             }
         } else
             imageShape = ShapeUtil.getShape(context.getResources().getColor(colorCode, null),

@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -19,6 +20,11 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.ServerValue;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,9 +32,12 @@ import java.util.List;
 import uren.com.myduties.R;
 import uren.com.myduties.common.ShowSelectedPhotoFragment;
 import uren.com.myduties.dbManagement.GroupDBHelper;
+import uren.com.myduties.dbManagement.GroupTaskDBHelper;
 import uren.com.myduties.dbManagement.UserDBHelper;
 import uren.com.myduties.dbManagement.UserTaskDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
+import uren.com.myduties.dutyManagement.tasks.GroupAllTasksFragment;
+import uren.com.myduties.evetBusModels.TaskTypeBus;
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.OnCompleteCallback;
 import uren.com.myduties.interfaces.ReturnCallback;
@@ -37,9 +46,13 @@ import uren.com.myduties.models.GroupTask;
 import uren.com.myduties.models.Task;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.CommonUtils;
+import uren.com.myduties.utils.ShapeUtil;
+import uren.com.myduties.utils.TaskTypeHelper;
 import uren.com.myduties.utils.dataModelUtil.GroupDataUtil;
 import uren.com.myduties.utils.dataModelUtil.UserDataUtil;
 
+import static com.google.firebase.database.core.operation.OperationSource.SERVER;
+import static uren.com.myduties.constants.StringConstants.ANIMATE_LEFT_TO_RIGHT;
 import static uren.com.myduties.constants.StringConstants.CHAR_AMPERSAND;
 
 public class GroupTaskAdapter extends RecyclerView.Adapter {
@@ -51,8 +64,8 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
     private List<GroupTask> taskList;
     private BaseFragment.FragmentNavigation fragmentNavigation;
     private HashMap<String, Integer> taskPositionHashMap;
-    private ReturnCallback returnCallback;
     private User user;
+    private TaskTypeHelper taskTypeHelper;
 
     public GroupTaskAdapter(Activity activity, Context context,
                             BaseFragment.FragmentNavigation fragmentNavigation, User user) {
@@ -62,10 +75,12 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
         this.taskList = new ArrayList<>();
         this.taskPositionHashMap = new HashMap<>();
         this.user = user;
+        EventBus.getDefault().register(this);
     }
 
-    public void setReturnCallback(ReturnCallback returnCallback) {
-        this.returnCallback = returnCallback;
+    @Subscribe(sticky = true)
+    public void taskTypeReceived(TaskTypeBus taskTypeBus){
+        taskTypeHelper = taskTypeBus.getTypeMap();
     }
 
     @Override
@@ -90,6 +105,7 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
         ImageView imgProfilePic;
         ImageView completedImgv;
         ImageView moreImgv;
+        ImageView taskTypeImgv;
         TextView txtProfilePic;
         TextView txtUserName;
         TextView txtDetail;
@@ -99,6 +115,7 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
         GroupTask task;
         int position;
         LinearLayout profileMainLayout;
+        LinearLayout mainll;
         TextView txtCreateAt;
         TextView txtCompletedAt;
 
@@ -129,6 +146,8 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
             llcompleted = view.findViewById(R.id.llcompleted);
             completedImgv = view.findViewById(R.id.completedImgv);
             tvWhoCompleted = view.findViewById(R.id.tvWhoCompleted);
+            taskTypeImgv = view.findViewById(R.id.taskTypeImgv);
+            mainll = view.findViewById(R.id.mainll);
 
             imgGroupPic = view.findViewById(R.id.imgGroupPic);
             txtGroupPic = view.findViewById(R.id.txtGroupPic);
@@ -154,7 +173,16 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
                 public void onClick(View v) {
                     if (taskGroup != null && taskGroup.getGroupPhotoUrl() != null &&
                             !taskGroup.getGroupPhotoUrl().isEmpty()) {
-                        fragmentNavigation.pushFragment(new ShowSelectedPhotoFragment(taskGroup.getGroupPhotoUrl()));
+                        fragmentNavigation.pushFragment(new ShowSelectedPhotoFragment(taskGroup.getGroupPhotoUrl()), ANIMATE_LEFT_TO_RIGHT);
+                    }
+                }
+            });
+
+            tvSeeAllTasks.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (taskGroup != null) {
+                        fragmentNavigation.pushFragment(new GroupAllTasksFragment(taskGroup));
                     }
                 }
             });
@@ -168,7 +196,24 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
                             switch (item.getItemId()) {
                                 case R.id.completeTask:
 
-                                    // TODO: 2019-08-27
+                                    task.setCompleted(true);
+                                    task.setWhoCompleted(user);
+
+                                    GroupTaskDBHelper.addOrUpdateGroupTask(task, true, new OnCompleteCallback() {
+                                        @Override
+                                        public void OnCompleted() {
+                                            taskList.set(position, task);
+                                            notifyItemChanged(position);
+                                            setTaskCompletedTime();
+
+                                            // TODO: 2019-08-26 - Burada assignedfrom user a notif gonderilecek
+                                        }
+
+                                        @Override
+                                        public void OnFailed(String message) {
+                                            CommonUtils.showToastShort(mContext, message);
+                                        }
+                                    });
 
                                     break;
                                 case R.id.callUser:
@@ -186,7 +231,7 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
                                                 CommonUtils.showToastShort(mContext, message);
                                             }
                                         });
-                                    }else
+                                    } else
                                         callAssignedFromUser();
 
                                     break;
@@ -195,6 +240,23 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
                         }
                     });
                     popupMenu.show();
+                }
+            });
+        }
+
+        public void setTaskCompletedTime() {
+            GroupTaskDBHelper.getGroupTaskWithId(task.getTaskId(), taskGroup.getGroupid(), new CompleteCallback() {
+                @Override
+                public void onComplete(Object object) {
+                    GroupTask groupTask = (GroupTask) object;
+                    task.setCompletedTime(groupTask.getCompletedTime());
+                    taskList.set(position, task);
+                    notifyItemChanged(position);
+                }
+
+                @Override
+                public void onFailed(String message) {
+
                 }
             });
         }
@@ -225,6 +287,16 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
             setWhoCompleted();
             setCompletedImage();
             setPopupMenu();
+            setTaskTypeImage();
+            setUrgency();
+        }
+
+        private void setUrgency() {
+            CommonUtils.setUrgencyColor(mContext, task.isUrgency(), cardView);
+        }
+
+        private void setTaskTypeImage() {
+            CommonUtils.setTaskTypeImage(mContext, taskTypeImgv, task.getType(), taskTypeHelper);
         }
 
         private void setCompletedImage() {
@@ -339,7 +411,7 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
             popupMenu = new PopupMenu(mContext, moreImgv);
             popupMenu.inflate(R.menu.menu_group_task_item);
 
-            if(task.isCompleted())
+            if (task.isCompleted())
                 popupMenu.getMenu().findItem(R.id.completeTask).setVisible(false);
             else
                 popupMenu.getMenu().findItem(R.id.completeTask).setVisible(true);

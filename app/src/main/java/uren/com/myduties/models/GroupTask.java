@@ -11,15 +11,17 @@ public class GroupTask {
     User assignedFrom;
     boolean completed;
     boolean closed;
+    boolean urgency;
     User whoCompleted;
     long assignedTime;
     long completedTime;
+    String type;
 
     public GroupTask() {
     }
 
     public GroupTask(String taskId, String taskDesc, Group group, User assignedFrom, boolean completed, User whoCompleted,
-                     long assignedTime, long completedTime, boolean closed) {
+                     long assignedTime, long completedTime, boolean closed, String type, boolean urgency) {
         this.taskId = taskId;
         this.taskDesc = taskDesc;
         this.group = group;
@@ -29,6 +31,8 @@ public class GroupTask {
         this.assignedTime = assignedTime;
         this.completedTime = completedTime;
         this.closed = closed;
+        this.type = type;
+        this.urgency = urgency;
     }
 
     public GroupTask(Group group) {
@@ -105,5 +109,21 @@ public class GroupTask {
 
     public void setClosed(boolean closed) {
         this.closed = closed;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public boolean isUrgency() {
+        return urgency;
+    }
+
+    public void setUrgency(boolean urgency) {
+        this.urgency = urgency;
     }
 }

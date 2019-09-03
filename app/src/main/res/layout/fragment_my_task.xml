@@ -37,25 +37,9 @@
                     android:weightSum="10">
 
 
-                    <!--<RelativeLayout
-                        android:id="@+id/llFilter"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="2dp"
-                        android:layout_weight="1"
-                        android:gravity="center">
-
-                        <uren.com.myduties.utils.ClickableImage.ClickableImageView
-                            android:id="@+id/imgFilter"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:padding="2dp"
-                            android:src="@drawable/ic_retry_black_100dp" />
-                    </RelativeLayout>-->
-
                     <LinearLayout
                         android:id="@+id/llSearch"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="8"
                         android:orientation="vertical">
@@ -63,7 +47,18 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:orientation="horizontal"
                             android:padding="10dp">
+
+                            <!--ImageView
+                                android:id="@+id/menuImgv"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_gravity="center|left"
+                                android:layout_marginLeft="10dp"
+                                android:contentDescription="TODO"
+                                android:padding="5dp"
+                                android:src="@drawable/icon_menu" /-->
 
                             <FrameLayout
                                 android:layout_width="match_parent"
@@ -84,7 +79,7 @@
                                     android:gravity="center"
                                     android:text="@string/search"
                                     android:textColor="@color/White"
-                                    android:textSize="17sp" />
+                                    android:textSize="15sp" />
 
 
                             </FrameLayout>
@@ -94,33 +89,6 @@
 
                     </LinearLayout>
 
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="2dp"
-                        android:layout_weight="1"
-                        android:gravity="center">
-
-                        <!--<uren.com.myduties.utils.ClickableImage.ClickableImageView
-                            android:id="@+id/myMessagesImgv"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:src="@mipmap/icon_speech_bubble" />-->
-
-                       <!-- <TextView
-                            android:id="@+id/unreadMsgCntTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
-                            android:layout_alignParentEnd="true"
-                            android:background="@drawable/circle_text_bg"
-                            android:gravity="center"
-                            android:textColor="@color/white"
-                            android:textSize="9dp"
-                            android:textStyle="bold"
-                            android:visibility="gone" />-->
-
-                    </RelativeLayout>
 
                 </LinearLayout>
 

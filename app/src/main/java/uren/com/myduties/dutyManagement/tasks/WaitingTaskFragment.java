@@ -190,15 +190,6 @@ public class WaitingTaskFragment extends BaseFragment {
 
     }
 
-    /*public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-    public void onStop(){
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-*/
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
