@@ -17,6 +17,8 @@ import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.ShapeUtil;
 
 import static uren.com.myduties.constants.StringConstants.CHAR_AMPERSAND;
+import static uren.com.myduties.constants.StringConstants.fb_child_status_friend;
+import static uren.com.myduties.constants.StringConstants.fb_child_status_sendedrequest;
 
 public class UserDataUtil {
 
@@ -146,6 +148,35 @@ public class UserDataUtil {
         if (!picExist)
             return colorCode;
         else return 0;
+    }
+
+    public static void updateFriendButton(Context context, String followStatus, Button displayButton, Boolean isHideKeybard) {
+
+        if (isHideKeybard != null && isHideKeybard)
+            CommonUtils.hideKeyBoard(context);
+
+        GradientDrawable buttonShape = null;
+        displayButton.setVisibility(View.VISIBLE);
+
+        if (followStatus.equals(fb_child_status_friend)) {
+            //takip ediliyor
+            displayButton.setText(context.getResources().getString(R.string.friend));
+            displayButton.setTextColor(context.getResources().getColor(R.color.Black, null));
+            buttonShape = ShapeUtil.getShape(context.getResources().getColor(R.color.White, null),
+                    context.getResources().getColor(R.color.Gray, null), GradientDrawable.RECTANGLE, 15, 2);
+            displayButton.setEnabled(false);
+
+        } else if (followStatus.equals(fb_child_status_sendedrequest)) {
+            //istek gonderildi
+            displayButton.setText(context.getResources().getString(R.string.request_sended));
+            displayButton.setTextColor(context.getResources().getColor(R.color.White, null));
+            buttonShape = ShapeUtil.getShape(context.getResources().getColor(R.color.Silver, null),
+                    0, GradientDrawable.RECTANGLE, 15, 0);
+            displayButton.setEnabled(false);
+
+        }
+
+        displayButton.setBackground(buttonShape);
     }
 
 }

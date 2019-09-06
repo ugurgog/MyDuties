@@ -17,6 +17,9 @@ public class StringConstants {
     public static final String CHAR_E = "E";
     public static final String CHAR_H = "H";
 
+    public static final String GROUP_OP_CHOOSE_TYPE = "CHOOSE";
+    public static final String GROUP_OP_VIEW_TYPE = "VIEW";
+
     public static final String CAMERA_TEXT = "CAMERA";
     public static final String GALLERY_TEXT = "GALLERY";
     public static final String FROM_FILE_TEXT = "FROM_FILE";
@@ -30,11 +33,17 @@ public class StringConstants {
     public static final String fb_child_phone = "Phone";
     public static final String fb_child_networks = "Networks";
     public static final String fb_child_groups = "Groups";
+    public static final String fb_child_friends = "Friends";
     public static final String fb_child_countryCode = "countryCode";
     public static final String fb_child_dialCode = "dialCode";
     public static final String fb_child_phoneNumber = "phoneNumber";
     public static final String fb_child_whocompletedid = "whoCompletedId";
     public static final String fb_child_urgency = "urgency";
+
+    public static final String fb_child_status_sendedrequest = "sendedRequest";
+    public static final String fb_child_status_friend = "friend";
+    public static final String fb_child_status_waiting = "waiting";
+    public static final String fb_child_status_all = "all";
 
     public static final String fb_child_adminid = "adminId";
     public static final String fb_child_groupphotourl = "groupPhotoUrl";
@@ -50,6 +59,7 @@ public class StringConstants {
     public static final String fb_child_taskdesc = "taskDesc";
     public static final String fb_child_members = "Members";
     public static final String fb_child_type = "type";
+    public static final String fb_child_assignedfrom = "AssignedFrom";
 
     public static final String FCM_CODE_BODY = "body";
     public static final String FCM_CODE_TITLE = "title";

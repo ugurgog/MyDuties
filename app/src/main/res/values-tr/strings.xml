@@ -44,6 +44,7 @@
     <string name="exitFromGroup">Gruptan Çık</string>
     <string name="areYouSureExitFromGroup">Gruptan çıkmak istediğinize emin misiniz?</string>
     <string name="upperYes">EVET</string>
+    <string name="lowerYes">Evet</string>
     <string name="upperNo">HAYIR</string>
     <string name="removeFromGroup">  Gruptan Çikar</string>
     <string name="viewTheProfile">  Profil Görüntüle</string>
@@ -90,11 +91,12 @@
     <string name="searchUser">Kullanıcı arayın...</string>
     <string name="IN_GROUP">Grupta</string>
     <string name="REMOVE">Çıkar</string>
-    <string name="REMOVE_FOLLOWER_TITLE">Takipçiyi Çıkar?</string>
-    <string name="REMOVE_FOLLOWER_MESSAGE">Takipçilerden çıkardığınız bilgisi bu kullanıcıya iletilmeyecektir</string>
+    <string name="REMOVE_FOLLOWER_TITLE">Arkadaşı Çıkar?</string>
+    <string name="REMOVE_FOLLOWER_MESSAGE">Bu kişiyi arkadaşlardan çıkarmak istediğinize emin misiniz?</string>
     <string name="SEARCH_FOLLOWERS">Takipçileri ara...</string>
-    <string name="SEARCH_FOLLOWINGS">Takip edilenleri ara…</string>
+    <string name="SEARCH_FRIENDS">Arkadaşlarda ara…</string>
     <string name="USER_NOT_FOUND">Kullanıcı bulunamadı.</string>
+    <string name="cancelSendedRequest">Gönderilen arkadaşlık isteği geri çekilecek. Onaylıyor musunuz?</string>
 
     <string name="REMOVE_BLOCK_PERSON">Bu kişi ile mesajlaşabilmek için engeli kaldırmalısınız!</string>
     <string name="TO_BE_REMOVED_BLOCK_PERSON">Bu kişi ile mesajlaşabilmek için engeliniz kaldırılmalıdır!</string>
@@ -119,6 +121,7 @@
     <string name="groupsShareText">Gruplar</string>
     <string name="justMeShareText">Sadece Ben</string>
     <string name="allFollowersShareText">Tüm Takipçiler</string>
+    <string name="tasksmyassigned">Görevlendirme</string>
 
     <string name="PUBLIC_SHARE_DESC">Herkese paylaşacaksın</string>
     <string name="ALL_FOLLOWERS_SHARE_DESC">Tüm takipçilere paylaşacaksın</string>
@@ -148,7 +151,6 @@
 
     <string name="signOut">Çıkış yap</string>
     <string name="followers">Takipçiler</string>
-    <string name="followings">Takiptesin</string>
     <string name="follow">Takip et</string>
     <string name="following">Takip ediliyor</string>
     <string name="invite">Davet Et</string>
@@ -357,6 +359,15 @@
     <string name="view_my_profile">Profilimi Görüntüle</string>
     <string name="tasks_assigned_to_people">Kişilere atadığım görevler</string>
     <string name="tasks_assigned_to_groups">Gruplara atadığım görevler</string>
+
+    <string name="addFriend">Ekle</string>
+    <string name="removeFriend">Çıkar</string>
+    <string name="waiting">Bekliyor</string>
+    <string name="reqSended">İstek Gönderildi</string>
+    <string name="acceptReq">Kabul Et</string>
+    <string name="friend">Arkadaş</string>
+
+    <string name="phoneNotDefined">Telefon bilgisi henüz tanımlanmadı.</string>
 
     <string name="FCM_SERVER_KEY">AAAA4JR4Gec:APA91bGLWhwgn6JuvSPzJVWUw-LTiu3rW48ihDO--ulWaWja8s8f6M9v4fy_Y2pMOx8cqrB8NwzT-XB9cqfMpsYpgQ8yAksP6xK8A9rG5nOpbwUJQkr04xgG9aI4Qbf4P16XxuzMYvWv</string>
 

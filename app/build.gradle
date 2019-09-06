@@ -66,5 +66,8 @@ dependencies {
 
     //image zooming
     implementation 'com.github.chrisbanes:PhotoView:1.2.6'
+
+    //Gson is a Java library that can be used to convert Java Objects into their JSON representation
+    implementation 'com.google.code.gson:gson:2.8.5'
 }
 apply plugin: 'com.google.gms.google-services'

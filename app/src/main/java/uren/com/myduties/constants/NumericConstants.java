@@ -36,7 +36,7 @@ public class NumericConstants {
 
     //Get Follower initial values
     public static final int DEFAULT_GET_FOLLOWER_PAGE_COUNT = 1;
-    public static final int DEFAULT_GET_FOLLOWER_PERPAGE_COUNT = 30; // EN AZ 4 OLMALI.
+    public static final int DEFAULT_GET_FOLLOWER_PERPAGE_COUNT = 50; // EN AZ 4 OLMALI.
 
     public static final int SHARE_TRY_COUNT = 2;
 

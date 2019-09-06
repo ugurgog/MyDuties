@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="?attr/colorPrimary"
+    android:gravity="center"
+    app:contentInsetLeft="0dp"
+    app:contentInsetStart="0dp"
+    app:elevation="@dimen/default_elevation"
+    app:layout_scrollFlags="scroll|enterAlways"
+    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+
+    <LinearLayout
+        android:id="@+id/l2"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/searchToolbarBackImgv"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"
+                android:padding="17dp"
+                android:src="@drawable/icon_back_arrow"
+                android:visibility="visible"/>
+
+            <ImageView
+                android:id="@+id/imgCancelSearch"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"
+                android:padding="15dp"
+                android:src="@drawable/ic_close_white_24dp"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|left"
+                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/ic_search_white_24dp" />
+
+                    <EditText
+                        android:id="@+id/editTextSearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="39dp"
+                        android:background="@drawable/search_edittext"
+                        android:hint="@string/search"
+                        android:paddingLeft="35dp"
+                        android:textColorHint="@color/White"
+                        android:textSize="17sp" />
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/searchToolbarAddItemImgv"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"
+                android:padding="10dp"
+                android:src="@drawable/ic_add_white_24dp"
+                android:visibility="visible" />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+</androidx.appcompat.widget.Toolbar>

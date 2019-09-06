@@ -17,6 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -31,17 +32,28 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import uren.com.myduties.R;
 import uren.com.myduties.common.ShowSelectedPhotoFragment;
+import uren.com.myduties.dbManagement.FriendsDBHelper;
+import uren.com.myduties.dbManagement.GroupDBHelper;
+import uren.com.myduties.dbManagement.GroupTaskDBHelper;
+import uren.com.myduties.dbManagement.UserDBHelper;
+import uren.com.myduties.dbManagement.UserTaskDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.dutyManagement.NextActivity;
 import uren.com.myduties.dutyManagement.tasks.SearchFragment;
 import uren.com.myduties.evetBusModels.UserBus;
+import uren.com.myduties.interfaces.CompleteCallback;
+import uren.com.myduties.interfaces.ReturnCallback;
+import uren.com.myduties.models.Friend;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.ClickableImage.ClickableImageView;
+import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.ShapeUtil;
 import uren.com.myduties.utils.dataModelUtil.UserDataUtil;
 
 import static uren.com.myduties.constants.StringConstants.ANIMATE_LEFT_TO_RIGHT;
 import static uren.com.myduties.constants.StringConstants.CHAR_AMPERSAND;
+import static uren.com.myduties.constants.StringConstants.GROUP_OP_VIEW_TYPE;
+import static uren.com.myduties.constants.StringConstants.fb_child_status_friend;
 
 public class ProfileFragment extends BaseFragment {
 
@@ -56,31 +68,44 @@ public class ProfileFragment extends BaseFragment {
     NavigationView navViewLayout;
     @BindView(R.id.imgUserEdit)
     ClickableImageView imgUserEdit;
-    @BindView(R.id.friendsImgv)
-    ImageView friendsImgv;
 
     @BindView(R.id.imgProfile)
     ImageView imgProfile;
     @BindView(R.id.txtProfile)
     TextView txtProfile;
     @BindView(R.id.txtName)
-    TextView txtName;
+    AppCompatTextView txtName;
     @BindView(R.id.txtUsername)
-    TextView txtUsername;
+    AppCompatTextView txtUsername;
+    @BindView(R.id.emailTv)
+    AppCompatTextView emailTv;
+    @BindView(R.id.phoneTv)
+    AppCompatTextView phoneTv;
     @BindView(R.id.llUserInfo)
     LinearLayout llUserInfo;
 
-    @BindView(R.id.imgForward1)
-    ImageView imgForward1;
-    @BindView(R.id.imgForward2)
-    ImageView imgForward2;
-    @BindView(R.id.imgForward3)
-    ImageView imgForward3;
+    @BindView(R.id.friendsCntTv)
+    TextView friendsCntTv;
+    @BindView(R.id.groupsCntTv)
+    TextView groupsCntTv;
+    @BindView(R.id.tasksCntTv)
+    TextView tasksCntTv;
 
     TextView navViewNameTv;
     TextView navViewEmailTv;
 
+    @BindView(R.id.llFollowInfo)
+    RelativeLayout llFollowInfo;
+
+    @BindView(R.id.friendsLayout)
+    LinearLayout friendsLayout;
+    @BindView(R.id.groupsLayout)
+    LinearLayout groupsLayout;
+    @BindView(R.id.tasksLayout)
+    LinearLayout tasksLayout;
+
     boolean mDrawerState;
+    int assignedTaskCnt = 0;
 
     User user;
 
@@ -105,7 +130,7 @@ public class ProfileFragment extends BaseFragment {
     }
 
     @Subscribe(sticky = true)
-    public void accountHolderUserReceived(UserBus userBus){
+    public void accountHolderUserReceived(UserBus userBus) {
         user = userBus.getUser();
     }
 
@@ -113,19 +138,67 @@ public class ProfileFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        if (mView == null) {
-            mView = inflater.inflate(R.layout.fragment_profile, container, false);
-            ButterKnife.bind(this, mView);
-            initVariables();
-            initListeners();
-            setProfileDetails();
-        }
+        mView = inflater.inflate(R.layout.fragment_profile, container, false);
+        ButterKnife.bind(this, mView);
+        initVariables();
+        initListeners();
+        setProfileDetails();
 
         return mView;
     }
 
+    private void setFriendsCntTv() {
+        friendsCntTv.setText(Integer.toString(0));
+        FriendsDBHelper.getFriendCountByStatus(user.getUserid(), fb_child_status_friend, new CompleteCallback() {
+            @Override
+            public void onComplete(Object object) {
+                int count = (int) object;
+                friendsCntTv.setText(Integer.toString(count));
+            }
+
+            @Override
+            public void onFailed(String message) {
+
+            }
+        });
+    }
+
+    private void setGroupsCntTv(){
+        if(user.getGroupIdList() != null)
+            groupsCntTv.setText(Integer.toString(user.getGroupIdList().size()));
+        else {
+            GroupDBHelper.getUserGroupsCount(user.getUserid(), new ReturnCallback() {
+                @Override
+                public void OnReturn(Object object) {
+                    int count = (int) object;
+                    groupsCntTv.setText(Integer.toString(count));
+                }
+            });
+        }
+    }
+
+    private void setTasksCntTv(){
+        assignedTaskCnt = 0;
+        UserTaskDBHelper.getIAssignedTasksToUsersCount(user.getUserid(), new ReturnCallback() {
+            @Override
+            public void OnReturn(Object object) {
+                assignedTaskCnt = assignedTaskCnt + (int) object;
+                tasksCntTv.setText(Integer.toString(assignedTaskCnt));
+            }
+        });
+
+
+        GroupTaskDBHelper.getIAssignedTasksToGroupsCount(user.getUserid(), new ReturnCallback() {
+            @Override
+            public void OnReturn(Object object) {
+                assignedTaskCnt = assignedTaskCnt + (int) object;
+                tasksCntTv.setText(Integer.toString(assignedTaskCnt));
+            }
+        });
+    }
+
     private void setProfileDetails() {
-        if(user != null){
+        if (user != null) {
             UserDataUtil.setProfilePicture(getContext(), user.getProfilePhotoUrl(),
                     user.getName(), user.getUsername(), txtProfile, imgProfile, true);
             imgProfile.setPadding(7, 7, 7, 7);
@@ -145,26 +218,54 @@ public class ProfileFragment extends BaseFragment {
             else
                 txtUsername.setVisibility(View.GONE);
 
-            if (user.getEmail() != null && !user.getEmail().trim().isEmpty())
+            if (user.getEmail() != null && !user.getEmail().trim().isEmpty()) {
                 navViewEmailTv.setText(user.getEmail());
-            else
+                emailTv.setText(user.getEmail());
+            } else
                 navViewEmailTv.setVisibility(View.GONE);
+
+            if (user.getPhone() != null && user.getPhone().getDialCode() != null && user.getPhone().getPhoneNumber() != 0)
+                phoneTv.setText(user.getPhone().getDialCode() + " " + user.getPhone().getPhoneNumber());
         }
     }
 
     private void initVariables() {
-        friendsImgv.setColorFilter(ContextCompat.getColor(getContext(), R.color.DodgerBlue), android.graphics.PorterDuff.Mode.SRC_IN);
-        imgForward1.setColorFilter(ContextCompat.getColor(getContext(), R.color.DodgerBlue), android.graphics.PorterDuff.Mode.SRC_IN);
-        imgForward2.setColorFilter(ContextCompat.getColor(getContext(), R.color.DodgerBlue), android.graphics.PorterDuff.Mode.SRC_IN);
-        imgForward3.setColorFilter(ContextCompat.getColor(getContext(), R.color.DodgerBlue), android.graphics.PorterDuff.Mode.SRC_IN);
-
-        llUserInfo.setBackground(ShapeUtil.getShape(getContext().getResources().getColor(R.color.DodgerBlue, null),
-                0, GradientDrawable.RECTANGLE, 30, 0));
+        llFollowInfo.setBackground(ShapeUtil.getShape(getContext().getResources().getColor(R.color.White, null),
+                getContext().getResources().getColor(R.color.DarkGray, null), GradientDrawable.RECTANGLE, 30, 2));
 
         setNavViewItems();
+        setFriendsCntTv();
+        setGroupsCntTv();
+        setTasksCntTv();
     }
 
     private void initListeners() {
+        friendsLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mFragmentNavigation.pushFragment(new FriendsFragment());
+            }
+        });
+
+        groupsLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mFragmentNavigation.pushFragment(new GroupManagementFragment(GROUP_OP_VIEW_TYPE, new ReturnCallback() {
+                    @Override
+                    public void OnReturn(Object object) {
+
+                    }
+                }));
+            }
+        });
+
+        tasksLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: 2019-09-04
+            }
+        });
+
         imgUserEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

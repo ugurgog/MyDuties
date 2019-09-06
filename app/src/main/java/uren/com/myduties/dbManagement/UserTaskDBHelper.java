@@ -26,9 +26,11 @@ import java.util.Objects;
 
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.OnCompleteCallback;
+import uren.com.myduties.interfaces.ReturnCallback;
 import uren.com.myduties.models.Task;
 import uren.com.myduties.models.User;
 
+import static uren.com.myduties.constants.StringConstants.fb_child_assignedfrom;
 import static uren.com.myduties.constants.StringConstants.fb_child_assignedfromid;
 import static uren.com.myduties.constants.StringConstants.fb_child_assignedtime;
 import static uren.com.myduties.constants.StringConstants.fb_child_closed;
@@ -47,7 +49,7 @@ public class UserTaskDBHelper {
                                            final CompleteCallback completeCallback) {
         final List<Task> taskList = new ArrayList<>();
 
-        if(assignedTo == null || assignedTo.getUserid() == null){
+        if (assignedTo == null || assignedTo.getUserid() == null) {
             completeCallback.onComplete(null);
             return;
         }
@@ -74,7 +76,7 @@ public class UserTaskDBHelper {
                         String taskDesc = (String) map.get(fb_child_taskdesc);
                         long assignedTime = (long) map.get(fb_child_assignedtime);
                         boolean closedVal = (boolean) map.get(fb_child_closed);
-                        boolean urgency  = (boolean) map.get(fb_child_urgency);
+                        boolean urgency = (boolean) map.get(fb_child_urgency);
 
                         long completedTime = 0;
                         if (map.get(fb_child_completedtime) != null)
@@ -129,7 +131,7 @@ public class UserTaskDBHelper {
                     if (completedVal == true && closedVal == false) {
                         String taskDesc = (String) map.get(fb_child_taskdesc);
                         long assignedTime = (long) map.get(fb_child_assignedtime);
-                        boolean urgency  = (boolean) map.get(fb_child_urgency);
+                        boolean urgency = (boolean) map.get(fb_child_urgency);
 
                         long completedTime = 0;
                         if (map.get(fb_child_completedtime) != null)
@@ -194,6 +196,37 @@ public class UserTaskDBHelper {
             @Override
             public void onFailure(@NonNull Exception e) {
                 onCompleteCallback.OnFailed(e.getMessage());
+            }
+        });
+    }
+
+    public static void getIAssignedTasksToUsersCount(String userid, ReturnCallback returnCallback) {
+
+        if (userid == null || userid.isEmpty()) {
+            returnCallback.OnReturn(0);
+            return;
+        }
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(fb_child_assignedfrom).
+                child(userid).child(fb_child_users);
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                int count = 0;
+
+                for (DataSnapshot outboundSnapshot : dataSnapshot.getChildren())
+                    for (DataSnapshot temp : outboundSnapshot.getChildren())
+                        count++;
+
+
+                returnCallback.OnReturn(count);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
     }

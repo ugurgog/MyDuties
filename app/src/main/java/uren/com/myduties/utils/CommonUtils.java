@@ -34,6 +34,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -364,5 +367,23 @@ public class CommonUtils {
         else
             view.setBackground(ShapeUtil.getShape(mContext.getResources().getColor(R.color.White, null),
                     mContext.getResources().getColor(R.color.White, null), GradientDrawable.RECTANGLE, 15, 3));
+    }
+
+    public static String readCountryCodes(Context context) {
+        InputStream inputStream = context.getResources().openRawResource(R.raw.country_codes);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        byte buf[] = new byte[1024];
+        int len;
+        try {
+            while ((len = inputStream.read(buf)) != -1) {
+                outputStream.write(buf, 0, len);
+            }
+            outputStream.close();
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return outputStream.toString();
     }
 }

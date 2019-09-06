@@ -23,20 +23,24 @@ import java.util.Map;
 
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.OnCompleteCallback;
+import uren.com.myduties.interfaces.ReturnCallback;
 import uren.com.myduties.models.Group;
 import uren.com.myduties.models.GroupTask;
 import uren.com.myduties.models.Task;
 import uren.com.myduties.models.User;
 
+import static uren.com.myduties.constants.StringConstants.fb_child_assignedfrom;
 import static uren.com.myduties.constants.StringConstants.fb_child_assignedfromid;
 import static uren.com.myduties.constants.StringConstants.fb_child_assignedtime;
 import static uren.com.myduties.constants.StringConstants.fb_child_closed;
 import static uren.com.myduties.constants.StringConstants.fb_child_completed;
 import static uren.com.myduties.constants.StringConstants.fb_child_completedtime;
+import static uren.com.myduties.constants.StringConstants.fb_child_groups;
 import static uren.com.myduties.constants.StringConstants.fb_child_grouptask;
 import static uren.com.myduties.constants.StringConstants.fb_child_taskdesc;
 import static uren.com.myduties.constants.StringConstants.fb_child_type;
 import static uren.com.myduties.constants.StringConstants.fb_child_urgency;
+import static uren.com.myduties.constants.StringConstants.fb_child_users;
 import static uren.com.myduties.constants.StringConstants.fb_child_usertask;
 import static uren.com.myduties.constants.StringConstants.fb_child_whocompletedid;
 
@@ -351,6 +355,37 @@ public class GroupTaskDBHelper {
             @Override
             public void onFailure(@NonNull Exception e) {
                 onCompleteCallback.OnFailed(e.getMessage());
+            }
+        });
+    }
+
+    public static void getIAssignedTasksToGroupsCount(String userid, ReturnCallback returnCallback) {
+
+        if (userid == null || userid.isEmpty()) {
+            returnCallback.OnReturn(0);
+            return;
+        }
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(fb_child_assignedfrom).
+                child(userid).child(fb_child_groups);
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                int count = 0;
+
+                for (DataSnapshot outboundSnapshot : dataSnapshot.getChildren())
+                    for (DataSnapshot temp : outboundSnapshot.getChildren())
+                        count++;
+
+
+                returnCallback.OnReturn(count);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
     }

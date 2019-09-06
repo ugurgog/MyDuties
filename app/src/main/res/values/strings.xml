@@ -61,6 +61,7 @@
     <string name="exitFromGroup">Exit From Group</string>
     <string name="areYouSureExitFromGroup">Are you sure you want to leave the group?</string>
     <string name="upperYes">YES</string>
+    <string name="lowerYes">Yes</string>
     <string name="upperNo">NO</string>
     <string name="removeFromGroup">  Remove from the group</string>
     <string name="viewTheProfile">  View the profile</string>
@@ -107,11 +108,12 @@
     <string name="searchUser">Search user...</string>
     <string name="IN_GROUP">In Group</string>
     <string name="REMOVE">Remove</string>
-    <string name="REMOVE_FOLLOWER_TITLE">Remove Follower?</string>
-    <string name="REMOVE_FOLLOWER_MESSAGE">The information that you removed from the followers will not be forwarded to this user</string>
+    <string name="REMOVE_FOLLOWER_TITLE">Remove Friend?</string>
+    <string name="REMOVE_FOLLOWER_MESSAGE">Are you sure you want to remove this person from friends?</string>
     <string name="SEARCH_FOLLOWERS">Search followers...</string>
-    <string name="SEARCH_FOLLOWINGS">Search followings...</string>
+    <string name="SEARCH_FRIENDS">Search friends...</string>
     <string name="USER_NOT_FOUND">User not found.</string>
+    <string name="cancelSendedRequest">The friend request sent will be withdrawn. Do you confirm?</string>
 
     <string name="REMOVE_BLOCK_PERSON">You need to unblock to be able to chat with this person!</string>
     <string name="TO_BE_REMOVED_BLOCK_PERSON">You must be unblocked to communicate with this person!</string>
@@ -147,6 +149,7 @@
     <string name="groupsShareText">Groups</string>
     <string name="justMeShareText">Just Me</string>
     <string name="allFollowersShareText">All Followers</string>
+    <string name="tasksmyassigned">Assignment</string>
 
     <string name="PUBLIC_SHARE_DESC">You share everyone</string>
     <string name="ALL_FOLLOWERS_SHARE_DESC">You share all followers</string>
@@ -154,7 +157,6 @@
 
     <string name="signOut">Sign Out</string>
     <string name="followers">Followers</string>
-    <string name="followings">Followings</string>
     <string name="follow">Follow</string>
     <string name="following">Following</string>
     <string name="invite">Invite</string>
@@ -378,6 +380,14 @@
     <string name="tasks_assigned_to_people">Tasks I assign to people</string>
     <string name="tasks_assigned_to_groups">Tasks I assign to groups</string>
 
+    <string name="addFriend">Add Friend</string>
+    <string name="removeFriend">Remove Friend</string>
+    <string name="waiting">Waiting</string>
+    <string name="reqSended">Request Sended</string>
+    <string name="acceptReq">Accept</string>
+    <string name="friend">Friend</string>
+
+    <string name="phoneNotDefined">Phone info is not yet defined.</string>
 
 
     <string name="FCM_SERVER_KEY">AAAA4JR4Gec:APA91bGLWhwgn6JuvSPzJVWUw-LTiu3rW48ihDO--ulWaWja8s8f6M9v4fy_Y2pMOx8cqrB8NwzT-XB9cqfMpsYpgQ8yAksP6xK8A9rG5nOpbwUJQkr04xgG9aI4Qbf4P16XxuzMYvWv</string>

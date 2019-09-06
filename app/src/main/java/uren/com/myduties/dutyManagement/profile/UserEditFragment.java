@@ -43,17 +43,20 @@ import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import uren.com.myduties.R;
+import uren.com.myduties.dbManagement.UserDBHelper;
 import uren.com.myduties.dbManagement.UserPhotoDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.dutyManagement.NextActivity;
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.CompleteCallback;
+import uren.com.myduties.interfaces.OnCompleteCallback;
 import uren.com.myduties.models.PhotoSelectUtil;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.ClickableImage.ClickableImageView;
 import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.IntentSelectUtil;
 import uren.com.myduties.utils.PermissionModule;
+import uren.com.myduties.utils.ProgressDialogUtil;
 import uren.com.myduties.utils.ShapeUtil;
 import uren.com.myduties.utils.dataModelUtil.UserDataUtil;
 import uren.com.myduties.utils.dialogBoxUtil.DialogBoxUtil;
@@ -101,6 +104,8 @@ public class UserEditFragment extends BaseFragment
     boolean profilPicChanged = false;
     boolean photoExist = false;
 
+    ProgressDialogUtil progressDialogUtil;
+
     User user;
 
     private static final int ACTIVITY_REQUEST_CODE_OPEN_GALLERY = 385;
@@ -111,7 +116,6 @@ public class UserEditFragment extends BaseFragment
 
     @Override
     public void onStart() {
-        getActivity().findViewById(R.id.tabMainLayout).setVisibility(View.GONE);
         super.onStart();
     }
 
@@ -133,6 +137,7 @@ public class UserEditFragment extends BaseFragment
         toolbarTitleTv.setText(getContext().getResources().getString(R.string.editProfile));
         commonToolbarTickImgv.setVisibility(View.VISIBLE);
         permissionModule = new PermissionModule(getContext());
+        progressDialogUtil = new ProgressDialogUtil(getContext(), getContext().getResources().getString(R.string.UPDATING), false);
     }
 
     public void initListeners() {
@@ -250,7 +255,7 @@ public class UserEditFragment extends BaseFragment
 
     public void startEditPhoneNumber() {
 
-        /*if (mFragmentNavigation != null) {
+        if (mFragmentNavigation != null) {
             mFragmentNavigation.pushFragment(new PhoneNumEditFragment(user.getPhone(), new CompleteCallback() {
                 @Override
                 public void onComplete(Object object) {
@@ -262,11 +267,11 @@ public class UserEditFragment extends BaseFragment
                 }
 
                 @Override
-                public void onFailed(Exception e) {
+                public void onFailed(String s) {
 
                 }
             }), ANIMATE_RIGHT_TO_LEFT);
-        }*/
+        }
     }
 
     private void editProfileCancelClicked() {
@@ -304,42 +309,41 @@ public class UserEditFragment extends BaseFragment
 
     private void updateOperation() {
 
+        progressDialogUtil.dialogShow();
+        if(profilPicChanged) {
+            UserPhotoDBHelper.uploadUserPhoto(getContext(), user.getUserid(), photoSelectUtil, new CompleteCallback() {
+                @Override
+                public void onComplete(Object object) {
+                    String downloadUrl = (String) object;
+                    user.setProfilePhotoUrl(downloadUrl);
+                    updateUserPersonalInfo();
+                }
 
-        UserPhotoDBHelper.uploadUserPhoto(getContext(), user.getUserid(), photoSelectUtil, new CompleteCallback() {
+                @Override
+                public void onFailed(String message) {
+                    CommonUtils.showToastShort(getContext(), message);
+                    progressDialogUtil.dialogDismiss();
+                }
+            });
+        }else {
+            updateUserPersonalInfo();
+        }
+    }
+
+    private void updateUserPersonalInfo(){
+        UserDBHelper.addOrUpdateUser(user, new OnCompleteCallback() {
             @Override
-            public void onComplete(Object object) {
-                Log.i("","");
+            public void OnCompleted() {
+                progressDialogUtil.dialogDismiss();
                 editProfileCancelClicked();
             }
 
             @Override
-            public void onFailed(String message) {
+            public void OnFailed(String message) {
                 CommonUtils.showToastShort(getContext(), message);
+                progressDialogUtil.dialogDismiss();
             }
         });
-
-        /*new UpdateUserProfileProcess(getActivity(), new ServiceCompleteCallback() {
-            @Override
-            public void onSuccess() {
-                DialogBoxUtil.showSuccessDialogBox(getActivity(), getActivity().getResources().getString(R.string.profileUpdateSuccessful), null, new InfoDialogBoxCallback() {
-                    @Override
-                    public void okClick() {
-                        ProfileHelper.ProfileRefresh.getInstance().profileRefreshStart();
-                        editProfileCancelClicked();
-                    }
-                });
-            }
-
-            @Override
-            public void onFailed(Exception e) {
-                DialogBoxUtil.showErrorDialog(getActivity(), e.getMessage(), new InfoDialogBoxCallback() {
-                    @Override
-                    public void okClick() {
-                    }
-                });
-                e.printStackTrace();
-            }
-        }, profilPicChanged, userProfileProperties, photoSelectUtil);*/
     }
 
     private void chooseImageProcess() {

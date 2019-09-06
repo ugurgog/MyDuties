@@ -9,21 +9,19 @@ public class Group {
     private String groupPhotoUrl = null;
     private long createAt;
     private String groupAdmin = null;
-    private List<String> memberIdList = new ArrayList<>();
-    private String type;
+    private List<User> memberList = new ArrayList<>();
 
     public Group() {
     }
 
     public Group(String groupid, String name, String groupPhotoUrl, long createAt, String groupAdmin,
-                  List<String> memberIdList, String type) {
+                  List<User> memberList) {
         this.groupid = groupid;
         this.name = name;
         this.groupPhotoUrl = groupPhotoUrl;
         this.createAt = createAt;
         this.groupAdmin = groupAdmin;
-        this.memberIdList = memberIdList;
-        this.type = type;
+        this.memberList = memberList;
     }
 
     public Group(String groupid) {
@@ -62,12 +60,12 @@ public class Group {
         this.createAt = createAt;
     }
 
-    public List<String> getMemberIdList() {
-        return memberIdList;
+    public List<User> getMemberList() {
+        return memberList;
     }
 
-    public void setMemberIdList(List<String> memberIdList) {
-        this.memberIdList = memberIdList;
+    public void setMemberList(List<User> memberList) {
+        this.memberList = memberList;
     }
 
     public String getGroupAdmin() {
@@ -78,11 +76,4 @@ public class Group {
         this.groupAdmin = groupAdmin;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
 }

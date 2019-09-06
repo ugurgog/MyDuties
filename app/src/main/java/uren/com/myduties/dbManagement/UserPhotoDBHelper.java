@@ -3,6 +3,7 @@ package uren.com.myduties.dbManagement;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -39,20 +40,12 @@ public class UserPhotoDBHelper {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference().child("images").child(userid + "/profilephoto.jpg");
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        photoSelectUtil.getBitmap().compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] data = baos.toByteArray();
-
-
-
-
         storageRef.putFile(photoSelectUtil.getMediaUri()).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
             @Override
             public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                 if (!task.isSuccessful()) {
                     throw task.getException();
                 }
-                completeCallback.onComplete(storageRef.getDownloadUrl());
                 return storageRef.getDownloadUrl();
             }
         }).addOnCompleteListener(new OnCompleteListener<Uri>() {
@@ -60,36 +53,13 @@ public class UserPhotoDBHelper {
             public void onComplete(@NonNull Task<Uri> task) {
                 if (task.isSuccessful()) {
                     Uri downloadUri = task.getResult();
-                    completeCallback.onComplete(downloadUri);
+                    Log.i("Uri:", downloadUri.toString());
+                    completeCallback.onComplete(downloadUri.toString());
                 } else {
-                    completeCallback.onFailed("upload failed: " + task.getException().getMessage());
+                    completeCallback.onFailed("Upload failed: " + task.getException().getMessage());
                 }
             }
         });
-
-
-
-
-
-
-
-
-
-
-
-        /*UploadTask uploadTask = storageRef.putBytes(data);
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                completeCallback.onFailed(exception.getMessage());
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Task<Uri> uri = storageRef.getDownloadUrl();
-                completeCallback.onComplete(taskSnapshot);
-            }
-        });*/
     }
 
 
