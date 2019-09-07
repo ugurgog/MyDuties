@@ -80,4 +80,9 @@ public class StringConstants {
     public static final String ANIMATE_RIGHT_TO_LEFT = "ANIMATE_RIGHT_TO_LEFT";
     public static final String ANIMATE_DOWN_TO_UP = "ANIMATE_DOWN_TO_UP";
     public static final String ANIMATE_UP_TO_DOWN = "ANIMATE_UP_TO_DOWN";
+
+    public static final String photo_upload_new = "newPhoto";
+    public static final String photo_upload_change = "changePhoto";
+
+    public static final String APP_INVITATION_LINK = "https://myduties.page.link/wMv3";
 }

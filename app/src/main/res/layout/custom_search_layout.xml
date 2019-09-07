@@ -37,6 +37,7 @@
                     android:layout_weight="8"
                     android:background="@null"
                     android:id="@+id/searchEdittext"
+                    android:textSize="15sp"
                     android:textColorHint="@color/Silver" />
 
             </LinearLayout>
@@ -61,7 +62,8 @@
             android:layout_marginTop="7dp"
             android:background="@color/Silver"></View>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
+            android:fontFamily="@font/amiko"
             android:id="@+id/searchResultTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

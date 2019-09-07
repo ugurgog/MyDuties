@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.google.gson.Gson;
 
@@ -65,7 +66,7 @@ public class PhoneNumEditFragment extends BaseFragment {
     @BindView(R.id.commonToolbarTickImgv)
     ImageView commonToolbarTickImgv;
     @BindView(R.id.toolbarTitleTv)
-    TextView toolbarTitleTv;
+    AppCompatTextView toolbarTitleTv;
     @BindView(R.id.countryCodeTv)
     TextView countryCodeTv;
     @BindView(R.id.countryDialCodeTv)

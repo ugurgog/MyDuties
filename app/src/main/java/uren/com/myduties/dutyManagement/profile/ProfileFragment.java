@@ -1,6 +1,7 @@
 package uren.com.myduties.dutyManagement.profile;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -30,6 +31,7 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import uren.com.myduties.MainActivity;
 import uren.com.myduties.R;
 import uren.com.myduties.common.ShowSelectedPhotoFragment;
 import uren.com.myduties.dbManagement.FriendsDBHelper;
@@ -39,6 +41,7 @@ import uren.com.myduties.dbManagement.UserDBHelper;
 import uren.com.myduties.dbManagement.UserTaskDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.dutyManagement.NextActivity;
+import uren.com.myduties.dutyManagement.profile.helper.SettingOperation;
 import uren.com.myduties.dutyManagement.tasks.SearchFragment;
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.CompleteCallback;
@@ -51,6 +54,7 @@ import uren.com.myduties.utils.ShapeUtil;
 import uren.com.myduties.utils.dataModelUtil.UserDataUtil;
 
 import static uren.com.myduties.constants.StringConstants.ANIMATE_LEFT_TO_RIGHT;
+import static uren.com.myduties.constants.StringConstants.ANIMATE_RIGHT_TO_LEFT;
 import static uren.com.myduties.constants.StringConstants.CHAR_AMPERSAND;
 import static uren.com.myduties.constants.StringConstants.GROUP_OP_VIEW_TYPE;
 import static uren.com.myduties.constants.StringConstants.fb_child_status_friend;
@@ -93,6 +97,8 @@ public class ProfileFragment extends BaseFragment {
 
     TextView navViewNameTv;
     TextView navViewEmailTv;
+    ImageView navImgProfile;
+    TextView navViewShortenTextView;
 
     @BindView(R.id.llFollowInfo)
     RelativeLayout llFollowInfo;
@@ -163,8 +169,8 @@ public class ProfileFragment extends BaseFragment {
         });
     }
 
-    private void setGroupsCntTv(){
-        if(user.getGroupIdList() != null)
+    private void setGroupsCntTv() {
+        if (user.getGroupIdList() != null)
             groupsCntTv.setText(Integer.toString(user.getGroupIdList().size()));
         else {
             GroupDBHelper.getUserGroupsCount(user.getUserid(), new ReturnCallback() {
@@ -177,7 +183,7 @@ public class ProfileFragment extends BaseFragment {
         }
     }
 
-    private void setTasksCntTv(){
+    private void setTasksCntTv() {
         assignedTaskCnt = 0;
         UserTaskDBHelper.getIAssignedTasksToUsersCount(user.getUserid(), new ReturnCallback() {
             @Override
@@ -224,6 +230,15 @@ public class ProfileFragment extends BaseFragment {
             } else
                 navViewEmailTv.setVisibility(View.GONE);
 
+            //profile picture
+            UserDataUtil.setProfilePicture(getContext(), user.getProfilePhotoUrl(),
+                    user.getName(), user.getUsername(), txtProfile, imgProfile, false);
+            imgProfile.setPadding(3, 3, 3, 3);
+            //navigation profile picture
+            UserDataUtil.setProfilePicture(getContext(), user.getProfilePhotoUrl(),
+                    user.getName(), user.getUsername(), navViewShortenTextView, navImgProfile, false);
+
+
             if (user.getPhone() != null && user.getPhone().getDialCode() != null && user.getPhone().getPhoneNumber() != 0)
                 phoneTv.setText(user.getPhone().getDialCode() + " " + user.getPhone().getPhoneNumber());
         }
@@ -250,7 +265,7 @@ public class ProfileFragment extends BaseFragment {
         groupsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mFragmentNavigation.pushFragment(new GroupManagementFragment(GROUP_OP_VIEW_TYPE, new ReturnCallback() {
+                mFragmentNavigation.pushFragment(new GroupViewFragment(new ReturnCallback() {
                     @Override
                     public void OnReturn(Object object) {
 
@@ -262,6 +277,7 @@ public class ProfileFragment extends BaseFragment {
         tasksLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mFragmentNavigation.pushFragment(new TasksIAssignedFragment());
                 // TODO: 2019-09-04
             }
         });
@@ -314,22 +330,58 @@ public class ProfileFragment extends BaseFragment {
             }
         });
 
-        navViewLayout.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        navViewLayout.setNavigationItemSelectedListener(item -> {
 
-                switch (item.getItemId()) {
-                    case R.id.searchItem:
-                        drawerLayout.closeDrawer(Gravity.LEFT);
-                        break;
+            switch (item.getItemId()) {
 
-                    default:
-                        break;
-                }
+                case R.id.viewItem:
+                    mDrawerState = false;
+                    drawerLayout.closeDrawer(Gravity.LEFT);
+                    startPendingRequestFragment();
+                    break;
 
-                return false;
+                case R.id.settingsItem:
+                    mDrawerState = false;
+                    drawerLayout.closeDrawer(Gravity.LEFT);
+                    startSettingsFragment();
+                    break;
+
+                case R.id.reportProblemItem:
+                    mDrawerState = false;
+                    drawerLayout.closeDrawer(Gravity.LEFT);
+                    //startNotifyProblemFragment();
+                    break;
+
+                case R.id.rateUs:
+                    mDrawerState = false;
+                    drawerLayout.closeDrawer(Gravity.LEFT);
+                    CommonUtils.commentApp(getContext());
+                    break;
+
+                case R.id.exit:
+                    mDrawerState = false;
+                    drawerLayout.closeDrawer(Gravity.LEFT);
+                    signOutClicked();
+                    break;
+
+                default:
+                    break;
             }
+
+            return false;
         });
+    }
+
+    private void startPendingRequestFragment() {
+        if (mFragmentNavigation != null) {
+            mFragmentNavigation.pushFragment(new PendingRequestsFragment(), ANIMATE_LEFT_TO_RIGHT);
+        }
+    }
+
+    private void startSettingsFragment() {
+        if (mFragmentNavigation != null) {
+            mFragmentNavigation.pushFragment(new SettingsFragment(), ANIMATE_RIGHT_TO_LEFT);
+        }
     }
 
     private void userEditClicked() {
@@ -342,11 +394,29 @@ public class ProfileFragment extends BaseFragment {
         View v = navViewLayout.getHeaderView(0);
         navViewNameTv = v.findViewById(R.id.navViewNameTv);
         navViewEmailTv = v.findViewById(R.id.navViewEmailTv);
+        navImgProfile = v.findViewById(R.id.navImgProfile);
+        navViewShortenTextView = v.findViewById(R.id.navViewShortenTextView);
+        drawerLayout.closeDrawer(Gravity.LEFT);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ((NextActivity) Objects.requireNonNull(getActivity())).ANIMATION_TAG = null;
+    }
+
+    private void signOutClicked() {
+        SettingOperation.userSignOut(new CompleteCallback() {
+            @Override
+            public void onComplete(Object object) {
+                Objects.requireNonNull(getActivity()).finish();
+                startActivity(new Intent(getActivity(), MainActivity.class));
+            }
+
+            @Override
+            public void onFailed(String s) {
+                CommonUtils.showToastShort(getContext(), s);
+            }
+        });
     }
 }

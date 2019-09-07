@@ -165,7 +165,7 @@
     <string name="ASKING_STOP_FOLLOWING">Are you sure you want to stop following?</string>
     <string name="PENDING_REQUESTS">Pending Requests</string>
     <string name="THERE_IS_NO_PENDING_REQUEST">There is no pending request</string>
-    <string name="CONTACT_INVITE_MESSAGE">Do you want to share in CatchU and follow your friends? You can download the application from this link:</string>
+    <string name="CONTACT_INVITE_MESSAGE">Do you want to follow group and friend tasks with the My Duties app? You can download the application from this link:</string>
     <string name="CONNECT_FACEBOOK">Connect Facebook</string>
     <string name="INVITE_YOUR_FRIENDS">Invite Your Friends</string>
     <string name="ADD_YOUR_FRIENDS">Add Your Friends</string>
@@ -178,7 +178,7 @@
     <string name="CONTACT_FRIENDS">Contact Friends</string>
     <string name="PRIVATE_ACCOUNT">Private Account</string>
     <string name="VERSION">Version</string> 
-    <string name="ABOUT_APP">CatchU: If you have any questions
+    <string name="ABOUT_APP">My Duties: If you have any questions
         or suggestions about the application, please write to us.
     </string>
     <string name="authoremail">catchuren@gmail.com</string> 

@@ -72,7 +72,8 @@
                         android:hint="@string/search"
                         android:paddingLeft="35dp"
                         android:textColorHint="@color/White"
-                        android:textSize="17sp" />
+                        android:textSize="14sp"
+                        android:gravity="center"/>
 
                 </FrameLayout>
 

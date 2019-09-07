@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -121,14 +122,14 @@ public class FriendVerticalListAdapter extends RecyclerView.Adapter implements F
     }
 
     class SelectFriendHolder extends RecyclerView.ViewHolder {
-        TextView nameTextView;
-        TextView usernameTextView;
+        AppCompatTextView nameTextView;
+        AppCompatTextView usernameTextView;
         TextView shortUserNameTv;
         ImageView profilePicImgView;
         ImageView tickImgv;
         LinearLayout specialListLinearLayout;
         User user;
-        TextView inGroupTv;
+        AppCompatTextView inGroupTv;
         int position = 0;
 
         public SelectFriendHolder(final View itemView) {

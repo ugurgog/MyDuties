@@ -160,6 +160,80 @@ public class UserTaskDBHelper {
         });
     }
 
+    public static void getUserTaskById(User assignedTo, User assignedFrom, String taskid, final CompleteCallback completeCallback) {
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance()
+                .getReference(fb_child_usertask).child(assignedTo.getUserid()).child(taskid);
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                Map<String, Object> map = (Map) dataSnapshot.getValue();
+
+                boolean completedVal = false;
+                try {
+                    completedVal = (boolean) map.get(fb_child_completed);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                boolean closedVal = false;
+                try {
+                    closedVal = (boolean) map.get(fb_child_closed);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                String taskDesc = null;
+                try {
+                    taskDesc = (String) map.get(fb_child_taskdesc);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                long assignedTime = 0;
+                try {
+                    assignedTime = (long) map.get(fb_child_assignedtime);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                boolean urgency = false;
+                try {
+                    urgency = (boolean) map.get(fb_child_urgency);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                long completedTime = 0;
+                try {
+                    completedTime = (long) map.get(fb_child_completedtime);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                String type = null;
+                try {
+                    type = (String) map.get(fb_child_type);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                Task task = new Task(taskid, taskDesc, assignedFrom, completedVal,
+                        assignedTo, assignedTime, completedTime, closedVal, type, urgency);
+
+                completeCallback.onComplete(task);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                completeCallback.onFailed(databaseError.getMessage());
+            }
+        });
+    }
+
     public static void addOrUpdateUserTask(Task task, boolean completedOk, final OnCompleteCallback onCompleteCallback) {
 
         if (task == null) return;
@@ -227,6 +301,54 @@ public class UserTaskDBHelper {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+    }
+
+    public static void getIAssignedTasksToUsers(User assignedFrom, CompleteCallback completeCallback) {
+
+        if (assignedFrom == null || assignedFrom.getUserid() == null || assignedFrom.getUserid().isEmpty()) {
+            return;
+        }
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(fb_child_assignedfrom).
+                child(assignedFrom.getUserid()).child(fb_child_users);
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                for (DataSnapshot outboundSnapshot : dataSnapshot.getChildren()) {
+                    Log.i("outboundSnapshot:", outboundSnapshot.toString());
+
+                    String assignedToId = outboundSnapshot.getKey();
+
+                    for (DataSnapshot temp : outboundSnapshot.getChildren()) {
+                        Log.i("temp:", outboundSnapshot.toString());
+
+                        UserDBHelper.getUser(assignedToId, new CompleteCallback() {
+                            @Override
+                            public void onComplete(Object object) {
+                                getUserTaskById((User) object, assignedFrom, temp.getKey(), completeCallback);
+                            }
+
+                            @Override
+                            public void onFailed(String message) {
+
+                            }
+                        });
+
+
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                completeCallback.onFailed(databaseError.getMessage());
             }
         });
     }

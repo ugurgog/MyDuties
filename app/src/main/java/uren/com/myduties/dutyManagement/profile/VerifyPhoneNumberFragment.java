@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.Fragment;
 
 import org.greenrobot.eventbus.EventBus;
@@ -56,7 +57,7 @@ public class VerifyPhoneNumberFragment extends Fragment {
     @BindView(R.id.commonToolbarTickImgv)
     ImageView commonToolbarTickImgv;
     @BindView(R.id.toolbarTitleTv)
-    TextView toolbarTitleTv;
+    AppCompatTextView toolbarTitleTv;
     @BindView(R.id.warningMessageTv)
     TextView warningMessageTv;
     @BindView(R.id.remainingTimeTv)

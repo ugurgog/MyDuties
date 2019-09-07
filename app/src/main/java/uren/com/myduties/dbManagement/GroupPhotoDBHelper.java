@@ -19,11 +19,13 @@ import uren.com.myduties.R;
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.models.PhotoSelectUtil;
 
+import static uren.com.myduties.constants.StringConstants.photo_upload_new;
+
 public class GroupPhotoDBHelper {
 
-    public static void uploadGroupPhoto(Context context, String groupid, PhotoSelectUtil photoSelectUtil, CompleteCallback completeCallback){
+    public static void uploadGroupPhoto(String type, Context context, String groupid, PhotoSelectUtil photoSelectUtil, CompleteCallback completeCallback) {
 
-        if(groupid == null || groupid.isEmpty()){
+        if (groupid == null || groupid.isEmpty()) {
             completeCallback.onFailed(context.getResources().getString(R.string.UNEXPECTED_ERROR));
             return;
         }
@@ -31,8 +33,7 @@ public class GroupPhotoDBHelper {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference().child("images").child(groupid + "/groupphoto.jpg");
 
-
-        if(photoSelectUtil != null) {
+        if (photoSelectUtil != null) {
             storageRef.putFile(photoSelectUtil.getMediaUri()).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
                 public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
@@ -52,19 +53,21 @@ public class GroupPhotoDBHelper {
                     }
                 }
             });
-        }
-        else {
-            storageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    completeCallback.onComplete(null);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    completeCallback.onFailed("Upload failed: " + exception.getMessage());
-                }
-            });
+        } else {
+            if (!type.equals(photo_upload_new)) {
+                storageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        completeCallback.onComplete(null);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        completeCallback.onFailed("Upload failed: " + exception.getMessage());
+                    }
+                });
+            }else
+                completeCallback.onComplete(null);
         }
     }
 }

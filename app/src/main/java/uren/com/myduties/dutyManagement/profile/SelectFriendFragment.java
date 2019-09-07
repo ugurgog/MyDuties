@@ -96,12 +96,12 @@ public class SelectFriendFragment extends BaseFragment {
     }
 
     @Subscribe(sticky = true)
-    public void selectedUsersReceived(SelectedUsersBus selectedUsersBus){
+    public void selectedUsersReceived(SelectedUsersBus selectedUsersBus) {
         selectedUsers = selectedUsersBus.getUsers();
     }
 
     @Subscribe(sticky = true)
-    public void accountHolderUserReceived(UserBus userBus){
+    public void accountHolderUserReceived(UserBus userBus) {
         accountholderUser = userBus.getUser();
     }
 
@@ -241,7 +241,7 @@ public class SelectFriendFragment extends BaseFragment {
         FriendsDBHelper.getFriendsByStatus(accountholderUser.getUserid(), perPageCnt, fb_child_status_friend, new CompleteCallback() {
             @Override
             public void onComplete(Object object) {
-                if(object != null){
+                if (object != null) {
                     adapter.addUser(((Friend) object).getUser());
                     progressDialogUtil.dialogDismiss();
                 }
@@ -275,21 +275,21 @@ public class SelectFriendFragment extends BaseFragment {
         if (pendingName != null) {
             if (pendingName.equals(ViewGroupDetailFragment.class.getName())) {
                 startAddParticipantToGroup();
-            }  else if (pendingName.equals(GroupManagementFragment.class.getName())) {
+            } else if (pendingName.equals(GroupViewFragment.class.getName())) {
 
                 if (mFragmentNavigation != null) {
-                    /*mFragmentNavigation.pushFragment(new AddGroupFragment(new CompleteCallback() {
+                    mFragmentNavigation.pushFragment(new AddGroupFragment(new CompleteCallback() {
                         @Override
                         public void onComplete(Object object) {
                             Objects.requireNonNull(getActivity()).onBackPressed();
-                            returnCallback.onReturn(object);
+                            returnCallback.OnReturn(object);
                         }
 
                         @Override
-                        public void onFailed(Exception e) {
-
+                        public void onFailed(String message) {
+                            CommonUtils.showToastShort(getContext(), message);
                         }
-                    }), ANIMATE_RIGHT_TO_LEFT);*/
+                    }), ANIMATE_RIGHT_TO_LEFT);
                 }
             }
         }
@@ -297,18 +297,22 @@ public class SelectFriendFragment extends BaseFragment {
 
     private void startAddParticipantToGroup() {
 
-        GroupDBHelper.addParticipantsToGroup(groupId, selectedUsers, new OnCompleteCallback() {
-            @Override
-            public void OnCompleted() {
-                returnCallback.OnReturn(null);
-                Objects.requireNonNull(getActivity()).onBackPressed();
-            }
+        for (User user : selectedUsers) {
+            GroupDBHelper.addAParticipantToGroup(groupId, user, new OnCompleteCallback() {
+                @Override
+                public void OnCompleted() {
+                    returnCallback.OnReturn(user);
 
-            @Override
-            public void OnFailed(String message) {
-                CommonUtils.showToastShort(getContext(), message);
-            }
-        });
+                    if (user.getUserid().equals(selectedUsers.get(selectedUsers.size() - 1).getUserid()))
+                        Objects.requireNonNull(getActivity()).onBackPressed();
+                }
+
+                @Override
+                public void OnFailed(String message) {
+                    CommonUtils.showToastShort(getContext(), message);
+                }
+            });
+        }
     }
 
 

@@ -10,6 +10,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -55,7 +56,7 @@ import static uren.com.myduties.constants.StringConstants.fb_child_whocompletedi
 
 public class GroupDBHelper {
 
-    public static void addOrUpdateGroup(Group group, final OnCompleteCallback onCompleteCallback) {
+    public static void updateGroup(Group group, final OnCompleteCallback onCompleteCallback) {
 
         if (group == null)
             return;
@@ -96,6 +97,74 @@ public class GroupDBHelper {
             @Override
             public void onFailure(@NonNull Exception e) {
                 onCompleteCallback.OnFailed(e.getMessage());
+            }
+        });
+    }
+
+    public static void addGroup(Group group, final CompleteCallback completeCallback) {
+
+        if (group == null)
+            return;
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(fb_child_groups).child(group.getGroupid());
+
+        final Map<String, Object> values = new HashMap<>();
+
+        if (group.getGroupAdmin() != null)
+            values.put(fb_child_adminid, group.getGroupAdmin());
+
+        values.put(fb_child_createdat, ServerValue.TIMESTAMP);
+
+        if (group.getGroupPhotoUrl() != null)
+            values.put(fb_child_groupphotourl, group.getGroupPhotoUrl());
+
+        if (group.getName() != null)
+            values.put(fb_child_name, group.getName());
+
+        Map<String, Object> membersMap = new HashMap<>();
+
+        if (group.getMemberList() != null) {
+            for (User user : group.getMemberList()) {
+                membersMap.put(user.getUserid(), " ");
+            }
+            values.put(fb_child_members, membersMap);
+        }
+
+        databaseReference.updateChildren(values).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                addGroupsUnderUsers();
+                completeCallback.onComplete(null);
+            }
+
+            private void addGroupsUnderUsers() {
+                for(User user: group.getMemberList()){
+                    Map<String, Object> map = new HashMap<>();
+                    map.put(group.getGroupid(), " ");
+
+                    FirebaseDatabase.getInstance()
+                            .getReference(fb_child_users)
+                            .child(user.getUserid())
+                            .child(fb_child_groups)
+                            .updateChildren(map)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            completeCallback.onFailed(e.getMessage());
+                        }
+                    });
+                }
+            }
+
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                completeCallback.onFailed(e.getMessage());
             }
         });
     }
@@ -349,5 +418,40 @@ public class GroupDBHelper {
         }
     }
 
+    public static void addAParticipantToGroup(String groupid, User user, OnCompleteCallback onCompleteCallback) {
 
+        final Map<String, Object> values = new HashMap<>();
+        values.put(groupid, " ");
+
+        FirebaseDatabase.getInstance()
+                .getReference(fb_child_users).child(user.getUserid()).child(fb_child_groups)
+                .updateChildren(values).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+                final Map<String, Object> map = new HashMap<>();
+                map.put(user.getUserid(), " ");
+
+                FirebaseDatabase.getInstance()
+                        .getReference(fb_child_groups).child(groupid).child(fb_child_members)
+                        .updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        onCompleteCallback.OnCompleted();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        onCompleteCallback.OnFailed(e.getMessage());
+                    }
+                });
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                onCompleteCallback.OnFailed(e.getMessage());
+            }
+        });
+    }
 }

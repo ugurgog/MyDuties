@@ -2,49 +2,46 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <group
-        android:id="@+id/menu_top"
-        android:checkableBehavior="single">
-        <item
-            android:id="@+id/searchItem"
-            android:checkable="true"
-            android:icon="@drawable/icon_menu"
-            android:title="@string/EXPLORE_PEOPLE" />
-
+    <group android:checkableBehavior="single">
         <item
             android:id="@+id/viewItem"
             android:checkable="true"
-            android:icon="@drawable/icon_menu"
-            android:title="@string/EXPLORE_PEOPLE" />
+            android:icon="@drawable/ic_visibility_white_24dp"
+            android:title="@string/VIEW_PENDING_REQUEST"
+            app:itemTextAppearance="@style/menu_text_style"/>
 
-        <item
-            android:id="@+id/manageGroupsItem"
-            android:checkable="true"
-            android:icon="@drawable/icon_menu"
-            android:title="@string/EXPLORE_PEOPLE" />
-
-        <item
-            android:id="@+id/messagesItem"
-            android:checkable="true"
-            android:icon="@drawable/icon_menu"
-            android:title="@string/EXPLORE_PEOPLE"/>
     </group>
 
-    <group
-        android:id="@+id/menu_bottom"
-        android:checkableBehavior="none">
+    <group android:checkableBehavior="single">
 
         <item
             android:id="@+id/reportProblemItem"
             android:checkable="true"
-            android:icon="@drawable/icon_menu"
-            android:title="@string/EXPLORE_PEOPLE" />
+            android:icon="@drawable/ic_warning_white_24dp"
+            android:title="@string/REPORT_PROBLEM"
+            app:itemTextAppearance="@style/menu_text_style"/>
 
         <item
             android:id="@+id/settingsItem"
             android:checkable="true"
-            android:icon="@drawable/icon_menu"
-            android:title="@string/EXPLORE_PEOPLE" />
+            android:icon="@drawable/ic_settings_white_24dp"
+            android:title="@string/settings"
+            app:itemTextAppearance="@style/menu_text_style"/>
+
+        <item
+            android:id="@+id/rateUs"
+            android:checkable="true"
+            android:icon="@drawable/ic_star_white_24dp"
+            android:title="@string/rateus"
+            app:itemTextAppearance="@style/menu_text_style"/>
+
+        <item
+            android:id="@+id/exit"
+            android:checkable="true"
+            android:icon="@drawable/ic_exit_to_app_white_48dp"
+            android:title="@string/signOut"
+            app:itemTextAppearance="@style/menu_text_style"/>
+
     </group>
 
 </menu>

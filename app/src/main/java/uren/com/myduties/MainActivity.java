@@ -28,6 +28,7 @@ import uren.com.myduties.dutyManagement.NextActivity;
 import uren.com.myduties.evetBusModels.TaskTypeBus;
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.CompleteCallback;
+import uren.com.myduties.interfaces.OnCompleteCallback;
 import uren.com.myduties.login.AccountHolderInfo;
 import uren.com.myduties.login.LoginActivity;
 import uren.com.myduties.messaging.MessageUpdateProcess;
@@ -180,14 +181,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateDeviceTokenForFCM() {
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
-            @Override
-            public void onSuccess(InstanceIdResult instanceIdResult) {
-                String deviceToken = instanceIdResult.getToken();
-                MyFirebaseMessagingService.sendRegistrationToServer(deviceToken, Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
-            }
-        });
+        MessageUpdateProcess.updateTokenSigninValue(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid(), CHAR_E,
+                new OnCompleteCallback() {
+                    @Override
+                    public void OnCompleted() {
+                        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+                            @Override
+                            public void onSuccess(InstanceIdResult instanceIdResult) {
+                                String deviceToken = instanceIdResult.getToken();
+                                MyFirebaseMessagingService.sendRegistrationToServer(deviceToken, Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
+                            }
+                        });
+                    }
 
-        MessageUpdateProcess.updateTokenSigninValue(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid(), CHAR_E);
+                    @Override
+                    public void OnFailed(String message) {
+
+                    }
+                });
     }
 }

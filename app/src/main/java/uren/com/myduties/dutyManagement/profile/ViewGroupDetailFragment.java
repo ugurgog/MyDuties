@@ -68,6 +68,7 @@ import static uren.com.myduties.constants.StringConstants.ANIMATE_LEFT_TO_RIGHT;
 import static uren.com.myduties.constants.StringConstants.ANIMATE_RIGHT_TO_LEFT;
 import static uren.com.myduties.constants.StringConstants.CAMERA_TEXT;
 import static uren.com.myduties.constants.StringConstants.GALLERY_TEXT;
+import static uren.com.myduties.constants.StringConstants.photo_upload_change;
 import static uren.com.myduties.dutyManagement.profile.adapters.GroupDetailListAdapter.CODE_CHANGE_AS_ADMIN;
 import static uren.com.myduties.dutyManagement.profile.adapters.GroupDetailListAdapter.CODE_REMOVE_FROM_GROUP;
 
@@ -255,9 +256,7 @@ public class ViewGroupDetailFragment extends BaseFragment {
                             new ReturnCallback() {
                                 @Override
                                 public void OnReturn(Object object) {
-                                    for(User user: selectedUsers)
-                                        adapter.addFriend(user);
-                                    selectedUsers.clear();
+                                    adapter.addFriend((User) object);
                                 }
                             }), ANIMATE_RIGHT_TO_LEFT);
                 }
@@ -404,7 +403,7 @@ public class ViewGroupDetailFragment extends BaseFragment {
 
     public void updateGroup() {
 
-        GroupPhotoDBHelper.uploadGroupPhoto(getContext(), groupRequestResultResultArrayItem.getGroupid(), photoSelectUtil,
+        GroupPhotoDBHelper.uploadGroupPhoto(photo_upload_change, getContext(), groupRequestResultResultArrayItem.getGroupid(), photoSelectUtil,
                 new CompleteCallback() {
                     @Override
                     public void onComplete(Object object) {

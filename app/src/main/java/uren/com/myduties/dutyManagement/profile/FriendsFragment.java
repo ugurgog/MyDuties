@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -57,7 +58,7 @@ public class FriendsFragment extends BaseFragment {
     @BindView(R.id.commonToolbarbackImgv)
     ClickableImageView commonToolbarbackImgv;
     @BindView(R.id.toolbarTitleTv)
-    TextView toolbarTitleTv;
+    AppCompatTextView toolbarTitleTv;
 
     //Search layout variables
     @BindView(R.id.searchEdittext)
@@ -65,7 +66,7 @@ public class FriendsFragment extends BaseFragment {
     @BindView(R.id.searchCancelImgv)
     ImageView searchCancelImgv;
     @BindView(R.id.searchResultTv)
-    TextView searchResultTv;
+    AppCompatTextView searchResultTv;
 
     private LinearLayoutManager mLayoutManager;
     private FriendsAdapter friendsAdapter;

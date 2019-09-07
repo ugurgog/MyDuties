@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -104,8 +105,8 @@ public class GroupDetailListAdapter extends RecyclerView.Adapter<GroupDetailList
 
     class GroupDetailListHolder extends RecyclerView.ViewHolder {
 
-        TextView profileName;
-        TextView profileUserName;
+        AppCompatTextView profileName;
+        AppCompatTextView profileUserName;
         TextView shortUsernameTv;
         User user;
         Button adminDisplayBtn;

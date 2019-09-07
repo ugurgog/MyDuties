@@ -28,7 +28,7 @@
                 android:id="@+id/commonToolbarbackImgv"
                 android:layout_width="?attr/actionBarSize"
                 android:layout_height="?attr/actionBarSize"
-                android:padding="13dp"
+                android:padding="17dp"
                 android:src="@drawable/icon_back_arrow"
                 android:visibility="visible"/>
 
@@ -50,14 +50,14 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center">
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:fontFamily="@font/amiko"
                         android:id="@+id/toolbarTitleTv"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:layout_weight="5"
-                        android:fontFamily="@font/alike_angular"
                         android:gravity="center"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/toolbarTextSize" />

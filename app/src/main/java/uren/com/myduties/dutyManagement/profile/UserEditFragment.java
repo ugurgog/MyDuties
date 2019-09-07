@@ -30,6 +30,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -81,7 +82,7 @@ public class UserEditFragment extends BaseFragment
     @BindView(R.id.commonToolbarTickImgv)
     ImageView commonToolbarTickImgv;
     @BindView(R.id.toolbarTitleTv)
-    TextView toolbarTitleTv;
+    AppCompatTextView toolbarTitleTv;
     @BindView(R.id.imgProfile)
     ImageView imgProfile;
     @BindView(R.id.addPhotoImgv)

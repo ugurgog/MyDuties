@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -112,9 +113,9 @@ public class FriendsAdapter extends RecyclerView.Adapter implements Filterable {
 
     public class FriendViewHolder extends RecyclerView.ViewHolder {
 
-        TextView profileName;
-        TextView profileUserName;
-        TextView shortUserNameTv;
+        AppCompatTextView profileName;
+        AppCompatTextView profileUserName;
+        AppCompatTextView shortUserNameTv;
         ImageView profileImage;
         Button btnFollowStatus;
         CardView cardView;

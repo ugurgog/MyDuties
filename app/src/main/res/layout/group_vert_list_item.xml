@@ -61,7 +61,8 @@
                 android:orientation="horizontal"
                 android:layout_weight="5">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:fontFamily="@font/amiko"
                     android:id="@+id/groupnameTextView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -69,7 +70,7 @@
                     android:layout_marginLeft="3dp"
                     android:layout_weight="10"
                     android:textSize="12dp"
-                    android:textStyle="italic|bold" />
+                    android:textColor="@color/Black"/>
 
             </LinearLayout>
 
@@ -79,6 +80,7 @@
                 android:layout_weight="2.5">
 
                 <Button
+                    android:fontFamily="@font/amiko"
                     android:id="@+id/adminDisplayButton"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
@@ -87,7 +89,8 @@
                     android:textAllCaps="false"
                     android:textColor="@color/MediumSeaGreen"
                     android:textSize="10sp"
-                    android:textStyle="normal|bold" />
+                    android:textStyle="normal|bold"
+                    android:enabled="false"/>
             </LinearLayout>
 
             <LinearLayout

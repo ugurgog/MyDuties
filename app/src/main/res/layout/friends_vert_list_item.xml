@@ -45,7 +45,8 @@
                             android:layout_gravity="center"
                             android:scaleType="fitXY" />
 
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:fontFamily="@font/amiko"
                             android:id="@+id/shortUserNameTv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -66,15 +67,18 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
-                            <TextView
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:fontFamily="@font/amiko"
                                 android:id="@+id/profile_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
+                                android:textColor="@color/Black"
                                 android:layout_marginLeft="5dp"
                                 android:textSize="15sp" />
 
-                            <TextView
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:fontFamily="@font/amiko"
                                 android:id="@+id/profile_user_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"

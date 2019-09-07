@@ -50,20 +50,21 @@
                 android:layout_weight="5"
                 android:orientation="vertical">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:fontFamily="@font/amiko"
                     android:id="@+id/profileName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15dp"
-                    android:textStyle="bold" />
+                    android:textColor="@color/Black" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:fontFamily="@font/amiko"
                     android:id="@+id/profileUserName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/tintColor"
-                    android:textSize="12dp"
-                    android:textStyle="italic" />
+                    android:textSize="12dp" />
             </LinearLayout>
 
             <RelativeLayout

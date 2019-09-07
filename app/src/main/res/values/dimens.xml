@@ -2,4 +2,5 @@
 <resources>
     <dimen name="default_elevation">8dp</dimen>
     <dimen name="toolbarTextSize">17sp</dimen>
+    <dimen name="ADD_GROUP_IMGV_SIZE">50px</dimen>
 </resources>

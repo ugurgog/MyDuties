@@ -179,4 +179,17 @@ public class UserDataUtil {
         displayButton.setBackground(buttonShape);
     }
 
+    public static void updateInviteButton(Context context, Button displayButton, Boolean isHideKeyboard) {
+        if (isHideKeyboard != null && isHideKeyboard)
+            CommonUtils.hideKeyBoard(context);
+
+        GradientDrawable buttonShape;
+        displayButton.setText(context.getResources().getString(R.string.invite));
+        displayButton.setTextColor(context.getResources().getColor(R.color.Coral, null));
+        buttonShape = ShapeUtil.getShape(context.getResources().getColor(R.color.White, null),
+                context.getResources().getColor(R.color.Coral, null), GradientDrawable.RECTANGLE, 15, 3);
+
+        displayButton.setBackground(buttonShape);
+    }
+
 }

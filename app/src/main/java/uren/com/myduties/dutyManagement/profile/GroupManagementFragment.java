@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -64,7 +65,7 @@ public class GroupManagementFragment extends BaseFragment {
     @BindView(R.id.imgCancelSearch)
     ImageView imgCancelSearch;
     @BindView(R.id.searchResultTv)
-    TextView searchResultTv;
+    AppCompatTextView searchResultTv;
     @BindView(R.id.nextFab)
     FloatingActionButton nextFab;
 

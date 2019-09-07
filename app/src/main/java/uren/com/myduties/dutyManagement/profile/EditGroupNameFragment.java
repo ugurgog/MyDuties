@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import java.util.Objects;
 
@@ -42,7 +43,7 @@ public class EditGroupNameFragment extends BaseFragment {
     @BindView(R.id.commonToolbarbackImgv)
     ClickableImageView commonToolbarbackImgv;
     @BindView(R.id.toolbarTitleTv)
-    TextView toolbarTitleTv;
+    AppCompatTextView toolbarTitleTv;
     @BindView(R.id.groupNameEditText)
     EditText groupNameEditText;
     @BindView(R.id.textSizeCntTv)
@@ -174,7 +175,7 @@ public class EditGroupNameFragment extends BaseFragment {
     public void updateGroup() {
         groupRequestResultResultArrayItem.setName(groupNameEditText.getText().toString());
 
-        GroupDBHelper.addOrUpdateGroup(groupRequestResultResultArrayItem, new OnCompleteCallback() {
+        GroupDBHelper.updateGroup(groupRequestResultResultArrayItem, new OnCompleteCallback() {
             @Override
             public void OnCompleted() {
                 completeCallback.onComplete(groupNameEditText.getText().toString());
