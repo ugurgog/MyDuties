@@ -24,14 +24,17 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import uren.com.myduties.R;
+import uren.com.myduties.dbManagement.GroupTaskDBHelper;
 import uren.com.myduties.dbManagement.UserTaskDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
+import uren.com.myduties.dutyManagement.profile.adapters.AssignedToGroupsAdapter;
 import uren.com.myduties.dutyManagement.profile.adapters.AssignedToUsersAdapter;
 import uren.com.myduties.dutyManagement.tasks.helper.TaskHelper;
 import uren.com.myduties.dutyManagement.tasks.interfaces.TaskRefreshCallback;
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.ReturnCallback;
+import uren.com.myduties.models.GroupTask;
 import uren.com.myduties.models.Task;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.ClickableImage.ClickableImageView;
@@ -47,7 +50,7 @@ import static uren.com.myduties.constants.NumericConstants.VIEW_SERVER_ERROR;
 public class AssignedToGroupsFragment extends BaseFragment {
 
     View mView;
-    AssignedToUsersAdapter assignedToUsersAdapter;
+    AssignedToGroupsAdapter assignedToGroupsAdapter;
     CustomLinearLayoutManager mLayoutManager;
 
     @BindView(R.id.rv_feed)
@@ -70,11 +73,7 @@ public class AssignedToGroupsFragment extends BaseFragment {
     @BindView(R.id.imgRetry)
     ClickableImageView imgRetry;
 
-    private int limitValue;
     private boolean loading = true;
-    private int pastVisibleItems, visibleItemCount, totalItemCount;
-    private List<Task> taskList = new ArrayList<>();
-    private static final int RECYCLER_VIEW_CACHE_COUNT = 10;
     private boolean pulledToRefresh = false;
     private boolean isFirstFetch = false;
     User user;
@@ -93,7 +92,7 @@ public class AssignedToGroupsFragment extends BaseFragment {
                              Bundle savedInstanceState) {
 
         if (mView == null) {
-            mView = inflater.inflate(R.layout.fragment_waiting_task, container, false);
+            mView = inflater.inflate(R.layout.fragment_assigned_to_groups, container, false);
             ButterKnife.bind(this, mView);
             initVariables();
             initListeners();
@@ -106,7 +105,7 @@ public class AssignedToGroupsFragment extends BaseFragment {
     }
 
     private void initVariables() {
-        limitValue = REC_MAXITEM_LIMIT_COUNT;
+
     }
 
     private void initListeners() {
@@ -119,17 +118,6 @@ public class AssignedToGroupsFragment extends BaseFragment {
         setLayoutManager();
         setAdapter();
         setPullToRefresh();
-        setRecyclerViewScroll();
-        setFeedRefreshListener();
-    }
-
-    private void setFeedRefreshListener() {
-        TaskHelper.TaskRefresh.getInstance().setTaskRefreshCallback(new TaskRefreshCallback() {
-            @Override
-            public void onTaskRefresh() {
-                refreshFeed();
-            }
-        });
     }
 
     private void setLayoutManager() {
@@ -138,58 +126,19 @@ public class AssignedToGroupsFragment extends BaseFragment {
     }
 
     private void setAdapter() {
-        assignedToUsersAdapter = new AssignedToUsersAdapter(getActivity(), getContext(), mFragmentNavigation);
-        recyclerView.setAdapter(assignedToUsersAdapter);
-        assignedToUsersAdapter.setReturnCallback(new ReturnCallback() {
-            @Override
-            public void OnReturn(Object object) {
-                List<Task> returnList = (ArrayList<Task>) object;
-                if (returnList != null && returnList.size() == 0 )
-                    showExceptionLayout(true, VIEW_NO_POST_FOUND);
-            }
-        });
+        assignedToGroupsAdapter = new AssignedToGroupsAdapter(getActivity(), getContext(), mFragmentNavigation);
+        recyclerView.setAdapter(assignedToGroupsAdapter);
     }
 
     private void setPullToRefresh() {
         refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                refreshFeed();
+                pulledToRefresh = true;
+                assignedToGroupsAdapter.updatePostListItems();
+                startGetPosts();
             }
         });
-    }
-
-    private void refreshFeed() {
-        pulledToRefresh = true;
-        startGetPosts();
-    }
-
-    private void setRecyclerViewScroll() {
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                if (dy > 0) //check for scroll down
-                {
-                    visibleItemCount = mLayoutManager.getChildCount();
-                    totalItemCount = mLayoutManager.getItemCount();
-                    pastVisibleItems = mLayoutManager.findFirstVisibleItemPosition();
-
-                    if (loading) {
-                        //Do pagination.. i.e. fetch new data
-                        if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
-                            loading = false;
-                            limitValue = limitValue + REC_MAXITEM_LIMIT_COUNT;
-                            assignedToUsersAdapter.addProgressLoading();
-                            startGetPosts();
-                        }
-                    }
-                }
-            }
-        });
-
     }
 
     @Override
@@ -211,75 +160,36 @@ public class AssignedToGroupsFragment extends BaseFragment {
 
     private void startGetPosts() {
 
-        UserTaskDBHelper.getIAssignedTasksToUsers(user, new CompleteCallback() {
+        GroupTaskDBHelper.getIAssignedTasksToGroups(user, new CompleteCallback() {
             @Override
             public void onComplete(Object object) {
-
+                pulledToRefresh = false;
+                setFetchData((GroupTask) object);
             }
 
             @Override
             public void onFailed(String message) {
+                pulledToRefresh = false;
                 loadingView.hide();
                 refresh_layout.setRefreshing(false);
-
-                if (taskList.size() > 0) {
-                    DialogBoxUtil.showErrorDialog(getContext(), Objects.requireNonNull(getContext()).getResources().getString(R.string.serverError), new InfoDialogBoxCallback() {
-                        @Override
-                        public void okClick() {
-
-                        }
-                    });
-                    showExceptionLayout(false, -1);
-                    if (assignedToUsersAdapter.isShowingProgressLoading()) {
-                        assignedToUsersAdapter.removeProgressLoading();
-                    }
-
-                } else {
-                    showExceptionLayout(true, VIEW_SERVER_ERROR);
-                }
             }
         });
     }
 
-    private void setFetchData(List<Task> taskList) {
+    private void setFetchData(GroupTask task) {
 
         if (isFirstFetch) {
             isFirstFetch = false;
             loadingView.smoothToHide();
         }
-
-        if (taskList != null) {
-            if (taskList.size() == 0 ) {
-                showExceptionLayout(true, VIEW_NO_POST_FOUND);
-            } else {
-                showExceptionLayout(false, -1);
-            }
-            setUpRecyclerView(taskList);
-        }
-
+        setUpRecyclerView(task);
         refresh_layout.setRefreshing(false);
     }
 
-    private void setUpRecyclerView(List<Task> taskList1) {
-
+    private void setUpRecyclerView(GroupTask task) {
         loading = true;
-        taskList.addAll(taskList1);
-
-        assignedToUsersAdapter.removeProgressLoading();
-
-        if (pulledToRefresh) {
-            assignedToUsersAdapter.updatePostListItems(taskList1);
-            pulledToRefresh = false;
-        } else {
-            assignedToUsersAdapter.addAll(taskList1);
-        }
+        assignedToGroupsAdapter.addTask(task);
     }
-
-    public void scrollRecViewInitPosition() {
-        mLayoutManager.smoothScrollToPosition(recyclerView, null, 0);
-        //recyclerView.smoothScrollToPosition(0);
-    }
-
 
     /**********************************************/
     private void showExceptionLayout(boolean showException, int viewType) {

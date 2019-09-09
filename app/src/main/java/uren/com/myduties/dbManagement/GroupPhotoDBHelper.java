@@ -31,7 +31,7 @@ public class GroupPhotoDBHelper {
         }
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference().child("images").child(groupid + "/groupphoto.jpg");
+        StorageReference storageRef = storage.getReference().child("images").child("groups").child(groupid + "/groupphoto.jpg");
 
         if (photoSelectUtil != null) {
             storageRef.putFile(photoSelectUtil.getMediaUri()).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {

@@ -63,4 +63,40 @@
 
     </LinearLayout>
 
+    <RelativeLayout
+        android:id="@+id/screenShotMainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="150dp"
+        android:background="@color/transparent"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/screenShotCancelBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="20dp"
+            android:padding="5dp"
+            android:text="@string/cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/White" />
+
+        <Button
+            android:id="@+id/screenShotApproveBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            android:padding="5dp"
+            android:text="@string/SCREENSHOT"
+            android:textAllCaps="false"
+            android:textColor="@color/White" />
+
+    </RelativeLayout>
+
 </RelativeLayout>

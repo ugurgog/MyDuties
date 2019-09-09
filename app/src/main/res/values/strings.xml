@@ -388,6 +388,23 @@
     <string name="friend">Friend</string>
 
     <string name="phoneNotDefined">Phone info is not yet defined.</string>
+    <string name="thisTaskAssignedTo">This task assigned to</string>
+    <string name="remind">Remind</string>
+    <string name="urgent">Urgent</string>
+    <string name="closed">Closed</string>
+    <string name="taskIsClosedAlready">This task is already closed.</string>
+    <string name="markAsUrgent">Mark as urgent</string>
+    <string name="taskIsUrgentAlready">This task is already urgent.</string>
+    <string name="closedTaskNotMarkedUrgent">Closed tasks cannot be marked urgently.</string>
+    <string name="openTasksCouldNotBeDeleted">Tasks that are not closed cannot be deleted.</string>
+    <string name="changeDesc">Update description</string>
+    <string name="descCouldNotBeUpdated">Task closed. The description cannot be updated.</string>
+    <string name="completedDescCouldNotBeUpdated">Task completed. The description cannot be updated.</string>
+    <string name="adminLogin">Admin Page</string>
+    <string name="problems">Problems</string>
+    <string name="viewUncompletedProblems">View Incomplete Problems</string>
+    <string name="viewCompletedProblems">View Completed Problems</string>
+
 
 
     <string name="FCM_SERVER_KEY">AAAA4JR4Gec:APA91bGLWhwgn6JuvSPzJVWUw-LTiu3rW48ihDO--ulWaWja8s8f6M9v4fy_Y2pMOx8cqrB8NwzT-XB9cqfMpsYpgQ8yAksP6xK8A9rG5nOpbwUJQkr04xgG9aI4Qbf4P16XxuzMYvWv</string>

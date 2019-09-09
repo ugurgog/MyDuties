@@ -299,7 +299,7 @@ public class GroupTaskDBHelper {
 
                             GroupTask groupTask = new GroupTask(taskId, taskDesc,
                                     new Group(groupId), new User(assignedFromId), completedVal,
-                                    new User(whoCompletedId), assignedTime, completedTime, closedVal,type, urgency);
+                                    new User(whoCompletedId), assignedTime, completedTime, closedVal, type, urgency);
                             completeCallback.onComplete(groupTask);
                         }
                     }
@@ -390,13 +390,102 @@ public class GroupTaskDBHelper {
         });
     }
 
+    public static void getIAssignedTasksToGroups(User assignedFrom, CompleteCallback completeCallback) {
+
+        if (assignedFrom == null || assignedFrom.getUserid() == null || assignedFrom.getUserid().isEmpty()) {
+            return;
+        }
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(fb_child_assignedfrom).
+                child(assignedFrom.getUserid()).child(fb_child_groups);
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot outboundSnapshot : dataSnapshot.getChildren()) {
+                    String groupid = outboundSnapshot.getKey();
+
+                    for (DataSnapshot temp : outboundSnapshot.getChildren()) {
+                        String groupTaskId = temp.getKey();
+
+                        GroupDBHelper.getGroup(groupid, new CompleteCallback() {
+                            @Override
+                            public void onComplete(Object object) {
+                                Group group = (Group) object;
+
+                                getGroupTaskWithId(groupTaskId, groupid, new CompleteCallback() {
+                                    @Override
+                                    public void onComplete(Object object) {
+                                        GroupTask groupTask = (GroupTask) object;
+                                        groupTask.setGroup(group);
+
+                                        if (groupTask.getWhoCompleted() != null && groupTask.getWhoCompleted().getUserid() != null &&
+                                                !groupTask.getWhoCompleted().getUserid().isEmpty()) {
+
+                                            UserDBHelper.getUser(groupTask.getWhoCompleted().getUserid(), new CompleteCallback() {
+                                                @Override
+                                                public void onComplete(Object object) {
+                                                    groupTask.setWhoCompleted((User) object);
+                                                    completeCallback.onComplete(groupTask);
+                                                }
+
+                                                @Override
+                                                public void onFailed(String message) {
+
+                                                }
+                                            });
+                                        }else
+                                            completeCallback.onComplete(groupTask);
+                                    }
+
+                                    @Override
+                                    public void onFailed(String message) {
+
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onFailed(String message) {
+
+                            }
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                completeCallback.onFailed(databaseError.getMessage());
+            }
+        });
+    }
+
     public static void deleteGroupTask(String userid, String groupid, String taskid, final OnCompleteCallback onCompleteCallback) {
 
         FirebaseDatabase.getInstance().getReference(fb_child_grouptask).child(groupid).child(taskid)
                 .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                onCompleteCallback.OnCompleted();
+
+                FirebaseDatabase.getInstance().getReference(fb_child_assignedfrom)
+                        .child(userid)
+                        .child(fb_child_groups)
+                        .child(groupid)
+                        .child(taskid)
+                        .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        onCompleteCallback.OnCompleted();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        onCompleteCallback.OnFailed(e.getMessage());
+                    }
+                });
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

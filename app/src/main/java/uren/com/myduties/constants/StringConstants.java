@@ -39,6 +39,18 @@ public class StringConstants {
     public static final String fb_child_phoneNumber = "phoneNumber";
     public static final String fb_child_whocompletedid = "whoCompletedId";
     public static final String fb_child_urgency = "urgency";
+    public static final String fb_child_admin = "admin";
+
+    public static final String fb_child_problems = "Problems";
+    public static final String fb_child_fixed = "fixed";
+    public static final String fb_child_platform = "platform";
+    public static final String fb_child_problemdesc = "problemDesc";
+    public static final String fb_child_problemphotourl= "problemPhotoUrl";
+    public static final String fb_child_whoopened= "whoOpened";
+
+    public static final String fb_child_value_android = "android";
+    public static final String fb_child_value_ios = "ios";
+    public static final String fb_child_value_bug = "bug";
 
     public static final String fb_child_status_sendedrequest = "sendedRequest";
     public static final String fb_child_status_friend = "friend";
@@ -85,4 +97,8 @@ public class StringConstants {
     public static final String photo_upload_change = "changePhoto";
 
     public static final String APP_INVITATION_LINK = "https://myduties.page.link/wMv3";
+
+    public static final String ALGOLIA_APP_ID = "0NXABIBM4D";
+    public static final String ALGOLIA_SEARCH_API_KEY = "c93cf7a717073098d2d25938b3ee8d27";
+    public static final String ALGOLIA_INDEX_NAME = "MyDuties";
 }

@@ -3,14 +3,17 @@ package uren.com.myduties.dutyManagement;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -30,11 +33,13 @@ import uren.com.myduties.dutyManagement.assignTask.AssignTaskFragment;
 import uren.com.myduties.dutyManagement.fragmentControllers.FragNavController;
 import uren.com.myduties.dutyManagement.fragmentControllers.FragNavTransactionOptions;
 import uren.com.myduties.dutyManagement.fragmentControllers.FragmentHistory;
+import uren.com.myduties.dutyManagement.profile.NotifyProblemFragment;
 import uren.com.myduties.dutyManagement.profile.ProfileFragment;
 import uren.com.myduties.dutyManagement.tasks.MyTaskFragment;
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.CommonUtils;
+import uren.com.myduties.utils.ShapeUtil;
 
 import static uren.com.myduties.constants.StringConstants.ANIMATE_DOWN_TO_UP;
 import static uren.com.myduties.constants.StringConstants.ANIMATE_LEFT_TO_RIGHT;
@@ -52,6 +57,9 @@ public class NextActivity extends FragmentActivity implements
     public static FrameLayout contentFrame;
     public LinearLayout profilePageMainLayout;
     public TabLayout bottomTabLayout;
+    public RelativeLayout screenShotMainLayout;
+    public Button screenShotCancelBtn;
+    public Button screenShotApproveBtn;
 
     public LinearLayout tabMainLayout;
 
@@ -60,6 +68,7 @@ public class NextActivity extends FragmentActivity implements
     public String ANIMATION_TAG;
 
     public FragNavTransactionOptions transactionOptions;
+    public static NotifyProblemFragment notifyProblemFragment;
 
     private int[] mTabIconsSelected = {
             R.drawable.ic_my_tasks_white_24dp,
@@ -124,12 +133,22 @@ public class NextActivity extends FragmentActivity implements
         profilePageMainLayout = findViewById(R.id.profilePageMainLayout);
         contentFrame = findViewById(R.id.content_frame);
         tabMainLayout = findViewById(R.id.tabMainLayout);
+        screenShotMainLayout = findViewById(R.id.screenShotMainLayout);
+        screenShotCancelBtn = findViewById(R.id.screenShotCancelBtn);
+        screenShotApproveBtn = findViewById(R.id.screenShotApproveBtn);
         TABS = getResources().getStringArray(R.array.tab_name);
+        setShapes();
 
         //setStatusBarTransparent();
         initTab();
     }
 
+    public void setShapes() {
+        screenShotCancelBtn.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.Red, null),
+                getResources().getColor(R.color.White, null), GradientDrawable.RECTANGLE, 15, 4));
+        screenShotApproveBtn.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.MediumSeaGreen, null),
+                getResources().getColor(R.color.White, null), GradientDrawable.RECTANGLE, 15, 4));
+    }
 
     private void setStatusBarTransparent() {
 
@@ -170,6 +189,10 @@ public class NextActivity extends FragmentActivity implements
         ImageView icon = view.findViewById(R.id.tab_icon);
         icon.setImageDrawable(CommonUtils.setDrawableSelector(NextActivity.this, mTabIconsSelected[position], mTabIconsSelected[position]));
         return view;
+    }
+
+    public void clearStackGivenIndex(int index){
+        mNavController.clearStackWithGivenIndex(index);
     }
 
     @Override

@@ -19,6 +19,7 @@ import uren.com.myduties.utils.ShapeUtil;
 import static uren.com.myduties.constants.StringConstants.CHAR_AMPERSAND;
 import static uren.com.myduties.constants.StringConstants.fb_child_status_friend;
 import static uren.com.myduties.constants.StringConstants.fb_child_status_sendedrequest;
+import static uren.com.myduties.constants.StringConstants.fb_child_status_waiting;
 
 public class UserDataUtil {
 
@@ -164,7 +165,6 @@ public class UserDataUtil {
             displayButton.setTextColor(context.getResources().getColor(R.color.Black, null));
             buttonShape = ShapeUtil.getShape(context.getResources().getColor(R.color.White, null),
                     context.getResources().getColor(R.color.Gray, null), GradientDrawable.RECTANGLE, 15, 2);
-            displayButton.setEnabled(false);
 
         } else if (followStatus.equals(fb_child_status_sendedrequest)) {
             //istek gonderildi
@@ -172,8 +172,18 @@ public class UserDataUtil {
             displayButton.setTextColor(context.getResources().getColor(R.color.White, null));
             buttonShape = ShapeUtil.getShape(context.getResources().getColor(R.color.Silver, null),
                     0, GradientDrawable.RECTANGLE, 15, 0);
-            displayButton.setEnabled(false);
-
+        }else if(followStatus.equals(fb_child_status_waiting)){
+            //istek bana gelmis
+            displayButton.setText(context.getResources().getString(R.string.acceptReq));
+            displayButton.setTextColor(context.getResources().getColor(R.color.White, null));
+            buttonShape = ShapeUtil.getShape(context.getResources().getColor(R.color.Silver, null),
+                    0, GradientDrawable.RECTANGLE, 15, 0);
+        }else {
+            //arkadas degil bi bagimiz yok
+            displayButton.setText(context.getResources().getString(R.string.addFriend));
+            displayButton.setTextColor(context.getResources().getColor(R.color.White, null));
+            buttonShape = ShapeUtil.getShape(context.getResources().getColor(R.color.DodgerBlue, null),
+                    0, GradientDrawable.RECTANGLE, 15, 0);
         }
 
         displayButton.setBackground(buttonShape);

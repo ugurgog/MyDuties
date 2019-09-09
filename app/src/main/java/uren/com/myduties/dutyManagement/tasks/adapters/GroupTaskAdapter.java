@@ -292,7 +292,7 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
         }
 
         private void setUrgency() {
-            CommonUtils.setUrgencyColor(mContext, task.isUrgency(), cardView);
+            CommonUtils.setUrgencyColor(mContext, task.isUrgency(), cardView, null);
         }
 
         private void setTaskTypeImage() {

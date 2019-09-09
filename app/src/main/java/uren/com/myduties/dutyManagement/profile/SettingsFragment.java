@@ -26,6 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import uren.com.myduties.MainActivity;
 import uren.com.myduties.R;
+import uren.com.myduties.admin.AdminPageFragment;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.dutyManagement.NextActivity;
 import uren.com.myduties.dutyManagement.profile.helper.SettingOperation;
@@ -61,6 +62,10 @@ public class SettingsFragment extends BaseFragment {
     LinearLayout changePasswordLayout;
     @BindView(R.id.helpCenterLayout)
     LinearLayout helpCenterLayout;
+    @BindView(R.id.problemInformLayout)
+    LinearLayout problemInformLayout;
+    @BindView(R.id.adminLayout)
+    LinearLayout adminLayout;
 
     private User accountHolderUser;
 
@@ -108,6 +113,12 @@ public class SettingsFragment extends BaseFragment {
 
     public void setDefaultUIValues() {
         toolbarTitleTv.setText(Objects.requireNonNull(getActivity()).getResources().getString(R.string.settings));
+        setAdminOp();
+    }
+
+    private void setAdminOp() {
+        if(accountHolderUser.isAdmin())
+            adminLayout.setVisibility(View.VISIBLE);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -148,6 +159,22 @@ public class SettingsFragment extends BaseFragment {
             }
         });
 
+        problemInformLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startNotifyProblemFragment();
+            }
+        });
+
+        adminLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mFragmentNavigation != null) {
+                    mFragmentNavigation.pushFragment(new AdminPageFragment(), ANIMATE_LEFT_TO_RIGHT);
+                }
+            }
+        });
+
         helpCenterLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -174,6 +201,13 @@ public class SettingsFragment extends BaseFragment {
         });
     }
 
+    public void startNotifyProblemFragment() {
+        if (mFragmentNavigation != null) {
+            Objects.requireNonNull(getActivity()).findViewById(R.id.screenShotMainLayout).setVisibility(View.GONE);
+            NextActivity.notifyProblemFragment = null;
+            mFragmentNavigation.pushFragment(new NotifyProblemFragment(), ANIMATE_LEFT_TO_RIGHT);
+        }
+    }
 
     public void startContactFriendsFragment() {
         if (mFragmentNavigation != null) {

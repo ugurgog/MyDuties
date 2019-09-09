@@ -12,6 +12,7 @@ public class User {
     private String profilePhotoUrl = null;
     private Phone phone;
     private List<String> groupIdList;
+    private boolean admin;
 
     public User() {
     }
@@ -91,5 +92,13 @@ public class User {
 
     public void setGroupIdList(List<String> groupIdList) {
         this.groupIdList = groupIdList;
+    }
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 }

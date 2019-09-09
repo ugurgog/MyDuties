@@ -38,7 +38,7 @@ public class UserPhotoDBHelper {
         }
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference().child("images").child(userid + "/profilephoto.jpg");
+        StorageReference storageRef = storage.getReference().child("images").child("users").child(userid + "/profilephoto.jpg");
 
         storageRef.putFile(photoSelectUtil.getMediaUri()).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
             @Override

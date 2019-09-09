@@ -237,6 +237,7 @@ public class FriendsAdapter extends RecyclerView.Adapter implements Filterable {
             this.position = position;
             setFriendInformation();
             UserDataUtil.updateFriendButton(mContext, friend.getFriendStatus(), btnFollowStatus, false);
+            btnFollowStatus.setEnabled(false);
         }
 
         private void setFriendInformation() {

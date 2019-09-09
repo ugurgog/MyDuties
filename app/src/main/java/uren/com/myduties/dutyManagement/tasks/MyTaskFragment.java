@@ -160,7 +160,7 @@ public class MyTaskFragment extends BaseFragment implements View.OnClickListener
     public void onClick(View view) {
 
         if (view == llSearch) {
-            mFragmentNavigation.pushFragment(SearchFragment.newInstance(), "");
+            mFragmentNavigation.pushFragment(new SearchFragment(), "");
         }
 
     }

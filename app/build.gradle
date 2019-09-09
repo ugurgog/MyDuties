@@ -69,5 +69,11 @@ dependencies {
 
     //Gson is a Java library that can be used to convert Java Objects into their JSON representation
     implementation 'com.google.code.gson:gson:2.8.5'
+
+
+    implementation 'com.algolia:algoliasearch-android:3.27.0'
+    //implementation 'com.algolia:instantsearch-android:2.0.1'
+
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 }
 apply plugin: 'com.google.gms.google-services'

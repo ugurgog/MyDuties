@@ -42,7 +42,6 @@ import uren.com.myduties.dbManagement.UserTaskDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.dutyManagement.NextActivity;
 import uren.com.myduties.dutyManagement.profile.helper.SettingOperation;
-import uren.com.myduties.dutyManagement.tasks.SearchFragment;
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.ReturnCallback;
@@ -349,7 +348,7 @@ public class ProfileFragment extends BaseFragment {
                 case R.id.reportProblemItem:
                     mDrawerState = false;
                     drawerLayout.closeDrawer(Gravity.LEFT);
-                    //startNotifyProblemFragment();
+                    startNotifyProblemFragment();
                     break;
 
                 case R.id.rateUs:
@@ -387,6 +386,14 @@ public class ProfileFragment extends BaseFragment {
     private void userEditClicked() {
         if (mFragmentNavigation != null) {
             mFragmentNavigation.pushFragment(new UserEditFragment(), ANIMATE_LEFT_TO_RIGHT);
+        }
+    }
+
+    public void startNotifyProblemFragment() {
+        if (mFragmentNavigation != null) {
+            Objects.requireNonNull(getActivity()).findViewById(R.id.screenShotMainLayout).setVisibility(View.GONE);
+            NextActivity.notifyProblemFragment = null;
+            mFragmentNavigation.pushFragment(new NotifyProblemFragment(), ANIMATE_LEFT_TO_RIGHT);
         }
     }
 

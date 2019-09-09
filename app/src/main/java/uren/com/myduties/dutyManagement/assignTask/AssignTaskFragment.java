@@ -13,7 +13,6 @@ import butterknife.ButterKnife;
 import uren.com.myduties.R;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.dutyManagement.NextActivity;
-import uren.com.myduties.dutyManagement.tasks.SearchFragment;
 
 public class AssignTaskFragment extends BaseFragment {
 
@@ -24,12 +23,6 @@ public class AssignTaskFragment extends BaseFragment {
     public AssignTaskFragment() {
     }
 
-    public static SearchFragment newInstance() {
-        Bundle args = new Bundle();
-        SearchFragment fragment = new SearchFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onStart() {

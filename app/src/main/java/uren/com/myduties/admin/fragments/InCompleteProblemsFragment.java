@@ -1,4 +1,4 @@
-package uren.com.myduties.dutyManagement.profile;
+package uren.com.myduties.admin.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,19 +14,16 @@ import uren.com.myduties.R;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.dutyManagement.NextActivity;
 
-public class OtherProfileFragment extends BaseFragment {
-
+public class InCompleteProblemsFragment extends BaseFragment {
 
     View mView;
 
 
-    public OtherProfileFragment() {
+    public InCompleteProblemsFragment() {
     }
-
 
     @Override
     public void onStart() {
-        Objects.requireNonNull(getActivity()).findViewById(R.id.tabMainLayout).setVisibility(View.VISIBLE);
         super.onStart();
     }
 
@@ -35,7 +32,7 @@ public class OtherProfileFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         if (mView == null) {
-            mView = inflater.inflate(R.layout.fragment_other_profile, container, false);
+            mView = inflater.inflate(R.layout.fragment_incomplete_problems, container, false);
             ButterKnife.bind(this, mView);
 
         }

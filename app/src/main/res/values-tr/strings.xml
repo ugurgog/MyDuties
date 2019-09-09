@@ -368,6 +368,22 @@
     <string name="friend">Arkadaş</string>
 
     <string name="phoneNotDefined">Telefon bilgisi henüz tanımlanmadı.</string>
+    <string name="thisTaskAssignedTo">Bu görev şu kişiye atandı</string>
+    <string name="remind">Hatırlat</string>
+    <string name="urgent">Acil</string>
+    <string name="closed">Kapalı</string>
+    <string name="taskIsClosedAlready">Bu görev zaten kapatılmış.</string>
+    <string name="markAsUrgent">Acil yap</string>
+    <string name="taskIsUrgentAlready">Bu görev zaten acil.</string>
+    <string name="closedTaskNotMarkedUrgent">Kapalı görevler acil işaretlenemez.</string>
+    <string name="openTasksCouldNotBeDeleted">Kapanmayan görevler silinemez.</string>
+    <string name="changeDesc">Açıklamayı güncelle</string>
+    <string name="descCouldNotBeUpdated">Görev kapalı. Açıklama güncellenemez.</string>
+    <string name="completedDescCouldNotBeUpdated">Görev tamamlanmış. Açıklama güncellenemez.</string>
+    <string name="adminLogin">Admin Sayfası</string>
+    <string name="problems">Problemler</string>
+    <string name="viewUncompletedProblems">Bekleyen Problemleri Gör</string>
+    <string name="viewCompletedProblems">Tamamlanmış Problemleri Gör</string>
 
     <string name="FCM_SERVER_KEY">AAAA4JR4Gec:APA91bGLWhwgn6JuvSPzJVWUw-LTiu3rW48ihDO--ulWaWja8s8f6M9v4fy_Y2pMOx8cqrB8NwzT-XB9cqfMpsYpgQ8yAksP6xK8A9rG5nOpbwUJQkr04xgG9aI4Qbf4P16XxuzMYvWv</string>
 

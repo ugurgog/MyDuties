@@ -25,6 +25,7 @@ import uren.com.myduties.interfaces.OnCompleteCallback;
 import uren.com.myduties.models.Phone;
 import uren.com.myduties.models.User;
 
+import static uren.com.myduties.constants.StringConstants.fb_child_admin;
 import static uren.com.myduties.constants.StringConstants.fb_child_countryCode;
 import static uren.com.myduties.constants.StringConstants.fb_child_dialCode;
 import static uren.com.myduties.constants.StringConstants.fb_child_email;
@@ -135,7 +136,15 @@ public class UserDBHelper {
                         }
                     }
 
+                    boolean admin = false;
+                    try {
+                        admin = (boolean) userMap.get(fb_child_admin);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                     User user = new User(userid, name, username, email, photoUrl, phone, groupList);
+                    user.setAdmin(admin);
                     completeCallback.onComplete(user);
                 }else
                     completeCallback.onComplete(new User());

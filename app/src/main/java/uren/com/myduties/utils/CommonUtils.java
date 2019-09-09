@@ -110,6 +110,7 @@ public class CommonUtils {
             Toast.makeText(context, context.getString(R.string.commentFailed), Toast.LENGTH_SHORT).show();
         }
     }
+
     public static boolean checkCameraHardware(Context context) {
         // this device has a camera
         return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
@@ -352,7 +353,7 @@ public class CommonUtils {
     }
 
     public static void setTaskTypeImage(Context context, ImageView taskTypeImgv, String type, TaskTypeHelper taskTypeHelper) {
-        if(type == null || type.isEmpty()) return;
+        if (type == null || type.isEmpty()) return;
         int typeVal = taskTypeHelper.getTypes().get(type);
         Glide.with(context)
                 .load(typeVal)
@@ -360,13 +361,18 @@ public class CommonUtils {
                 .into(taskTypeImgv);
     }
 
-    public static void setUrgencyColor(Context mContext, boolean urgencyVal, View view){
-        if(urgencyVal)
+    public static void setUrgencyColor(Context mContext, boolean urgencyVal, View view, TextView tvUrgency) {
+        if (urgencyVal) {
+            if (tvUrgency != null)
+                tvUrgency.setVisibility(View.VISIBLE);
             view.setBackground(ShapeUtil.getShape(mContext.getResources().getColor(R.color.White, null),
                     mContext.getResources().getColor(R.color.Red, null), GradientDrawable.RECTANGLE, 15, 3));
-        else
+        } else {
+            if (tvUrgency != null)
+                tvUrgency.setVisibility(View.GONE);
             view.setBackground(ShapeUtil.getShape(mContext.getResources().getColor(R.color.White, null),
                     mContext.getResources().getColor(R.color.White, null), GradientDrawable.RECTANGLE, 15, 3));
+        }
     }
 
     public static String readCountryCodes(Context context) {

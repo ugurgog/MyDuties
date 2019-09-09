@@ -42,6 +42,8 @@ import static uren.com.myduties.constants.StringConstants.fb_child_members;
 import static uren.com.myduties.constants.StringConstants.fb_child_name;
 import static uren.com.myduties.constants.StringConstants.fb_child_status_all;
 import static uren.com.myduties.constants.StringConstants.fb_child_status_friend;
+import static uren.com.myduties.constants.StringConstants.fb_child_status_sendedrequest;
+import static uren.com.myduties.constants.StringConstants.fb_child_status_waiting;
 import static uren.com.myduties.constants.StringConstants.fb_child_taskdesc;
 import static uren.com.myduties.constants.StringConstants.fb_child_type;
 import static uren.com.myduties.constants.StringConstants.fb_child_urgency;
@@ -304,6 +306,64 @@ public class FriendsDBHelper {
                 onCompleteCallback.OnFailed(e.getMessage());
             }
         });
+    }
 
+    public static void sendFriendRequest(String whoSendedId, String whoReceiveId, OnCompleteCallback onCompleteCallback){
+
+        final Map<String, Object> values = new HashMap<>();
+        values.put(whoReceiveId, fb_child_status_sendedrequest);
+
+        FirebaseDatabase.getInstance().getReference(fb_child_friends).child(whoSendedId).updateChildren(values)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+
+                final Map<String, Object> temp = new HashMap<>();
+                values.put(whoSendedId, fb_child_status_waiting);
+
+                FirebaseDatabase.getInstance().getReference(fb_child_friends).child(whoReceiveId).updateChildren(temp)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                onCompleteCallback.OnCompleted();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        onCompleteCallback.OnFailed(e.getMessage());
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                onCompleteCallback.OnFailed(e.getMessage());
+            }
+        });
+    }
+
+    public static void getFriendStatus(String whoDemands, String friendUserId, CompleteCallback completeCallback){
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance()
+                .getReference(fb_child_friends).child(whoDemands).child(friendUserId);
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                try {
+                    String status = (String) dataSnapshot.getValue();
+                    completeCallback.onComplete(status);
+                } catch (Exception e) {
+                    completeCallback.onComplete(null);
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                completeCallback.onFailed(databaseError.toString());
+            }
+        });
     }
 }

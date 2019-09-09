@@ -93,7 +93,7 @@ public class AssignedToUsersFragment extends BaseFragment {
                              Bundle savedInstanceState) {
 
         if (mView == null) {
-            mView = inflater.inflate(R.layout.fragment_waiting_task, container, false);
+            mView = inflater.inflate(R.layout.fragment_assigned_to_users, container, false);
             ButterKnife.bind(this, mView);
             initVariables();
             initListeners();
@@ -119,16 +119,6 @@ public class AssignedToUsersFragment extends BaseFragment {
         setLayoutManager();
         setAdapter();
         setPullToRefresh();
-        setFeedRefreshListener();
-    }
-
-    private void setFeedRefreshListener() {
-        TaskHelper.TaskRefresh.getInstance().setTaskRefreshCallback(new TaskRefreshCallback() {
-            @Override
-            public void onTaskRefresh() {
-                refreshFeed();
-            }
-        });
     }
 
     private void setLayoutManager() {
@@ -139,28 +129,17 @@ public class AssignedToUsersFragment extends BaseFragment {
     private void setAdapter() {
         assignedToUsersAdapter = new AssignedToUsersAdapter(getActivity(), getContext(), mFragmentNavigation);
         recyclerView.setAdapter(assignedToUsersAdapter);
-        assignedToUsersAdapter.setReturnCallback(new ReturnCallback() {
-            @Override
-            public void OnReturn(Object object) {
-                List<Task> returnList = (ArrayList<Task>) object;
-                if (returnList != null && returnList.size() == 0 )
-                    showExceptionLayout(true, VIEW_NO_POST_FOUND);
-            }
-        });
     }
 
     private void setPullToRefresh() {
         refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                refreshFeed();
+                pulledToRefresh = true;
+                assignedToUsersAdapter.updatePostListItems();
+                startGetPosts();
             }
         });
-    }
-
-    private void refreshFeed() {
-        pulledToRefresh = true;
-        startGetPosts();
     }
 
     @Override
@@ -185,56 +164,33 @@ public class AssignedToUsersFragment extends BaseFragment {
         UserTaskDBHelper.getIAssignedTasksToUsers(user, new CompleteCallback() {
             @Override
             public void onComplete(Object object) {
-                assignedToUsersAdapter.addTask((Task) object);
+                pulledToRefresh = false;
+                setFetchData((Task) object);
             }
 
             @Override
             public void onFailed(String message) {
+                pulledToRefresh = false;
                 loadingView.hide();
                 refresh_layout.setRefreshing(false);
             }
         });
     }
 
-    private void setFetchData(List<Task> taskList) {
+    private void setFetchData(Task task) {
 
         if (isFirstFetch) {
             isFirstFetch = false;
             loadingView.smoothToHide();
         }
-
-        if (taskList != null) {
-            if (taskList.size() == 0 ) {
-                showExceptionLayout(true, VIEW_NO_POST_FOUND);
-            } else {
-                showExceptionLayout(false, -1);
-            }
-            setUpRecyclerView(taskList);
-        }
-
+        setUpRecyclerView(task);
         refresh_layout.setRefreshing(false);
     }
 
-    private void setUpRecyclerView(List<Task> taskList1) {
-
+    private void setUpRecyclerView(Task task) {
         loading = true;
-
-
-        assignedToUsersAdapter.removeProgressLoading();
-
-        if (pulledToRefresh) {
-            assignedToUsersAdapter.updatePostListItems(taskList1);
-            pulledToRefresh = false;
-        } else {
-            assignedToUsersAdapter.addAll(taskList1);
-        }
+        assignedToUsersAdapter.addTask(task);
     }
-
-    public void scrollRecViewInitPosition() {
-        mLayoutManager.smoothScrollToPosition(recyclerView, null, 0);
-        //recyclerView.smoothScrollToPosition(0);
-    }
-
 
     /**********************************************/
     private void showExceptionLayout(boolean showException, int viewType) {
