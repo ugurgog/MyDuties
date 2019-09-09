@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,7 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uren.com.myduties.R;
+import uren.com.myduties.common.ShowSelectedPhotoFragment;
 import uren.com.myduties.dbManagement.FriendsDBHelper;
+import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.dutyManagement.profile.interfaces.ListItemClickListener;
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.CompleteCallback;
@@ -51,12 +54,14 @@ public class SearchResultAdapter extends RecyclerView.Adapter {
     private Context mContext;
     private List<Friend> friendList;
     GradientDrawable imageShape;
+    BaseFragment.FragmentNavigation fragmentNavigation;
 
     User accountholderUser;
 
-    public SearchResultAdapter(Context context) {
+    public SearchResultAdapter(Context context, BaseFragment.FragmentNavigation fragmentNavigation) {
         this.mContext = context;
         this.friendList = new ArrayList<>();
+        this.fragmentNavigation = fragmentNavigation;
         imageShape = ShapeUtil.getShape(context.getResources().getColor(R.color.DodgerBlue, null),
                 0, GradientDrawable.OVAL, 50, 0);
         EventBus.getDefault().register(this);
@@ -80,37 +85,24 @@ public class SearchResultAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         RecyclerView.ViewHolder viewHolder;
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.search_result_list_item, parent, false);
 
-        if (viewType == VIEW_ITEM) {
-            View itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.search_result_list_item, parent, false);
-
-            viewHolder = new MyViewHolder(itemView);
-        } else {
-            View v = LayoutInflater.from(parent.getContext()).inflate(
-                    R.layout.progressbar_item, parent, false);
-
-            viewHolder = new ProgressViewHolder(v);
-        }
+        viewHolder = new MyViewHolder(itemView);
         return viewHolder;
 
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
-        if (holder instanceof MyViewHolder) {
-            Friend friend = friendList.get(position);
-            ((MyViewHolder) holder).setData(friend, position);
-        } else {
-            ((ProgressViewHolder) holder).progressBar.setIndeterminate(true);
-        }
+        Friend friend = friendList.get(position);
+        ((MyViewHolder) holder).setData(friend, position);
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView profileName;
-        TextView profileUserName;
+        AppCompatTextView profileName;
+        AppCompatTextView profileUserName;
         TextView shortUserNameTv;
         ImageView profileImage;
         Button btnFollowStatus;
@@ -141,13 +133,23 @@ public class SearchResultAdapter extends RecyclerView.Adapter {
                     manageFollowStatus();
                 }
             });
+
+            profileImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (friend != null && friend.getUser() != null && friend.getUser().getProfilePhotoUrl() != null
+                            && !friend.getUser().getProfilePhotoUrl().isEmpty()) {
+                        fragmentNavigation.pushFragment(new ShowSelectedPhotoFragment(friend.getUser().getProfilePhotoUrl()));
+                    }
+                }
+            });
         }
 
         public void manageFollowStatus() {
-            
+
             switch (friend.getFriendStatus()) {
                 case fb_child_status_friend:
-                    
+
                     break;
                 case fb_child_status_waiting:
                     FriendsDBHelper.acceptFriendRequest(accountholderUser.getUserid(), friend.getUser().getUserid(), new OnCompleteCallback() {
@@ -173,11 +175,11 @@ public class SearchResultAdapter extends RecyclerView.Adapter {
             }
         }
 
-        public void sendFriendRequest(){
+        public void sendFriendRequest() {
             FriendsDBHelper.sendFriendRequest(accountholderUser.getUserid(), friend.getUser().getUserid(), new OnCompleteCallback() {
                 @Override
                 public void OnCompleted() {
-                    friend.setFriendStatus(fb_child_status_friend);
+                    friend.setFriendStatus(fb_child_status_sendedrequest);
                     friendList.set(position, friend);
                     notifyItemChanged(position);
                 }
@@ -235,24 +237,39 @@ public class SearchResultAdapter extends RecyclerView.Adapter {
         public void setData(Friend friend, int position) {
             this.friend = friend;
             this.position = position;
+            setFriendInformation();
+            setButtonVisibility();
+            setFriendStatus();
+        }
+
+        private void setButtonVisibility() {
+            if(accountholderUser.getUserid().equals(friend.getUser().getUserid()))
+                btnFollowStatus.setVisibility(View.GONE);
+            else
+                btnFollowStatus.setVisibility(View.VISIBLE);
+        }
+
+        private void setFriendInformation() {
             UserDataUtil.setName(friend.getUser().getName(), profileName);
             UserDataUtil.setUsername(friend.getUser().getUsername(), profileUserName);
             UserDataUtil.setProfilePicture(mContext, friend.getUser().getProfilePhotoUrl(),
                     friend.getUser().getName(), friend.getUser().getUsername(), shortUserNameTv, profileImage, false);
-            setFriendStatus();
-            UserDataUtil.updateFriendButton(mContext, friend.getFriendStatus(), btnFollowStatus, true);
-            setButtonEnabled();
         }
 
         private void setFriendStatus() {
-            if(friend.getFriendStatus() == null || friend.getFriendStatus().isEmpty()){
+            if (friend.getFriendStatus() == null || friend.getFriendStatus().isEmpty()) {
                 FriendsDBHelper.getFriendStatus(accountholderUser.getUserid(), friend.getUser().getUserid(), new CompleteCallback() {
                     @Override
                     public void onComplete(Object object) {
                         String status = (String) object;
-                        friend.setFriendStatus(status);
-                        friendList.set(position, friend);
-                        notifyItemChanged(position);
+                        if (status == null) {
+                            setFriendButtonCase();
+                        } else {
+                            friend.setFriendStatus(status);
+                            friendList.set(position, friend);
+                            notifyItemChanged(position);
+                            setFriendButtonCase();
+                        }
                     }
 
                     @Override
@@ -260,37 +277,20 @@ public class SearchResultAdapter extends RecyclerView.Adapter {
 
                     }
                 });
-            }
+            } else
+                setFriendButtonCase();
+        }
+
+        private void setFriendButtonCase() {
+            UserDataUtil.updateFriendButton(mContext, friend.getFriendStatus(), btnFollowStatus, false);
+            setButtonEnabled();
         }
 
         private void setButtonEnabled() {
-            if(friend.getFriendStatus().equals(fb_child_status_friend))
+            if (friend.getFriendStatus().equals(fb_child_status_friend))
                 btnFollowStatus.setEnabled(false);
             else
                 btnFollowStatus.setEnabled(true);
-        }
-    }
-
-    public static class ProgressViewHolder extends RecyclerView.ViewHolder {
-        public ProgressBar progressBar;
-
-        public ProgressViewHolder(View v) {
-            super(v);
-            progressBar = v.findViewById(R.id.progressBarLoading);
-        }
-    }
-
-    public void addProgressLoading() {
-        if (getItemViewType(friendList.size() - 1) != VIEW_PROG) {
-            friendList.add(null);
-            notifyItemInserted(friendList.size() - 1);
-        }
-    }
-
-    public void removeProgressLoading() {
-        if (getItemViewType(friendList.size() - 1) == VIEW_PROG) {
-            friendList.remove(friendList.size() - 1);
-            notifyItemRemoved(friendList.size());
         }
     }
 
@@ -299,28 +299,18 @@ public class SearchResultAdapter extends RecyclerView.Adapter {
         return friendList.size();
     }
 
-    public void updateAdapterWithPosition(int position) {
-        notifyItemChanged(position);
-    }
-
     public List<Friend> getPersonList() {
         return friendList;
     }
 
-    public void addAll(List<Friend> friends) {
-        if (friends != null) {
-            friendList.addAll(friends);
-            notifyItemRangeInserted(friendList.size(), friendList.size() + friends.size());
-        }
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     public void updateListItems(List<Friend> newUserList) {
         this.friendList.clear();
         this.friendList.addAll(newUserList);
-    }
-
-    public void clearList() {
-        friendList.clear();
         notifyDataSetChanged();
     }
 }

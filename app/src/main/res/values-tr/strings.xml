@@ -97,6 +97,7 @@
     <string name="SEARCH_FRIENDS">Arkadaşlarda ara…</string>
     <string name="USER_NOT_FOUND">Kullanıcı bulunamadı.</string>
     <string name="cancelSendedRequest">Gönderilen arkadaşlık isteği geri çekilecek. Onaylıyor musunuz?</string>
+    <string name="searchUsers">Kullanıcı Ara</string>
 
     <string name="REMOVE_BLOCK_PERSON">Bu kişi ile mesajlaşabilmek için engeli kaldırmalısınız!</string>
     <string name="TO_BE_REMOVED_BLOCK_PERSON">Bu kişi ile mesajlaşabilmek için engeliniz kaldırılmalıdır!</string>

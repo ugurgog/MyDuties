@@ -157,7 +157,7 @@ public class UserDataUtil {
             CommonUtils.hideKeyBoard(context);
 
         GradientDrawable buttonShape = null;
-        displayButton.setVisibility(View.VISIBLE);
+        //displayButton.setVisibility(View.VISIBLE);
 
         if (followStatus.equals(fb_child_status_friend)) {
             //takip ediliyor

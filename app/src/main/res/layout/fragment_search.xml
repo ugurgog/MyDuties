@@ -9,21 +9,15 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/toolbar_search_layout" />
+        <include layout="@layout/toolbar_custom_layout" />
 
-        <TextView
-            android:id="@+id/txtResult"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:textColor="@color/gray"
-            android:textSize="17sp" />
+        <include layout="@layout/custom_search_layout" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/search_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp">
+            android:background="@color/White">
 
         </androidx.recyclerview.widget.RecyclerView>
 

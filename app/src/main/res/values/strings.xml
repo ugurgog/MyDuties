@@ -114,6 +114,7 @@
     <string name="SEARCH_FRIENDS">Search friends...</string>
     <string name="USER_NOT_FOUND">User not found.</string>
     <string name="cancelSendedRequest">The friend request sent will be withdrawn. Do you confirm?</string>
+    <string name="searchUsers">Search Users</string>
 
     <string name="REMOVE_BLOCK_PERSON">You need to unblock to be able to chat with this person!</string>
     <string name="TO_BE_REMOVED_BLOCK_PERSON">You must be unblocked to communicate with this person!</string>

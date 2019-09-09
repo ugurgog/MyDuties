@@ -15,12 +15,15 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Timer;
@@ -35,7 +38,11 @@ import uren.com.myduties.dutyManagement.tasks.adapters.SearchResultAdapter;
 import uren.com.myduties.dutyManagement.tasks.helper.SearchResultsJsonParser;
 import uren.com.myduties.dutyManagement.tasks.helper.UserJsonParser;
 import uren.com.myduties.dutyManagement.tasks.model.HighlightedResult;
+import uren.com.myduties.interfaces.ReturnCallback;
+import uren.com.myduties.models.Friend;
 import uren.com.myduties.models.User;
+import uren.com.myduties.utils.ClickableImage.ClickableImageView;
+import uren.com.myduties.utils.CommonUtils;
 
 import com.algolia.search.saas.AlgoliaException;
 import com.algolia.search.saas.Client;
@@ -50,7 +57,9 @@ import org.json.JSONObject;
 import static uren.com.myduties.constants.StringConstants.ALGOLIA_APP_ID;
 import static uren.com.myduties.constants.StringConstants.ALGOLIA_INDEX_NAME;
 import static uren.com.myduties.constants.StringConstants.ALGOLIA_SEARCH_API_KEY;
+import static uren.com.myduties.constants.StringConstants.fb_child_email;
 import static uren.com.myduties.constants.StringConstants.fb_child_name;
+import static uren.com.myduties.constants.StringConstants.fb_child_profilePhotoUrl;
 import static uren.com.myduties.constants.StringConstants.fb_child_username;
 import static uren.com.myduties.constants.StringConstants.fb_child_users;
 
@@ -58,22 +67,23 @@ public class SearchFragment extends BaseFragment {
 
     View mView;
 
-    @BindView(R.id.editTextSearch)
-    EditText editTextSearch;
-    @BindView(R.id.txtResult)
-    TextView txtResult;
-    @BindView(R.id.imgCancelSearch)
-    ImageView imgCancelSearch;
-    @BindView(R.id.searchToolbarBackImgv)
-    ImageView searchToolbarBackImgv;
+    @BindView(R.id.searchEdittext)
+    EditText searchEdittext;
     @BindView(R.id.search_recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.commonToolbarbackImgv)
+    ClickableImageView commonToolbarbackImgv;
+    @BindView(R.id.toolbarTitleTv)
+    AppCompatTextView toolbarTitleTv;
+    @BindView(R.id.searchCancelImgv)
+    ImageView searchCancelImgv;
+    @BindView(R.id.searchResultTv)
+    AppCompatTextView searchResultTv;
 
     Index index;
-    CompletionHandler completionHandler;
 
     SearchResultAdapter searchResultAdapter;
-
+    List<Friend> friendList;
 
     private static final int LOAD_MORE_THRESHOLD = 5;
     private static final int HITS_PER_PAGE = 20;
@@ -101,22 +111,31 @@ public class SearchFragment extends BaseFragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
         }
 
         return mView;
     }
 
     private void initListeners() {
-        editTextSearch.setOnClickListener(new View.OnClickListener() {
+
+        commonToolbarbackImgv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editTextSearch.requestFocus();
-                showKeyboard(true);
+                showKeyboard(false);
+                Objects.requireNonNull(getActivity()).onBackPressed();
             }
         });
 
-        editTextSearch.addTextChangedListener(new TextWatcher() {
+        searchCancelImgv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchEdittext.setText("");
+                searchCancelImgv.setVisibility(View.GONE);
+                showKeyboard(false);
+            }
+        });
+
+        searchEdittext.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -130,29 +149,25 @@ public class SearchFragment extends BaseFragment {
             @Override
             public void afterTextChanged(Editable s) {
 
-                if (s != null && s.toString() != null && !s.toString().isEmpty()) {
-                    imgCancelSearch.setVisibility(View.VISIBLE);
-                    searchToolbarBackImgv.setVisibility(View.GONE);
-                } else {
-                    imgCancelSearch.setVisibility(View.GONE);
-                    searchToolbarBackImgv.setVisibility(View.VISIBLE);
-                }
+                if (s != null && s.toString() != null) {
+                    if (!s.toString().trim().isEmpty()) {
+                        searchCancelImgv.setVisibility(View.VISIBLE);
+                    } else {
+                        searchCancelImgv.setVisibility(View.GONE);
+                    }
+                } else
+                    searchCancelImgv.setVisibility(View.GONE);
 
-                if(s!= null && s.toString() != null){
+                if (s != null && s.toString() != null) {
                     Query query = new Query(s.toString())
-                            .setAttributesToRetrieve(fb_child_name, fb_child_username)
+                            .setAttributesToRetrieve(fb_child_name, fb_child_username, fb_child_profilePhotoUrl, fb_child_email)
                             .setHitsPerPage(50);
                     index.searchAsync(query, new CompletionHandler() {
                         @Override
                         public void requestCompleted(JSONObject content, AlgoliaException error) {
-                            Log.i("jsonObject:" , content.toString());
-
                             SearchResultsJsonParser resultsParser = new SearchResultsJsonParser();
                             List<HighlightedResult<User>> resultList = resultsParser.parseResults(content);
-
-                            // TODO: 2019-09-09 devam edecegiz 
-                            //User user = UserJsonParser.parse(content);
-                            Log.i("user:" , "");
+                            updateAdapterItems(resultList);
                         }
                     });
                 }
@@ -160,8 +175,28 @@ public class SearchFragment extends BaseFragment {
         });
     }
 
+    private void updateAdapterItems(List<HighlightedResult<User>> resultList) {
+        friendList.clear();
+
+        for (HighlightedResult<User> result : resultList) {
+            User user = result.getResult();
+            friendList.add(new Friend(user, ""));
+        }
+
+        searchResultAdapter.updateListItems(friendList);
+
+        if (friendList.size() == 0)
+            searchResultTv.setVisibility(View.VISIBLE);
+        else
+            searchResultTv.setVisibility(View.GONE);
+    }
+
     private void initVariables() {
-        editTextSearch.requestFocus();
+        searchEdittext.requestFocus();
+        searchEdittext.setHint(getContext().getResources().getString(R.string.searchUser));
+        searchResultTv.setText(getContext().getResources().getString(R.string.USER_NOT_FOUND));
+        friendList = new ArrayList<>();
+        toolbarTitleTv.setText(getContext().getResources().getString(R.string.searchUsers));
         showKeyboard(true);
         initRecyclerView();
     }
@@ -175,9 +210,12 @@ public class SearchFragment extends BaseFragment {
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(mLayoutManager);
     }
+
     private void setAdapter() {
-        searchResultAdapter = new SearchResultAdapter(getContext());
+        searchResultAdapter = new SearchResultAdapter(getContext(), mFragmentNavigation);
+        searchResultAdapter.setHasStableIds(true);
         recyclerView.setAdapter(searchResultAdapter);
+        recyclerView.getItemAnimator().setChangeDuration(0);
     }
 
     private void setupAlgoliaSearch() throws JSONException {
@@ -199,9 +237,9 @@ public class SearchFragment extends BaseFragment {
         } else {
             InputMethodManager imm = (InputMethodManager) Objects.requireNonNull(getContext()).getSystemService(
                     Context.INPUT_METHOD_SERVICE);
-            Objects.requireNonNull(imm).hideSoftInputFromWindow(editTextSearch.getWindowToken(), 0);
-            editTextSearch.setFocusable(false);
-            editTextSearch.setFocusableInTouchMode(true);
+            Objects.requireNonNull(imm).hideSoftInputFromWindow(searchEdittext.getWindowToken(), 0);
+            searchEdittext.setFocusable(false);
+            searchEdittext.setFocusableInTouchMode(true);
         }
     }
 
