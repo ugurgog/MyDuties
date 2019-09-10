@@ -1,7 +1,460 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/White">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:elevation="@dimen/default_elevation"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:gravity="left"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <RelativeLayout
+                        android:layout_width="60dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/profilePicImgView"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center"
+                                android:contentDescription="TODO" />
+
+                            <TextView
+                                android:id="@+id/shortUserNameTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:textColor="@color/White"
+                                android:textStyle="bold"
+                                android:visibility="gone" />
+                        </FrameLayout>
+
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:fontFamily="@font/amiko"
+                                android:id="@+id/toolbarTitle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="10dp"
+                                android:gravity="left"
+                                android:textColor="@color/White"
+                                android:textSize="15sp" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:fontFamily="@font/amiko"
+                                android:id="@+id/toolbarSubTitle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="10dp"
+                                android:gravity="left"
+                                android:textColor="@color/White"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <uren.com.myduties.utils.ClickableImage.ClickableImageView
+                    android:id="@+id/moreSettingsImgv"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_more_vert_white_24dp"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <!--<ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/scrollView">-->
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:layout_marginTop="5dp"
+                                android:fontFamily="@font/amiko"
+                                android:padding="3dp"
+                                android:text="@string/pleaseEnterTaskDesc"
+                                android:textColor="@color/Black"
+                                android:textSize="13sp"/>
+
+                            <EditText
+                                android:id="@+id/shareMsgEditText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="3dp"
+                                android:layout_marginTop="3dp"
+                                android:layout_marginRight="5dp"
+                                android:background="@color/transparent"
+                                android:focusable="true"
+                                android:gravity="top"
+                                android:hint="@string/writetaskdesc"
+                                android:inputType="textMultiLine|textNoSuggestions"
+                                android:lines="6"
+                                android:maxLines="6"
+                                android:paddingLeft="5dp"
+                                android:scrollbars="vertical"
+                                android:textColor="@color/Black"
+                                android:textColorHint="@color/transparentBlack"
+                                android:textCursorDrawable="@null"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="7dp"
+                            android:alpha="0.1"
+                            android:background="@android:color/black" />
+
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/amiko"
+                            android:padding="3dp"
+                            android:text="@string/whomorwhichgrouptask"
+                            android:textColor="@color/Black"
+                            android:textSize="13sp"/>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="3dp"
+                                android:orientation="horizontal">
+
+
+                                <View
+                                    android:layout_width="1dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="7dp"
+                                    android:alpha="0.1"
+                                    android:background="@android:color/black"
+                                    android:visibility="gone" />
+
+                                <RelativeLayout
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_marginLeft="7dp">
+
+                                    <ImageView
+                                        android:id="@+id/personSelectImgv"
+                                        android:layout_width="50dp"
+                                        android:layout_height="50dp"
+                                        android:contentDescription="TODO"
+                                        android:padding="8dp"
+                                        android:src="@drawable/ic_person_black_100dp" />
+
+                                </RelativeLayout>
+
+                                <View
+                                    android:layout_width="1dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="7dp"
+                                    android:alpha="0.1"
+                                    android:background="@android:color/black" />
+
+                                <RelativeLayout
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_marginLeft="7dp">
+
+                                    <ImageView
+                                        android:id="@+id/groupSelectImgv"
+                                        android:layout_width="50dp"
+                                        android:layout_height="50dp"
+                                        android:contentDescription="TODO"
+                                        android:padding="8dp"
+                                        android:src="@drawable/icon_groups_black" />
+
+                                </RelativeLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/selectedLL"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center|right"
+                                    android:gravity="right"
+                                    android:orientation="horizontal"
+                                    android:visibility="gone"
+                                    android:layout_marginLeft="50dp">
+
+
+                                    <FrameLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center">
+
+                                        <ImageView
+                                            android:id="@+id/selectedPicImgView"
+                                            android:layout_width="35dp"
+                                            android:layout_height="35dp"
+                                            android:layout_gravity="center"
+                                            android:contentDescription="TODO" />
+
+                                        <TextView
+                                            android:id="@+id/selectedShortNameTv"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:textColor="@color/White"
+                                            android:textStyle="bold"
+                                            android:visibility="gone" />
+                                    </FrameLayout>
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:id="@+id/selectedNameTv"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginStart="5dp"
+                                        android:fontFamily="@font/amiko"
+                                        android:text="ugurgogebakan"
+                                        android:textColor="@color/DodgerBlue"
+                                        android:textSize="10sp" />
+
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="7dp"
+                            android:alpha="0.1"
+                            android:background="@android:color/black" />
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp"
+                            android:layout_marginBottom="7dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical" >
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="5dp"
+                                    android:layout_marginTop="5dp"
+                                    android:fontFamily="@font/amiko"
+                                    android:padding="3dp"
+                                    android:text="@string/defaultHomeSelected"
+                                    android:textColor="@color/Black"
+                                    android:textSize="13sp"/>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal">
+
+                                    <uren.com.myduties.utils.ClickableImage.ClickableImageView
+                                        android:id="@+id/taskTypeImgv"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp"
+                                        android:src="@drawable/ic_home_type_24dp"
+                                        android:visibility="visible"
+                                        android:layout_marginStart="15dp"/>
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:fontFamily="@font/amiko"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginStart="8dp"
+                                        android:gravity="center_vertical"
+                                        android:textSize="11sp"
+                                        android:id="@+id/taskTypeName"
+                                        android:text="@string/task_type_home"/>
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+
+
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="7dp"
+                            android:alpha="0.1"
+                            android:background="@android:color/black" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp"
+                            android:layout_marginBottom="7dp"
+                            android:orientation="horizontal">
+
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:layout_marginStart="3dp">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:fontFamily="@font/amiko"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/urgent"
+                                    android:layout_marginStart="5dp"
+                                    android:layout_gravity="center"
+                                    android:textSize="13sp"/>
+
+                                <Switch
+                                    android:id="@+id/urgentSwitch"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="30dp"
+                                    android:checked="true"
+                                    android:gravity="right"
+                                    android:layout_gravity="center"
+                                    android:layout_marginStart="50dp"/>
+
+                            </LinearLayout>
+
+
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </androidx.core.widget.NestedScrollView>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/nextFab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_margin="10dp"
+                android:src="@drawable/ic_send_white_24dp"
+                android:visibility="visible"/>
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <!--</ScrollView>-->
+
 
 </RelativeLayout>

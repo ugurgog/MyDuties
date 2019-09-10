@@ -45,6 +45,7 @@ import uren.com.myduties.dbManagement.UserDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.dutyManagement.NextActivity;
 import uren.com.myduties.dutyManagement.profile.adapters.GroupDetailListAdapter;
+import uren.com.myduties.dutyManagement.tasks.GroupAllTasksFragment;
 import uren.com.myduties.evetBusModels.SelectedUsersBus;
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.CompleteCallback;
@@ -96,6 +97,8 @@ public class ViewGroupDetailFragment extends BaseFragment {
     ImageView changePicImgv;
     @BindView(R.id.backImgv)
     ImageView backImgv;
+    @BindView(R.id.seeGroupTasksCardview)
+    CardView seeGroupTasksCardview;
 
     boolean photoExistOnImgv = false;
 
@@ -238,6 +241,13 @@ public class ViewGroupDetailFragment extends BaseFragment {
     }
 
     public void addListeners() {
+        seeGroupTasksCardview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mFragmentNavigation.pushFragment(new GroupAllTasksFragment(groupRequestResultResultArrayItem));
+            }
+        });
+
         backImgv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -24,6 +24,7 @@ import android.text.format.DateUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +49,7 @@ import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import uren.com.myduties.R;
+import uren.com.myduties.models.TaskType;
 
 import static uren.com.myduties.constants.StringConstants.APP_GOOGLE_PLAY_DEFAULT_LINK;
 
@@ -354,7 +356,14 @@ public class CommonUtils {
 
     public static void setTaskTypeImage(Context context, ImageView taskTypeImgv, String type, TaskTypeHelper taskTypeHelper) {
         if (type == null || type.isEmpty()) return;
-        int typeVal = taskTypeHelper.getTypes().get(type);
+        int typeVal = 0;
+
+        for (TaskType taskType : taskTypeHelper.getTypes())
+            if (taskType.getKey().equals(type)) {
+                typeVal = taskType.getImgId();
+                break;
+            }
+
         Glide.with(context)
                 .load(typeVal)
                 .apply(RequestOptions.centerInsideTransform())
@@ -391,5 +400,19 @@ public class CommonUtils {
             e.printStackTrace();
         }
         return outputStream.toString();
+    }
+
+    public static void showKeyboard(Context context, boolean showKeyboard, EditText editText) {
+
+        if (showKeyboard) {
+            InputMethodManager imm = (InputMethodManager) Objects.requireNonNull(context).getSystemService(Context.INPUT_METHOD_SERVICE);
+            Objects.requireNonNull(imm).toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+        } else {
+            InputMethodManager imm = (InputMethodManager) Objects.requireNonNull(context).getSystemService(
+                    Context.INPUT_METHOD_SERVICE);
+            Objects.requireNonNull(imm).hideSoftInputFromWindow(editText.getWindowToken(), 0);
+            editText.setFocusable(false);
+            editText.setFocusableInTouchMode(true);
+        }
     }
 }

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Black"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="100dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:fontFamily="@font/amiko"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/selectTaskType"
+            android:textColor="@color/White"
+            android:textSize="20sp"
+            android:layout_above="@+id/recyclerView"
+            android:gravity="center"
+            android:layout_marginBottom="50dp">
+        </androidx.appcompat.widget.AppCompatTextView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/transparent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_gravity="center">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+
+
+
+
+
+</RelativeLayout>

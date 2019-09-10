@@ -12,7 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:id="@+id/specialListLinearLayout"
+            android:id="@+id/groupSelectMainLinLay"
             android:orientation="horizontal"
             android:baselineAligned="false">
 
@@ -25,20 +25,30 @@
                 android:layout_weight="1.5">
 
                 <ImageView
-                    android:id="@+id/specialPictureImgView"
+                    android:id="@+id/groupPicImgView"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
                     android:contentDescription="TODO" />
 
                 <TextView
-                    android:id="@+id/shortUsernameTv"
+                    android:id="@+id/shortGroupNameTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textColor="@color/White"
                     android:textStyle="bold"
                     android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/tickImgv"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="right|bottom"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_check_white_24dp"
+                    android:contentDescription="TODO"
+                    android:visibility="gone"/>
             </FrameLayout>
 
             <LinearLayout
@@ -52,19 +62,12 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:fontFamily="@font/amiko"
-                    android:id="@+id/profileName"
+                    android:id="@+id/groupnameTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="15dp"
+                    android:textSize="14dp"
                     android:textColor="@color/Black" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:fontFamily="@font/amiko"
-                    android:id="@+id/profileUserName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/tintColor"
-                    android:textSize="12dp" />
             </LinearLayout>
 
             <RelativeLayout
@@ -74,7 +77,7 @@
                 android:gravity="center">
 
                 <Button
-                    android:id="@+id/adminDisplayBtn"
+                    android:id="@+id/adminDisplayButton"
                     android:layout_height="32dp"
                     android:layout_width="match_parent"
                     android:layout_gravity="center"

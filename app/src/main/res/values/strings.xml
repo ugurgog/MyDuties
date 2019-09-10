@@ -37,6 +37,8 @@
     <string name="errorUpper">ERROR</string>
     <string name="addPersonToGroup">Add Friend to Group</string>
     <string name="selectLeastOneFriend">You must choose at least 1 person!</string>
+    <string name="selectOneFriend">Please select a friend!</string>
+    <string name="selectOneGroup">Please select a group!</string>
     <string name="selectLeastOneGroup">You must choose at least 1 group!</string>
     <string name="addFriendFirst">To create a group, you must have at least one follower!</string>
     <string name="addGroupName">Add group name</string>
@@ -82,6 +84,7 @@
     <string name="NEW_GROUP">Yeni Grup</string>
 
     <string name="typeToAddText">Say something...</string>
+    <string name="writetaskdesc"><font size="12">Write task description...</font></string>
     <string name="UPDATING">Updating...</string>
     <string name="EXPLORE_PEOPLE">Explore People</string>
     <string name="VIEW_PENDING_REQUEST">View Pending Requests</string>
@@ -113,6 +116,7 @@
     <string name="SEARCH_FOLLOWERS">Search followers...</string>
     <string name="SEARCH_FRIENDS">Search friends...</string>
     <string name="USER_NOT_FOUND">User not found.</string>
+    <string name="GROUP_NOT_FOUND">Group not found.</string>
     <string name="cancelSendedRequest">The friend request sent will be withdrawn. Do you confirm?</string>
     <string name="searchUsers">Search Users</string>
 
@@ -390,6 +394,9 @@
 
     <string name="phoneNotDefined">Phone info is not yet defined.</string>
     <string name="thisTaskAssignedTo">This task assigned to</string>
+    <string name="defaultHomeSelected">The task type is default home. Click the picture to change it.</string>
+    <string name="whomorwhichgrouptask">Whom or which group will the task be assigned to? Please select.</string>
+    <string name="pleaseEnterTaskDesc">Please enter the job description.</string>
     <string name="remind">Remind</string>
     <string name="urgent">Urgent</string>
     <string name="closed">Closed</string>
@@ -405,7 +412,17 @@
     <string name="problems">Problems</string>
     <string name="viewUncompletedProblems">View Incomplete Problems</string>
     <string name="viewCompletedProblems">View Completed Problems</string>
+    <string name="chooseAFriend">Select a Friend</string>
+    <string name="chooseAGroup">Select a Group</string>
+    <string name="selectTaskType">Please Select Task Type</string>
 
+    <string name="task_type_home">Home</string>
+    <string name="task_type_shop">Shopping</string>
+    <string name="task_type_business">Business</string>
+    <string name="task_type_school">School</string>
+    <string name="task_type_love">Relationship</string>
+    <string name="task_type_child">Children</string>
+    <string name="task_type_pet">Pet</string>
 
 
     <string name="FCM_SERVER_KEY">AAAA4JR4Gec:APA91bGLWhwgn6JuvSPzJVWUw-LTiu3rW48ihDO--ulWaWja8s8f6M9v4fy_Y2pMOx8cqrB8NwzT-XB9cqfMpsYpgQ8yAksP6xK8A9rG5nOpbwUJQkr04xgG9aI4Qbf4P16XxuzMYvWv</string>

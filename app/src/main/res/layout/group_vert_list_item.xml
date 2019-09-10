@@ -83,7 +83,7 @@
                     android:fontFamily="@font/amiko"
                     android:id="@+id/adminDisplayButton"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="32dp"
                     android:layout_gravity="center"
                     android:layout_marginRight="5dp"
                     android:textAllCaps="false"

@@ -97,12 +97,12 @@
                         <Button
                             android:id="@+id/btnFollowStatus"
                             android:layout_width="match_parent"
-                            android:layout_height="33dp"
+                            android:layout_height="32dp"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:text="@string/follow"
                             android:textAllCaps="false"
-                            android:textSize="10sp" />
+                            android:textSize="10sp"
+                            android:visibility="gone"/>
 
                     </RelativeLayout>
 

@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             tryAgainButton.setVisibility(View.GONE);
             networkTryDesc.setVisibility(View.GONE);
-            TaskTypeHelper taskTypeHelper = new TaskTypeHelper();
+            TaskTypeHelper taskTypeHelper = new TaskTypeHelper(MainActivity.this);
             EventBus.getDefault().postSticky(new TaskTypeBus(taskTypeHelper));
             startLoginProcess();
         }

@@ -9,10 +9,11 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/specialListLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:id="@+id/specialListLinearLayout"
+            android:gravity="center"
             android:orientation="horizontal"
             android:baselineAligned="false">
 
@@ -25,64 +26,63 @@
                 android:layout_weight="1.5">
 
                 <ImageView
-                    android:id="@+id/specialPictureImgView"
+                    android:id="@+id/profilePicImgView"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
                     android:contentDescription="TODO" />
 
                 <TextView
-                    android:id="@+id/shortUsernameTv"
+                    android:id="@+id/shortUserNameTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textColor="@color/White"
                     android:textStyle="bold"
                     android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/tickImgv"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="right|bottom"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_check_white_24dp"
+                    android:contentDescription="TODO"
+                    android:visibility="gone"
+                    android:layout_marginRight="10dp"/>
+
             </FrameLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="5dp"
-                android:layout_weight="5"
-                android:orientation="vertical">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:fontFamily="@font/amiko"
-                    android:id="@+id/profileName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="15dp"
-                    android:textColor="@color/Black" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:fontFamily="@font/amiko"
-                    android:id="@+id/profileUserName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/tintColor"
-                    android:textSize="12dp" />
-            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2.5"
-                android:gravity="center">
+                android:layout_weight="5"
+                android:gravity="center_vertical">
 
-                <Button
-                    android:id="@+id/adminDisplayBtn"
-                    android:layout_height="32dp"
-                    android:layout_width="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="5dp"
-                    android:text="@string/adminText"
-                    android:textAllCaps="false"
-                    android:textColor="@color/MediumSeaGreen"
-                    android:textSize="10sp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:fontFamily="@font/amiko"
+                        android:id="@+id/nameTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/Black"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:fontFamily="@font/amiko"
+                        android:id="@+id/usernameTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
 
             </RelativeLayout>
 
@@ -104,7 +104,6 @@
         </LinearLayout>
 
     </LinearLayout>
-
 
 
 </androidx.cardview.widget.CardView>

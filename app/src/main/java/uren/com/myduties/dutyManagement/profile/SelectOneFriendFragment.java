@@ -1,5 +1,6 @@
 package uren.com.myduties.dutyManagement.profile;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,70 +37,57 @@ import uren.com.myduties.dbManagement.FriendsDBHelper;
 import uren.com.myduties.dbManagement.GroupDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.dutyManagement.NextActivity;
-import uren.com.myduties.dutyManagement.assignTask.AssignTaskFragment;
 import uren.com.myduties.dutyManagement.profile.adapters.FriendVerticalListAdapter;
+import uren.com.myduties.dutyManagement.profile.adapters.SelectOneFriendAdapter;
 import uren.com.myduties.evetBusModels.SelectedUsersBus;
-import uren.com.myduties.evetBusModels.TaskTypeBus;
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.OnCompleteCallback;
 import uren.com.myduties.interfaces.ReturnCallback;
+import uren.com.myduties.interfaces.ReturnObjectListener;
 import uren.com.myduties.models.Friend;
 import uren.com.myduties.models.User;
+import uren.com.myduties.utils.ClickableImage.ClickableImageView;
 import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.ProgressDialogUtil;
 import uren.com.myduties.utils.ShapeUtil;
 
-import static uren.com.myduties.constants.NumericConstants.DEFAULT_GET_FOLLOWER_PAGE_COUNT;
 import static uren.com.myduties.constants.NumericConstants.DEFAULT_GET_FOLLOWER_PERPAGE_COUNT;
 import static uren.com.myduties.constants.StringConstants.ANIMATE_LEFT_TO_RIGHT;
 import static uren.com.myduties.constants.StringConstants.ANIMATE_RIGHT_TO_LEFT;
 import static uren.com.myduties.constants.StringConstants.fb_child_status_friend;
 
-public class SelectFriendFragment extends BaseFragment {
+public class SelectOneFriendFragment extends BaseFragment {
 
     View mView;
 
     @BindView(R.id.nextFab)
     FloatingActionButton nextFab;
-    @BindView(R.id.imgCancelSearch)
-    ImageView imgCancelSearch;
-    @BindView(R.id.editTextSearch)
-    EditText editTextSearch;
+    @BindView(R.id.searchCancelImgv)
+    ImageView searchCancelImgv;
+    @BindView(R.id.searchEdittext)
+    EditText searchEdittext;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    @BindView(R.id.searchToolbarBackImgv)
-    ImageView searchToolbarBackImgv;
-    @BindView(R.id.searchToolbarAddItemImgv)
-    ImageView searchToolbarAddItemImgv;
+    @BindView(R.id.searchResultTv)
+    AppCompatTextView searchResultTv;
+    @BindView(R.id.commonToolbarbackImgv)
+    ClickableImageView commonToolbarbackImgv;
+    @BindView(R.id.toolbarTitleTv)
+    AppCompatTextView toolbarTitleTv;
 
     private ProgressDialogUtil progressDialogUtil;
-    private FriendVerticalListAdapter adapter;
-    private String groupId;
-    private List<User> groupParticipantList;
-    private String pendingName;
+    private SelectOneFriendAdapter selectOneFriendAdapter;
     private LinearLayoutManager linearLayoutManager;
     private int pastVisibleItems, visibleItemCount, totalItemCount;
     private boolean loading = true;
     private ReturnCallback returnCallback;
     private int perPageCnt;
-    private String groupAdminUserid;
-    private List<User> selectedUsers;
+    private User selectedUser;
     private User accountholderUser;
 
-    public SelectFriendFragment(String groupId, String groupAdminUserid, List<User> groupParticipantList, String pendingName,
-                                ReturnCallback returnCallback) {
-        this.groupId = groupId;
-        this.groupParticipantList = groupParticipantList;
-        this.pendingName = pendingName;
+    public SelectOneFriendFragment(ReturnCallback returnCallback) {
         this.returnCallback = returnCallback;
-        this.groupAdminUserid = groupAdminUserid;
-        EventBus.getDefault().postSticky(new SelectedUsersBus(new ArrayList<>()));
-    }
-
-    @Subscribe(sticky = true)
-    public void selectedUsersReceived(SelectedUsersBus selectedUsersBus) {
-        selectedUsers = selectedUsersBus.getUsers();
     }
 
     @Subscribe(sticky = true)
@@ -129,19 +118,25 @@ public class SelectFriendFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         if (mView == null) {
-            mView = inflater.inflate(R.layout.fragment_select_friend, container, false);
+            mView = inflater.inflate(R.layout.fragment_select_one_friend, container, false);
             ButterKnife.bind(this, mView);
             addListeners();
-            setShapes();
-            setPaginationValues();
-            setAdapter();
-            setRecyclerViewScroll();
-            getFriendSelectionPage();
+            initVariables();
             progressDialogUtil = new ProgressDialogUtil(getContext(), null, false);
             progressDialogUtil.dialogShow();
-            searchToolbarAddItemImgv.setVisibility(View.GONE);
         }
         return mView;
+    }
+
+    private void initVariables(){
+        searchResultTv.setText(getContext().getResources().getString(R.string.USER_NOT_FOUND));
+        toolbarTitleTv.setText(Objects.requireNonNull(getActivity()).getResources().getString(R.string.chooseAFriend));
+        searchEdittext.setHint(getContext().getResources().getString(R.string.searchUser));
+        setShapes();
+        setPaginationValues();
+        setAdapter();
+        setRecyclerViewScroll();
+        getFriendSelectionPage();
     }
 
     @Override
@@ -154,11 +149,10 @@ public class SelectFriendFragment extends BaseFragment {
     }
 
     public void addListeners() {
-        searchToolbarBackImgv.setOnClickListener(new View.OnClickListener() {
+        commonToolbarbackImgv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((NextActivity) Objects.requireNonNull(getActivity())).ANIMATION_TAG = ANIMATE_LEFT_TO_RIGHT;
-                getActivity().onBackPressed();
+                Objects.requireNonNull(getActivity()).onBackPressed();
             }
         });
 
@@ -170,38 +164,49 @@ public class SelectFriendFragment extends BaseFragment {
             }
         });
 
-        imgCancelSearch.setOnClickListener(new View.OnClickListener() {
+        searchCancelImgv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editTextSearch.setText("");
-                imgCancelSearch.setVisibility(View.GONE);
+                searchEdittext.setText("");
+                searchCancelImgv.setVisibility(View.GONE);
+                CommonUtils.showKeyboard(getContext(), false, searchEdittext);
             }
         });
 
-        editTextSearch.addTextChangedListener(new TextWatcher() {
+        searchEdittext.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s != null) {
+                if (s != null && s.toString() != null) {
                     if (!s.toString().trim().isEmpty()) {
-                        imgCancelSearch.setVisibility(View.VISIBLE);
-                        searchToolbarBackImgv.setVisibility(View.GONE);
+                        searchCancelImgv.setVisibility(View.VISIBLE);
                     } else {
-                        imgCancelSearch.setVisibility(View.GONE);
-                        searchToolbarBackImgv.setVisibility(View.VISIBLE);
+                        searchCancelImgv.setVisibility(View.GONE);
                     }
 
-                    if (adapter != null)
-                        adapter.updateAdapter(s.toString());
+                    if (selectOneFriendAdapter != null)
+                        selectOneFriendAdapter.updateAdapter(s.toString(), new ReturnObjectListener() {
+                            @Override
+                            public void OnReturn(Object object) {
+                                int itemSize = (int) object;
+
+                                if (itemSize == 0)
+                                    searchResultTv.setVisibility(View.VISIBLE);
+                                else
+                                    searchResultTv.setVisibility(View.GONE);
+                            }
+                        });
                 } else
-                    imgCancelSearch.setVisibility(View.GONE);
+                    searchCancelImgv.setVisibility(View.GONE);
             }
         });
     }
@@ -228,7 +233,7 @@ public class SelectFriendFragment extends BaseFragment {
                         if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
                             loading = false;
                             perPageCnt = perPageCnt + DEFAULT_GET_FOLLOWER_PERPAGE_COUNT;
-                            adapter.addProgressLoading();
+                            selectOneFriendAdapter.addProgressLoading();
                             getFriendSelectionPage();
                         }
                     }
@@ -243,7 +248,7 @@ public class SelectFriendFragment extends BaseFragment {
             @Override
             public void onComplete(Object object) {
                 if (object != null) {
-                    adapter.addUser(((Friend) object).getUser());
+                    selectOneFriendAdapter.addUser(((Friend) object).getUser());
                     progressDialogUtil.dialogDismiss();
                 }
             }
@@ -251,8 +256,8 @@ public class SelectFriendFragment extends BaseFragment {
             @Override
             public void onFailed(String message) {
                 progressDialogUtil.dialogDismiss();
-                if (adapter.isShowingProgressLoading()) {
-                    adapter.removeProgressLoading();
+                if (selectOneFriendAdapter.isShowingProgressLoading()) {
+                    selectOneFriendAdapter.removeProgressLoading();
                 }
                 CommonUtils.showToastShort(getContext(), message);
             }
@@ -262,59 +267,23 @@ public class SelectFriendFragment extends BaseFragment {
     public void setAdapter() {
         linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new FriendVerticalListAdapter(getContext(), groupParticipantList);
-        recyclerView.setAdapter(adapter);
+        selectOneFriendAdapter = new SelectOneFriendAdapter(getContext(), new ReturnCallback() {
+            @Override
+            public void OnReturn(Object object) {
+                selectedUser = (User) object;
+            }
+        });
+        recyclerView.setAdapter(selectOneFriendAdapter);
     }
 
     public void checkSelectedPerson() {
 
-        if (selectedUsers.size() == 0) {
-            Toast.makeText(getContext(), getResources().getString(R.string.selectLeastOneFriend), Toast.LENGTH_SHORT).show();
+        if (selectedUser == null) {
+            Toast.makeText(getContext(), getResources().getString(R.string.selectOneFriend), Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (pendingName != null) {
-            if (pendingName.equals(ViewGroupDetailFragment.class.getName())) {
-                startAddParticipantToGroup();
-            } else if (pendingName.equals(GroupViewFragment.class.getName())) {
-
-                if (mFragmentNavigation != null) {
-                    mFragmentNavigation.pushFragment(new AddGroupFragment(new CompleteCallback() {
-                        @Override
-                        public void onComplete(Object object) {
-                            Objects.requireNonNull(getActivity()).onBackPressed();
-                            returnCallback.OnReturn(object);
-                        }
-
-                        @Override
-                        public void onFailed(String message) {
-                            CommonUtils.showToastShort(getContext(), message);
-                        }
-                    }), ANIMATE_RIGHT_TO_LEFT);
-                }
-            }
-        }
+        returnCallback.OnReturn(selectedUser);
+        Objects.requireNonNull(getActivity()).onBackPressed();
     }
-
-    private void startAddParticipantToGroup() {
-
-        for (User user : selectedUsers) {
-            GroupDBHelper.addAParticipantToGroup(groupId, user, new OnCompleteCallback() {
-                @Override
-                public void OnCompleted() {
-                    returnCallback.OnReturn(user);
-
-                    if (user.getUserid().equals(selectedUsers.get(selectedUsers.size() - 1).getUserid()))
-                        Objects.requireNonNull(getActivity()).onBackPressed();
-                }
-
-                @Override
-                public void OnFailed(String message) {
-                    CommonUtils.showToastShort(getContext(), message);
-                }
-            });
-        }
-    }
-
-
 }

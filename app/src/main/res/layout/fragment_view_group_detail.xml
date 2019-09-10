@@ -228,7 +228,62 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="7dp"
-                        android:text="@string/addPersonToGroup" />
+                        android:text="@string/addPersonToGroup"
+                        android:textColor="@color/Black"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/seeGroupTasksCardview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+
+                    <!--<ImageView
+                        android:id="@+id/addFriendImgv"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:padding="10dp"
+                        android:src="@mipmap/icon_add_white" />-->
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="13dp"
+                        android:layout_marginTop="5dp">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:padding="10dp"
+                            android:src="@drawable/ic_assignment_black_24dp"
+                            android:contentDescription="TODO" />
+
+                    </FrameLayout>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:fontFamily="@font/amiko"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="7dp"
+                        android:text="@string/see_all_tasks"
+                        android:textColor="@color/Black"
+                        />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
