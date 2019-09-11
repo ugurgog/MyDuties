@@ -321,7 +321,7 @@ public class UserEditFragment extends BaseFragment
     }
 
     private void updateUserPersonalInfo(){
-        UserDBHelper.addOrUpdateUser(user, new OnCompleteCallback() {
+        UserDBHelper.updateUser(user, true, new OnCompleteCallback() {
             @Override
             public void OnCompleted() {
                 progressDialogUtil.dialogDismiss();

@@ -151,6 +151,8 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
             UserDataUtil.setProfilePicture(context, user.getProfilePhotoUrl(),
                     user.getName(),
                     user.getUsername(), shortUserNameTv, profileImage, false);
+            UserDataUtil.updatePendingApproveButton(context, btnApprove);
+            UserDataUtil.updatePendingRejectButton(context, btnReject);
         }
     }
 

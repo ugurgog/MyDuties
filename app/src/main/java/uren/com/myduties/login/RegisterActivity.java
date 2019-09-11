@@ -17,12 +17,17 @@ import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.algolia.search.saas.Client;
+import com.algolia.search.saas.Index;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.gson.JsonObject;
+
+import org.json.JSONObject;
 
 import java.util.Objects;
 
@@ -39,6 +44,9 @@ import uren.com.myduties.utils.ShapeUtil;
 import uren.com.myduties.utils.dialogBoxUtil.DialogBoxUtil;
 import uren.com.myduties.utils.dialogBoxUtil.Interfaces.InfoDialogBoxCallback;
 
+import static uren.com.myduties.constants.StringConstants.ALGOLIA_APP_ID;
+import static uren.com.myduties.constants.StringConstants.ALGOLIA_INDEX_NAME;
+import static uren.com.myduties.constants.StringConstants.ALGOLIA_SEARCH_API_KEY;
 import static uren.com.myduties.constants.StringConstants.LOGIN_USER;
 
 
@@ -57,6 +65,8 @@ public class RegisterActivity extends AppCompatActivity
     String userEmail;
     String userPassword;
     ProgressDialog progressDialog;
+
+    Index index;
 
     //Firebase
     private FirebaseAuth mAuth;
@@ -98,6 +108,8 @@ public class RegisterActivity extends AppCompatActivity
         btnRegister.setOnClickListener(this);
         progressDialog = new ProgressDialog(this);
         mAuth = FirebaseAuth.getInstance();
+        Client client = new Client(ALGOLIA_APP_ID, ALGOLIA_SEARCH_API_KEY);
+        index = client.getIndex(ALGOLIA_INDEX_NAME);
     }
 
     @Override
@@ -218,6 +230,7 @@ public class RegisterActivity extends AppCompatActivity
                             progressDialog.dismiss();
                             setUserInfo(userName, userEmail);
                             addUserToSystem(userName, userEmail);
+
                             //startAppIntroPage();
                             //startMainPage();
                         } else {
@@ -254,7 +267,7 @@ public class RegisterActivity extends AppCompatActivity
         user.setUserid(mAuth.getCurrentUser().getUid());
         user.setUsername(username);
         user.setEmail(email);
-        UserDBHelper.addOrUpdateUser(user, new OnCompleteCallback() {
+        UserDBHelper.addUser(user, new OnCompleteCallback() {
             @Override
             public void OnCompleted() {
                 startAppIntroPage();

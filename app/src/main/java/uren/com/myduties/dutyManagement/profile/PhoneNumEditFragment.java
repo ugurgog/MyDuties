@@ -263,7 +263,7 @@ public class PhoneNumEditFragment extends BaseFragment {
     public void clearUserPhoneNum() {
         user.setPhone(new Phone());
 
-        UserDBHelper.addOrUpdateUser(user, new OnCompleteCallback() {
+        UserDBHelper.updateUser(user, false, new OnCompleteCallback() {
             @Override
             public void OnCompleted() {
                 completeCallback.onComplete(" ");

@@ -298,7 +298,7 @@ public class FriendsDBHelper {
             public void onSuccess(Void aVoid) {
 
                 final Map<String, Object> temp = new HashMap<>();
-                values.put(whoSendedId, fb_child_status_waiting);
+                temp.put(whoSendedId, fb_child_status_waiting);
 
                 FirebaseDatabase.getInstance().getReference(fb_child_friends).child(whoReceiveId).updateChildren(temp)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {

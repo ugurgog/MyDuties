@@ -200,4 +200,22 @@ public class UserDataUtil {
         displayButton.setBackground(buttonShape);
     }
 
+    public static void updatePendingApproveButton(Context context, Button displayButton) {
+        CommonUtils.hideKeyBoard(context);
+        GradientDrawable buttonShape;
+        displayButton.setTextColor(context.getResources().getColor(R.color.White, null));
+        buttonShape = ShapeUtil.getShape(context.getResources().getColor(R.color.DodgerBlue, null),
+                context.getResources().getColor(R.color.White, null), GradientDrawable.RECTANGLE, 15, 1);
+        displayButton.setBackground(buttonShape);
+    }
+
+    public static void updatePendingRejectButton(Context context, Button displayButton) {
+        CommonUtils.hideKeyBoard(context);
+        GradientDrawable buttonShape;
+        displayButton.setTextColor(context.getResources().getColor(R.color.Black, null));
+        buttonShape = ShapeUtil.getShape(context.getResources().getColor(R.color.White, null),
+                context.getResources().getColor(R.color.Gray, null), GradientDrawable.RECTANGLE, 15, 2);
+        displayButton.setBackground(buttonShape);
+    }
+
 }

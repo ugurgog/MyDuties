@@ -215,7 +215,7 @@ public class VerifyPhoneNumberFragment extends Fragment {
 
         user.setPhone(phone);
 
-        UserDBHelper.addOrUpdateUser(user, new OnCompleteCallback() {
+        UserDBHelper.updateUser(user, false, new OnCompleteCallback() {
             @Override
             public void OnCompleted() {
                 DialogBoxUtil.showInfoDialogWithLimitedTime(getActivity(), null, getActivity().getResources().getString(R.string.UPDATE_IS_SUCCESSFUL), 1500, new InfoDialogBoxCallback() {

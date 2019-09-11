@@ -95,12 +95,12 @@
                         <Button
                             android:id="@+id/btnApprove"
                             android:layout_width="match_parent"
-                            android:layout_height="35dp"
+                            android:layout_height="33dp"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:text="@string/ACCEPT"
                             android:textAllCaps="false"
-                            android:textSize="12sp" />
+                            android:textSize="10sp" />
 
                     </RelativeLayout>
 
@@ -113,12 +113,12 @@
                         <Button
                             android:id="@+id/btnReject"
                             android:layout_width="match_parent"
-                            android:layout_height="35dp"
+                            android:layout_height="33dp"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:text="@string/REJECT"
                             android:textAllCaps="false"
-                            android:textSize="12sp" />
+                            android:textSize="10sp" />
 
                     </RelativeLayout>
 
