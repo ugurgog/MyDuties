@@ -102,6 +102,12 @@ public class WaitingTaskFragment extends BaseFragment {
         return mView;
     }
 
+    @Override
+    public void onStart() {
+        Objects.requireNonNull(getActivity()).findViewById(R.id.tabMainLayout).setVisibility(View.VISIBLE);
+        super.onStart();
+    }
+
     private void initVariables() {
         limitValue = REC_MAXITEM_LIMIT_COUNT;
     }

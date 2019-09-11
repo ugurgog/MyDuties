@@ -173,7 +173,7 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
                 public void onClick(View v) {
                     if (taskGroup != null && taskGroup.getGroupPhotoUrl() != null &&
                             !taskGroup.getGroupPhotoUrl().isEmpty()) {
-                        fragmentNavigation.pushFragment(new ShowSelectedPhotoFragment(taskGroup.getGroupPhotoUrl()), ANIMATE_LEFT_TO_RIGHT);
+                        fragmentNavigation.pushFragment(new ShowSelectedPhotoFragment(taskGroup.getGroupPhotoUrl()));
                     }
                 }
             });
@@ -199,7 +199,7 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
                                     task.setCompleted(true);
                                     task.setWhoCompleted(user);
 
-                                    GroupTaskDBHelper.addOrUpdateGroupTask(task, true, new OnCompleteCallback() {
+                                    GroupTaskDBHelper.updateGroupTask(task, true, new OnCompleteCallback() {
                                         @Override
                                         public void OnCompleted() {
                                             taskList.set(position, task);

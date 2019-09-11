@@ -28,8 +28,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import uren.com.myduties.R;
-import uren.com.myduties.common.ShowSelectedPhotoFragment;
-import uren.com.myduties.dbManagement.UserDBHelper;
 import uren.com.myduties.dbManagement.UserTaskDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.evetBusModels.TaskTypeBus;
@@ -153,7 +151,7 @@ public class AssignedToUsersAdapter extends RecyclerView.Adapter {
                                 case R.id.close:
                                     task.setClosed(true);
 
-                                    UserTaskDBHelper.addOrUpdateUserTask(task, false, new OnCompleteCallback() {
+                                    UserTaskDBHelper.updateUserTask(task, false, new OnCompleteCallback() {
                                         @Override
                                         public void OnCompleted() {
                                             taskList.set(position, task);

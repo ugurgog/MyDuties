@@ -27,10 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import uren.com.myduties.R;
-import uren.com.myduties.common.ShowSelectedPhotoFragment;
 import uren.com.myduties.dbManagement.GroupTaskDBHelper;
-import uren.com.myduties.dbManagement.UserDBHelper;
-import uren.com.myduties.dbManagement.UserTaskDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.evetBusModels.TaskTypeBus;
 import uren.com.myduties.evetBusModels.UserBus;
@@ -222,7 +219,7 @@ public class AssignedToGroupsAdapter extends RecyclerView.Adapter {
         }
 
         private void updateGroup() {
-            GroupTaskDBHelper.addOrUpdateGroupTask(groupTask, false, new OnCompleteCallback() {
+            GroupTaskDBHelper.updateGroupTask(groupTask, false, new OnCompleteCallback() {
                 @Override
                 public void OnCompleted() {
                     taskList.set(position, groupTask);

@@ -245,6 +245,7 @@
     <string name="PASSWORD_LINK_SEND_SUCCESS">Renew password link has sent to your email address.</string>
     <string name="PASSWORD_LINK_SEND_FAIL">Fail to send link, please tyr again.</string>
     <string name="SHARE_IS_SUCCESSFUL">The share you just made was successful :) </string>
+    <string name="taskAssignSuccessful">Task assignment completed.</string>
     <string name="PASSWORD_IS_CHANGED">Password is changed</string>
     <string name="CURRENT_PASSWORD_INCORRECT">Current password is incorrect</string>
     <string name="ASK_FOR_REMOVE_ACCOUNT_PRIVACY">Do you want to remove the privacy of the account?</string>
@@ -396,7 +397,6 @@
     <string name="thisTaskAssignedTo">This task assigned to</string>
     <string name="defaultHomeSelected">The task type is default home. Click the picture to change it.</string>
     <string name="whomorwhichgrouptask">Whom or which group will the task be assigned to? Please select.</string>
-    <string name="pleaseEnterTaskDesc">Please enter the job description.</string>
     <string name="remind">Remind</string>
     <string name="urgent">Urgent</string>
     <string name="closed">Closed</string>
@@ -415,6 +415,8 @@
     <string name="chooseAFriend">Select a Friend</string>
     <string name="chooseAGroup">Select a Group</string>
     <string name="selectTaskType">Please Select Task Type</string>
+    <string name="selectUserOrGroupToAssignTask">Please select user or group to assign a task!</string>
+    <string name="pleaseEnterTaskDesc">Please write task description!</string>
 
     <string name="task_type_home">Home</string>
     <string name="task_type_shop">Shopping</string>

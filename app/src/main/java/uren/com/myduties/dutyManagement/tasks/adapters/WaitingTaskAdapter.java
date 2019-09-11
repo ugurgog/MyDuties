@@ -176,7 +176,7 @@ public class WaitingTaskAdapter extends RecyclerView.Adapter {
                                 case R.id.changeAsCompleted:
                                     task.setCompleted(true);
 
-                                    UserTaskDBHelper.addOrUpdateUserTask(task, true, new OnCompleteCallback() {
+                                    UserTaskDBHelper.updateUserTask(task, true, new OnCompleteCallback() {
                                         @Override
                                         public void OnCompleted() {
                                             taskList.remove(position);

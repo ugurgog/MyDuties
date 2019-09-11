@@ -93,7 +93,7 @@ public class SearchFragment extends BaseFragment {
 
     @Override
     public void onStart() {
-        Objects.requireNonNull(getActivity()).findViewById(R.id.tabMainLayout).setVisibility(View.VISIBLE);
+        Objects.requireNonNull(getActivity()).findViewById(R.id.tabMainLayout).setVisibility(View.GONE);
         super.onStart();
     }
 

@@ -226,6 +226,7 @@
     <string name="PASSWORD_LINK_SEND_SUCCESS">Şifre sıfırlama linki e-mail adresinize gönderildi.</string>
     <string name="PASSWORD_LINK_SEND_FAIL">Şifre gönderme başarısız, lütfen tekrar deneyiniz.</string>
     <string name="SHARE_IS_SUCCESSFUL">Biraz önce yapmış olduğunuz paylaşım başarılı sonuçlandı :) </string>
+    <string name="taskAssignSuccessful">Task assignment completed.</string>
     <string name="PASSWORD_IS_CHANGED">Şifre değiştirildi</string>
     <string name="CURRENT_PASSWORD_INCORRECT">Mevcut şifre hatalı</string>
     <string name="ASK_FOR_REMOVE_ACCOUNT_PRIVACY">Hesabınızın gizliliğini kaldırmak istiyor musunuz?</string>
@@ -376,7 +377,6 @@
     <string name="thisTaskAssignedTo">Bu görev şu kişiye atandı</string>
     <string name="defaultHomeSelected">The task type is default home. Click the picture to change it.</string>
     <string name="whomorwhichgrouptask">Görev kime yada hangi gruba atanacak?. Lütfen seçiniz.</string>
-    <string name="pleaseEnterTaskDesc">Please enter the job description.</string>
     <string name="remind">Hatırlat</string>
     <string name="urgent">Acil</string>
     <string name="closed">Kapalı</string>
@@ -395,6 +395,8 @@
     <string name="chooseAFriend">Bir Arkadaş Seçin</string>
     <string name="chooseAGroup">Bir Grup Seçin</string>
     <string name="selectTaskType">Lütfen Görevin Tipini Seçiniz</string>
+    <string name="selectUserOrGroupToAssignTask">Görev ataması için lütfen kullanıcı yada grup seçin!</string>
+    <string name="pleaseEnterTaskDesc">Lütfen görev açıkmasını yazın!</string>
 
     <string name="task_type_home">Ev</string>
     <string name="task_type_shop">Market</string>

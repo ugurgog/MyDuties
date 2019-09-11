@@ -313,7 +313,7 @@ public class GroupTaskDBHelper {
         }
     }
 
-    public static void addOrUpdateGroupTask(GroupTask groupTask, boolean completedOk,
+    public static void updateGroupTask(GroupTask groupTask, boolean completedOk,
                                             final OnCompleteCallback onCompleteCallback) {
 
         if (groupTask == null) return;
@@ -332,8 +332,6 @@ public class GroupTaskDBHelper {
         if (groupTask.getAssignedTime() != 0)
             values.put(fb_child_assignedtime, groupTask.getAssignedTime());
 
-        Log.i("ServerValue.TIMESTAMP:", ServerValue.TIMESTAMP.toString());
-
         if (completedOk)
             values.put(fb_child_completedtime, ServerValue.TIMESTAMP);
 
@@ -343,6 +341,41 @@ public class GroupTaskDBHelper {
         values.put(fb_child_completed, groupTask.isCompleted());
         values.put(fb_child_closed, groupTask.isClosed());
         values.put(fb_child_whocompletedid, groupTask.getWhoCompleted().getUserid());
+        values.put(fb_child_type, groupTask.getType());
+        values.put(fb_child_urgency, groupTask.isUrgency());
+
+        databaseReference.updateChildren(values).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull com.google.android.gms.tasks.Task<Void> task) {
+                onCompleteCallback.OnCompleted();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                onCompleteCallback.OnFailed(e.getMessage());
+            }
+        });
+    }
+
+    public static void addGroupTask(GroupTask groupTask, final OnCompleteCallback onCompleteCallback) {
+
+        if (groupTask == null) return;
+        if (groupTask.getTaskId() == null || groupTask.getTaskId().isEmpty()) return;
+        if (groupTask.getGroup() == null || groupTask.getGroup().getGroupid().isEmpty()) return;
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(fb_child_grouptask).
+                child(groupTask.getGroup().getGroupid()).child(groupTask.getTaskId());
+
+        final Map<String, Object> values = new HashMap<>();
+
+        if (groupTask.getTaskDesc() != null)
+            values.put(fb_child_taskdesc, groupTask.getTaskDesc());
+        if (groupTask.getAssignedFrom().getUserid() != null)
+            values.put(fb_child_assignedfromid, groupTask.getAssignedFrom().getUserid());
+
+        values.put(fb_child_assignedtime, ServerValue.TIMESTAMP);
+        values.put(fb_child_completed, groupTask.isCompleted());
+        values.put(fb_child_closed, groupTask.isClosed());
         values.put(fb_child_type, groupTask.getType());
         values.put(fb_child_urgency, groupTask.isUrgency());
 
@@ -435,7 +468,7 @@ public class GroupTaskDBHelper {
 
                                                 }
                                             });
-                                        }else
+                                        } else
                                             completeCallback.onComplete(groupTask);
                                     }
 

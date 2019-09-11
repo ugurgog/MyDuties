@@ -16,6 +16,8 @@ import androidx.annotation.Nullable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import uk.co.senab.photoview.PhotoViewAttacher;
@@ -35,6 +37,12 @@ public class ShowSelectedPhotoFragment extends BaseFragment {
 
     public ShowSelectedPhotoFragment(String photoUrl) {
         this.photoUrl = photoUrl;
+    }
+
+    @Override
+    public void onStart() {
+        Objects.requireNonNull(getActivity()).findViewById(R.id.tabMainLayout).setVisibility(View.GONE);
+        super.onStart();
     }
 
 

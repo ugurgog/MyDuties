@@ -24,7 +24,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 
-
 import java.util.Objects;
 
 import io.fabric.sdk.android.Fabric;

@@ -418,7 +418,7 @@
                                     android:id="@+id/urgentSwitch"
                                     android:layout_width="wrap_content"
                                     android:layout_height="30dp"
-                                    android:checked="true"
+                                    android:checked="false"
                                     android:gravity="right"
                                     android:layout_gravity="center"
                                     android:layout_marginStart="50dp"/>

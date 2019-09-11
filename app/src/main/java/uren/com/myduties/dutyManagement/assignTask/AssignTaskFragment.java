@@ -1,9 +1,12 @@
 package uren.com.myduties.dutyManagement.assignTask;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -18,6 +21,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lai.library.ButtonStyle;
 
 import org.greenrobot.eventbus.EventBus;
@@ -30,11 +34,14 @@ import butterknife.ButterKnife;
 import uren.com.myduties.R;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.dutyManagement.NextActivity;
+import uren.com.myduties.dutyManagement.assignTask.controller.CheckTaskItems;
 import uren.com.myduties.dutyManagement.assignTask.interfaces.TaskTypeCallback;
 import uren.com.myduties.dutyManagement.profile.SelectFriendFragment;
 import uren.com.myduties.dutyManagement.profile.SelectOneFriendFragment;
 import uren.com.myduties.dutyManagement.profile.SelectOneGroupFragment;
+import uren.com.myduties.evetBusModels.TaskTypeBus;
 import uren.com.myduties.evetBusModels.UserBus;
+import uren.com.myduties.interfaces.OnCompleteCallback;
 import uren.com.myduties.interfaces.ReturnCallback;
 import uren.com.myduties.models.Group;
 import uren.com.myduties.models.TaskType;
@@ -42,8 +49,10 @@ import uren.com.myduties.models.User;
 import uren.com.myduties.utils.ClickableImage.ClickableImageView;
 import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.ShapeUtil;
+import uren.com.myduties.utils.TaskTypeHelper;
 import uren.com.myduties.utils.dataModelUtil.GroupDataUtil;
 import uren.com.myduties.utils.dataModelUtil.UserDataUtil;
+import uren.com.myduties.utils.dialogBoxUtil.GifDialogBox;
 
 import static uren.com.myduties.constants.StringConstants.ANIMATE_RIGHT_TO_LEFT;
 
@@ -87,10 +96,17 @@ public class AssignTaskFragment extends BaseFragment {
     @BindView(R.id.shareMsgEditText)
     EditText shareMsgEditText;
 
+    @BindView(R.id.nextFab)
+    FloatingActionButton nextFab;
+
+    TaskTypeHelper taskTypeHelper;
 
     User accountHolderUser;
     User selectedUser = null;
     Group selectedGroup = null;
+
+    TaskType selectedTaskType = null;
+    boolean urgency = false;
 
     public AssignTaskFragment() {
     }
@@ -118,17 +134,21 @@ public class AssignTaskFragment extends BaseFragment {
         accountHolderUser = userBus.getUser();
     }
 
+    @Subscribe(sticky = true)
+    public void taskTypeHelperReceived(TaskTypeBus taskTypeBus) {
+        taskTypeHelper = taskTypeBus.getTypeMap();
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        if (mView == null) {
+        if(mView == null) {
             mView = inflater.inflate(R.layout.fragment_assign_task, container, false);
             ButterKnife.bind(this, mView);
             initializeItems();
             initializeListeners();
         }
-
         return mView;
     }
 
@@ -138,11 +158,54 @@ public class AssignTaskFragment extends BaseFragment {
         ((NextActivity) Objects.requireNonNull(getActivity())).ANIMATION_TAG = null;
     }
 
-    private void initializeItems(){
+    private void initializeItems() {
         setToolbarInfo();
+        selectedTaskType = taskTypeHelper.getTypes().get(0);
+        selectedUser = null;
+        selectedGroup = null;
+        urgency = false;
     }
 
+    public void showShareSuccessView() {
+        final Handler handler = new Handler();
+        handler.postDelayed(() -> {
+            if (NextActivity.thisActivity != null) {
+                new GifDialogBox.Builder(NextActivity.thisActivity)
+                        .setMessage(NextActivity.thisActivity.getResources().getString(R.string.taskAssignSuccessful))
+                        .setGifResource(R.drawable.gif16)
+                        .setNegativeBtnVisibility(View.GONE)
+                        .setPositiveBtnVisibility(View.GONE)
+                        .setTitleVisibility(View.GONE)
+                        .setDurationTime(3000)
+                        .isCancellable(true)
+                        .build();
+            }
+        }, 1000);
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
     private void initializeListeners() {
+        nextFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CheckTaskItems checkTaskItems = new CheckTaskItems(getContext(), accountHolderUser,
+                        selectedUser, selectedGroup, selectedTaskType, urgency, shareMsgEditText.getText().toString(),
+                        new OnCompleteCallback() {
+                            @Override
+                            public void OnCompleted() {
+                                Objects.requireNonNull(getActivity()).onBackPressed();
+                                showShareSuccessView();
+                            }
+
+                            @Override
+                            public void OnFailed(String message) {
+                                CommonUtils.showToastShort(getContext(), message);
+                            }
+                        });
+                checkTaskItems.checkTaskThenAssign();
+            }
+        });
+
         personSelectImgv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,10 +226,28 @@ public class AssignTaskFragment extends BaseFragment {
                 startTaskTypeSelectFragment();
             }
         });
+
+        urgentSwitch.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        if (urgentSwitch.isChecked()) {
+                            urgency = false;
+                        } else {
+                            urgency = true;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     public void setToolbarInfo() {
-        if (accountHolderUser != null ) {
+        if (accountHolderUser != null) {
             if (accountHolderUser.getName() != null && !accountHolderUser.getName().isEmpty()) {
                 UserDataUtil.setName(accountHolderUser.getName(), toolbarTitle);
             }
@@ -175,18 +256,18 @@ public class AssignTaskFragment extends BaseFragment {
                 UserDataUtil.setUsername(accountHolderUser.getUsername(), toolbarSubTitle);
             }
 
-
             UserDataUtil.setProfilePicture(getContext(), accountHolderUser.getProfilePhotoUrl(), accountHolderUser.getName(),
                     accountHolderUser.getUsername(), shortUserNameTv, profilePicImgView, false);
         }
     }
 
-    private void startTaskTypeSelectFragment(){
+    private void startTaskTypeSelectFragment() {
         CommonUtils.showKeyboard(getContext(), false, shareMsgEditText);
         if (mFragmentNavigation != null) {
             mFragmentNavigation.pushFragment(new TaskTypeSelectFragment(new TaskTypeCallback() {
                 @Override
                 public void OnReturn(TaskType taskType) {
+                    selectedTaskType = taskType;
                     setTaskTypeViews(taskType);
                 }
             }));
@@ -220,21 +301,21 @@ public class AssignTaskFragment extends BaseFragment {
     }
 
     public void setSelectedViews(Object object) {
-        if(object != null)
+        if (object != null)
             selectedLL.setVisibility(View.VISIBLE);
         else
             selectedLL.setVisibility(View.GONE);
 
-        if(object instanceof User) {
+        if (object instanceof User) {
             setSelectedUserViews((User) object);
             selectedGroup = null;
-        }else if(object instanceof  Group) {
+        } else if (object instanceof Group) {
             setSelectedGroupViews((Group) object);
             selectedUser = null;
         }
     }
 
-    private void setTaskTypeViews(TaskType taskType){
+    private void setTaskTypeViews(TaskType taskType) {
         Glide.with(getContext())
                 .load(taskType.getImgId())
                 .apply(RequestOptions.centerInsideTransform())
@@ -242,8 +323,8 @@ public class AssignTaskFragment extends BaseFragment {
         taskTypeName.setText(taskType.getDesc());
     }
 
-    public void setSelectedUserViews(User user){
-        if (user != null ) {
+    public void setSelectedUserViews(User user) {
+        if (user != null) {
             if (user.getName() != null && !user.getName().isEmpty()) {
                 UserDataUtil.setName(user.getName(), selectedNameTv);
             }
@@ -253,8 +334,8 @@ public class AssignTaskFragment extends BaseFragment {
         }
     }
 
-    public void setSelectedGroupViews(Group group){
-        if (group != null ) {
+    public void setSelectedGroupViews(Group group) {
+        if (group != null) {
             if (group.getName() != null && !group.getName().isEmpty()) {
                 UserDataUtil.setName(group.getName(), selectedNameTv);
             }

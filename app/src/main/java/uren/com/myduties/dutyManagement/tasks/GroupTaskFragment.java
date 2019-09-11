@@ -109,6 +109,12 @@ public class GroupTaskFragment extends BaseFragment {
         return mView;
     }
 
+    @Override
+    public void onStart() {
+        Objects.requireNonNull(getActivity()).findViewById(R.id.tabMainLayout).setVisibility(View.VISIBLE);
+        super.onStart();
+    }
+
     private void initVariables() {
         showExceptionLayout(true, VIEW_NO_POST_FOUND);
     }

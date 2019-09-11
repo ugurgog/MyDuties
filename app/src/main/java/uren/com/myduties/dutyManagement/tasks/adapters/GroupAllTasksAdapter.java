@@ -166,7 +166,7 @@ public class GroupAllTasksAdapter extends RecyclerView.Adapter {
                                     task.setCompleted(true);
                                     task.setWhoCompleted(user);
 
-                                    GroupTaskDBHelper.addOrUpdateGroupTask(task, true, new OnCompleteCallback() {
+                                    GroupTaskDBHelper.updateGroupTask(task, true, new OnCompleteCallback() {
                                         @Override
                                         public void OnCompleted() {
                                             taskList.set(position, task);

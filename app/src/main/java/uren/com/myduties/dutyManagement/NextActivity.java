@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.android.material.tabs.TabLayout;
@@ -24,7 +25,9 @@ import com.google.android.material.tabs.TabLayout;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.Stack;
 
 import butterknife.ButterKnife;
 import io.fabric.sdk.android.Fabric;
@@ -69,6 +72,7 @@ public class NextActivity extends FragmentActivity implements
 
     public FragNavTransactionOptions transactionOptions;
     public static NotifyProblemFragment notifyProblemFragment;
+    public AssignTaskFragment assignTaskFragment;
 
     private int[] mTabIconsSelected = {
             R.drawable.ic_my_tasks_white_24dp,
@@ -123,8 +127,18 @@ public class NextActivity extends FragmentActivity implements
     }
 
     public void tabSelectionControl(TabLayout.Tab tab) {
-        fragmentHistory.push(tab.getPosition());
-        switchAndUpdateTabSelection(tab.getPosition());
+        if (tab.getPosition() != FragNavController.TAB2) {
+            fragmentHistory.push(tab.getPosition());
+            switchAndUpdateTabSelection(tab.getPosition());
+        } else {
+            assignTaskFragment = new AssignTaskFragment();
+            Stack<Fragment> fragmentStack = new Stack<>();
+            fragmentStack.add(assignTaskFragment);
+            mNavController.setRootFragment(fragmentStack, FragNavController.TAB2);
+
+            fragmentHistory.push(tab.getPosition());
+            switchAndUpdateTabSelection(tab.getPosition());
+        }
     }
 
     private void initValues() {
@@ -357,7 +371,8 @@ public class NextActivity extends FragmentActivity implements
             case TAB1:
                 return new MyTaskFragment();
             case FragNavController.TAB2:
-                return new AssignTaskFragment();
+                assignTaskFragment = new AssignTaskFragment();
+                return assignTaskFragment;
             case FragNavController.TAB3:
                 return new ProfileFragment();
 

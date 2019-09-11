@@ -105,6 +105,12 @@ public class GroupAllTasksFragment extends BaseFragment {
     }
 
     @Override
+    public void onStart() {
+        Objects.requireNonNull(getActivity()).findViewById(R.id.tabMainLayout).setVisibility(View.VISIBLE);
+        super.onStart();
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((NextActivity) getActivity()).ANIMATION_TAG = ANIMATE_RIGHT_TO_LEFT;

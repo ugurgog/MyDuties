@@ -125,6 +125,12 @@ public class ViewGroupDetailFragment extends BaseFragment {
     }
 
     @Override
+    public void onStart() {
+        Objects.requireNonNull(getActivity()).findViewById(R.id.tabMainLayout).setVisibility(View.VISIBLE);
+        super.onStart();
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         EventBus.getDefault().register(this);
@@ -321,11 +327,6 @@ public class ViewGroupDetailFragment extends BaseFragment {
             }
         });
         recyclerView.setAdapter(adapter);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
     }
 
     private void startChooseImageProc() {

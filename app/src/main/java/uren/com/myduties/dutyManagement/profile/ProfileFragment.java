@@ -119,6 +119,7 @@ public class ProfileFragment extends BaseFragment {
 
     @Override
     public void onStart() {
+        Objects.requireNonNull(getActivity()).findViewById(R.id.tabMainLayout).setVisibility(View.VISIBLE);
         super.onStart();
     }
 

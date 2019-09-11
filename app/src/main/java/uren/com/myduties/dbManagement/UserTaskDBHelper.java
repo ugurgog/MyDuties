@@ -234,7 +234,7 @@ public class UserTaskDBHelper {
         });
     }
 
-    public static void addOrUpdateUserTask(Task task, boolean completedOk, final OnCompleteCallback onCompleteCallback) {
+    public static void updateUserTask(Task task, boolean completedOk, final OnCompleteCallback onCompleteCallback) {
 
         if (task == null) return;
         if (task.getTaskId() == null || task.getTaskId().isEmpty()) return;
@@ -260,6 +260,41 @@ public class UserTaskDBHelper {
         values.put(fb_child_closed, task.isClosed());
         values.put(fb_child_type, task.getType());
         values.put(fb_child_urgency, task.isUrgency());
+
+        databaseReference.updateChildren(values).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull com.google.android.gms.tasks.Task<Void> task) {
+                onCompleteCallback.OnCompleted();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                onCompleteCallback.OnFailed(e.getMessage());
+            }
+        });
+    }
+
+    public static void addUserTask(Task task, final OnCompleteCallback onCompleteCallback) {
+
+        if (task == null) return;
+        if (task.getTaskId() == null || task.getTaskId().isEmpty()) return;
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(fb_child_usertask).
+                child(task.getAssignedTo().getUserid()).child(task.getTaskId());
+
+        final Map<String, Object> values = new HashMap<>();
+
+        if (task.getTaskDesc() != null)
+            values.put(fb_child_taskdesc, task.getTaskDesc());
+
+        if (task.getAssignedFrom().getUserid() != null)
+            values.put(fb_child_assignedfromid, task.getAssignedFrom().getUserid());
+
+        values.put(fb_child_completed, task.isCompleted());
+        values.put(fb_child_closed, task.isClosed());
+        values.put(fb_child_type, task.getType());
+        values.put(fb_child_urgency, task.isUrgency());
+        values.put(fb_child_assignedtime, ServerValue.TIMESTAMP);
 
         databaseReference.updateChildren(values).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

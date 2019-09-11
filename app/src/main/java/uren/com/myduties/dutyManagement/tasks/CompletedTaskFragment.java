@@ -26,7 +26,6 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import uren.com.myduties.R;
-import uren.com.myduties.common.ShowSelectedPhotoFragment;
 import uren.com.myduties.dbManagement.UserTaskDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.dutyManagement.tasks.adapters.CompletedTaskAdapter;
@@ -104,6 +103,12 @@ public class CompletedTaskFragment extends BaseFragment {
         }
 
         return mView;
+    }
+
+    @Override
+    public void onStart() {
+        Objects.requireNonNull(getActivity()).findViewById(R.id.tabMainLayout).setVisibility(View.VISIBLE);
+        super.onStart();
     }
 
     private void initVariables() {
