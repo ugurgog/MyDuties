@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -18,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,7 +29,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -49,7 +46,6 @@ import uren.com.myduties.dutyManagement.profile.adapters.FriendGridListAdapter;
 import uren.com.myduties.evetBusModels.SelectedUsersBus;
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.CompleteCallback;
-import uren.com.myduties.interfaces.OnCompleteCallback;
 import uren.com.myduties.interfaces.ReturnCallback;
 import uren.com.myduties.models.Group;
 import uren.com.myduties.models.PhotoSelectUtil;
@@ -309,7 +305,7 @@ public class AddGroupFragment extends BaseFragment {
                         GroupDBHelper.getGroup(group.getGroupid(), new CompleteCallback() {
                             @Override
                             public void onComplete(Object object) {
-                                completeCallback.onComplete((Group) object);
+                                completeCallback.onComplete(object);
                                 Objects.requireNonNull(getActivity()).onBackPressed();
                             }
 

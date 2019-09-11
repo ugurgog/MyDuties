@@ -9,12 +9,10 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -27,7 +25,6 @@ import uren.com.myduties.R;
 import uren.com.myduties.common.ShowSelectedPhotoFragment;
 import uren.com.myduties.dbManagement.FriendsDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
-import uren.com.myduties.dutyManagement.profile.interfaces.ListItemClickListener;
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.OnCompleteCallback;
@@ -37,9 +34,7 @@ import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.ShapeUtil;
 import uren.com.myduties.utils.dataModelUtil.UserDataUtil;
 import uren.com.myduties.utils.dialogBoxUtil.CustomDialogBox;
-import uren.com.myduties.utils.dialogBoxUtil.DialogBoxUtil;
 import uren.com.myduties.utils.dialogBoxUtil.Interfaces.CustomDialogListener;
-import uren.com.myduties.utils.dialogBoxUtil.Interfaces.YesNoDialogBoxCallback;
 
 import static uren.com.myduties.constants.StringConstants.fb_child_status_friend;
 import static uren.com.myduties.constants.StringConstants.fb_child_status_sendedrequest;

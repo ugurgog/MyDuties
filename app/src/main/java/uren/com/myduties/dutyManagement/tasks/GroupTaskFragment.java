@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -19,34 +18,23 @@ import com.wang.avi.AVLoadingIndicatorView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import uren.com.myduties.R;
 import uren.com.myduties.dbManagement.GroupTaskDBHelper;
-import uren.com.myduties.dbManagement.UserTaskDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
-import uren.com.myduties.dutyManagement.NextActivity;
-import uren.com.myduties.dutyManagement.tasks.adapters.CompletedTaskAdapter;
 import uren.com.myduties.dutyManagement.tasks.adapters.GroupTaskAdapter;
 import uren.com.myduties.dutyManagement.tasks.helper.TaskHelper;
 import uren.com.myduties.dutyManagement.tasks.interfaces.TaskRefreshCallback;
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.CompleteCallback;
-import uren.com.myduties.interfaces.ReturnCallback;
-import uren.com.myduties.models.Group;
 import uren.com.myduties.models.GroupTask;
-import uren.com.myduties.models.Task;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.ClickableImage.ClickableImageView;
-import uren.com.myduties.utils.dialogBoxUtil.DialogBoxUtil;
-import uren.com.myduties.utils.dialogBoxUtil.Interfaces.InfoDialogBoxCallback;
 import uren.com.myduties.utils.layoutManager.CustomLinearLayoutManager;
 
-import static uren.com.myduties.constants.NumericConstants.REC_MAXITEM_LIMIT_COUNT;
 import static uren.com.myduties.constants.NumericConstants.VIEW_NO_POST_FOUND;
 import static uren.com.myduties.constants.NumericConstants.VIEW_RETRY;
 import static uren.com.myduties.constants.NumericConstants.VIEW_SERVER_ERROR;

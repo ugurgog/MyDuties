@@ -6,10 +6,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 
 import androidx.annotation.NonNull;
@@ -24,19 +22,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 import uren.com.myduties.MainActivity;
 import uren.com.myduties.R;
+import uren.com.myduties.dbManagement.TokenDBHelper;
 
 import static uren.com.myduties.constants.StringConstants.FB_CHILD_DEVICE_TOKEN;
 import static uren.com.myduties.constants.StringConstants.FB_CHILD_TOKEN;
@@ -91,40 +83,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (firebaseAuth != null && firebaseAuth.getCurrentUser() != null) {
             String userid = firebaseAuth.getCurrentUser().getUid();
             if (!userid.isEmpty())
-                sendRegistrationToServer(token, userid);
+                TokenDBHelper.sendTokenToServer(token, userid);
         }
     }
-
-    public static void sendRegistrationToServer(String token, String userid) {
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference(FB_CHILD_DEVICE_TOKEN)
-                .child(userid);
-
-        final Map<String, Object> values = new HashMap<>();
-        values.put(FB_CHILD_TOKEN, token);
-
-        database.updateChildren(values).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
-            }
-        });
-    }
-
 
     private void sendNotificationForMessaging(RemoteMessage remoteMessage) {
         String messageBody = Objects.requireNonNull(remoteMessage.getNotification()).getBody();
         String messageTitle = remoteMessage.getNotification().getTitle();
-        //String messageType = remoteMessage.getData().get(FCM_MESSAGE_TYPE);
 
         Intent intent = new Intent(this, MainActivity.class);
-
-        /*if (messageType != null && !messageType.isEmpty())
-            intent.putExtra(FCM_MESSAGE_TYPE, messageType);*/
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,

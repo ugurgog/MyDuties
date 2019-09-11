@@ -3,9 +3,7 @@ package uren.com.myduties.utils;
 import android.content.Context;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import uren.com.myduties.R;
 import uren.com.myduties.models.TaskType;

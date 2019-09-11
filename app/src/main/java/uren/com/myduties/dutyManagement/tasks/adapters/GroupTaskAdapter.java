@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -14,13 +13,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.firebase.database.ServerValue;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -34,25 +30,20 @@ import uren.com.myduties.common.ShowSelectedPhotoFragment;
 import uren.com.myduties.dbManagement.GroupDBHelper;
 import uren.com.myduties.dbManagement.GroupTaskDBHelper;
 import uren.com.myduties.dbManagement.UserDBHelper;
-import uren.com.myduties.dbManagement.UserTaskDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.dutyManagement.tasks.GroupAllTasksFragment;
 import uren.com.myduties.evetBusModels.TaskTypeBus;
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.OnCompleteCallback;
-import uren.com.myduties.interfaces.ReturnCallback;
+import uren.com.myduties.messaging.NotificationHandler;
 import uren.com.myduties.models.Group;
 import uren.com.myduties.models.GroupTask;
-import uren.com.myduties.models.Task;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.CommonUtils;
-import uren.com.myduties.utils.ShapeUtil;
 import uren.com.myduties.utils.TaskTypeHelper;
 import uren.com.myduties.utils.dataModelUtil.GroupDataUtil;
 import uren.com.myduties.utils.dataModelUtil.UserDataUtil;
 
-import static com.google.firebase.database.core.operation.OperationSource.SERVER;
-import static uren.com.myduties.constants.StringConstants.ANIMATE_LEFT_TO_RIGHT;
 import static uren.com.myduties.constants.StringConstants.CHAR_AMPERSAND;
 
 public class GroupTaskAdapter extends RecyclerView.Adapter {
@@ -79,7 +70,7 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
     }
 
     @Subscribe(sticky = true)
-    public void taskTypeReceived(TaskTypeBus taskTypeBus){
+    public void taskTypeReceived(TaskTypeBus taskTypeBus) {
         taskTypeHelper = taskTypeBus.getTypeMap();
     }
 
@@ -205,8 +196,9 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
                                             taskList.set(position, task);
                                             notifyItemChanged(position);
                                             setTaskCompletedTime();
-
-                                            // TODO: 2019-08-26 - Burada assignedfrom user a notif gonderilecek
+                                            NotificationHandler.sendUserNotification(mContext, user, task.getAssignedFrom(),
+                                                    user.getName() + " " + mContext.getResources().getString(R.string.completedThisTask),
+                                                    task.getTaskDesc());
                                         }
 
                                         @Override

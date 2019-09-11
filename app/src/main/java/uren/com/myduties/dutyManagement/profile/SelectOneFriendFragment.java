@@ -1,6 +1,5 @@
 package uren.com.myduties.dutyManagement.profile;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,23 +24,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import uren.com.myduties.R;
 import uren.com.myduties.dbManagement.FriendsDBHelper;
-import uren.com.myduties.dbManagement.GroupDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
-import uren.com.myduties.dutyManagement.NextActivity;
-import uren.com.myduties.dutyManagement.profile.adapters.FriendVerticalListAdapter;
 import uren.com.myduties.dutyManagement.profile.adapters.SelectOneFriendAdapter;
-import uren.com.myduties.evetBusModels.SelectedUsersBus;
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.CompleteCallback;
-import uren.com.myduties.interfaces.OnCompleteCallback;
 import uren.com.myduties.interfaces.ReturnCallback;
 import uren.com.myduties.interfaces.ReturnObjectListener;
 import uren.com.myduties.models.Friend;
@@ -53,8 +44,6 @@ import uren.com.myduties.utils.ProgressDialogUtil;
 import uren.com.myduties.utils.ShapeUtil;
 
 import static uren.com.myduties.constants.NumericConstants.DEFAULT_GET_FOLLOWER_PERPAGE_COUNT;
-import static uren.com.myduties.constants.StringConstants.ANIMATE_LEFT_TO_RIGHT;
-import static uren.com.myduties.constants.StringConstants.ANIMATE_RIGHT_TO_LEFT;
 import static uren.com.myduties.constants.StringConstants.fb_child_status_friend;
 
 public class SelectOneFriendFragment extends BaseFragment {

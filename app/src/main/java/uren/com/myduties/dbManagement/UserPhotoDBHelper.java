@@ -1,7 +1,6 @@
 package uren.com.myduties.dbManagement;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
 
@@ -9,19 +8,14 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.ByteArrayOutputStream;
-
 import uren.com.myduties.R;
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.models.PhotoSelectUtil;
-import uren.com.myduties.models.User;
 
 public class UserPhotoDBHelper {
 

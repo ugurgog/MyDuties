@@ -1,7 +1,6 @@
 package uren.com.myduties.dutyManagement.profile.helper;
 
 import android.content.Context;
-import android.os.AsyncTask;
 
 import com.google.gson.Gson;
 

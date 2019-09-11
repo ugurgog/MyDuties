@@ -15,25 +15,16 @@ import java.util.Map;
 
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.OnCompleteCallback;
-import uren.com.myduties.models.Group;
 import uren.com.myduties.models.Problem;
-import uren.com.myduties.models.User;
 
-import static uren.com.myduties.constants.StringConstants.fb_child_adminid;
 import static uren.com.myduties.constants.StringConstants.fb_child_completedtime;
 import static uren.com.myduties.constants.StringConstants.fb_child_createdat;
 import static uren.com.myduties.constants.StringConstants.fb_child_fixed;
-import static uren.com.myduties.constants.StringConstants.fb_child_groupphotourl;
-import static uren.com.myduties.constants.StringConstants.fb_child_groups;
-import static uren.com.myduties.constants.StringConstants.fb_child_members;
-import static uren.com.myduties.constants.StringConstants.fb_child_name;
 import static uren.com.myduties.constants.StringConstants.fb_child_platform;
 import static uren.com.myduties.constants.StringConstants.fb_child_problemdesc;
 import static uren.com.myduties.constants.StringConstants.fb_child_problemphotourl;
 import static uren.com.myduties.constants.StringConstants.fb_child_problems;
 import static uren.com.myduties.constants.StringConstants.fb_child_type;
-import static uren.com.myduties.constants.StringConstants.fb_child_users;
-import static uren.com.myduties.constants.StringConstants.fb_child_usertask;
 import static uren.com.myduties.constants.StringConstants.fb_child_whoopened;
 
 public class ProblemDBHelper {

@@ -1,6 +1,5 @@
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -20,7 +19,6 @@
             android:background="@color/White">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/htab_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_gravity="top"
@@ -36,7 +34,6 @@
                     android:orientation="horizontal">
 
                     <RelativeLayout
-                        android:id="@+id/notification"
                         android:layout_width="0dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
@@ -45,7 +42,6 @@
                         android:gravity="center">
 
                         <RelativeLayout
-                            android:id="@+id/menuLayout"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
 
@@ -64,14 +60,12 @@
                         </RelativeLayout>
 
                         <RelativeLayout
-                            android:id="@+id/backLayout"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="left"
                             android:visibility="gone">
 
                             <uren.com.myduties.utils.ClickableImage.ClickableImageView
-                                android:id="@+id/imgBackBtn"
                                 android:layout_width="?attr/actionBarSize"
                                 android:layout_height="?attr/actionBarSize"
                                 android:paddingTop="8dp"
@@ -85,7 +79,6 @@
                     </RelativeLayout>
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/toolbar_title"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -98,7 +91,6 @@
                         />
 
                     <RelativeLayout
-                        android:id="@+id/notification2"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="end"
@@ -131,7 +123,6 @@
                 android:background="@color/White">
 
             <LinearLayout
-                android:id="@+id/llContent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:descendantFocusability="blocksDescendants"
@@ -139,7 +130,6 @@
                 android:background="@color/white">
 
                 <LinearLayout
-                    android:id="@+id/llProfile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
@@ -184,7 +174,6 @@
                         </RelativeLayout>
 
                         <LinearLayout
-                            android:id="@+id/llUserDetail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -333,7 +322,6 @@
                 </LinearLayout>
 
                 <RelativeLayout
-                    android:id="@+id/llData"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="15dp">

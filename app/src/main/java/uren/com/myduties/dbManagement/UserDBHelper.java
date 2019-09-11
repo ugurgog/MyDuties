@@ -1,7 +1,5 @@
 package uren.com.myduties.dbManagement;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -13,7 +11,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,11 +28,9 @@ import static uren.com.myduties.constants.StringConstants.fb_child_dialCode;
 import static uren.com.myduties.constants.StringConstants.fb_child_email;
 import static uren.com.myduties.constants.StringConstants.fb_child_groups;
 import static uren.com.myduties.constants.StringConstants.fb_child_name;
-import static uren.com.myduties.constants.StringConstants.fb_child_networks;
 import static uren.com.myduties.constants.StringConstants.fb_child_phone;
 import static uren.com.myduties.constants.StringConstants.fb_child_phoneNumber;
 import static uren.com.myduties.constants.StringConstants.fb_child_profilePhotoUrl;
-import static uren.com.myduties.constants.StringConstants.fb_child_taskdesc;
 import static uren.com.myduties.constants.StringConstants.fb_child_username;
 import static uren.com.myduties.constants.StringConstants.fb_child_users;
 

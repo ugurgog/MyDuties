@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +30,6 @@ import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.ItemClickListener;
 import uren.com.myduties.interfaces.OnCompleteCallback;
-import uren.com.myduties.models.Friend;
 import uren.com.myduties.models.Group;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.CommonUtils;

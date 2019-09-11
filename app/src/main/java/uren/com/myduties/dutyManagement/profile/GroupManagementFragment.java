@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,8 +34,6 @@ import uren.com.myduties.dutyManagement.NextActivity;
 import uren.com.myduties.dutyManagement.profile.adapters.GroupsListAdapter;
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.CompleteCallback;
-import uren.com.myduties.interfaces.ItemClickListener;
-import uren.com.myduties.interfaces.RecyclerViewAdapterCallback;
 import uren.com.myduties.interfaces.ReturnCallback;
 import uren.com.myduties.models.Group;
 import uren.com.myduties.models.User;

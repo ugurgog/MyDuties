@@ -12,7 +12,6 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -28,22 +27,17 @@ import java.util.List;
 import uren.com.myduties.R;
 import uren.com.myduties.dbManagement.FriendsDBHelper;
 import uren.com.myduties.dbManagement.UserDBHelper;
-import uren.com.myduties.dutyManagement.profile.interfaces.ListItemClickListener;
-import uren.com.myduties.evetBusModels.TaskTypeBus;
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.OnCompleteCallback;
 import uren.com.myduties.interfaces.ReturnCallback;
 import uren.com.myduties.models.Friend;
-import uren.com.myduties.models.GroupTask;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.ShapeUtil;
 import uren.com.myduties.utils.dataModelUtil.UserDataUtil;
 import uren.com.myduties.utils.dialogBoxUtil.CustomDialogBox;
-import uren.com.myduties.utils.dialogBoxUtil.DialogBoxUtil;
 import uren.com.myduties.utils.dialogBoxUtil.Interfaces.CustomDialogListener;
-import uren.com.myduties.utils.dialogBoxUtil.Interfaces.YesNoDialogBoxCallback;
 
 import static uren.com.myduties.constants.StringConstants.fb_child_status_friend;
 import static uren.com.myduties.constants.StringConstants.fb_child_status_sendedrequest;
@@ -292,7 +286,7 @@ public class FriendsAdapter extends RecyclerView.Adapter implements Filterable {
 
         public ProgressViewHolder(View v) {
             super(v);
-            progressBar = (ProgressBar) v.findViewById(R.id.progressBarLoading);
+            progressBar = v.findViewById(R.id.progressBarLoading);
         }
     }
 

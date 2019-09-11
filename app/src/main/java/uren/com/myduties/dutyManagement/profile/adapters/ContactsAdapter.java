@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -28,7 +27,6 @@ import uren.com.myduties.dutyManagement.profile.interfaces.ContactFriendSelectCa
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.ReturnCallback;
 import uren.com.myduties.models.Contact;
-import uren.com.myduties.models.ContactFriendModel;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.ShapeUtil;
 import uren.com.myduties.utils.dataModelUtil.UserDataUtil;

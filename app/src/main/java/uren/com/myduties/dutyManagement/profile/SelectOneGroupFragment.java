@@ -29,25 +29,18 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import uren.com.myduties.R;
-import uren.com.myduties.dbManagement.FriendsDBHelper;
 import uren.com.myduties.dbManagement.GroupDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
-import uren.com.myduties.dutyManagement.profile.adapters.SelectOneFriendAdapter;
 import uren.com.myduties.dutyManagement.profile.adapters.SelectOneGroupAdapter;
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.ReturnCallback;
-import uren.com.myduties.interfaces.ReturnObjectListener;
-import uren.com.myduties.models.Friend;
 import uren.com.myduties.models.Group;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.ClickableImage.ClickableImageView;
 import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.ProgressDialogUtil;
 import uren.com.myduties.utils.ShapeUtil;
-
-import static uren.com.myduties.constants.NumericConstants.DEFAULT_GET_FOLLOWER_PERPAGE_COUNT;
-import static uren.com.myduties.constants.StringConstants.fb_child_status_friend;
 
 public class SelectOneGroupFragment extends BaseFragment {
 

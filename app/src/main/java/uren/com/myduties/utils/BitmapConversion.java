@@ -4,20 +4,15 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.BitmapShader;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
-import android.graphics.RectF;
-import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.view.View;
-import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.BitmapCompat;
@@ -26,7 +21,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
 
-import uren.com.myduties.R;
 import uren.com.myduties.models.PhotoSelectUtil;
 
 import static uren.com.myduties.constants.NumericConstants.MAX_IMAGE_SIZE_1ANDHALFMB;

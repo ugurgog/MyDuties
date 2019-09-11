@@ -1,16 +1,12 @@
 package uren.com.myduties.dutyManagement.tasks;
 
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
@@ -28,7 +24,6 @@ import uren.com.myduties.R;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.dutyManagement.tasks.adapters.FeedPagerAdapter;
 import uren.com.myduties.dutyManagement.tasks.helper.TaskHelper;
-import uren.com.myduties.utils.ClickableImage.ClickableImageView;
 
 public class MyTaskFragment extends BaseFragment implements View.OnClickListener {
 

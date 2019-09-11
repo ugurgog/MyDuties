@@ -1,9 +1,7 @@
 package uren.com.myduties.dutyManagement.tasks.helper;
 
 
-import android.app.Activity;
 import android.content.Context;
-import android.os.AsyncTask;
 
 import java.util.ArrayList;
 import java.util.List;

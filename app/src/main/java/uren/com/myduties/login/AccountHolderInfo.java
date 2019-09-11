@@ -1,33 +1,12 @@
 package uren.com.myduties.login;
 
-import androidx.annotation.NonNull;
-
 import com.crashlytics.android.Crashlytics;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.math.BigDecimal;
-import java.util.Map;
 
 import uren.com.myduties.R;
 import uren.com.myduties.dbManagement.UserDBHelper;
 import uren.com.myduties.interfaces.CompleteCallback;
-import uren.com.myduties.models.Phone;
 import uren.com.myduties.models.User;
-
-import static uren.com.myduties.constants.StringConstants.fb_child_countryCode;
-import static uren.com.myduties.constants.StringConstants.fb_child_dialCode;
-import static uren.com.myduties.constants.StringConstants.fb_child_email;
-import static uren.com.myduties.constants.StringConstants.fb_child_name;
-import static uren.com.myduties.constants.StringConstants.fb_child_phone;
-import static uren.com.myduties.constants.StringConstants.fb_child_phoneNumber;
-import static uren.com.myduties.constants.StringConstants.fb_child_profilePhotoUrl;
-import static uren.com.myduties.constants.StringConstants.fb_child_username;
-import static uren.com.myduties.constants.StringConstants.fb_child_users;
 
 public class AccountHolderInfo {
 

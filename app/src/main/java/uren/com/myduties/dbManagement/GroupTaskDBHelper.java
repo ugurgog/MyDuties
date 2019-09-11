@@ -1,7 +1,5 @@
 package uren.com.myduties.dbManagement;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -15,7 +13,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +23,6 @@ import uren.com.myduties.interfaces.OnCompleteCallback;
 import uren.com.myduties.interfaces.ReturnCallback;
 import uren.com.myduties.models.Group;
 import uren.com.myduties.models.GroupTask;
-import uren.com.myduties.models.Task;
 import uren.com.myduties.models.User;
 
 import static uren.com.myduties.constants.StringConstants.fb_child_assignedfrom;
@@ -40,8 +36,6 @@ import static uren.com.myduties.constants.StringConstants.fb_child_grouptask;
 import static uren.com.myduties.constants.StringConstants.fb_child_taskdesc;
 import static uren.com.myduties.constants.StringConstants.fb_child_type;
 import static uren.com.myduties.constants.StringConstants.fb_child_urgency;
-import static uren.com.myduties.constants.StringConstants.fb_child_users;
-import static uren.com.myduties.constants.StringConstants.fb_child_usertask;
 import static uren.com.myduties.constants.StringConstants.fb_child_whocompletedid;
 
 public class GroupTaskDBHelper {

@@ -3,7 +3,6 @@ package uren.com.myduties.dutyManagement.profile;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,7 +13,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,8 +37,6 @@ import uren.com.myduties.dutyManagement.profile.interfaces.ContactFriendSelectCa
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.ReturnCallback;
 import uren.com.myduties.models.Contact;
-import uren.com.myduties.models.ContactFriendModel;
-import uren.com.myduties.models.User;
 import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.DynamicLinkUtil;
 import uren.com.myduties.utils.PermissionModule;

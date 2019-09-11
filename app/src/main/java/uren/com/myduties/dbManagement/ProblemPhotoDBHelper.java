@@ -3,7 +3,6 @@ package uren.com.myduties.dbManagement;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -21,9 +20,6 @@ import java.io.ByteArrayOutputStream;
 import uren.com.myduties.R;
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.models.PhotoSelectUtil;
-import uren.com.myduties.utils.BitmapConversion;
-
-import static uren.com.myduties.constants.StringConstants.photo_upload_new;
 
 public class ProblemPhotoDBHelper {
 

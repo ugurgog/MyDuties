@@ -6,6 +6,7 @@ public class FCMItems {
     String otherUserDeviceToken;
     String title;
     String body;
+    String photoUrl;
 
     public String getOtherUserDeviceToken() {
         return otherUserDeviceToken;
@@ -31,4 +32,11 @@ public class FCMItems {
         this.body = body;
     }
 
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
 }

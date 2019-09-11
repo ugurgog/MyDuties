@@ -16,7 +16,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.crashlytics.android.Crashlytics;
 
-
 import io.fabric.sdk.android.Fabric;
 import uren.com.myduties.MainActivity;
 import uren.com.myduties.R;

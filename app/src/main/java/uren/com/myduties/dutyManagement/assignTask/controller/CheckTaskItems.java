@@ -1,8 +1,6 @@
 package uren.com.myduties.dutyManagement.assignTask.controller;
 
 import android.content.Context;
-import android.os.Handler;
-import android.view.View;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -10,17 +8,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import uren.com.myduties.R;
 import uren.com.myduties.dbManagement.GroupTaskDBHelper;
 import uren.com.myduties.dbManagement.UserTaskDBHelper;
-import uren.com.myduties.dutyManagement.NextActivity;
-import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.OnCompleteCallback;
+import uren.com.myduties.messaging.NotificationHandler;
 import uren.com.myduties.models.Group;
 import uren.com.myduties.models.GroupTask;
 import uren.com.myduties.models.Task;
 import uren.com.myduties.models.TaskType;
 import uren.com.myduties.models.User;
-import uren.com.myduties.utils.dialogBoxUtil.GifDialogBox;
 
-import static uren.com.myduties.constants.StringConstants.fb_child_groups;
 import static uren.com.myduties.constants.StringConstants.fb_child_grouptask;
 import static uren.com.myduties.constants.StringConstants.fb_child_usertask;
 
@@ -82,6 +77,9 @@ public class CheckTaskItems {
         UserTaskDBHelper.addUserTask(task, new OnCompleteCallback() {
             @Override
             public void OnCompleted() {
+                NotificationHandler.sendUserNotification(context, assignedFrom, assignedTo,
+                        assignedFrom.getName() + " " + context.getResources().getString(R.string.assignedTaskToYou),
+                        taskDesc);
                 onCompleteCallback.OnCompleted();
             }
 
@@ -109,6 +107,9 @@ public class CheckTaskItems {
         GroupTaskDBHelper.addGroupTask(groupTask, new OnCompleteCallback() {
             @Override
             public void OnCompleted() {
+                NotificationHandler.sendNotificationToGroupParticipants(context, assignedFrom, group,
+                        assignedFrom.getName() + " " + context.getResources().getString(R.string.assignedTaskTo) + " " +
+                        groupTask.getGroup().getName(), taskDesc);
                 onCompleteCallback.OnCompleted();
             }
 

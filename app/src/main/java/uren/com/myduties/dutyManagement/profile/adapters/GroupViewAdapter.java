@@ -44,8 +44,6 @@ import uren.com.myduties.utils.dialogBoxUtil.CustomDialogBox;
 
 import static uren.com.myduties.constants.NumericConstants.GROUP_NAME_MAX_LENGTH;
 import static uren.com.myduties.constants.StringConstants.ANIMATE_LEFT_TO_RIGHT;
-import static uren.com.myduties.constants.StringConstants.GROUP_OP_CHOOSE_TYPE;
-import static uren.com.myduties.constants.StringConstants.GROUP_OP_VIEW_TYPE;
 
 public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.GroupViewListHolder> implements Filterable {
 
@@ -184,10 +182,7 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
 
         public void exitFromGroup(final String userid) {
 
-            if (group.getGroupAdmin().equals(accountholderUser.getUserid()))
-                adminWillChange = true;
-            else
-                adminWillChange = false;
+            adminWillChange = group.getGroupAdmin().equals(accountholderUser.getUserid());
 
             GroupDBHelper.exitUserFromGroup(userid, group.getGroupid(), new CompleteCallback() {
                 @Override

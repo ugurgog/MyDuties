@@ -24,6 +24,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.Objects;
 
 import io.fabric.sdk.android.Fabric;
+import uren.com.myduties.dbManagement.TokenDBHelper;
 import uren.com.myduties.dutyManagement.NextActivity;
 import uren.com.myduties.evetBusModels.TaskTypeBus;
 import uren.com.myduties.evetBusModels.UserBus;
@@ -31,9 +32,8 @@ import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.OnCompleteCallback;
 import uren.com.myduties.login.AccountHolderInfo;
 import uren.com.myduties.login.LoginActivity;
-import uren.com.myduties.messaging.MessageUpdateProcess;
-import uren.com.myduties.models.LoginUser;
 import uren.com.myduties.messaging.MyFirebaseMessagingService;
+import uren.com.myduties.models.LoginUser;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.AnimationUtil;
 import uren.com.myduties.utils.CommonUtils;
@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateDeviceTokenForFCM() {
-        MessageUpdateProcess.updateTokenSigninValue(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid(), CHAR_E,
+        TokenDBHelper.updateTokenSigninValue(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid(), CHAR_E,
                 new OnCompleteCallback() {
                     @Override
                     public void OnCompleted() {
@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(InstanceIdResult instanceIdResult) {
                                 String deviceToken = instanceIdResult.getToken();
-                                MyFirebaseMessagingService.sendRegistrationToServer(deviceToken, Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
+                                TokenDBHelper.sendTokenToServer(deviceToken, Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
                             }
                         });
                     }

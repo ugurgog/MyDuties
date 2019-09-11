@@ -18,7 +18,6 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -28,7 +27,6 @@ import java.util.List;
 import uren.com.myduties.R;
 import uren.com.myduties.dutyManagement.profile.interfaces.ClickCallback;
 import uren.com.myduties.evetBusModels.SelectedUsersBus;
-import uren.com.myduties.models.Friend;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.ShapeUtil;

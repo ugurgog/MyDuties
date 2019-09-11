@@ -22,37 +22,16 @@ import java.util.Objects;
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.OnCompleteCallback;
 import uren.com.myduties.interfaces.ReturnCallback;
-import uren.com.myduties.models.Friend;
 import uren.com.myduties.models.Group;
-import uren.com.myduties.models.GroupTask;
-import uren.com.myduties.models.Phone;
 import uren.com.myduties.models.User;
 
 import static uren.com.myduties.constants.StringConstants.fb_child_adminid;
-import static uren.com.myduties.constants.StringConstants.fb_child_assignedfromid;
-import static uren.com.myduties.constants.StringConstants.fb_child_assignedtime;
-import static uren.com.myduties.constants.StringConstants.fb_child_closed;
-import static uren.com.myduties.constants.StringConstants.fb_child_completed;
-import static uren.com.myduties.constants.StringConstants.fb_child_completedtime;
-import static uren.com.myduties.constants.StringConstants.fb_child_countryCode;
 import static uren.com.myduties.constants.StringConstants.fb_child_createdat;
-import static uren.com.myduties.constants.StringConstants.fb_child_dialCode;
-import static uren.com.myduties.constants.StringConstants.fb_child_email;
 import static uren.com.myduties.constants.StringConstants.fb_child_groupphotourl;
 import static uren.com.myduties.constants.StringConstants.fb_child_groups;
-import static uren.com.myduties.constants.StringConstants.fb_child_grouptask;
 import static uren.com.myduties.constants.StringConstants.fb_child_members;
 import static uren.com.myduties.constants.StringConstants.fb_child_name;
-import static uren.com.myduties.constants.StringConstants.fb_child_networks;
-import static uren.com.myduties.constants.StringConstants.fb_child_phone;
-import static uren.com.myduties.constants.StringConstants.fb_child_phoneNumber;
-import static uren.com.myduties.constants.StringConstants.fb_child_profilePhotoUrl;
-import static uren.com.myduties.constants.StringConstants.fb_child_taskdesc;
-import static uren.com.myduties.constants.StringConstants.fb_child_type;
-import static uren.com.myduties.constants.StringConstants.fb_child_urgency;
-import static uren.com.myduties.constants.StringConstants.fb_child_username;
 import static uren.com.myduties.constants.StringConstants.fb_child_users;
-import static uren.com.myduties.constants.StringConstants.fb_child_whocompletedid;
 
 public class GroupDBHelper {
 

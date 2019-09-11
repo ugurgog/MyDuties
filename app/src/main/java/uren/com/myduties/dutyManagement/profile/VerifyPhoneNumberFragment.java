@@ -1,6 +1,5 @@
 package uren.com.myduties.dutyManagement.profile;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;

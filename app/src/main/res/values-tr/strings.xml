@@ -14,8 +14,6 @@
     <string name="search">Ara</string>
     <string name="FACEBOOK">FACEBOOK</string>
     <string name="CONTACTS">BAĞLANTILAR</string>
-    <string name="FACEBOOK_LOWER">Facebook</string>
-    <string name="CONTACTS_LOWER">Bağlantılar</string>
     <string name="error">Hata:</string>
     <string name="errorUpper">HATA</string>
     <string name="addPersonToGroup">Katılımcı Ekle</string>
@@ -23,51 +21,33 @@
     <string name="selectOneFriend">Lütfen 1 arkadaşınızı seçiniz!</string>
     <string name="selectOneGroup">Please select a group!</string>
     <string name="selectLeastOneGroup">En az 1 grup seçmelisiniz!</string>
-    <string name="addFriendFirst">Grup oluşturmak için önce takipçi edinmelisiniz!</string>
     <string name="addGroupName">Grup adı ekle</string>
     <string name="pleaseWriteGroupName">Grup adı boş olamaz!</string>
     <string name="deviceHasNoCamera">Cihazın kamerası yok!</string>
-    <string name="groupIsCreating">Grup Oluşturuluyor...</string>
     <string name="writeGroupName">Grup adını yazın...</string>
     <string name="defineGroupNameAndIcon">Grup adı ve simgesi belirleyin</string>
     <string name="participant"> katılımcı</string>
     <string name="constantItem">adet</string>
     <string name="adminText">  Grup Yöneticisi  </string>
     <string name="selectPicture">Resim Seçin</string>
-    <string name="SELECT_VIDEO">Video Seçin</string>
     <string name="openCamera">Kamerayı Aç</string>
     <string name="openGallery">Galeriden Seç</string>
     <string name="REMOVE_PHOTO">Fotoğrafı kaldır</string>
-    <string name="REMOVE_VIDEO">Videoyu kaldır</string>
     <string name="EDIT">Düzenle</string>
-    <string name="PLAY">Oynat</string>
     <string name="chooseProfilePhoto">Profil fotoğrafı seçin</string>
     <string name="CHOOSE_GROUP_PHOTO">Grup fotoğrafı seçin</string>
-    <string name="exitFromGroup">Gruptan Çık</string>
     <string name="areYouSureExitFromGroup">Gruptan çıkmak istediğinize emin misiniz?</string>
     <string name="upperYes">EVET</string>
     <string name="lowerYes">Evet</string>
     <string name="upperNo">HAYIR</string>
     <string name="removeFromGroup">  Gruptan Çikar</string>
-    <string name="viewTheProfile">  Profil Görüntüle</string>
     <string name="createdAt">Oluşturuldu:</string>
     <string name="completedAt">Tamamlandı:</string>
     <string name="changeAsAdmin">Admin olarak değiştir</string>
-    <string name="pleaseAddShareItem">Paylaşım yapabilmek için video, resim ya da not eklemelisiniz!</string>
-    <string name="share">Paylaş</string>
-    <string name="locationIsEmpty">Paylaşım için lokasyon bilgisi zorunludur</string>
     <string name="secondShort">sn</string>
-    <string name="profileUpdateSuccessful">Profil Güncelleme Başarılı</string>
-    <string name="dragForDelete">Silmek için Sürükle</string>
-    <string name="finish">Bitir</string>
-    <string name="USE">Kullan</string>
-    <string name="typeToAddText">Bir şeyler yaz...</string>
-    <string name="writetaskdesc"><font size="12">Görev açıklamasını yazınız...</font></string>
+    <string name="writetaskdesc"></string>
     <string name="UPDATING">Güncelleniyor...</string>
-    <string name="EXPLORE_PEOPLE">Kişileri Keşfet</string>
     <string name="VIEW_PENDING_REQUEST">Gelen Istekleri Görüntüle</string>
-    <string name="THERE_IS_NO_GROUP_CREATE_OR_INCLUDE">Oluşturduğunuz veya dahil olduğunuz bir grup bulunmamaktadır</string>
-    <string name="THERE_IS_NO_FACEFRIEND_WHO_USING_CATCHU">CatchU uygulamasını kullanan Facebook arkadaşınız bulunmamaktadır</string>
     <string name="PHONE_NUM">Telefon Numarası</string>
     <string name="SELECT_COUNTRY">Ülke Seç</string>
     <string name="COUNTRY_NAME">Ülke Adı</string>
@@ -81,56 +61,34 @@
     <string name="NOT_ENTERED_VERIFY_CODE_IN_TIME">Size verilen süre içinde kodu girmediniz. Lütfen tekrar kodu gönderiniz!</string>
     <string name="UPDATE_IS_SUCCESSFUL">Güncelendi</string>
     <string name="THERE_IS_NO_SEARCH_RESULT">Hiç bir sonuç bulunamadı.</string>
-    <string name="DEFAULT_POST_ERROR_MESSAGE">Paylaşım esnasında bir hata ile karşılaşıldı, tekrar denemek ister misiniz?</string>
-    <string name="GROUP_SETTINGS">Grup Ayarları</string>
     <string name="TAKE_SCREENSHOT">Ekran görüntüsü al</string>
     <string name="CIRCLE_THE_PROBLEM">Sorunu daire içine al</string>
     <string name="SCREENSHOT">Çek</string>
-    <string name="detail">Detay</string>
     <string name="searchGroup">Grup Ara</string>
-    <string name="GROUPS_LOADING">Grouplar Yükleniyor...</string>
-    <string name="NEW_GROUP">New Group</string>
 
     <string name="searchUser">Kullanıcı arayın...</string>
     <string name="IN_GROUP">Grupta</string>
     <string name="REMOVE">Çıkar</string>
     <string name="REMOVE_FOLLOWER_TITLE">Arkadaşı Çıkar?</string>
     <string name="REMOVE_FOLLOWER_MESSAGE">Bu kişiyi arkadaşlardan çıkarmak istediğinize emin misiniz?</string>
-    <string name="SEARCH_FOLLOWERS">Takipçileri ara...</string>
     <string name="SEARCH_FRIENDS">Arkadaşlarda ara…</string>
     <string name="USER_NOT_FOUND">Kullanıcı bulunamadı.</string>
     <string name="GROUP_NOT_FOUND">Grup bulunamadı.</string>
     <string name="cancelSendedRequest">Gönderilen arkadaşlık isteği geri çekilecek. Onaylıyor musunuz?</string>
     <string name="searchUsers">Kullanıcı Ara</string>
 
-    <string name="REMOVE_BLOCK_PERSON">Bu kişi ile mesajlaşabilmek için engeli kaldırmalısınız!</string>
-    <string name="TO_BE_REMOVED_BLOCK_PERSON">Bu kişi ile mesajlaşabilmek için engeliniz kaldırılmalıdır!</string>
-
     <string name="profile">Profil</string>
     <string name="editProfile">Profili Düzenle</string>
     <string name="save">Kaydet</string>
     <string name="cancel">İptal</string>
-    <string name="discard">Çıkar</string>
     <string name="giveNewName">Yeni Grup İsmi Girin</string>
-    <string name="groupPhotoChanging">Değiştiriliyor...</string>
     <string name="ok">TAMAM</string>
     <string name="next">İleri</string>
     <string name="close">Kapat</string>
-    <string name="sure_exit_not_saving_image">resmi kaydetmeden çıkmak ister misiniz?</string>
-    <string name="image_saved_successfully">Görüntü başarıyla kaydedildi</string>
-    <string name="failed_to_save_image">Resim kaydedilemedi</string>
 
     <!-- Whose for will be shared -->
-    <string name="publicShareText">Herkese Açik</string>
-    <string name="friendsShareText">Özel</string>
     <string name="groupsShareText">Gruplar</string>
-    <string name="justMeShareText">Sadece Ben</string>
-    <string name="allFollowersShareText">Tüm Takipçiler</string>
     <string name="tasksmyassigned">Görevlendirme</string>
-
-    <string name="PUBLIC_SHARE_DESC">Herkese paylaşacaksın</string>
-    <string name="ALL_FOLLOWERS_SHARE_DESC">Tüm takipçilere paylaşacaksın</string>
-    <string name="JUSTME_SHARE_DESC">Sadece kendine paylaşacaksın</string>
 
     <!-- Location Settings constants-->
     <string name="gpsSettings">GPS Ayarları</string>
@@ -138,12 +96,6 @@
     <string name="settings">Ayarlar</string>
 
     <!-- Share tab item constants-->
-
-    <array name="gender">
-        <item>Erkek</item>
-        <item>Kadın</item>
-        <item>Belirtilmemiş</item>
-    </array>
 
     <!-- Time constants-->
     <string name="seconds">saniye</string>
@@ -155,27 +107,19 @@
     <string name="years">yıl</string>
 
     <string name="signOut">Çıkış yap</string>
-    <string name="followers">Takipçiler</string>
-    <string name="follow">Takip et</string>
-    <string name="following">Takip ediliyor</string>
     <string name="invite">Davet Et</string>
     <string name="request_sended">İstek gönderildi</string>
-    <string name="cancel_following">Takip etmeyi bırak?</string>
-    <string name="ASKING_STOP_FOLLOWING">Takip etmeyi bırakmak istediğine emin misin?</string>
     <string name="PENDING_REQUESTS">Bekleyen Istekler</string>
     <string name="THERE_IS_NO_PENDING_REQUEST">Bekleyen isteğiniz bulunmamaktadır</string>
     <string name="CONTACT_INVITE_MESSAGE">My Duties uygulaması ile grup ve arkadaş görevlerini takip etmek ister misin? Uygulamayı bu linkten indirebilirsin:</string>
-    <string name="CONNECT_FACEBOOK">Facebook\'a Bağlan</string>
     <string name="INVITE_YOUR_FRIENDS">Arkadaşlarını Davet Et</string>
     <string name="ADD_YOUR_FRIENDS">Arkadaşlarını Ekle</string>
-    <string name="FACEBOOK_FRIENDS">Facebook Arkadaşları</string>
     <string name="ACCOUNT">Hesap</string>
     <string name="CHANGE_PASSWORD">Şifreyi Değiştir</string>
     <string name="SUPPORT">Destek</string>
     <string name="HELP_CENTER">Uygulama Hakkında</string>
     <string name="REPORT_PROBLEM">Sorun Bildir</string>
     <string name="CONTACT_FRIENDS">Rehber Kişileri</string>
-    <string name="PRIVATE_ACCOUNT">Gizli Hesap</string>
     <string name="VERSION">Versiyon</string> 
     <string name="ABOUT_APP">My Duties: Uygulama hakkında herhangi
         bir sorunuz ya da öneriniz var ise lütfen bize yazın.
@@ -203,10 +147,7 @@
     <!-- User edit constants constants-->
     <string name="PERSONAL_INFORMATION">Kişisel Bilgilerim</string>
     <string name="NAME">İsim</string>
-    <string name="BIRTHDAY">Doğum günü</string>
     <string name="PHONE">Telefon</string>
-    <string name="GENDER">Cinsiyet</string>
-    <string name="WEBSITE">Website</string>
 
     // Mesajlar-Uyarılar
     <string name="UNEXPECTED_ERROR">Beklenmeyen bir hata oluştu!</string>
@@ -225,99 +166,39 @@
     <string name="PLEASE_WAIT">"Lütfen bekleyiniz.."</string>
     <string name="PASSWORD_LINK_SEND_SUCCESS">Şifre sıfırlama linki e-mail adresinize gönderildi.</string>
     <string name="PASSWORD_LINK_SEND_FAIL">Şifre gönderme başarısız, lütfen tekrar deneyiniz.</string>
-    <string name="SHARE_IS_SUCCESSFUL">Biraz önce yapmış olduğunuz paylaşım başarılı sonuçlandı :) </string>
     <string name="taskAssignSuccessful">Task assignment completed.</string>
     <string name="PASSWORD_IS_CHANGED">Şifre değiştirildi</string>
     <string name="CURRENT_PASSWORD_INCORRECT">Mevcut şifre hatalı</string>
-    <string name="ASK_FOR_REMOVE_ACCOUNT_PRIVACY">Hesabınızın gizliliğini kaldırmak istiyor musunuz?</string>
-    <string name="ASK_FOR_MAKE_ACCOUNT_PRIVACY">Hesabınızı gizli yapmak istiyor musunuz?</string>
-    <string name="SHARE_IS_UNSUCCESSFUL">Maalesef yaptığınız paylaşım başarılı sonuçlanmadı :(</string>
     <string name="CAN_YOU_SPECIFY_THE_PROBLEM">Problemi kısaca belirtebilir misiniz?</string>
     <string name="PROBLEM_NOTIFY_DESCRIPTION">Karşılaşmış olduğunuz problemi ya da geliştirmemizi istediklerinizi bildirerek bize yardımcı olabilirsiniz.</string>
     <string name="REPORT_PROBLEM_OR_COMMENT">Sorun Bildir</string>
     <string name="serverError">Teknik Hata !</string>
-    <string name="FIND_FACEBOOK_FRIENDS">Facebook Arkadaşlarını Bul</string>
-    <string name="YOU_CAN_FIND_FACEBOOK_FRIENDS">Catchu kullanan facebook arkadaşlarını bulabilirsin</string>
     <string name="GIVE_PERMISSION_TO_SEE_CONTACT_FRIENDS">Arkadaşlarınızı görmek için kişilere erişim izni vermelisiniz</string>
-    <string name="SOMETHING_WENT_WRONG">Bir Hata Oluştu!</string>
     <string name="GOT_IT">ANLADIM</string>
     <string name="CHECK_YOUR_INTERNET_CONNECTION">Lütfen internet bağlantınızı kontrol ediniz!</string>
     <string name="TRY_AGAIN_AFTER_CHECK_YOUR_NETWORK">Internet baglantınızı kontrol ettikten sonra tekrar deneyiniz.</string>
     <string name="TRY_AGAIN">Tekrar Deneyin</string>
     <string name="SKIP">GEÇ</string>
     <string name="FORGOT_YOUR_PASSWORD">Şifreni mi unuttun?</string>
-    <string name="ADVANCED_SETTINGS">Gelişmiş Seçenekler</string>
-    <string name="SEND">Gönder</string>
-    <string name="LET_POST_COMMENT">Yorum yapılmasına izin ver</string>
     <string name="THANKS_FOR_FEEDBACK">Geri bildiriminiz için teşekkür ederiz. En kısa sürede aksiyon almaya çalışacağız.</string>
-    <string name="COMMENT_SETTINGS">Yorum Ayarları</string>
-    <string name="MAP_SETTINGS">Harita Ayarları</string>
-    <string name="LOCATION_WILL_SEEN_ON_POST">Lokasyon görünsün</string>
-    <string name="COMMENT_SETTINGS_DESC">Bu özelliği paylaşım yapıldıktan sonra gönderi ayarlarından güncelleyebilirsin</string>
-    <string name="LOCATION_SETTINGS_DESC">Bu özellik paylaşım yapıldıktan sonra güncellenemez</string>
-    <string name="SEND_MESSAGE">Mesaj Gönder</string>
-    <string name="MESSAGES">Mesajlarım</string>
     <string name="TODAY">Bugün</string>
     <string name="YESTERDAY">Dün</string>
-    <string name="BLOCK">Engelle</string>
-    <string name="UNBLOCK">Engeli Kaldır</string>
-    <string name="REPORT_PERSON">Şikayet Et</string>
-    <string name="YOU_HAVE_NEW_MESSAGES">Yeni mesajlarınız var</string>
     <string name="ACCEPT">Onayla</string>
     <string name="REJECT">Reddet</string>
-    <string name="COMPLAIN_PERSON_TEXT">Bu kişi hakkında şikayetinizi kısaca belirtebilir misiniz?</string>
-    <string name="COMPLAIN_FEEDBACK">Şikayetiniz incelendikten sonra en kısa sürede aksiyon alınacaktır.</string>
 
     <string name="emptyFeed">Henüz size atanan bir görev bulunmuyor..</string>
     <string name="there_is_no_completed_task">Tamamlanan göreviniz bulunmuyor..</string>
     <string name="there_is_no_group_task">Grup göreviniz bulunmuyor...</string>
 
-    <string name="needLocationPermission">Paylaşımları görüntüleyebilmek için konumunuza erişmemiz gerekiyor. Lütfen Ayarlar\'dan konum izinlerini aktifleştirin.</string>
-    <string name="likes">Beğeni</string>
-    <string name="comments">Yorum</string>
     <string name="loading">Yükleniyor...</string>
-    <string name="locationError">Konumunuza erişim sağlanamıyor, lütfen lokasyon ayarlarınızı kontrol ediniz...</string>
     <string name="swipeDownForRefresh">Yenilemek için aşağı sürükleyin.</string>
-    <string name="unfollow">Takibi bırak</string>
-    <string name="disableComment">Yorum yapmayı kapat</string>
-    <string name="enableComment">Yorum yapılmasına izin ver</string>
-    <string name="report">Şikayet et...</string>
     <string name="delete">Sil</string>
-    <string name="commentHint">Ne düşünüyorsun?</string>
-    <string name="like">Beğen</string>
-    <string name="filterSettings">Filtre Ayarları</string>
-    <string name="apply">Uygula</string>
-    <string name="nearby">YAKININDA OLANLAR</string>
-    <string name="meter">metre</string>
-    <string name="clearFilter">Sıfırla</string>
-    <string name="now">Şimdi</string>
-    <string name="feedTypePublic">Genel</string>
-    <string name="feedTypeCatched">Catched</string>
-    <string name="feedViewTypeGrid">Izgara</string>
-    <string name="feedViewTypeList">Liste</string>
-    <string name="sharedPosts">Paylaşımlarım</string>
-    <string name="caughtPosts">Catch ettiklerim</string>
-    <string name="groupPosts">Grup paylaşımları</string>
-    <string name="deleteThisPost">Bu paylaşımı sil?</string>
-    <string name="reportPostMessage">Bu paylaşımı şikayet etmek istiyor musunuz? Ekibimiz değerlendirip, uygunsuzsa kaldıracaklardır.</string>
-    <string name="posts">Paylaşımlar</string>
-    <string name="postsInfo">Kişinin civarda ve herkese açık yaptığı paylaşımlar burada gösterilir. Paylaşım detayı için paylaşıma tıklayabilirsiniz. </string>
-    <string name="emptyFeed2">Herhangi bir paylaşım yakalanamadı.</string>
-    <string name="notFound">Bulunamadı</string>
     <string name="rateus">Bizi Değerlendir</string>
-    <string name="commentFailed">Google Play kurulu değil</string> 
-    <string name="ABOUT_ME">Hakkımda</string>
-    <string name="ABOUT_ME_BIO">Kısaca Ben</string>
-    <string name="AGE">Yaş,</string>
-    <string name="direct_follow_notif_text">sizi takip etmeye başladı</string>
-    <string name="follow_request_notif_text">size takip isteği gönderdi</string>
-    <string name="wanna_take_screenshot">Şikayetiniz ile ilgili ekran görüntüsü almak ister misiniz? </string>
-    <string name="CONTINUE">DEVAM</string>
+    <string name="commentFailed">Google Play kurulu değil</string><![CDATA[ 
 
+    ]]>
     <string name="WRITE_YOUR_NAME">İsim yazın..</string>
     <string name="WRITE_USERNAME">Kullanıcı adını yazın..</string>
-    <string name="WRITE_WEB_SITE">Web sitesi adresini yazın..</string>
-    <string name="WRITE_ABOUT_ME">Kısaca kendinizden bahsedin..</string>
     <string name="WRITE_EMAIL">Email adresinizi yazın..</string>
 
     <array name="months">
@@ -336,14 +217,6 @@
     </array>
 
     <!-- Exception mesajları -->
-    <string name="needLocationPermission2">Catchu\yu kullanabilmek için konumunu etkinleştirmelisin.</string>
-    <string name="locationSettings">Şuraya git: Ayarlar > Bağlantılar > Konum servisini açık hale getir.</string>
-
-    <string name="label_brush">Fırça</string>
-    <string name="label_emoji">Emoji</string>
-    <string name="label_eraser">Silgi</string>
-    <string name="label_text">Text</string>
-    <string name="label_filter">Filtre</string>
 
     <string name="waiting_task">Bekleyen</string>
     <string name="completed_task">Tamamlanan</string>
@@ -351,25 +224,15 @@
 
     <string name="task_completed">Tamamlandı</string>
     <string name="call_user">Ara</string>
-    <string name="delete_task">Sil</string>
 
     <string name="users_phone_not_defined">Kullanıcının telefonu tanımlı değil.</string>
-    <string name="sure_to_delete_waiting_task">Görevi silmek istediğinize emin misiniz?</string>
-    <string name="notify_user_when_waiting_task_deleted">Tamamlanmamış görev silindiğinde görevi atayan kullanıcıya bildirim gönderilecektir.</string>
     <string name="see_all_tasks">Tüm grup görevlerini gör</string>
     <string name="group_with_twodot">Grup:</string>
     <string name="completed_this_task">bu görevi tamamladı</string>
     <string name="undefined_user">Tanımsız Kullanıcı</string>
     <string name="friends">Arkadaşlar</string>
 
-    <string name="view_my_profile">Profilimi Görüntüle</string>
-    <string name="tasks_assigned_to_people">Kişilere atadığım görevler</string>
-    <string name="tasks_assigned_to_groups">Gruplara atadığım görevler</string>
-
     <string name="addFriend">Ekle</string>
-    <string name="removeFriend">Çıkar</string>
-    <string name="waiting">Bekliyor</string>
-    <string name="reqSended">İstek Gönderildi</string>
     <string name="acceptReq">Kabul Et</string>
     <string name="friend">Arkadaş</string>
 
@@ -385,9 +248,6 @@
     <string name="taskIsUrgentAlready">Bu görev zaten acil.</string>
     <string name="closedTaskNotMarkedUrgent">Kapalı görevler acil işaretlenemez.</string>
     <string name="openTasksCouldNotBeDeleted">Kapanmayan görevler silinemez.</string>
-    <string name="changeDesc">Açıklamayı güncelle</string>
-    <string name="descCouldNotBeUpdated">Görev kapalı. Açıklama güncellenemez.</string>
-    <string name="completedDescCouldNotBeUpdated">Görev tamamlanmış. Açıklama güncellenemez.</string>
     <string name="adminLogin">Admin Sayfası</string>
     <string name="problems">Problemler</string>
     <string name="viewUncompletedProblems">Bekleyen Problemleri Gör</string>
@@ -397,6 +257,12 @@
     <string name="selectTaskType">Lütfen Görevin Tipini Seçiniz</string>
     <string name="selectUserOrGroupToAssignTask">Görev ataması için lütfen kullanıcı yada grup seçin!</string>
     <string name="pleaseEnterTaskDesc">Lütfen görev açıkmasını yazın!</string>
+
+    <string name="assignedTaskToYou">size bir görev atadı</string>
+    <string name="assignedTaskTo">bu gruba bir görev atadı</string>
+    <string name="completedThisTask">bu görevi tamamladı</string>
+    <string name="markedThisTaskUrgent">bu görevi acil işaretledi</string>
+    <string name="letsRememberThisTask">Bu görevi hatırla</string>
 
     <string name="task_type_home">Ev</string>
     <string name="task_type_shop">Market</string>

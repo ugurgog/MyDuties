@@ -6,7 +6,6 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
@@ -15,11 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
@@ -37,7 +34,6 @@ import uren.com.myduties.common.ShowSelectedPhotoFragment;
 import uren.com.myduties.dbManagement.FriendsDBHelper;
 import uren.com.myduties.dbManagement.GroupDBHelper;
 import uren.com.myduties.dbManagement.GroupTaskDBHelper;
-import uren.com.myduties.dbManagement.UserDBHelper;
 import uren.com.myduties.dbManagement.UserTaskDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.dutyManagement.NextActivity;
@@ -45,7 +41,6 @@ import uren.com.myduties.dutyManagement.profile.helper.SettingOperation;
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.ReturnCallback;
-import uren.com.myduties.models.Friend;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.ClickableImage.ClickableImageView;
 import uren.com.myduties.utils.CommonUtils;
@@ -55,7 +50,6 @@ import uren.com.myduties.utils.dataModelUtil.UserDataUtil;
 import static uren.com.myduties.constants.StringConstants.ANIMATE_LEFT_TO_RIGHT;
 import static uren.com.myduties.constants.StringConstants.ANIMATE_RIGHT_TO_LEFT;
 import static uren.com.myduties.constants.StringConstants.CHAR_AMPERSAND;
-import static uren.com.myduties.constants.StringConstants.GROUP_OP_VIEW_TYPE;
 import static uren.com.myduties.constants.StringConstants.fb_child_status_friend;
 
 public class ProfileFragment extends BaseFragment {

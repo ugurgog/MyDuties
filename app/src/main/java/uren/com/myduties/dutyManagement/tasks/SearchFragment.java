@@ -1,33 +1,34 @@
 package uren.com.myduties.dutyManagement.tasks;
 
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.algolia.search.saas.AlgoliaException;
+import com.algolia.search.saas.Client;
+import com.algolia.search.saas.CompletionHandler;
+import com.algolia.search.saas.Index;
+import com.algolia.search.saas.Query;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,23 +37,10 @@ import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.dutyManagement.NextActivity;
 import uren.com.myduties.dutyManagement.tasks.adapters.SearchResultAdapter;
 import uren.com.myduties.dutyManagement.tasks.helper.SearchResultsJsonParser;
-import uren.com.myduties.dutyManagement.tasks.helper.UserJsonParser;
 import uren.com.myduties.dutyManagement.tasks.model.HighlightedResult;
-import uren.com.myduties.interfaces.ReturnCallback;
 import uren.com.myduties.models.Friend;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.ClickableImage.ClickableImageView;
-import uren.com.myduties.utils.CommonUtils;
-
-import com.algolia.search.saas.AlgoliaException;
-import com.algolia.search.saas.Client;
-import com.algolia.search.saas.CompletionHandler;
-import com.algolia.search.saas.Index;
-import com.algolia.search.saas.Query;
-import com.algolia.search.saas.RequestOptions;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import static uren.com.myduties.constants.StringConstants.ALGOLIA_APP_ID;
 import static uren.com.myduties.constants.StringConstants.ALGOLIA_INDEX_NAME;
@@ -61,7 +49,6 @@ import static uren.com.myduties.constants.StringConstants.fb_child_email;
 import static uren.com.myduties.constants.StringConstants.fb_child_name;
 import static uren.com.myduties.constants.StringConstants.fb_child_profilePhotoUrl;
 import static uren.com.myduties.constants.StringConstants.fb_child_username;
-import static uren.com.myduties.constants.StringConstants.fb_child_users;
 
 public class SearchFragment extends BaseFragment {
 

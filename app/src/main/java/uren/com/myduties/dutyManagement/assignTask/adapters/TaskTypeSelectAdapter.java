@@ -1,19 +1,12 @@
 package uren.com.myduties.dutyManagement.assignTask.adapters;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 
-import androidx.appcompat.widget.AppCompatTextView;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -22,25 +15,13 @@ import com.bumptech.glide.request.RequestOptions;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import uren.com.myduties.R;
-import uren.com.myduties.dbManagement.GroupTaskDBHelper;
-import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.dutyManagement.assignTask.interfaces.TaskTypeCallback;
 import uren.com.myduties.evetBusModels.TaskTypeBus;
-import uren.com.myduties.evetBusModels.UserBus;
-import uren.com.myduties.interfaces.OnCompleteCallback;
-import uren.com.myduties.models.GroupTask;
 import uren.com.myduties.models.TaskType;
-import uren.com.myduties.models.User;
-import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.TaskTypeHelper;
-import uren.com.myduties.utils.dataModelUtil.GroupDataUtil;
-import uren.com.myduties.utils.dataModelUtil.UserDataUtil;
 
 public class TaskTypeSelectAdapter extends RecyclerView.Adapter {
 

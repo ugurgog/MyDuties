@@ -3,29 +3,21 @@ package uren.com.myduties.dutyManagement.profile;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -38,9 +30,6 @@ import com.bumptech.glide.request.RequestOptions;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.Calendar;
-
-import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import uren.com.myduties.R;
@@ -373,7 +362,7 @@ public class UserEditFragment extends BaseFragment
     private void getGalleryPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!permissionModule.checkWriteExternalStoragePermission())
-                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, permissionModule.PERMISSION_WRITE_EXTERNAL_STORAGE);
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PermissionModule.PERMISSION_WRITE_EXTERNAL_STORAGE);
             else
                 startActivityForResult(Intent.createChooser(IntentSelectUtil.getGalleryIntent(),
                         getResources().getString(R.string.selectPicture)), ACTIVITY_REQUEST_CODE_OPEN_GALLERY);
@@ -392,18 +381,18 @@ public class UserEditFragment extends BaseFragment
             startActivityForResult(IntentSelectUtil.getCameraIntent(), ACTIVITY_REQUEST_CODE_OPEN_CAMERA);
         } else
             requestPermissions(new String[]{Manifest.permission.CAMERA},
-                    permissionModule.PERMISSION_CAMERA);
+                    PermissionModule.PERMISSION_CAMERA);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
-        if (requestCode == permissionModule.PERMISSION_WRITE_EXTERNAL_STORAGE) {
+        if (requestCode == PermissionModule.PERMISSION_WRITE_EXTERNAL_STORAGE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startActivityForResult(Intent.createChooser(IntentSelectUtil.getGalleryIntent(),
                         getResources().getString(R.string.selectPicture)), ACTIVITY_REQUEST_CODE_OPEN_GALLERY);
             }
-        } else if (requestCode == permissionModule.PERMISSION_CAMERA) {
+        } else if (requestCode == PermissionModule.PERMISSION_CAMERA) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startActivityForResult(IntentSelectUtil.getCameraIntent(), ACTIVITY_REQUEST_CODE_OPEN_CAMERA);
             }

@@ -1,7 +1,5 @@
 package uren.com.myduties.models;
 
-import java.math.BigDecimal;
-
 public class Phone {
 
     private String countryCode;

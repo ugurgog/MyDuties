@@ -18,9 +18,6 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -34,10 +31,10 @@ import uren.com.myduties.dbManagement.UserDBHelper;
 import uren.com.myduties.dbManagement.UserTaskDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.evetBusModels.TaskTypeBus;
-import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.OnCompleteCallback;
 import uren.com.myduties.interfaces.ReturnCallback;
+import uren.com.myduties.messaging.NotificationHandler;
 import uren.com.myduties.models.Task;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.CommonUtils;
@@ -183,8 +180,9 @@ public class WaitingTaskAdapter extends RecyclerView.Adapter {
                                             notifyItemRemoved(position);
                                             notifyItemRangeChanged(position, getItemCount());
                                             returnCallback.OnReturn(taskList);
-
-                                            // TODO: 2019-08-26 - Burada karsi user a notif gonderilecek
+                                            NotificationHandler.sendUserNotification(mContext, task.getAssignedTo(), task.getAssignedFrom(),
+                                                    task.getAssignedTo().getUserid() + " " + mContext.getResources().getString(R.string.completedThisTask),
+                                                    task.getTaskDesc());
                                         }
 
                                         @Override

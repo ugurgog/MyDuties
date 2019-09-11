@@ -28,7 +28,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.crashlytics.android.Crashlytics;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -36,14 +35,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 
-
 import java.util.Objects;
 
 import io.fabric.sdk.android.Fabric;
 import uren.com.myduties.MainActivity;
 import uren.com.myduties.R;
-import uren.com.myduties.models.LoginUser;
 import uren.com.myduties.login.utils.Validation;
+import uren.com.myduties.models.LoginUser;
 import uren.com.myduties.utils.BitmapConversion;
 import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.ShapeUtil;

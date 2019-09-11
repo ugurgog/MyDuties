@@ -106,7 +106,6 @@
                 </LinearLayout>
 
                 <uren.com.myduties.utils.ClickableImage.ClickableImageView
-                    android:id="@+id/moreSettingsImgv"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentTop="true"

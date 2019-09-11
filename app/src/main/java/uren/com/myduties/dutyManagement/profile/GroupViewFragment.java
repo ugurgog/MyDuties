@@ -1,7 +1,6 @@
 package uren.com.myduties.dutyManagement.profile;
 
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,7 +13,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,20 +20,16 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import uren.com.myduties.R;
-import uren.com.myduties.dbManagement.FriendsDBHelper;
 import uren.com.myduties.dbManagement.GroupDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.dutyManagement.NextActivity;
 import uren.com.myduties.dutyManagement.profile.adapters.GroupViewAdapter;
-import uren.com.myduties.dutyManagement.profile.adapters.GroupsListAdapter;
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.ReturnCallback;
@@ -45,8 +39,6 @@ import uren.com.myduties.utils.CommonUtils;
 
 import static uren.com.myduties.constants.StringConstants.ANIMATE_LEFT_TO_RIGHT;
 import static uren.com.myduties.constants.StringConstants.ANIMATE_RIGHT_TO_LEFT;
-import static uren.com.myduties.constants.StringConstants.GROUP_OP_CHOOSE_TYPE;
-import static uren.com.myduties.constants.StringConstants.fb_child_status_friend;
 
 public class GroupViewFragment extends BaseFragment {
 

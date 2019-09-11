@@ -1,7 +1,6 @@
 package uren.com.myduties.dutyManagement.profile;
 
 import android.graphics.drawable.GradientDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;

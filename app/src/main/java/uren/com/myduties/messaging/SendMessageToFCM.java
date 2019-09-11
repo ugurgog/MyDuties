@@ -19,12 +19,9 @@ import uren.com.myduties.messaging.interfaces.MessageSentFCMCallback;
 import uren.com.myduties.messaging.models.FCMItems;
 
 import static uren.com.myduties.constants.StringConstants.FCM_CODE_BODY;
-import static uren.com.myduties.constants.StringConstants.FCM_CODE_DATA;
-import static uren.com.myduties.constants.StringConstants.FCM_CODE_MESSAGE_ID;
 import static uren.com.myduties.constants.StringConstants.FCM_CODE_NOTIFICATION;
 import static uren.com.myduties.constants.StringConstants.FCM_CODE_TITLE;
 import static uren.com.myduties.constants.StringConstants.FCM_CODE_TO;
-import static uren.com.myduties.constants.StringConstants.FCM_CODE_USERID;
 import static uren.com.myduties.constants.StringConstants.FCM_MESSAGE_URL;
 
 public class SendMessageToFCM {
@@ -44,9 +41,7 @@ public class SendMessageToFCM {
                     notification.put(FCM_CODE_BODY, fcmItems.getBody());
                     notification.put(FCM_CODE_TITLE, fcmItems.getTitle());
 
-                    //JSONObject data = new JSONObject();
                     root.put(FCM_CODE_NOTIFICATION, notification);
-                    //root.put(FCM_CODE_DATA, data);
                     root.put(FCM_CODE_TO, fcmItems.getOtherUserDeviceToken());
 
                     String result = postToFCM(root.toString(), context, messageSentFCMCallback);

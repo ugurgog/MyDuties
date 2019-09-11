@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,7 +21,6 @@ import androidx.appcompat.widget.AppCompatTextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.lai.library.ButtonStyle;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -36,7 +34,6 @@ import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.dutyManagement.NextActivity;
 import uren.com.myduties.dutyManagement.assignTask.controller.CheckTaskItems;
 import uren.com.myduties.dutyManagement.assignTask.interfaces.TaskTypeCallback;
-import uren.com.myduties.dutyManagement.profile.SelectFriendFragment;
 import uren.com.myduties.dutyManagement.profile.SelectOneFriendFragment;
 import uren.com.myduties.dutyManagement.profile.SelectOneGroupFragment;
 import uren.com.myduties.evetBusModels.TaskTypeBus;
@@ -232,11 +229,7 @@ public class AssignTaskFragment extends BaseFragment {
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        if (urgentSwitch.isChecked()) {
-                            urgency = false;
-                        } else {
-                            urgency = true;
-                        }
+                        urgency = !urgentSwitch.isChecked();
                         break;
                     default:
                         break;

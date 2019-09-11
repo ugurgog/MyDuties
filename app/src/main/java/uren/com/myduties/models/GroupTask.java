@@ -1,9 +1,6 @@
 package uren.com.myduties.models;
 
 
-import uren.com.myduties.models.Group;
-import uren.com.myduties.models.User;
-
 public class GroupTask {
     String taskId;
     String taskDesc;

@@ -6,7 +6,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,7 +29,6 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -61,7 +58,6 @@ import uren.com.myduties.utils.IntentSelectUtil;
 import uren.com.myduties.utils.PermissionModule;
 import uren.com.myduties.utils.ProgressDialogUtil;
 import uren.com.myduties.utils.ShapeUtil;
-import uren.com.myduties.utils.dialogBoxUtil.CustomDialogBox;
 import uren.com.myduties.utils.dialogBoxUtil.DialogBoxUtil;
 import uren.com.myduties.utils.dialogBoxUtil.Interfaces.PhotoChosenCallback;
 
@@ -71,7 +67,6 @@ import static uren.com.myduties.constants.StringConstants.CAMERA_TEXT;
 import static uren.com.myduties.constants.StringConstants.GALLERY_TEXT;
 import static uren.com.myduties.constants.StringConstants.photo_upload_change;
 import static uren.com.myduties.dutyManagement.profile.adapters.GroupDetailListAdapter.CODE_CHANGE_AS_ADMIN;
-import static uren.com.myduties.dutyManagement.profile.adapters.GroupDetailListAdapter.CODE_REMOVE_FROM_GROUP;
 
 public class ViewGroupDetailFragment extends BaseFragment {
 

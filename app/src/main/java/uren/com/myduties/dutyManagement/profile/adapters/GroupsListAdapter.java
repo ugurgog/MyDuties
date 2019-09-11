@@ -22,7 +22,6 @@ import com.bumptech.glide.request.RequestOptions;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -33,11 +32,9 @@ import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.dutyManagement.profile.ViewGroupDetailFragment;
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.CompleteCallback;
-import uren.com.myduties.interfaces.ItemClickListener;
 import uren.com.myduties.interfaces.OnCompleteCallback;
 import uren.com.myduties.interfaces.RecyclerViewAdapterCallback;
 import uren.com.myduties.interfaces.ReturnCallback;
-import uren.com.myduties.models.Friend;
 import uren.com.myduties.models.Group;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.CommonUtils;
@@ -182,10 +179,7 @@ public class GroupsListAdapter extends RecyclerView.Adapter<GroupsListAdapter.Us
 
         public void exitFromGroup(final String userid) {
 
-            if(group.getGroupAdmin().equals(accountholderUser.getUserid()))
-                adminWillChange = true;
-            else
-                adminWillChange = false;
+            adminWillChange = group.getGroupAdmin().equals(accountholderUser.getUserid());
 
             GroupDBHelper.exitUserFromGroup(userid, group.getGroupid(), new CompleteCallback() {
                 @Override

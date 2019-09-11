@@ -3,14 +3,9 @@ package uren.com.myduties.dutyManagement.profile;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,7 +25,6 @@ import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.dutyManagement.NextActivity;
 import uren.com.myduties.dutyManagement.profile.adapters.SpecialSelectTabAdapter;
 import uren.com.myduties.utils.ClickableImage.ClickableImageView;
-import uren.com.myduties.utils.CommonUtils;
 
 import static uren.com.myduties.constants.StringConstants.ANIMATE_RIGHT_TO_LEFT;
 

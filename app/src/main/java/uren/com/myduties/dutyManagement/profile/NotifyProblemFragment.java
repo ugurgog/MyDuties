@@ -31,8 +31,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -59,10 +57,8 @@ import uren.com.myduties.utils.dialogBoxUtil.DialogBoxUtil;
 import uren.com.myduties.utils.dialogBoxUtil.Interfaces.InfoDialogBoxCallback;
 import uren.com.myduties.utils.dialogBoxUtil.Interfaces.PhotoChosenForReportCallback;
 
-
 import static uren.com.myduties.constants.StringConstants.ANIMATE_RIGHT_TO_LEFT;
 import static uren.com.myduties.constants.StringConstants.GALLERY_TEXT;
-import static uren.com.myduties.constants.StringConstants.fb_child_groups;
 import static uren.com.myduties.constants.StringConstants.fb_child_problems;
 import static uren.com.myduties.constants.StringConstants.fb_child_value_android;
 import static uren.com.myduties.constants.StringConstants.fb_child_value_bug;

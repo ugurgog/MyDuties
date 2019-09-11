@@ -1,11 +1,5 @@
 package uren.com.myduties.dutyManagement.profile.helper;
 
-import android.app.Activity;
-import android.content.Context;
-import android.os.AsyncTask;
-import android.view.View;
-import android.widget.Switch;
-
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -13,10 +7,10 @@ import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.Objects;
 
+import uren.com.myduties.dbManagement.TokenDBHelper;
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.OnCompleteCallback;
 import uren.com.myduties.login.AccountHolderInfo;
-import uren.com.myduties.messaging.MessageUpdateProcess;
 
 import static uren.com.myduties.constants.StringConstants.CHAR_H;
 
@@ -39,7 +33,7 @@ public class SettingOperation {
             @Override
             public void onSuccess(InstanceIdResult instanceIdResult) {
                 try {
-                    MessageUpdateProcess.updateTokenSigninValue(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid(), CHAR_H,
+                    TokenDBHelper.updateTokenSigninValue(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid(), CHAR_H,
                             new OnCompleteCallback() {
                                 @Override
                                 public void OnCompleted() {

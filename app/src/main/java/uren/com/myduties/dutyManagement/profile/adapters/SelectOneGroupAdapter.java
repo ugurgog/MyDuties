@@ -6,35 +6,6 @@ import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatTextView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import uren.com.myduties.R;
-import uren.com.myduties.interfaces.ReturnCallback;
-import uren.com.myduties.interfaces.ReturnObjectListener;
-import uren.com.myduties.models.User;
-import uren.com.myduties.utils.CommonUtils;
-import uren.com.myduties.utils.ShapeUtil;
-import uren.com.myduties.utils.dataModelUtil.UserDataUtil;
-
-import android.app.Activity;
-import android.content.Context;
-import android.graphics.drawable.GradientDrawable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -50,32 +21,17 @@ import com.bumptech.glide.request.RequestOptions;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import uren.com.myduties.R;
-import uren.com.myduties.dbManagement.GroupDBHelper;
-import uren.com.myduties.dutyManagement.BaseFragment;
-import uren.com.myduties.dutyManagement.profile.ViewGroupDetailFragment;
 import uren.com.myduties.evetBusModels.UserBus;
-import uren.com.myduties.interfaces.CompleteCallback;
-import uren.com.myduties.interfaces.ItemClickListener;
-import uren.com.myduties.interfaces.OnCompleteCallback;
-import uren.com.myduties.interfaces.RecyclerViewAdapterCallback;
 import uren.com.myduties.interfaces.ReturnCallback;
-import uren.com.myduties.models.Friend;
 import uren.com.myduties.models.Group;
 import uren.com.myduties.models.User;
-import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.ShapeUtil;
-import uren.com.myduties.utils.dialogBoxUtil.CustomDialogBox;
 
 import static uren.com.myduties.constants.NumericConstants.GROUP_NAME_MAX_LENGTH;
-import static uren.com.myduties.constants.StringConstants.ANIMATE_LEFT_TO_RIGHT;
-import static uren.com.myduties.constants.StringConstants.GROUP_OP_CHOOSE_TYPE;
-import static uren.com.myduties.constants.StringConstants.GROUP_OP_VIEW_TYPE;
 
 public class SelectOneGroupAdapter extends RecyclerView.Adapter<SelectOneGroupAdapter.UserGroupsListHolder> implements Filterable {
 

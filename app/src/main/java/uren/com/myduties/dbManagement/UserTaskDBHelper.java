@@ -16,13 +16,10 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.OnCompleteCallback;
@@ -36,7 +33,6 @@ import static uren.com.myduties.constants.StringConstants.fb_child_assignedtime;
 import static uren.com.myduties.constants.StringConstants.fb_child_closed;
 import static uren.com.myduties.constants.StringConstants.fb_child_completed;
 import static uren.com.myduties.constants.StringConstants.fb_child_completedtime;
-import static uren.com.myduties.constants.StringConstants.fb_child_email;
 import static uren.com.myduties.constants.StringConstants.fb_child_taskdesc;
 import static uren.com.myduties.constants.StringConstants.fb_child_type;
 import static uren.com.myduties.constants.StringConstants.fb_child_urgency;

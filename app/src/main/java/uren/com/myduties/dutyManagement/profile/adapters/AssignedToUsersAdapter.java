@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
@@ -31,10 +30,8 @@ import uren.com.myduties.R;
 import uren.com.myduties.dbManagement.UserTaskDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.evetBusModels.TaskTypeBus;
-import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.OnCompleteCallback;
-import uren.com.myduties.interfaces.ReturnCallback;
-import uren.com.myduties.models.Friend;
+import uren.com.myduties.messaging.NotificationHandler;
 import uren.com.myduties.models.Task;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.CommonUtils;
@@ -149,6 +146,9 @@ public class AssignedToUsersAdapter extends RecyclerView.Adapter {
                         public boolean onMenuItemClick(MenuItem item) {
                             switch (item.getItemId()) {
                                 case R.id.close:
+                                    if(task.isClosed())
+                                        CommonUtils.showToastShort(mContext, mContext.getResources().getString(R.string.taskIsClosedAlready));
+
                                     task.setClosed(true);
 
                                     UserTaskDBHelper.updateUserTask(task, false, new OnCompleteCallback() {
@@ -156,8 +156,6 @@ public class AssignedToUsersAdapter extends RecyclerView.Adapter {
                                         public void OnCompleted() {
                                             taskList.set(position, task);
                                             notifyItemChanged(position);
-
-                                            // TODO: 2019-08-26 - Burada karsi user a notif gonderilecek
                                         }
 
                                         @Override
@@ -184,9 +182,8 @@ public class AssignedToUsersAdapter extends RecyclerView.Adapter {
                                     break;
 
                                 case R.id.remind:
-
-                                    // TODO: 2019-09-07 - Kullaniciya bildirim gonderilecek 
-
+                                    NotificationHandler.sendUserNotification(mContext, assignedFrom, task.getAssignedTo(),
+                                            mContext.getResources().getString(R.string.letsRememberThisTask), task.getTaskDesc());
                                     break;
                             }
                             return false;

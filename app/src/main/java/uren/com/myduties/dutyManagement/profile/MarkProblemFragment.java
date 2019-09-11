@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-
 import java.util.Objects;
 
 import butterknife.BindView;

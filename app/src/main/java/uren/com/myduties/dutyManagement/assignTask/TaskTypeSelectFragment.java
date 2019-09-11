@@ -1,15 +1,10 @@
 package uren.com.myduties.dutyManagement.assignTask;
 
 import android.content.Context;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,31 +14,18 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import uren.com.myduties.R;
 import uren.com.myduties.dutyManagement.BaseFragment;
-import uren.com.myduties.dutyManagement.NextActivity;
 import uren.com.myduties.dutyManagement.assignTask.adapters.TaskTypeSelectAdapter;
 import uren.com.myduties.dutyManagement.assignTask.interfaces.TaskTypeCallback;
-import uren.com.myduties.dutyManagement.tasks.adapters.WaitingTaskAdapter;
 import uren.com.myduties.evetBusModels.TaskTypeBus;
-import uren.com.myduties.evetBusModels.UserBus;
-import uren.com.myduties.interfaces.ReturnCallback;
-import uren.com.myduties.models.PaintView;
-import uren.com.myduties.models.PhotoSelectUtil;
-import uren.com.myduties.models.Task;
 import uren.com.myduties.models.TaskType;
-import uren.com.myduties.utils.ShapeUtil;
 import uren.com.myduties.utils.TaskTypeHelper;
-
-import static uren.com.myduties.constants.NumericConstants.VIEW_NO_POST_FOUND;
-import static uren.com.myduties.constants.StringConstants.ANIMATE_LEFT_TO_RIGHT;
 
 public class TaskTypeSelectFragment extends BaseFragment {
 

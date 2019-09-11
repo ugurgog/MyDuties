@@ -1,6 +1,5 @@
 package uren.com.myduties.dutyManagement.profile.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
@@ -18,15 +17,10 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import uren.com.myduties.R;
-import uren.com.myduties.dutyManagement.profile.interfaces.ClickCallback;
-import uren.com.myduties.evetBusModels.SelectedUsersBus;
 import uren.com.myduties.interfaces.ReturnCallback;
 import uren.com.myduties.interfaces.ReturnObjectListener;
 import uren.com.myduties.models.User;

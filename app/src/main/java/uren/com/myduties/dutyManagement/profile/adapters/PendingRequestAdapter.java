@@ -27,7 +27,6 @@ import uren.com.myduties.dutyManagement.profile.interfaces.ListItemClickListener
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.OnCompleteCallback;
 import uren.com.myduties.interfaces.ReturnCallback;
-import uren.com.myduties.models.Friend;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.ShapeUtil;

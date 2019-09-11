@@ -24,7 +24,6 @@ import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -43,8 +42,6 @@ import uren.com.myduties.models.User;
 import uren.com.myduties.utils.ClickableImage.ClickableImageView;
 import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.ProgressDialogUtil;
-import uren.com.myduties.utils.dialogBoxUtil.DialogBoxUtil;
-import uren.com.myduties.utils.dialogBoxUtil.Interfaces.InfoDialogBoxCallback;
 
 import static uren.com.myduties.constants.StringConstants.ANIMATE_RIGHT_TO_LEFT;
 

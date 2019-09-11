@@ -2,9 +2,7 @@ package uren.com.myduties.dutyManagement.profile.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.PorterDuff;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
@@ -31,11 +28,9 @@ import uren.com.myduties.dbManagement.GroupTaskDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.evetBusModels.TaskTypeBus;
 import uren.com.myduties.evetBusModels.UserBus;
-import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.OnCompleteCallback;
-import uren.com.myduties.interfaces.ReturnCallback;
+import uren.com.myduties.messaging.NotificationHandler;
 import uren.com.myduties.models.GroupTask;
-import uren.com.myduties.models.Task;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.TaskTypeHelper;
@@ -168,8 +163,8 @@ public class AssignedToGroupsAdapter extends RecyclerView.Adapter {
                                     break;
 
                                 case R.id.remind:
-
-                                    // TODO: 2019-09-07 - Burada grup uyelerine bildirim gonderilecek 
+                                    NotificationHandler.sendNotificationToGroupParticipants(mContext, accountholderUser, groupTask.getGroup(),
+                                            mContext.getResources().getString(R.string.letsRememberThisTask), groupTask.getTaskDesc());
                                     break;
 
                                 case R.id.makeUrgent:
@@ -224,6 +219,9 @@ public class AssignedToGroupsAdapter extends RecyclerView.Adapter {
                 public void OnCompleted() {
                     taskList.set(position, groupTask);
                     notifyItemChanged(position);
+                    NotificationHandler.sendNotificationToGroupParticipants(mContext, accountholderUser, groupTask.getGroup(),
+                            accountholderUser.getName() + " " + mContext.getResources().getString(R.string.markedThisTaskUrgent),
+                            groupTask.getTaskDesc());
                 }
 
                 @Override
