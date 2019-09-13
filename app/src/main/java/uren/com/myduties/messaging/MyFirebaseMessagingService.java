@@ -6,8 +6,10 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 
 import androidx.annotation.NonNull;
@@ -22,6 +24,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -29,9 +34,11 @@ import java.util.Objects;
 import uren.com.myduties.MainActivity;
 import uren.com.myduties.R;
 import uren.com.myduties.dbManagement.TokenDBHelper;
+import uren.com.myduties.utils.BitmapConversion;
 
 import static uren.com.myduties.constants.StringConstants.FB_CHILD_DEVICE_TOKEN;
 import static uren.com.myduties.constants.StringConstants.FB_CHILD_TOKEN;
+import static uren.com.myduties.constants.StringConstants.FCM_CODE_PHOTO_URL;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
@@ -45,31 +52,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
-        // [START_EXCLUDE]
-        // There are two types of messages data messages and notification messages. Data messages
-        // are handled
-        // here in onMessageReceived whether the app is in the foreground or background. Data
-        // messages are the type
-        // traditionally used with GCM. Notification messages are only received here in
-        // onMessageReceived when the app
-        // is in the foreground. When the app is in the background an automatically generated
-        // notification is displayed.
-        // When the user taps on the notification they are returned to the app. Messages
-        // containing both notification
-        // and data payloads are treated as notification messages. The Firebase console always
-        // sends notification
-        // messages. For more see: https://firebase.google.com/docs/cloud-messaging/concept-options
-        // [END_EXCLUDE]
+        if (remoteMessage.getNotification() != null) {
+            String photoUrl;
+            try {
+                photoUrl = remoteMessage.getData().get(FCM_CODE_PHOTO_URL);
+            } finally {
 
-        /*if (remoteMessage.getData().size() > 0) {
-            if (remoteMessage.getNotification() != null)
-                sendNotificationForMessaging(remoteMessage);
-        }*/
-
-        if (remoteMessage.getNotification() != null)
-            sendNotificationForMessaging(remoteMessage);
+            }
+            new GetNotification(remoteMessage).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, photoUrl);
+        }
     }
-
 
     /**
      * Called if InstanceID token is updated. This may occur if the security of
@@ -87,7 +79,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
     }
 
-    private void sendNotificationForMessaging(RemoteMessage remoteMessage) {
+    private void sendNotificationForMessaging(RemoteMessage remoteMessage, Bitmap bitmap) {
         String messageBody = Objects.requireNonNull(remoteMessage.getNotification()).getBody();
         String messageTitle = remoteMessage.getNotification().getTitle();
 
@@ -113,6 +105,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (messageBody != null && !messageBody.isEmpty())
             notificationBuilder.setContentText(messageBody);
 
+        if (bitmap != null)
+            notificationBuilder.setLargeIcon(bitmap);
+
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -125,5 +120,38 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
         Objects.requireNonNull(notificationManager).notify(NotificationID.getID(), notificationBuilder.build());
+    }
+
+    public class GetNotification extends AsyncTask<String, Void, Void> {
+
+        RemoteMessage remoteMessage;
+
+        public GetNotification(RemoteMessage remoteMessage) {
+            this.remoteMessage = remoteMessage;
+        }
+
+        @Override
+        protected Void doInBackground(String... urls) {
+
+            try {
+                String photoUrl = urls[0];
+                Bitmap myBitmap = null;
+
+                if (photoUrl != null && !photoUrl.isEmpty()) {
+                    URL url = new URL(urls[0]);
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setDoInput(true);
+                    connection.connect();
+                    InputStream input = connection.getInputStream();
+                    myBitmap = BitmapConversion.getBitmapFromInputStream(input, getApplicationContext(), 350, 350);
+                }
+
+                sendNotificationForMessaging(remoteMessage, myBitmap);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 }

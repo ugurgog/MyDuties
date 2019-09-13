@@ -41,8 +41,7 @@ import static uren.com.myduties.constants.StringConstants.fb_child_usertask;
 
 public class UserTaskDBHelper {
 
-    public static void getUserWaitingTasks(User assignedTo, int limitValue,
-                                           final CompleteCallback completeCallback) {
+    public static void getUserWaitingTasks(User assignedTo, final CompleteCallback completeCallback) {
         final List<Task> taskList = new ArrayList<>();
 
         if (assignedTo == null || assignedTo.getUserid() == null) {
@@ -53,10 +52,10 @@ public class UserTaskDBHelper {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance()
                 .getReference(fb_child_usertask).child(assignedTo.getUserid());
 
-        Query query = databaseReference
-                .orderByChild(assignedTo.getUserid() + "/" + fb_child_assignedtime).limitToLast(limitValue);
+        //Query query = databaseReference
+        //            .orderByChild(assignedTo.getUserid() + "/" + fb_child_assignedtime).limitToFirst(limitValue);
 
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -101,15 +100,14 @@ public class UserTaskDBHelper {
         });
     }
 
-    public static void getUserCompletedTasks(User assignedTo, int limitValue,
-                                             final CompleteCallback completeCallback) {
+    public static void getUserCompletedTasks(User assignedTo, final CompleteCallback completeCallback) {
         final List<Task> taskList = new ArrayList<>();
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance()
                 .getReference(fb_child_usertask).child(assignedTo.getUserid());
 
         Query query = databaseReference
-                .orderByChild(assignedTo.getUserid() + "/" + fb_child_assignedtime).limitToLast(limitValue);
+                .orderByChild(assignedTo.getUserid() + "/" + fb_child_assignedtime);
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -270,32 +268,50 @@ public class UserTaskDBHelper {
         });
     }
 
-    public static void addUserTask(Task task, final OnCompleteCallback onCompleteCallback) {
+    public static void addUserTask(Task userTask, final OnCompleteCallback onCompleteCallback) {
 
-        if (task == null) return;
-        if (task.getTaskId() == null || task.getTaskId().isEmpty()) return;
+        if (userTask == null) return;
+        if (userTask.getTaskId() == null || userTask.getTaskId().isEmpty()) return;
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(fb_child_usertask).
-                child(task.getAssignedTo().getUserid()).child(task.getTaskId());
+                child(userTask.getAssignedTo().getUserid()).child(userTask.getTaskId());
 
         final Map<String, Object> values = new HashMap<>();
 
-        if (task.getTaskDesc() != null)
-            values.put(fb_child_taskdesc, task.getTaskDesc());
+        if (userTask.getTaskDesc() != null)
+            values.put(fb_child_taskdesc, userTask.getTaskDesc());
 
-        if (task.getAssignedFrom().getUserid() != null)
-            values.put(fb_child_assignedfromid, task.getAssignedFrom().getUserid());
+        if (userTask.getAssignedFrom().getUserid() != null)
+            values.put(fb_child_assignedfromid, userTask.getAssignedFrom().getUserid());
 
-        values.put(fb_child_completed, task.isCompleted());
-        values.put(fb_child_closed, task.isClosed());
-        values.put(fb_child_type, task.getType());
-        values.put(fb_child_urgency, task.isUrgency());
+        values.put(fb_child_completed, userTask.isCompleted());
+        values.put(fb_child_closed, userTask.isClosed());
+        values.put(fb_child_type, userTask.getType());
+        values.put(fb_child_urgency, userTask.isUrgency());
         values.put(fb_child_assignedtime, ServerValue.TIMESTAMP);
 
         databaseReference.updateChildren(values).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull com.google.android.gms.tasks.Task<Void> task) {
-                onCompleteCallback.OnCompleted();
+
+                final Map<String, Object> map = new HashMap<>();
+                map.put(userTask.getTaskId(), " ");
+
+                FirebaseDatabase.getInstance().getReference(fb_child_assignedfrom).
+                        child(userTask.getAssignedFrom().getUserid())
+                        .child(fb_child_users)
+                        .child(userTask.getAssignedTo().getUserid())
+                        .updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull com.google.android.gms.tasks.Task<Void> task) {
+                        onCompleteCallback.OnCompleted();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        onCompleteCallback.OnFailed(e.getMessage());
+                    }
+                });
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

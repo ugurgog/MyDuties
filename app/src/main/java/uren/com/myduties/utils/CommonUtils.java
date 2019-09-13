@@ -9,6 +9,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -366,18 +367,29 @@ public class CommonUtils {
                 .into(taskTypeImgv);
     }
 
-    public static void setUrgencyColor(Context mContext, boolean urgencyVal, View view, TextView tvUrgency) {
-        if (urgencyVal) {
-            if (tvUrgency != null)
+    public static void setUrgencyTv(boolean urgencyVal, TextView tvUrgency) {
+        if (tvUrgency != null) {
+            if (urgencyVal)
                 tvUrgency.setVisibility(View.VISIBLE);
-            view.setBackground(ShapeUtil.getShape(mContext.getResources().getColor(R.color.White, null),
-                    mContext.getResources().getColor(R.color.Red, null), GradientDrawable.RECTANGLE, 15, 3));
-        } else {
-            if (tvUrgency != null)
+            else
                 tvUrgency.setVisibility(View.GONE);
-            view.setBackground(ShapeUtil.getShape(mContext.getResources().getColor(R.color.White, null),
-                    mContext.getResources().getColor(R.color.White, null), GradientDrawable.RECTANGLE, 15, 3));
         }
+    }
+
+    public static void setClosedTv(boolean closed, TextView tvClosed) {
+        if (tvClosed != null) {
+            if (closed)
+                tvClosed.setVisibility(View.VISIBLE);
+            else
+                tvClosed.setVisibility(View.GONE);
+        }
+    }
+
+    public static void setCompletedImgv(Context context, boolean completed, ImageView completedImgv) {
+        if (completed)
+            completedImgv.setColorFilter(context.getResources().getColor(R.color.Green, null), PorterDuff.Mode.SRC_IN);
+        else
+            completedImgv.setColorFilter(context.getResources().getColor(R.color.Red, null), PorterDuff.Mode.SRC_IN);
     }
 
     public static String readCountryCodes(Context context) {

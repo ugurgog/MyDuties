@@ -24,6 +24,7 @@ import com.google.android.material.tabs.TabLayout;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Stack;
 
@@ -36,7 +37,10 @@ import uren.com.myduties.dutyManagement.fragmentControllers.FragNavTransactionOp
 import uren.com.myduties.dutyManagement.fragmentControllers.FragmentHistory;
 import uren.com.myduties.dutyManagement.profile.NotifyProblemFragment;
 import uren.com.myduties.dutyManagement.profile.ProfileFragment;
+import uren.com.myduties.dutyManagement.tasks.CompletedTaskFragment;
+import uren.com.myduties.dutyManagement.tasks.GroupTaskFragment;
 import uren.com.myduties.dutyManagement.tasks.MyTaskFragment;
+import uren.com.myduties.dutyManagement.tasks.WaitingTaskFragment;
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.CommonUtils;
@@ -71,6 +75,7 @@ public class NextActivity extends FragmentActivity implements
     public FragNavTransactionOptions transactionOptions;
     public static NotifyProblemFragment notifyProblemFragment;
     public AssignTaskFragment assignTaskFragment;
+    public MyTaskFragment myTaskFragment;
 
     private int[] mTabIconsSelected = {
             R.drawable.ic_my_tasks_white_24dp,
@@ -120,6 +125,7 @@ public class NextActivity extends FragmentActivity implements
             public void onTabReselected(TabLayout.Tab tab) {
                 mNavController.clearStack();
                 tabSelectionControl(tab);
+                checkFeedFragmentReselected(tab);
             }
         });
     }
@@ -153,6 +159,38 @@ public class NextActivity extends FragmentActivity implements
 
         //setStatusBarTransparent();
         initTab();
+    }
+
+    public void checkFeedFragmentReselected(TabLayout.Tab tab) {
+        if (tab.getPosition() == TAB1 && myTaskFragment != null) {
+
+            int selectedTabPosition = myTaskFragment.getSelectedTabPosition();
+            List<Fragment> fragments = Objects.requireNonNull(myTaskFragment.getFragmentManager()).getFragments();
+
+            if (selectedTabPosition == 0) {
+                for (int i = 0; i < fragments.size(); i++) {
+                    if (fragments.get(i) instanceof WaitingTaskFragment) {
+                        ((WaitingTaskFragment) fragments.get(i)).scrollRecViewInitPosition();
+                        break;
+                    }
+                }
+            }else if (selectedTabPosition == 1) {
+                for (int i = 0; i < fragments.size(); i++) {
+                    if (fragments.get(i) instanceof CompletedTaskFragment) {
+                        ((CompletedTaskFragment) fragments.get(i)).scrollRecViewInitPosition();
+                        break;
+                    }
+                }
+            }else if (selectedTabPosition == 2) {
+                for (int i = 0; i < fragments.size(); i++) {
+                    if (fragments.get(i) instanceof GroupTaskFragment) {
+                        ((GroupTaskFragment) fragments.get(i)).scrollRecViewInitPosition();
+                        break;
+                    }
+                }
+            }
+
+        }
     }
 
     public void setShapes() {
@@ -367,7 +405,8 @@ public class NextActivity extends FragmentActivity implements
         switch (index) {
 
             case TAB1:
-                return new MyTaskFragment();
+                myTaskFragment = new MyTaskFragment();
+                return myTaskFragment;
             case FragNavController.TAB2:
                 assignTaskFragment = new AssignTaskFragment();
                 return assignTaskFragment;

@@ -1,7 +1,13 @@
 package uren.com.myduties.models;
 
 import java.io.Serializable;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class LoginUser implements Serializable {
 
     private String userId;
@@ -11,7 +17,7 @@ public class LoginUser implements Serializable {
     private String profilePhotoUrl;
 
 
-    public LoginUser() {
+  /*  public LoginUser() {
         this.userId = "";
         this.email = "";
         this.username = "";
@@ -57,5 +63,5 @@ public class LoginUser implements Serializable {
 
     public void setProfilePhotoUrl(String profilePhotoUrl) {
         this.profilePhotoUrl = profilePhotoUrl;
-    }
+    }*/
 }

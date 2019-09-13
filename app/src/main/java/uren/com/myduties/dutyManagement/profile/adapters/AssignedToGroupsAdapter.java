@@ -220,7 +220,7 @@ public class AssignedToGroupsAdapter extends RecyclerView.Adapter {
                     taskList.set(position, groupTask);
                     notifyItemChanged(position);
                     NotificationHandler.sendNotificationToGroupParticipants(mContext, accountholderUser, groupTask.getGroup(),
-                            accountholderUser.getName() + " " + mContext.getResources().getString(R.string.markedThisTaskUrgent),
+                            UserDataUtil.getNameOrUsernameFromUser(accountholderUser) + " " + mContext.getResources().getString(R.string.markedThisTaskUrgent),
                             groupTask.getTaskDesc());
                 }
 
@@ -310,7 +310,7 @@ public class AssignedToGroupsAdapter extends RecyclerView.Adapter {
         }
 
         private void setUrgency() {
-            CommonUtils.setUrgencyColor(mContext, groupTask.isUrgency(), cardView, tvUrgency);
+            CommonUtils.setUrgencyTv( groupTask.isUrgency(), tvUrgency);
         }
 
         private void setTaskTypeImage() {

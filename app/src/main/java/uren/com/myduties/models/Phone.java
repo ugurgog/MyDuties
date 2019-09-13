@@ -1,12 +1,18 @@
 package uren.com.myduties.models;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Phone {
 
     private String countryCode;
     private String dialCode ;
     private long phoneNumber;
 
-    public Phone() {
+    /*public Phone() {
     }
 
     public Phone(String countryCode, String dialCode, long phoneNumber) {
@@ -37,5 +43,5 @@ public class Phone {
 
     public void setPhoneNumber(long phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
+    }*/
 }

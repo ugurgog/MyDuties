@@ -1,5 +1,11 @@
 package uren.com.myduties.models;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Problem {
     User whoOpened;
     String problemid;
@@ -11,7 +17,7 @@ public class Problem {
     String type;
     String problemPhotoUrl;
 
-    public Problem() {
+    /*public Problem() {
     }
 
     public Problem(User whoOpened, String problemid, long completedTime, long createdAt, boolean fixed, String platform, String problemDesc, String type, String problemPhotoUrl) {
@@ -96,5 +102,5 @@ public class Problem {
 
     public void setProblemPhotoUrl(String problemPhotoUrl) {
         this.problemPhotoUrl = problemPhotoUrl;
-    }
+    }*/
 }

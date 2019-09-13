@@ -266,7 +266,7 @@ public class AssignedToUsersAdapter extends RecyclerView.Adapter {
         }
 
         private void setUrgency() {
-            CommonUtils.setUrgencyColor(mContext, task.isUrgency(), cardView, tvUrgency);
+            CommonUtils.setUrgencyTv(task.isUrgency(), tvUrgency);
         }
 
         private void setTaskTypeImage() {

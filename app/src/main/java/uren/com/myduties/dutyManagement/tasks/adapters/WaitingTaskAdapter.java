@@ -15,6 +15,7 @@ import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -66,11 +67,11 @@ public class WaitingTaskAdapter extends RecyclerView.Adapter {
     }
 
     @Subscribe(sticky = true)
-    public void taskTypeReceived(TaskTypeBus taskTypeBus){
+    public void taskTypeReceived(TaskTypeBus taskTypeBus) {
         taskTypeHelper = taskTypeBus.getTypeMap();
     }
 
-    public void setReturnCallback(ReturnCallback returnCallback){
+    public void setReturnCallback(ReturnCallback returnCallback) {
         this.returnCallback = returnCallback;
     }
 
@@ -87,30 +88,17 @@ public class WaitingTaskAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         RecyclerView.ViewHolder viewHolder;
-        if (viewType == VIEW_ITEM) {
-            View itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.task_vert_list_item, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.task_vert_list_item, parent, false);
 
-            viewHolder = new MyViewHolder(itemView);
-        } else {
-            View v = LayoutInflater.from(parent.getContext()).inflate(
-                    R.layout.progressbar_item, parent, false);
-
-            viewHolder = new ProgressViewHolder(v);
-        }
+        viewHolder = new MyViewHolder(itemView);
         return viewHolder;
-
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
-        if (holder instanceof MyViewHolder) {
-            Task task = taskList.get(position);
-            ((MyViewHolder) holder).setData(task, position);
-        } else {
-            ((ProgressViewHolder) holder).progressBar.setIndeterminate(true);
-        }
+        Task task = taskList.get(position);
+        ((MyViewHolder) holder).setData(task, position);
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -120,13 +108,15 @@ public class WaitingTaskAdapter extends RecyclerView.Adapter {
         ImageView moreImgv;
         ImageView taskTypeImgv;
         TextView txtProfilePic;
-        TextView txtUserName;
-        TextView txtDetail;
+        AppCompatTextView txtUserName;
+        AppCompatTextView txtDetail;
         CardView cardView;
         Task task;
         int position;
         LinearLayout profileMainLayout;
         TextView txtCreateAt;
+        AppCompatTextView tvClosed;
+        AppCompatTextView tvUrgency;
         PopupMenu popupMenu = null;
         User assignedFrom = null;
 
@@ -143,6 +133,8 @@ public class WaitingTaskAdapter extends RecyclerView.Adapter {
             profileMainLayout = view.findViewById(R.id.profileMainLayout);
             txtCreateAt = view.findViewById(R.id.txtCreateAt);
             taskTypeImgv = view.findViewById(R.id.taskTypeImgv);
+            tvClosed = view.findViewById(R.id.tvClosed);
+            tvUrgency = view.findViewById(R.id.tvUrgency);
             setListeners();
             setPopupMenu();
         }
@@ -181,7 +173,7 @@ public class WaitingTaskAdapter extends RecyclerView.Adapter {
                                             notifyItemRangeChanged(position, getItemCount());
                                             returnCallback.OnReturn(taskList);
                                             NotificationHandler.sendUserNotification(mContext, task.getAssignedTo(), task.getAssignedFrom(),
-                                                    task.getAssignedTo().getUserid() + " " + mContext.getResources().getString(R.string.completedThisTask),
+                                                    UserDataUtil.getNameOrUsernameFromUser(task.getAssignedTo()) + " " + mContext.getResources().getString(R.string.completedThisTask),
                                                     task.getTaskDesc());
                                         }
 
@@ -200,7 +192,7 @@ public class WaitingTaskAdapter extends RecyclerView.Adapter {
                                             User user = (User) object;
 
                                             try {
-                                                if(user != null && user.getPhone() != null){
+                                                if (user != null && user.getPhone() != null) {
                                                     String phoneNumber = user.getPhone().getDialCode() + user.getPhone().getPhoneNumber();
                                                     mContext.startActivity(new Intent(Intent.ACTION_DIAL,
                                                             Uri.fromParts("tel", phoneNumber, null)));
@@ -235,6 +227,7 @@ public class WaitingTaskAdapter extends RecyclerView.Adapter {
             taskPositionHashMap.put(task.getTaskId(), position);
             setTaskTypeImage();
             setUrgency();
+            setClosedTv();
 
             //Task Description
             if (task.getTaskDesc() != null && !task.getTaskDesc().isEmpty()) {
@@ -269,7 +262,11 @@ public class WaitingTaskAdapter extends RecyclerView.Adapter {
         }
 
         private void setUrgency() {
-            CommonUtils.setUrgencyColor(mContext, task.isUrgency(), cardView, null);
+            CommonUtils.setUrgencyTv( task.isUrgency(), tvUrgency);
+        }
+
+        private void setClosedTv() {
+            CommonUtils.setClosedTv(task.isClosed(), tvClosed);
         }
 
         private void setTaskTypeImage() {
@@ -289,37 +286,9 @@ public class WaitingTaskAdapter extends RecyclerView.Adapter {
         }
     }
 
-    public void addProgressLoading() {
-        if (getItemViewType(taskList.size() - 1) != VIEW_PROG) {
-            taskList.add(null);
-            notifyItemInserted(taskList.size() - 1);
-        }
-    }
-
-    public void removeProgressLoading() {
-        if (getItemViewType(taskList.size() - 1) == VIEW_PROG) {
-            taskList.remove(taskList.size() - 1);
-            notifyItemRemoved(taskList.size());
-        }
-    }
-
     public void updatePostListItems(List<Task> newTaskList) {
         this.taskList.clear();
         this.taskList.addAll(newTaskList);
         notifyDataSetChanged();
     }
-
-    public boolean isShowingProgressLoading() {
-        return getItemViewType(taskList.size() - 1) == VIEW_PROG;
-    }
-
-    public static class ProgressViewHolder extends RecyclerView.ViewHolder {
-        public ProgressBar progressBar;
-
-        public ProgressViewHolder(View v) {
-            super(v);
-            progressBar = v.findViewById(R.id.progressBarLoading);
-        }
-    }
-
 }

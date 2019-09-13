@@ -125,17 +125,6 @@ public class CompletedTaskFragment extends BaseFragment {
         setLayoutManager();
         setAdapter();
         setPullToRefresh();
-        setRecyclerViewScroll();
-        setFeedRefreshListener();
-    }
-
-    private void setFeedRefreshListener() {
-        TaskHelper.TaskRefresh.getInstance().setTaskRefreshCallback(new TaskRefreshCallback() {
-            @Override
-            public void onTaskRefresh() {
-                refreshFeed();
-            }
-        });
     }
 
     private void setLayoutManager() {
@@ -171,43 +160,6 @@ public class CompletedTaskFragment extends BaseFragment {
         startGetPosts();
     }
 
-    private void setRecyclerViewScroll() {
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                if (dy > 0) //check for scroll down
-                {
-                    visibleItemCount = mLayoutManager.getChildCount();
-                    totalItemCount = mLayoutManager.getItemCount();
-                    pastVisibleItems = mLayoutManager.findFirstVisibleItemPosition();
-
-                    if (loading) {
-                        //Do pagination.. i.e. fetch new data
-                        if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
-                            loading = false;
-                            limitValue = limitValue + REC_MAXITEM_LIMIT_COUNT;
-                            completedTaskAdapter.addProgressLoading();
-                            startGetPosts();
-                        }
-                    }
-                }
-            }
-        });
-
-    }
-
-    /*public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-    public void onStop(){
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-*/
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -227,7 +179,7 @@ public class CompletedTaskFragment extends BaseFragment {
 
     private void startGetPosts() {
 
-        UserTaskDBHelper.getUserCompletedTasks(user, limitValue, new CompleteCallback() {
+        UserTaskDBHelper.getUserCompletedTasks(user, new CompleteCallback() {
             @Override
             public void onComplete(Object object) {
                 setFetchData((List<Task>)object);
@@ -246,10 +198,6 @@ public class CompletedTaskFragment extends BaseFragment {
                         }
                     });
                     showExceptionLayout(false, -1);
-                    if (completedTaskAdapter.isShowingProgressLoading()) {
-                        completedTaskAdapter.removeProgressLoading();
-                    }
-
                 } else {
                     showExceptionLayout(true, VIEW_SERVER_ERROR);
                 }
@@ -280,8 +228,6 @@ public class CompletedTaskFragment extends BaseFragment {
 
         loading = true;
         taskList.addAll(taskList1);
-
-        completedTaskAdapter.removeProgressLoading();
 
         if (pulledToRefresh) {
             completedTaskAdapter.updatePostListItems(taskList1);

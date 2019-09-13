@@ -24,9 +24,9 @@ public class PhoneNumberFormatUtil {
 
         for (Country country : countries) {
             if (country != null && country.getCode() != null && !country.getCode().trim().isEmpty() &&
-                    country.getDialCode() != null && !country.getDialCode().isEmpty()) {
+                    country.getDial_code() != null && !country.getDial_code().isEmpty()) {
                 if (country.getCode().trim().equals(locale)) {
-                    formatNumbersWithDialCode(country.getDialCode(), locale, contactList,
+                    formatNumbersWithDialCode(country.getDial_code(), locale, contactList,
                             completeCallback, context);
                     break;
                 }

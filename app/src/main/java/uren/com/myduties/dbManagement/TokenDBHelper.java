@@ -45,11 +45,17 @@ public class TokenDBHelper {
 
                 Map<String, Object> map = (Map) dataSnapshot.getValue();
 
-                String signIn = (String) map.get(FB_CHILD_SIGNIN);
+                String signIn = null;
+                try {
+                    signIn = (String) map.get(FB_CHILD_SIGNIN);
 
-                if(signIn.equals(CHAR_E)){
-                    String token = (String) map.get(FB_CHILD_TOKEN);
-                    completeCallback.onComplete(token);
+                    if(signIn.equals(CHAR_E)){
+                        String token = (String) map.get(FB_CHILD_TOKEN);
+                        completeCallback.onComplete(token);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    completeCallback.onFailed(e.getMessage());
                 }
             }
 

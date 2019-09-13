@@ -210,7 +210,7 @@ public class UserDBHelper {
                         e.printStackTrace();
                     }
 
-                    User user = new User(userid, name, username, email, photoUrl, phone, groupList);
+                    User user = new User(userid, name, username, email, photoUrl, phone, groupList, admin);
                     user.setAdmin(admin);
                     completeCallback.onComplete(user);
                 } else

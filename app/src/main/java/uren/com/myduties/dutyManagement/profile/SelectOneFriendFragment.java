@@ -68,10 +68,8 @@ public class SelectOneFriendFragment extends BaseFragment {
     private ProgressDialogUtil progressDialogUtil;
     private SelectOneFriendAdapter selectOneFriendAdapter;
     private LinearLayoutManager linearLayoutManager;
-    private int pastVisibleItems, visibleItemCount, totalItemCount;
     private boolean loading = true;
     private ReturnCallback returnCallback;
-    private int perPageCnt;
     private User selectedUser;
     private User accountholderUser;
 
@@ -122,19 +120,13 @@ public class SelectOneFriendFragment extends BaseFragment {
         toolbarTitleTv.setText(Objects.requireNonNull(getActivity()).getResources().getString(R.string.chooseAFriend));
         searchEdittext.setHint(getContext().getResources().getString(R.string.searchUser));
         setShapes();
-        setPaginationValues();
         setAdapter();
-        setRecyclerViewScroll();
         getFriendSelectionPage();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-    }
-
-    private void setPaginationValues() {
-        perPageCnt = DEFAULT_GET_FOLLOWER_PERPAGE_COUNT;
     }
 
     public void addListeners() {
@@ -206,34 +198,9 @@ public class SelectOneFriendFragment extends BaseFragment {
         nextFab.setBackground(shape);
     }
 
-    private void setRecyclerViewScroll() {
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                if (dy > 0) {
-                    visibleItemCount = linearLayoutManager.getChildCount();
-                    totalItemCount = linearLayoutManager.getItemCount();
-                    pastVisibleItems = linearLayoutManager.findFirstVisibleItemPosition();
-
-                    if (loading) {
-                        if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
-                            loading = false;
-                            perPageCnt = perPageCnt + DEFAULT_GET_FOLLOWER_PERPAGE_COUNT;
-                            selectOneFriendAdapter.addProgressLoading();
-                            getFriendSelectionPage();
-                        }
-                    }
-                }
-            }
-        });
-    }
-
     private void getFriendSelectionPage() {
 
-        FriendsDBHelper.getFriendsByStatus(accountholderUser.getUserid(), perPageCnt, fb_child_status_friend, new CompleteCallback() {
+        FriendsDBHelper.getFriendsByStatus(accountholderUser.getUserid(), fb_child_status_friend, new CompleteCallback() {
             @Override
             public void onComplete(Object object) {
                 if (object != null) {
@@ -245,9 +212,6 @@ public class SelectOneFriendFragment extends BaseFragment {
             @Override
             public void onFailed(String message) {
                 progressDialogUtil.dialogDismiss();
-                if (selectOneFriendAdapter.isShowingProgressLoading()) {
-                    selectOneFriendAdapter.removeProgressLoading();
-                }
                 CommonUtils.showToastShort(getContext(), message);
             }
         });

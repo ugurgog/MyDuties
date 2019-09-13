@@ -95,7 +95,7 @@ public class WaitingTaskFragment extends BaseFragment {
             initVariables();
             initListeners();
             initRecyclerView();
-            startGetPosts();
+            startGetPosts(false);
             loadingView.show();
         }
 
@@ -122,17 +122,6 @@ public class WaitingTaskFragment extends BaseFragment {
         setLayoutManager();
         setAdapter();
         setPullToRefresh();
-        setRecyclerViewScroll();
-        setFeedRefreshListener();
-    }
-
-    private void setFeedRefreshListener() {
-        TaskHelper.TaskRefresh.getInstance().setTaskRefreshCallback(new TaskRefreshCallback() {
-            @Override
-            public void onTaskRefresh() {
-                refreshFeed();
-            }
-        });
     }
 
     private void setLayoutManager() {
@@ -165,35 +154,7 @@ public class WaitingTaskFragment extends BaseFragment {
 
     private void refreshFeed() {
         pulledToRefresh = true;
-        startGetPosts();
-    }
-
-    private void setRecyclerViewScroll() {
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                if (dy > 0) //check for scroll down
-                {
-                    visibleItemCount = mLayoutManager.getChildCount();
-                    totalItemCount = mLayoutManager.getItemCount();
-                    pastVisibleItems = mLayoutManager.findFirstVisibleItemPosition();
-
-                    if (loading) {
-                        //Do pagination.. i.e. fetch new data
-                        if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
-                            loading = false;
-                            limitValue = limitValue + REC_MAXITEM_LIMIT_COUNT;
-                            waitingTaskAdapter.addProgressLoading();
-                            startGetPosts();
-                        }
-                    }
-                }
-            }
-        });
-
+        startGetPosts(false);
     }
 
     @Override
@@ -213,9 +174,9 @@ public class WaitingTaskFragment extends BaseFragment {
         user = userBus.getUser();
     }
 
-    private void startGetPosts() {
+    private void startGetPosts(boolean loadMore) {
 
-        UserTaskDBHelper.getUserWaitingTasks(user, limitValue, new CompleteCallback() {
+        UserTaskDBHelper.getUserWaitingTasks(user, new CompleteCallback() {
             @Override
             public void onComplete(Object object) {
                 setFetchData((List<Task>)object);
@@ -234,9 +195,6 @@ public class WaitingTaskFragment extends BaseFragment {
                         }
                     });
                     showExceptionLayout(false, -1);
-                    if (waitingTaskAdapter.isShowingProgressLoading()) {
-                        waitingTaskAdapter.removeProgressLoading();
-                    }
 
                 } else {
                     showExceptionLayout(true, VIEW_SERVER_ERROR);
@@ -268,8 +226,6 @@ public class WaitingTaskFragment extends BaseFragment {
 
         loading = true;
         taskList.addAll(taskList1);
-
-        waitingTaskAdapter.removeProgressLoading();
 
         if (pulledToRefresh) {
             waitingTaskAdapter.updatePostListItems(taskList1);

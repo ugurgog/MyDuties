@@ -81,28 +81,17 @@ public class FriendsAdapter extends RecyclerView.Adapter implements Filterable {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         RecyclerView.ViewHolder viewHolder;
-        if (viewType == VIEW_ITEM) {
-            View itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.friends_vert_list_item, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.friends_vert_list_item, parent, false);
 
-            viewHolder = new FriendsAdapter.FriendViewHolder(itemView);
-        } else {
-            View v = LayoutInflater.from(parent.getContext()).inflate(
-                    R.layout.progressbar_item, parent, false);
-
-            viewHolder = new FriendsAdapter.ProgressViewHolder(v);
-        }
+        viewHolder = new FriendsAdapter.FriendViewHolder(itemView);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof FriendsAdapter.FriendViewHolder) {
-            Friend friend = friendList.get(position);
-            ((FriendsAdapter.FriendViewHolder) holder).setData(friend, position);
-        } else {
-            ((FriendsAdapter.ProgressViewHolder) holder).progressBar.setIndeterminate(true);
-        }
+        Friend friend = friendList.get(position);
+        ((FriendsAdapter.FriendViewHolder) holder).setData(friend, position);
     }
 
     public class FriendViewHolder extends RecyclerView.ViewHolder {
@@ -143,7 +132,7 @@ public class FriendsAdapter extends RecyclerView.Adapter implements Filterable {
                 public void onClick(View v) {
                     if (friend.getFriendStatus().equals(fb_child_status_friend))
                         removeFriendDialog();
-                    else if(friend.getFriendStatus().equals(fb_child_status_sendedrequest))
+                    else if (friend.getFriendStatus().equals(fb_child_status_sendedrequest))
                         cancelRequestFriendDialog();
                 }
             });
@@ -264,29 +253,6 @@ public class FriendsAdapter extends RecyclerView.Adapter implements Filterable {
             friendList.add(friend);
             orgFriendList.add(friend);
             notifyItemInserted(friendList.size() - 1);
-        }
-    }
-
-    public void addProgressLoading() {
-        if (getItemViewType(friendList.size() - 1) != VIEW_PROG) {
-            friendList.add(null);
-            notifyItemInserted(friendList.size() - 1);
-        }
-    }
-
-    public void removeProgressLoading() {
-        if (getItemViewType(friendList.size() - 1) == VIEW_PROG) {
-            friendList.remove(friendList.size() - 1);
-            notifyItemRemoved(friendList.size());
-        }
-    }
-
-    public static class ProgressViewHolder extends RecyclerView.ViewHolder {
-        public ProgressBar progressBar;
-
-        public ProgressViewHolder(View v) {
-            super(v);
-            progressBar = v.findViewById(R.id.progressBarLoading);
         }
     }
 

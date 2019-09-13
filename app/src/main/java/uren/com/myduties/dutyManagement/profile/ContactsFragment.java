@@ -55,18 +55,17 @@ public class ContactsFragment extends BaseFragment {
     LinearLayout toolbarLayout;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
-    @BindView(R.id.editTextSearch)
-    EditText editTextSearch;
-    @BindView(R.id.imgCancelSearch)
-    ImageView imgCancelSearch;
-    @BindView(R.id.searchToolbarBackImgv)
-    ImageView searchToolbarBackImgv;
     @BindView(R.id.warningMsgLayout)
     LinearLayout warningMsgLayout;
     @BindView(R.id.warningMsgTv)
     AppCompatTextView warningMsgTv;
-    @BindView(R.id.searchToolbarAddItemImgv)
-    ImageView searchToolbarAddItemImgv;
+
+    @BindView(R.id.searchCancelImgv)
+    ImageView searchCancelImgv;
+    @BindView(R.id.searchToolbarBackImgv)
+    ImageView searchToolbarBackImgv;
+    @BindView(R.id.searchEdittext)
+    EditText searchEdittext;
 
     PermissionModule permissionModule;
     ContactsAdapter contactsAdapter;
@@ -106,7 +105,7 @@ public class ContactsFragment extends BaseFragment {
     }
 
     public void initVariables() {
-        searchToolbarAddItemImgv.setVisibility(View.GONE);
+        searchEdittext.setHint(getContext().getResources().getString(R.string.searchContact));
         permissionModule = new PermissionModule(getActivity());
         reformedContactList = new ArrayList<>();
         inviteContactsList = new ArrayList<>();
@@ -122,18 +121,12 @@ public class ContactsFragment extends BaseFragment {
         searchToolbarBackImgv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (edittextFocused) {
-                    CommonUtils.hideKeyBoard(Objects.requireNonNull(getContext()));
-                    searchToolbarBackImgv.setVisibility(View.GONE);
-                    if (editTextSearch != null)
-                        editTextSearch.setText("");
-                } else {
-                    Objects.requireNonNull(getActivity()).onBackPressed();
-                }
+                CommonUtils.showKeyboard(getContext(), false, searchEdittext);
+                getActivity().onBackPressed();
             }
         });
 
-        editTextSearch.addTextChangedListener(new TextWatcher() {
+        searchEdittext.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -148,15 +141,15 @@ public class ContactsFragment extends BaseFragment {
             public void afterTextChanged(Editable s) {
                 if (s != null && !s.toString().trim().isEmpty()) {
                     updateAdapter(s.toString());
-                    imgCancelSearch.setVisibility(View.VISIBLE);
+                    searchCancelImgv.setVisibility(View.VISIBLE);
                 } else {
                     updateAdapter("");
-                    imgCancelSearch.setVisibility(View.GONE);
+                    searchCancelImgv.setVisibility(View.GONE);
                 }
             }
         });
 
-        editTextSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+     /*   editTextSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
@@ -167,23 +160,14 @@ public class ContactsFragment extends BaseFragment {
                     edittextFocused = false;
                 }
             }
-        });
+        });*/
 
-        editTextSearch.setOnClickListener(new View.OnClickListener() {
+        searchCancelImgv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchToolbarBackImgv.setVisibility(View.VISIBLE);
-            }
-        });
-
-        imgCancelSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (editTextSearch != null)
-                    editTextSearch.setText("");
-                imgCancelSearch.setVisibility(View.GONE);
-                CommonUtils.hideKeyBoard(Objects.requireNonNull(getContext()));
-                searchToolbarBackImgv.setVisibility(View.GONE);
+                searchEdittext.setText("");
+                searchCancelImgv.setVisibility(View.GONE);
+                CommonUtils.showKeyboard(getContext(),false, searchEdittext);
             }
         });
     }

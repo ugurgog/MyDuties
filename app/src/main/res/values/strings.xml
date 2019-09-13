@@ -29,7 +29,7 @@
     <string name="addGroupName">Add group name</string>
     <string name="pleaseWriteGroupName">The group name cannot be empty!</string>
     <string name="deviceHasNoCamera">Device has no camera!</string>
-    <string name="writeGroupName">Write group name...</string>
+    <string name="writeGroupName">Write group name…</string>
     <string name="defineGroupNameAndIcon">Specify group name and icon</string>
     <string name="participant"> participants</string>
     <string name="constantItem">item</string>
@@ -51,9 +51,10 @@
     <string name="changeAsAdmin">Make Group Admin</string>
     <string name="secondShort">sec</string>
     <string name="searchGroup">Search Group</string>
+    <string name="searchContact">Search Contact</string>
 
-    <string name="writetaskdesc"></string>
-    <string name="UPDATING">Updating...</string>
+    <string name="writetaskdesc">Write something…</string>
+    <string name="UPDATING">Updating…</string>
     <string name="VIEW_PENDING_REQUEST">View Pending Requests</string>
     <string name="PHONE_NUM">Phone Number</string>
     <string name="SELECT_COUNTRY">Select Country</string>
@@ -71,12 +72,12 @@
     <string name="TAKE_SCREENSHOT">Take screenshot</string>
     <string name="CIRCLE_THE_PROBLEM">Take the problem round</string>
     <string name="SCREENSHOT">Take</string>
-    <string name="searchUser">Search user...</string>
+    <string name="searchUser">Search user…</string>
     <string name="IN_GROUP">In Group</string>
     <string name="REMOVE">Remove</string>
     <string name="REMOVE_FOLLOWER_TITLE">Remove Friend?</string>
     <string name="REMOVE_FOLLOWER_MESSAGE">Are you sure you want to remove this person from friends?</string>
-    <string name="SEARCH_FRIENDS">Search friends...</string>
+    <string name="SEARCH_FRIENDS">Search friends…</string>
     <string name="USER_NOT_FOUND">User not found.</string>
     <string name="GROUP_NOT_FOUND">Group not found.</string>
     <string name="cancelSendedRequest">The friend request sent will be withdrawn. Do you confirm?</string>
@@ -104,7 +105,8 @@
 
     <!-- Whose for will be shared -->
     <string name="groupsShareText">Groups</string>
-    <string name="tasksmyassigned">Assignment</string>
+    <string name="tasksmyassigned">The tasks I have assigned</string>
+    <string name="tasksmyassignedDesc">Assignments</string>
 
     <string name="signOut">Sign Out</string>
     <string name="invite">Invite</string>
@@ -198,11 +200,11 @@
     <string name="ACCEPT">Accept</string>
     <string name="REJECT">Reject</string>
 
-    <string name="emptyFeed">There is no waiting task...</string>
-    <string name="there_is_no_completed_task">There is no completed task...</string>
-    <string name="there_is_no_group_task">There is no group task...</string>
+    <string name="emptyFeed">There is no waiting task.</string>
+    <string name="there_is_no_completed_task">There is no completed task.</string>
+    <string name="there_is_no_group_task">There is no group task.</string>
 
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading…</string>
     <string name="serverError">Server Error</string>
     <string name="swipeDownForRefresh">Swipe down for refresh</string>
     <string name="delete">Delete</string>
@@ -210,6 +212,7 @@
     <string name="WRITE_YOUR_NAME">Type your name..</string>
     <string name="WRITE_USERNAME">Type your username..</string>
     <string name="WRITE_EMAIL">Type your email..</string>
+    <string name="TYPE_FOR_ADD_PHONE">Touch for adding phone number…</string>
 
     <array name="months">
         <item>January</item>
@@ -275,6 +278,7 @@
     <string name="completedThisTask">completed this task</string>
     <string name="markedThisTaskUrgent">has marked this task urgent</string>
     <string name="letsRememberThisTask">Remember this task</string>
+    <string name="sentYouFriendRequest">has sent you a friend request</string>
 
     <string name="task_type_home">Home</string>
     <string name="task_type_shop">Shopping</string>

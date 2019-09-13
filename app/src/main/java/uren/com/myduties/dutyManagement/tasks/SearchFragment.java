@@ -41,6 +41,7 @@ import uren.com.myduties.dutyManagement.tasks.model.HighlightedResult;
 import uren.com.myduties.models.Friend;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.ClickableImage.ClickableImageView;
+import uren.com.myduties.utils.CommonUtils;
 
 import static uren.com.myduties.constants.StringConstants.ALGOLIA_APP_ID;
 import static uren.com.myduties.constants.StringConstants.ALGOLIA_INDEX_NAME;
@@ -108,7 +109,7 @@ public class SearchFragment extends BaseFragment {
         commonToolbarbackImgv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showKeyboard(false);
+                CommonUtils.showKeyboard(getContext(), false, searchEdittext);
                 Objects.requireNonNull(getActivity()).onBackPressed();
             }
         });
@@ -118,7 +119,7 @@ public class SearchFragment extends BaseFragment {
             public void onClick(View v) {
                 searchEdittext.setText("");
                 searchCancelImgv.setVisibility(View.GONE);
-                showKeyboard(false);
+                CommonUtils.showKeyboard(getContext(), false, searchEdittext);
             }
         });
 
@@ -142,8 +143,9 @@ public class SearchFragment extends BaseFragment {
                     } else {
                         searchCancelImgv.setVisibility(View.GONE);
                     }
-                } else
+                } else {
                     searchCancelImgv.setVisibility(View.GONE);
+                }
 
                 if (s != null && s.toString() != null) {
                     Query query = new Query(s.toString())
@@ -184,7 +186,7 @@ public class SearchFragment extends BaseFragment {
         searchResultTv.setText(getContext().getResources().getString(R.string.USER_NOT_FOUND));
         friendList = new ArrayList<>();
         toolbarTitleTv.setText(getContext().getResources().getString(R.string.searchUsers));
-        showKeyboard(true);
+        CommonUtils.showKeyboard(getContext(), true, searchEdittext);
         initRecyclerView();
     }
 
@@ -214,20 +216,6 @@ public class SearchFragment extends BaseFragment {
                 .put("searchableAttributes", fb_child_name)
                 .put("searchableAttributes", fb_child_username);
         index.setSettingsAsync(settings, null);
-    }
-
-    private void showKeyboard(boolean showKeyboard) {
-
-        if (showKeyboard) {
-            InputMethodManager imm = (InputMethodManager) Objects.requireNonNull(getContext()).getSystemService(Context.INPUT_METHOD_SERVICE);
-            Objects.requireNonNull(imm).toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-        } else {
-            InputMethodManager imm = (InputMethodManager) Objects.requireNonNull(getContext()).getSystemService(
-                    Context.INPUT_METHOD_SERVICE);
-            Objects.requireNonNull(imm).hideSoftInputFromWindow(searchEdittext.getWindowToken(), 0);
-            searchEdittext.setFocusable(false);
-            searchEdittext.setFocusableInTouchMode(true);
-        }
     }
 
     @Override

@@ -55,22 +55,17 @@
                     android:layout_weight="10"
                     android:orientation="vertical">
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:fontFamily="@font/amiko"
                         android:id="@+id/nameTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/tintColor"
-                        android:textSize="12dp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/Black"
+                        android:textSize="13dp"
+                        android:textStyle="bold"/>
 
-                    <TextView
-                        android:id="@+id/usernameTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="10dp"
-                        android:textStyle="italic" />
-
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:fontFamily="@font/amiko"
                         android:id="@+id/phoneNumTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

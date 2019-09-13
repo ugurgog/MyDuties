@@ -1,16 +1,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="4dp">
+        app:cardBackgroundColor="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,7 +17,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp">
 
                 <!-- Top of Post Text /-->
                 <LinearLayout
@@ -75,13 +74,14 @@
                             android:gravity="center|left"
                             android:orientation="vertical">
 
-                            <TextView
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:fontFamily="@font/amiko"
                                 android:id="@+id/txtUserName"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="3dp"
                                 android:textColor="@color/colorPrimaryDark"
-                                android:textSize="15sp"
+                                android:textSize="14sp"
                                 android:text="@string/undefined_user"/>
 
                             <LinearLayout
@@ -98,13 +98,14 @@
                                     android:scaleType="fitXY"
                                     android:src="@drawable/ic_time_black_24dp" />
 
-                                <TextView
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:fontFamily="@font/amiko"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:textColor="@color/DodgerBlue"
                                     android:text="@string/createdAt"
-                                    android:textSize="12sp" />
+                                    android:textSize="11sp" />
 
                                 <View
                                     android:layout_width="5dp"
@@ -116,7 +117,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:textColor="@color/gray"
-                                    android:textSize="12sp"/>
+                                    android:textSize="11sp"/>
 
                             </LinearLayout>
 
@@ -136,13 +137,14 @@
                                     android:scaleType="fitXY"
                                     android:src="@drawable/ic_time_black_24dp" />
 
-                                <TextView
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:fontFamily="@font/amiko"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:text="@string/completedAt"
                                     android:textColor="@color/DodgerBlue"
-                                    android:textSize="12sp" />
+                                    android:textSize="11sp" />
 
                                 <View
                                     android:layout_width="5dp"
@@ -154,7 +156,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:textColor="@color/gray"
-                                    android:textSize="12sp" />
+                                    android:textSize="11sp" />
 
                             </LinearLayout>
 
@@ -170,15 +172,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="8dp"
-                    android:gravity="center">
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginRight="8dp">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
+                        android:gravity="center"
                         android:orientation="horizontal">
 
                         <ImageView
@@ -210,33 +212,55 @@
 
                     </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/closedImgv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:layout_marginTop="5dp"
-                        android:src="@drawable/icon_task_closed"
-                        android:visibility="visible"/>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_marginTop="2dp"
+                        android:gravity="center">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvUrgency"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/amiko"
+                            android:text="@string/urgent"
+                            android:textColor="@color/Red"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvClosed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/amiko"
+                            android:text="@string/closed"
+                            android:textColor="@color/Red"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="3dp"/>
+
+                    </LinearLayout>
                 </LinearLayout>
 
 
             </RelativeLayout>
 
-
-
-
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
+                android:fontFamily="@font/amiko"
                 android:id="@+id/txtDetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="5dp"
+                android:text="sdsdsdsd"
                 android:textColor="@color/Black"
-                android:textSize="14sp"
-                android:text="sdsdsdsd"/>
+                android:textSize="14sp" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
+                android:fontFamily="@font/amiko"
                 android:id="@+id/tvWhoCompleted"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -244,21 +268,18 @@
                 android:layout_marginTop="5dp"
                 android:textColor="@color/dot_dark_screen1"
                 android:text="sksdnsdsnd"
-                android:textStyle="italic"
-                android:textSize="12sp" />
+                android:textSize="11sp"
+                android:layout_marginBottom="7dp"/>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.2dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="20dp"
-                android:alpha="0.1"
-                android:background="@android:color/black" />
 
 
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@android:color/black" />
 
 </LinearLayout>

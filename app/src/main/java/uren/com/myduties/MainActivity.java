@@ -4,6 +4,7 @@ package uren.com.myduties;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -25,6 +26,7 @@ import java.util.Objects;
 
 import io.fabric.sdk.android.Fabric;
 import uren.com.myduties.dbManagement.TokenDBHelper;
+import uren.com.myduties.dbManagement.UserDBHelper;
 import uren.com.myduties.dutyManagement.NextActivity;
 import uren.com.myduties.evetBusModels.TaskTypeBus;
 import uren.com.myduties.evetBusModels.UserBus;
@@ -109,7 +111,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void fillUserInfo() {
-        user = new User();
+        loginProcess();
+
+        /*user = new User();
         Bundle extras = getIntent().getExtras();
         LoginUser loginUser = (LoginUser) getIntent().getSerializableExtra(LOGIN_USER);
 
@@ -129,15 +133,11 @@ public class MainActivity extends AppCompatActivity {
             loginProcess();
 
         } else {
-
-            /**
-             * Already signed-in
-             */
             user.setUserid(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
             user.setEmail(firebaseAuth.getCurrentUser().getEmail());
             user.setUsername("default");
             loginProcess();
-        }
+        }*/
     }
 
     public void loginProcess() {
@@ -157,7 +157,28 @@ public class MainActivity extends AppCompatActivity {
 
     public void startLoginProcess() {
 
-        AccountHolderInfo.getInstance(new CompleteCallback() {
+        UserDBHelper.getUser(firebaseAuth.getCurrentUser().getUid(), new CompleteCallback() {
+            @Override
+            public void onComplete(Object object) {
+                user = (User) object;
+
+                if (user != null) {
+                    EventBus.getDefault().postSticky(new UserBus(user));
+                    refresh_layout.setRefreshing(false);
+                    updateDeviceTokenForFCM();
+                    startActivity(new Intent(MainActivity.this, NextActivity.class));
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailed(String message) {
+                CommonUtils.showToastShort(MainActivity.this, message);
+                refresh_layout.setRefreshing(false);
+            }
+        });
+
+       /* AccountHolderInfo.getInstance(new CompleteCallback() {
             @Override
             public void onComplete(Object object) {
 
@@ -177,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
                 CommonUtils.showToastShort(MainActivity.this, message);
                 refresh_layout.setRefreshing(false);
             }
-        });
+        });*/
     }
 
     public void updateDeviceTokenForFCM() {

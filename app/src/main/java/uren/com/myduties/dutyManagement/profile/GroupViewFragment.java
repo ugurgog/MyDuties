@@ -20,6 +20,8 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -46,21 +48,21 @@ public class GroupViewFragment extends BaseFragment {
 
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
-    @BindView(R.id.searchToolbarLayout)
-    LinearLayout searchToolbarLayout;
-    @BindView(R.id.specialRecyclerView)
-    RecyclerView specialRecyclerView;
-    @BindView(R.id.searchToolbarAddItemImgv)
-    ImageView searchToolbarAddItemImgv;
+
+    @BindView(R.id.searchCancelImgv)
+    ImageView searchCancelImgv;
     @BindView(R.id.searchToolbarBackImgv)
     ImageView searchToolbarBackImgv;
 
-    @BindView(R.id.editTextSearch)
-    EditText editTextSearch;
-    @BindView(R.id.imgCancelSearch)
-    ImageView imgCancelSearch;
+    @BindView(R.id.specialRecyclerView)
+    RecyclerView specialRecyclerView;
+
+    @BindView(R.id.searchEdittext)
+    EditText searchEdittext;
     @BindView(R.id.searchResultTv)
     AppCompatTextView searchResultTv;
+    @BindView(R.id.nextFab)
+    FloatingActionButton nextFab;
 
     private Group selectedGroupItem;
     private ReturnCallback returnCallback;
@@ -123,8 +125,7 @@ public class GroupViewFragment extends BaseFragment {
     }
 
     public void initValues() {
-        searchToolbarLayout.setVisibility(View.VISIBLE);
-        searchToolbarAddItemImgv.setVisibility(View.VISIBLE);
+        searchEdittext.setHint(getContext().getResources().getString(R.string.searchGroup));
         setGroupsListAdapter();
         getGroups();
     }
@@ -133,21 +134,20 @@ public class GroupViewFragment extends BaseFragment {
         searchToolbarBackImgv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                CommonUtils.showKeyboard(getContext(), false, searchEdittext);
                 getActivity().onBackPressed();
             }
         });
 
-        searchToolbarAddItemImgv.setOnClickListener(new View.OnClickListener() {
+        nextFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CommonUtils.hideKeyBoard(getContext());
-                searchToolbarAddItemImgv.setEnabled(false);
-                searchToolbarAddItemImgv.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.image_click));
                 addNewGroup();
             }
         });
 
-        editTextSearch.addTextChangedListener(new TextWatcher() {
+        searchEdittext.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -161,24 +161,21 @@ public class GroupViewFragment extends BaseFragment {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s != null && s.toString() != null && !s.toString().isEmpty()) {
-                    imgCancelSearch.setVisibility(View.VISIBLE);
-                    searchToolbarBackImgv.setVisibility(View.GONE);
+                    searchCancelImgv.setVisibility(View.VISIBLE);
                     searchItemInList(s.toString());
                 } else {
-                    imgCancelSearch.setVisibility(View.GONE);
-                    searchToolbarBackImgv.setVisibility(View.VISIBLE);
+                    searchCancelImgv.setVisibility(View.GONE);
                     searchItemInList("");
                 }
             }
         });
 
-        imgCancelSearch.setOnClickListener(new View.OnClickListener() {
+        searchCancelImgv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommonUtils.hideKeyBoard(getContext());
-                editTextSearch.setText("");
-                imgCancelSearch.setVisibility(View.GONE);
-                searchResultTv.setVisibility(View.GONE);
+                searchEdittext.setText("");
+                searchCancelImgv.setVisibility(View.GONE);
+                CommonUtils.showKeyboard(getContext(),false, searchEdittext);
             }
         });
     }

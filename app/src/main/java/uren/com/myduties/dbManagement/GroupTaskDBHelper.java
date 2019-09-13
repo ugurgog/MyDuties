@@ -36,6 +36,7 @@ import static uren.com.myduties.constants.StringConstants.fb_child_grouptask;
 import static uren.com.myduties.constants.StringConstants.fb_child_taskdesc;
 import static uren.com.myduties.constants.StringConstants.fb_child_type;
 import static uren.com.myduties.constants.StringConstants.fb_child_urgency;
+import static uren.com.myduties.constants.StringConstants.fb_child_users;
 import static uren.com.myduties.constants.StringConstants.fb_child_whocompletedid;
 
 public class GroupTaskDBHelper {
@@ -193,8 +194,7 @@ public class GroupTaskDBHelper {
 
     }
 
-    public static void getGroupWaitingTasks(User user, int limitValue,
-                                            final CompleteCallback completeCallback) {
+    public static void getGroupWaitingTasks(User user, final CompleteCallback completeCallback) {
         final List<GroupTask> taskList = new ArrayList<>();
 
         if (user.getGroupIdList() == null || user.getGroupIdList().size() == 0)
@@ -204,10 +204,10 @@ public class GroupTaskDBHelper {
             DatabaseReference databaseReference = FirebaseDatabase.getInstance()
                     .getReference(fb_child_grouptask).child(groupId);
 
-            Query query = databaseReference
-                    .orderByChild(groupId + "/" + fb_child_assignedtime).limitToLast(limitValue);
+            //Query query = databaseReference
+            //        .orderByChild(groupId + "/" + fb_child_assignedtime).limitToFirst(limitValue);
 
-            query.addListenerForSingleValueEvent(new ValueEventListener() {
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -263,7 +263,7 @@ public class GroupTaskDBHelper {
                     .getReference(fb_child_grouptask).child(groupId);
 
             Query query = databaseReference
-                    .orderByChild(groupId + "/" + fb_child_assignedtime).limitToLast(limitValue);
+                    .orderByChild(groupId + "/" + fb_child_assignedtime).limitToFirst(limitValue);
 
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -376,7 +376,25 @@ public class GroupTaskDBHelper {
         databaseReference.updateChildren(values).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull com.google.android.gms.tasks.Task<Void> task) {
-                onCompleteCallback.OnCompleted();
+
+                final Map<String, Object> map = new HashMap<>();
+                map.put(groupTask.getTaskId(), " ");
+
+                FirebaseDatabase.getInstance().getReference(fb_child_assignedfrom).
+                        child(groupTask.getAssignedFrom().getUserid())
+                        .child(fb_child_groups)
+                        .child(groupTask.getGroup().getGroupid())
+                        .updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull com.google.android.gms.tasks.Task<Void> task) {
+                        onCompleteCallback.OnCompleted();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        onCompleteCallback.OnFailed(e.getMessage());
+                    }
+                });
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

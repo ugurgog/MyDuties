@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "964563573223-c7f4vq2ilgq2lgv3kek3c576u0unve4b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "uren.com.myduties",
+            "certificate_hash": "20f604bdc170017818e6f45659ebec617e4c29c2"
+          }
+        },
+        {
           "client_id": "964563573223-3il2jj45iqlq27kfa1kpmmkkmvisggsh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

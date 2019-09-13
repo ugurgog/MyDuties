@@ -24,7 +24,7 @@
     <string name="addGroupName">Grup adı ekle</string>
     <string name="pleaseWriteGroupName">Grup adı boş olamaz!</string>
     <string name="deviceHasNoCamera">Cihazın kamerası yok!</string>
-    <string name="writeGroupName">Grup adını yazın...</string>
+    <string name="writeGroupName">Grup adını yazın…</string>
     <string name="defineGroupNameAndIcon">Grup adı ve simgesi belirleyin</string>
     <string name="participant"> katılımcı</string>
     <string name="constantItem">adet</string>
@@ -45,8 +45,8 @@
     <string name="completedAt">Tamamlandı:</string>
     <string name="changeAsAdmin">Admin olarak değiştir</string>
     <string name="secondShort">sn</string>
-    <string name="writetaskdesc"></string>
-    <string name="UPDATING">Güncelleniyor...</string>
+    <string name="writetaskdesc">Bir şeyler yazın…</string>
+    <string name="UPDATING">Güncelleniyor…</string>
     <string name="VIEW_PENDING_REQUEST">Gelen Istekleri Görüntüle</string>
     <string name="PHONE_NUM">Telefon Numarası</string>
     <string name="SELECT_COUNTRY">Ülke Seç</string>
@@ -65,8 +65,9 @@
     <string name="CIRCLE_THE_PROBLEM">Sorunu daire içine al</string>
     <string name="SCREENSHOT">Çek</string>
     <string name="searchGroup">Grup Ara</string>
+    <string name="searchContact">Kişi Ara</string>
 
-    <string name="searchUser">Kullanıcı arayın...</string>
+    <string name="searchUser">Kullanıcı arayın…</string>
     <string name="IN_GROUP">Grupta</string>
     <string name="REMOVE">Çıkar</string>
     <string name="REMOVE_FOLLOWER_TITLE">Arkadaşı Çıkar?</string>
@@ -88,7 +89,8 @@
 
     <!-- Whose for will be shared -->
     <string name="groupsShareText">Gruplar</string>
-    <string name="tasksmyassigned">Görevlendirme</string>
+    <string name="tasksmyassigned">Benim atadığım görevler</string>
+    <string name="tasksmyassignedDesc">Görevler</string>
 
     <!-- Location Settings constants-->
     <string name="gpsSettings">GPS Ayarları</string>
@@ -188,9 +190,9 @@
 
     <string name="emptyFeed">Henüz size atanan bir görev bulunmuyor..</string>
     <string name="there_is_no_completed_task">Tamamlanan göreviniz bulunmuyor..</string>
-    <string name="there_is_no_group_task">Grup göreviniz bulunmuyor...</string>
+    <string name="there_is_no_group_task">Grup göreviniz bulunmuyor.</string>
 
-    <string name="loading">Yükleniyor...</string>
+    <string name="loading">Yükleniyor…</string>
     <string name="swipeDownForRefresh">Yenilemek için aşağı sürükleyin.</string>
     <string name="delete">Sil</string>
     <string name="rateus">Bizi Değerlendir</string>
@@ -200,6 +202,7 @@
     <string name="WRITE_YOUR_NAME">İsim yazın..</string>
     <string name="WRITE_USERNAME">Kullanıcı adını yazın..</string>
     <string name="WRITE_EMAIL">Email adresinizi yazın..</string>
+    <string name="TYPE_FOR_ADD_PHONE">Tel no eklemek için dokunun…</string>
 
     <array name="months">
         <item>Ocak</item>
@@ -263,6 +266,7 @@
     <string name="completedThisTask">bu görevi tamamladı</string>
     <string name="markedThisTaskUrgent">bu görevi acil işaretledi</string>
     <string name="letsRememberThisTask">Bu görevi hatırla</string>
+    <string name="sentYouFriendRequest">sana arkadaşlık isteği gönderdi</string>
 
     <string name="task_type_home">Ev</string>
     <string name="task_type_shop">Market</string>

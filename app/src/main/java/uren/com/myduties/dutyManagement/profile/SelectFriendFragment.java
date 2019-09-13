@@ -57,16 +57,15 @@ public class SelectFriendFragment extends BaseFragment {
 
     @BindView(R.id.nextFab)
     FloatingActionButton nextFab;
-    @BindView(R.id.imgCancelSearch)
-    ImageView imgCancelSearch;
-    @BindView(R.id.editTextSearch)
-    EditText editTextSearch;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+
+    @BindView(R.id.searchCancelImgv)
+    ImageView searchCancelImgv;
     @BindView(R.id.searchToolbarBackImgv)
     ImageView searchToolbarBackImgv;
-    @BindView(R.id.searchToolbarAddItemImgv)
-    ImageView searchToolbarAddItemImgv;
+    @BindView(R.id.searchEdittext)
+    EditText searchEdittext;
 
     private ProgressDialogUtil progressDialogUtil;
     private FriendVerticalListAdapter adapter;
@@ -74,10 +73,8 @@ public class SelectFriendFragment extends BaseFragment {
     private List<User> groupParticipantList;
     private String pendingName;
     private LinearLayoutManager linearLayoutManager;
-    private int pastVisibleItems, visibleItemCount, totalItemCount;
     private boolean loading = true;
     private ReturnCallback returnCallback;
-    private int perPageCnt;
     private String groupAdminUserid;
     private List<User> selectedUsers;
     private User accountholderUser;
@@ -129,13 +126,10 @@ public class SelectFriendFragment extends BaseFragment {
             ButterKnife.bind(this, mView);
             addListeners();
             setShapes();
-            setPaginationValues();
             setAdapter();
-            setRecyclerViewScroll();
             getFriendSelectionPage();
             progressDialogUtil = new ProgressDialogUtil(getContext(), null, false);
             progressDialogUtil.dialogShow();
-            searchToolbarAddItemImgv.setVisibility(View.GONE);
         }
         return mView;
     }
@@ -143,10 +137,6 @@ public class SelectFriendFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-    }
-
-    private void setPaginationValues() {
-        perPageCnt = DEFAULT_GET_FOLLOWER_PERPAGE_COUNT;
     }
 
     public void addListeners() {
@@ -166,15 +156,16 @@ public class SelectFriendFragment extends BaseFragment {
             }
         });
 
-        imgCancelSearch.setOnClickListener(new View.OnClickListener() {
+        searchCancelImgv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editTextSearch.setText("");
-                imgCancelSearch.setVisibility(View.GONE);
+                searchEdittext.setText("");
+                searchCancelImgv.setVisibility(View.GONE);
+                CommonUtils.showKeyboard(getContext(),false, searchEdittext);
             }
         });
 
-        editTextSearch.addTextChangedListener(new TextWatcher() {
+        searchEdittext.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -187,17 +178,15 @@ public class SelectFriendFragment extends BaseFragment {
             public void afterTextChanged(Editable s) {
                 if (s != null) {
                     if (!s.toString().trim().isEmpty()) {
-                        imgCancelSearch.setVisibility(View.VISIBLE);
-                        searchToolbarBackImgv.setVisibility(View.GONE);
+                        searchCancelImgv.setVisibility(View.VISIBLE);
                     } else {
-                        imgCancelSearch.setVisibility(View.GONE);
-                        searchToolbarBackImgv.setVisibility(View.VISIBLE);
+                        searchCancelImgv.setVisibility(View.GONE);
                     }
 
                     if (adapter != null)
                         adapter.updateAdapter(s.toString());
                 } else
-                    imgCancelSearch.setVisibility(View.GONE);
+                    searchCancelImgv.setVisibility(View.GONE);
             }
         });
     }
@@ -208,34 +197,9 @@ public class SelectFriendFragment extends BaseFragment {
         nextFab.setBackground(shape);
     }
 
-    private void setRecyclerViewScroll() {
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                if (dy > 0) {
-                    visibleItemCount = linearLayoutManager.getChildCount();
-                    totalItemCount = linearLayoutManager.getItemCount();
-                    pastVisibleItems = linearLayoutManager.findFirstVisibleItemPosition();
-
-                    if (loading) {
-                        if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
-                            loading = false;
-                            perPageCnt = perPageCnt + DEFAULT_GET_FOLLOWER_PERPAGE_COUNT;
-                            adapter.addProgressLoading();
-                            getFriendSelectionPage();
-                        }
-                    }
-                }
-            }
-        });
-    }
-
     private void getFriendSelectionPage() {
 
-        FriendsDBHelper.getFriendsByStatus(accountholderUser.getUserid(), perPageCnt, fb_child_status_friend, new CompleteCallback() {
+        FriendsDBHelper.getFriendsByStatus(accountholderUser.getUserid(), fb_child_status_friend, new CompleteCallback() {
             @Override
             public void onComplete(Object object) {
                 if (object != null) {
@@ -247,9 +211,6 @@ public class SelectFriendFragment extends BaseFragment {
             @Override
             public void onFailed(String message) {
                 progressDialogUtil.dialogDismiss();
-                if (adapter.isShowingProgressLoading()) {
-                    adapter.removeProgressLoading();
-                }
                 CommonUtils.showToastShort(getContext(), message);
             }
         });

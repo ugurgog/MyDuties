@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -98,9 +99,9 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
         ImageView moreImgv;
         ImageView taskTypeImgv;
         TextView txtProfilePic;
-        TextView txtUserName;
-        TextView txtDetail;
-        TextView tvWhoCompleted;
+        AppCompatTextView txtUserName;
+        AppCompatTextView txtDetail;
+        AppCompatTextView tvWhoCompleted;
         CardView cardView;
         LinearLayout llcompleted;
         GroupTask task;
@@ -112,8 +113,10 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
 
         ImageView imgGroupPic;
         TextView txtGroupPic;
-        TextView txtGroupName;
-        TextView tvSeeAllTasks;
+        AppCompatTextView txtGroupName;
+        AppCompatTextView tvSeeAllTasks;
+        AppCompatTextView tvClosed;
+        AppCompatTextView tvUrgency;
 
         PopupMenu popupMenu = null;
 
@@ -144,6 +147,8 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
             txtGroupPic = view.findViewById(R.id.txtGroupPic);
             txtGroupName = view.findViewById(R.id.txtGroupName);
             tvSeeAllTasks = view.findViewById(R.id.tvSeeAllTasks);
+            tvClosed = view.findViewById(R.id.tvClosed);
+            tvUrgency = view.findViewById(R.id.tvUrgency);
 
             setListeners();
         }
@@ -197,7 +202,7 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
                                             notifyItemChanged(position);
                                             setTaskCompletedTime();
                                             NotificationHandler.sendUserNotification(mContext, user, task.getAssignedFrom(),
-                                                    user.getName() + " " + mContext.getResources().getString(R.string.completedThisTask),
+                                                    UserDataUtil.getNameOrUsernameFromUser(user) + " " + mContext.getResources().getString(R.string.completedThisTask),
                                                     task.getTaskDesc());
                                         }
 
@@ -281,22 +286,25 @@ public class GroupTaskAdapter extends RecyclerView.Adapter {
             setPopupMenu();
             setTaskTypeImage();
             setUrgency();
+            setClosedTv();
         }
 
         private void setUrgency() {
-            CommonUtils.setUrgencyColor(mContext, task.isUrgency(), cardView, null);
+            CommonUtils.setUrgencyTv(task.isUrgency(), tvUrgency);
+        }
+
+        private void setClosedTv() {
+            CommonUtils.setClosedTv(task.isClosed(), tvClosed);
+        }
+
+        private void setCompletedImage() {
+            CommonUtils.setCompletedImgv(mContext, task.isCompleted(), completedImgv);
         }
 
         private void setTaskTypeImage() {
             CommonUtils.setTaskTypeImage(mContext, taskTypeImgv, task.getType(), taskTypeHelper);
         }
 
-        private void setCompletedImage() {
-            if (task.isCompleted())
-                completedImgv.setColorFilter(mContext.getResources().getColor(R.color.Green, null), PorterDuff.Mode.SRC_IN);
-            else
-                completedImgv.setColorFilter(mContext.getResources().getColor(R.color.Red, null), PorterDuff.Mode.SRC_IN);
-        }
 
         private void setWhoCompleted() {
             if (task.getWhoCompleted() == null || task.getWhoCompleted().getUserid() == null || task.getWhoCompleted().getUserid().isEmpty())

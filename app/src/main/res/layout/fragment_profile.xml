@@ -206,15 +206,17 @@
                         android:background="@color/white"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:paddingTop="15dp"
-                        android:paddingBottom="15dp"
-                        android:paddingStart="30dp"
-                        android:paddingEnd="30dp">
+                        android:padding="15dp"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginLeft="30dp">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginLeft="15dp">
 
                             <!-- Friends -->
                             <LinearLayout
@@ -243,7 +245,7 @@
                                     android:textColor="@color/DodgerBlue"
                                     android:layout_marginTop="5dp"
                                     android:textSize="15sp"
-                                    android:textStyle="bold|italic" />
+                                    android:textStyle="bold" />
 
                             </LinearLayout>
 
@@ -252,7 +254,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
-                                android:layout_marginStart="40dp"
+                                android:layout_marginStart="30dp"
                                 android:id="@+id/groupsLayout">
 
 
@@ -276,7 +278,7 @@
                                     android:textColor="@color/DodgerBlue"
                                     android:textSize="15sp"
                                     android:layout_marginTop="5dp"
-                                    android:textStyle="bold|italic" />
+                                    android:textStyle="bold" />
 
                             </LinearLayout>
 
@@ -285,19 +287,18 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
-                                android:layout_marginStart="40dp"
+                                android:layout_marginStart="30dp"
                                 android:id="@+id/tasksLayout">
 
 
                                 <androidx.appcompat.widget.AppCompatTextView
-                                    android:fontFamily="@font/amiko"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:text="@string/tasksmyassigned"
+                                    android:fontFamily="@font/amiko"
+                                    android:text="@string/tasksmyassignedDesc"
                                     android:textColor="@color/Gray"
                                     android:textSize="13sp" />
-
 
                                 <TextView
                                     android:id="@+id/tasksCntTv"
@@ -308,7 +309,7 @@
                                     android:layout_marginTop="5dp"
                                     android:textColor="@color/DodgerBlue"
                                     android:textSize="15sp"
-                                    android:textStyle="bold|italic" />
+                                    android:textStyle="bold" />
 
                             </LinearLayout>
                         </LinearLayout>

@@ -64,30 +64,19 @@ public class SelectOneFriendAdapter extends RecyclerView.Adapter implements Filt
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         RecyclerView.ViewHolder viewHolder;
-        if (viewType == VIEW_ITEM) {
-            View itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.one_friend_select_list_item, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.one_friend_select_list_item, parent, false);
 
-            viewHolder = new SelectOneFriendAdapter.SelectFriendHolder(itemView);
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-            linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        } else {
-            View v = LayoutInflater.from(parent.getContext()).inflate(
-                    R.layout.progressbar_item, parent, false);
-
-            viewHolder = new SelectOneFriendAdapter.ProgressViewHolder(v);
-        }
+        viewHolder = new SelectOneFriendAdapter.SelectFriendHolder(itemView);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof SelectFriendHolder) {
-            User user = friendList.get(position);
-            ((SelectFriendHolder) holder).setData(user, position);
-        } else {
-            ((ProgressViewHolder) holder).progressBar.setIndeterminate(true);
-        }
+        User user = friendList.get(position);
+        ((SelectFriendHolder) holder).setData(user, position);
     }
 
     class SelectFriendHolder extends RecyclerView.ViewHolder {
@@ -157,7 +146,7 @@ public class SelectOneFriendAdapter extends RecyclerView.Adapter implements Filt
                     tickImgv.setVisibility(View.VISIBLE);
                 else
                     tickImgv.setVisibility(View.GONE);
-            }else
+            } else
                 tickImgv.setVisibility(View.GONE);
         }
     }
@@ -217,46 +206,11 @@ public class SelectOneFriendAdapter extends RecyclerView.Adapter implements Filt
         return ((friendList != null) ? friendList.size() : 0);
     }
 
-    public void addAll(List<User> addedUserList) {
-        if (addedUserList != null) {
-            friendList.addAll(addedUserList);
-            orginalFriendList.addAll(addedUserList);
-            notifyItemRangeInserted(friendList.size(), friendList.size() + addedUserList.size());
-        }
-    }
-
     public void addUser(User user) {
         if (user != null) {
             friendList.add(user);
             orginalFriendList.add(user);
             notifyItemInserted(friendList.size() - 1);
-        }
-    }
-
-    public void addProgressLoading() {
-        if (getItemViewType(friendList.size() - 1) != VIEW_PROG) {
-            friendList.add(null);
-            notifyItemInserted(friendList.size() - 1);
-        }
-    }
-
-    public void removeProgressLoading() {
-        if (getItemViewType(friendList.size() - 1) == VIEW_PROG) {
-            friendList.remove(friendList.size() - 1);
-            notifyItemRemoved(friendList.size());
-        }
-    }
-
-    public boolean isShowingProgressLoading() {
-        return getItemViewType(friendList.size() - 1) == VIEW_PROG;
-    }
-
-    public static class ProgressViewHolder extends RecyclerView.ViewHolder {
-        public ProgressBar progressBar;
-
-        public ProgressViewHolder(View v) {
-            super(v);
-            progressBar = v.findViewById(R.id.progressBarLoading);
         }
     }
 }

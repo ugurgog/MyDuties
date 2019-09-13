@@ -19,7 +19,9 @@ import uren.com.myduties.messaging.interfaces.MessageSentFCMCallback;
 import uren.com.myduties.messaging.models.FCMItems;
 
 import static uren.com.myduties.constants.StringConstants.FCM_CODE_BODY;
+import static uren.com.myduties.constants.StringConstants.FCM_CODE_DATA;
 import static uren.com.myduties.constants.StringConstants.FCM_CODE_NOTIFICATION;
+import static uren.com.myduties.constants.StringConstants.FCM_CODE_PHOTO_URL;
 import static uren.com.myduties.constants.StringConstants.FCM_CODE_TITLE;
 import static uren.com.myduties.constants.StringConstants.FCM_CODE_TO;
 import static uren.com.myduties.constants.StringConstants.FCM_MESSAGE_URL;
@@ -40,8 +42,13 @@ public class SendMessageToFCM {
                     JSONObject notification = new JSONObject();
                     notification.put(FCM_CODE_BODY, fcmItems.getBody());
                     notification.put(FCM_CODE_TITLE, fcmItems.getTitle());
+                    notification.put(FCM_CODE_PHOTO_URL, fcmItems.getPhotoUrl());
+
+                    JSONObject data = new JSONObject();
+                    data.put(FCM_CODE_PHOTO_URL, fcmItems.getPhotoUrl());
 
                     root.put(FCM_CODE_NOTIFICATION, notification);
+                    root.put(FCM_CODE_DATA, data);
                     root.put(FCM_CODE_TO, fcmItems.getOtherUserDeviceToken());
 
                     String result = postToFCM(root.toString(), context, messageSentFCMCallback);
@@ -60,7 +67,7 @@ public class SendMessageToFCM {
                     int success, failure;
                     success = resultJson.getInt("success");
                     failure = resultJson.getInt("failure");
-                    Toast.makeText(context, "Message Success: " + success + "Message Failed: " + failure, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(context, "Message Success: " + success + "Message Failed: " + failure, Toast.LENGTH_LONG).show();
 
                     if(failure > 0)
                         messageSentFCMCallback.onFailed(new Exception("Message Send Failed!"));
@@ -70,7 +77,7 @@ public class SendMessageToFCM {
                 } catch (Exception e) {
                     messageSentFCMCallback.onFailed(e);
                     e.printStackTrace();
-                    Toast.makeText(context, "Message Failed, Unknown error occurred.", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(context, "Message Failed, Unknown error occurred.", Toast.LENGTH_LONG).show();
                 }
             }
         }.execute();

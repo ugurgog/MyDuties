@@ -66,8 +66,6 @@ public class FriendsFragment extends BaseFragment {
 
     private LinearLayoutManager mLayoutManager;
     private FriendsAdapter friendsAdapter;
-    int perPage;
-    private int pastVisibleItems, visibleItemCount, totalItemCount;
     private boolean loading = true;
     private List<String> statusList = new ArrayList<>();
 
@@ -90,7 +88,6 @@ public class FriendsFragment extends BaseFragment {
             mView = inflater.inflate(R.layout.fragment_friends, container, false);
             ButterKnife.bind(this, mView);
             init();
-            setPaginationValues();
             setListeners();
             initRecyclerView();
             getFriendList();
@@ -190,54 +187,14 @@ public class FriendsFragment extends BaseFragment {
         });
     }
 
-    private void setPaginationValues() {
-        perPage = DEFAULT_GET_FOLLOWER_PERPAGE_COUNT;
-    }
-
     private void initRecyclerView() {
         setLayoutManager();
         setAdapter();
-        setRecyclerViewScroll();
     }
 
     private void setLayoutManager() {
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(mLayoutManager);
-    }
-
-    private void setRecyclerViewScroll() {
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                if (dy > 0) {
-                    visibleItemCount = mLayoutManager.getChildCount();
-                    totalItemCount = mLayoutManager.getItemCount();
-                    pastVisibleItems = mLayoutManager.findFirstVisibleItemPosition();
-
-                    if (loading) {
-                        if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
-                            loading = false;
-                            perPage = perPage + DEFAULT_GET_FOLLOWER_PERPAGE_COUNT;
-                            friendsAdapter.addProgressLoading();
-                            loadCode = CODE_MORE_LOAD;
-                            getFriendList();
-                        }
-                    }
-                }
-            }
-        });
-    }
-
-    private void setUpRecyclerView(Friend friend) {
-        loading = true;
-
-        if (perPage != 50)
-            friendsAdapter.removeProgressLoading();
-
-        friendsAdapter.addFriend(friend);
     }
 
     private void setAdapter() {
@@ -246,13 +203,12 @@ public class FriendsFragment extends BaseFragment {
     }
 
     private void getFriendList() {
-
-        FriendsDBHelper.getFriendsByStatusList(accountHolder.getUserid(), perPage, statusList, new CompleteCallback() {
+        FriendsDBHelper.getFriendsByStatusList(accountHolder.getUserid(), statusList, new CompleteCallback() {
             @Override
             public void onComplete(Object object) {
                 if(object != null){
                     progressBar.setVisibility(View.GONE);
-                    setUpRecyclerView((Friend) object);
+                    friendsAdapter.addFriend((Friend) object);
                 }
             }
 
@@ -264,6 +220,4 @@ public class FriendsFragment extends BaseFragment {
         });
 
     }
-
-
 }

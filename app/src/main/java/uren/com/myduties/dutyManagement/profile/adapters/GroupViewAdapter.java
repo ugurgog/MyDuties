@@ -360,6 +360,7 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
                     List<Group> tempList = new ArrayList<>();
 
                     for (Group item : orgGroupList) {
+
                         if (item.getName().toLowerCase().contains(searchString.toLowerCase()))
                             tempList.add(item);
                     }

@@ -30,7 +30,7 @@ import static uren.com.myduties.constants.StringConstants.fb_child_status_waitin
 
 public class FriendsDBHelper {
 
-    public static void getFriendsByStatus(String userid, int limit, String statusVal, CompleteCallback completeCallback){
+    public static void getFriendsByStatus(String userid, String statusVal, CompleteCallback completeCallback){
 
         if(userid == null || userid.isEmpty()){
             completeCallback.onFailed("Kullanıcı id boş olamaz");
@@ -40,9 +40,9 @@ public class FriendsDBHelper {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance()
                 .getReference(fb_child_friends).child(userid);
 
-        Query query = databaseReference.limitToLast(limit);
+        //Query query = databaseReference.limitToFirst(limit);
 
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -150,7 +150,7 @@ public class FriendsDBHelper {
         });
     }
 
-    public static void getFriendsByStatusList(String userid, int limit, List<String> statusList, CompleteCallback completeCallback){
+    public static void getFriendsByStatusList(String userid, List<String> statusList, CompleteCallback completeCallback){
 
         if(userid == null || userid.isEmpty()){
             completeCallback.onFailed("Kullanıcı id boş olamaz");
@@ -160,9 +160,9 @@ public class FriendsDBHelper {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance()
                 .getReference(fb_child_friends).child(userid);
 
-        Query query = databaseReference.limitToLast(limit);
+        //Query query = databaseReference.limitToFirst(limit);
 
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 

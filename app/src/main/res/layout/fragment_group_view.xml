@@ -27,7 +27,7 @@
             android:id="@+id/searchToolbarLayout"
             android:visibility="visible">
 
-            <include layout="@layout/toolbar_search_layout" />
+            <include layout="@layout/toolbar_search2_layout" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -41,5 +41,15 @@
     </LinearLayout>
 
     <include layout="@layout/layout_progress_bar" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/nextFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_add_white_24dp"
+        android:visibility="visible"/>
 
 </RelativeLayout>

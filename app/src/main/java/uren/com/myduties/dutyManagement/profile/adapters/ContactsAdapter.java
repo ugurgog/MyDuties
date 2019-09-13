@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -78,10 +79,9 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
 
 
     class ContactsHolder extends RecyclerView.ViewHolder {
-        TextView nameTextView;
-        TextView usernameTextView;
+        AppCompatTextView nameTextView;
         TextView shortenTextView;
-        TextView phoneNumTextView;
+        AppCompatTextView phoneNumTextView;
         ImageView profilePicImgView;
         Contact contactFriendModel;
         Button statuDisplayBtn;
@@ -92,12 +92,10 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
             super(itemView);
 
             profilePicImgView = view.findViewById(R.id.profilePicImgView);
-            usernameTextView = view.findViewById(R.id.usernameTextView);
             nameTextView = view.findViewById(R.id.nameTextView);
             phoneNumTextView = view.findViewById(R.id.phoneNumTextView);
             statuDisplayBtn = view.findViewById(R.id.statuDisplayBtn);
             shortenTextView = view.findViewById(R.id.shortenTextView);
-            usernameTextView.setVisibility(View.GONE);
             phoneNumTextView.setVisibility(View.VISIBLE);
             profilePicImgView.setBackground(imageShape);
             statuDisplayBtn.setBackground(buttonShape);

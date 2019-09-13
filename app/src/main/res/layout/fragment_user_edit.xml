@@ -108,37 +108,27 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginTop="5dp">
+
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:fontFamily="@font/amiko"
+                            android:id="@+id/txtName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:gravity="bottom"
+                            android:text="@string/NAME"
+                            android:textColor="@color/DodgerBlue"/>
 
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="0.7dp"
                             android:layout_weight="1"
-                            android:background="@color/fab_color_shadow" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="25dp"
-                            android:background="@color/clearWhite"
-                            android:gravity="center_vertical">
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:fontFamily="@font/amiko"
-                                android:id="@+id/txtName"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:gravity="bottom"
-                                android:text="@string/NAME" />
-
-
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="0.7dp"
-                            android:layout_weight="1"
-                            android:background="@color/fab_color_shadow" />
+                            android:background="@color/fab_color_shadow"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"/>
 
                         <EditText
                             android:id="@+id/edtName"
@@ -149,9 +139,7 @@
                             android:singleLine="true"
                             android:hint="@string/WRITE_YOUR_NAME"
                             android:textSize="15sp"
-                            android:layout_height="40dp"
-                            android:textColorHint="@color/DodgerBlue"
-                            android:textColor="@color/DodgerBlue"/>
+                            android:layout_height="40dp" />
 
                     </LinearLayout>
 
@@ -159,36 +147,27 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginTop="17dp">
+
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:fontFamily="@font/amiko"
+                            android:id="@+id/txtUserName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="@string/username"
+                            android:textColor="@color/DodgerBlue"/>
+
 
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="0.7dp"
                             android:layout_weight="1"
-                            android:background="@color/fab_color_shadow" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="25dp"
-                            android:background="@color/clearWhite"
-                            android:gravity="center_vertical"
-                            android:orientation="vertical">
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:fontFamily="@font/amiko"
-                                android:id="@+id/txtUserName"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:text="@string/username" />
-
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="0.7dp"
-                            android:layout_weight="1"
-                            android:background="@color/fab_color_shadow" />
+                            android:background="@color/fab_color_shadow"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"/>
 
                         <EditText
                             android:id="@+id/edtUserName"
@@ -198,10 +177,8 @@
                             android:maxLength="30"
                             android:singleLine="true"
                             android:hint="@string/WRITE_USERNAME"
-                            android:textColorHint="@color/DodgerBlue"
                             android:textSize="15sp"
-                            android:layout_height="40dp"
-                            android:textColor="@color/DodgerBlue"/>
+                            android:layout_height="40dp" />
 
                     </LinearLayout>
 
@@ -209,36 +186,23 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginTop="17dp">
 
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:fontFamily="@font/amiko"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="@string/email"
+                            android:textColor="@color/DodgerBlue"/>
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="0.7dp"
                             android:layout_weight="1"
-                            android:background="@color/fab_color_shadow" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="25dp"
-                            android:background="@color/clearWhite"
-                            android:orientation="vertical"
-                            android:layout_gravity="center">
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:fontFamily="@font/amiko"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginBottom="5dp"
-                                android:text="@string/email" />
-
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="0.7dp"
-                            android:layout_weight="1"
-                            android:background="@color/fab_color_shadow" />
+                            android:background="@color/fab_color_shadow"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"/>
 
                         <EditText
                             android:id="@+id/edtEmail"
@@ -247,9 +211,7 @@
                             android:background="@android:color/transparent"
                             android:editable="false"
                             android:singleLine="true"
-                            android:textColor="@color/DodgerBlue"
                             android:hint="@string/WRITE_EMAIL"
-                            android:textColorHint="@color/DodgerBlue"
                             android:textSize="15sp"
                             android:layout_height="40dp"/>
 
@@ -259,37 +221,25 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginTop="17dp">
+
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:fontFamily="@font/amiko"
+                            android:text="@string/PHONE"
+                            android:textColor="@color/DodgerBlue" />
 
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="0.7dp"
                             android:layout_weight="1"
-                            android:background="@color/fab_color_shadow" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="25dp"
-                            android:background="@color/clearWhite"
-                            android:gravity="center_vertical"
-                            android:orientation="vertical">
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:fontFamily="@font/amiko"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="5dp"
-                                android:layout_marginLeft="10dp"
-                                android:text="@string/PHONE" />
-
-                        </LinearLayout>
-
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="0.7dp"
-                            android:layout_weight="1"
-                            android:background="@color/fab_color_shadow" />
+                            android:background="@color/fab_color_shadow"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"/>
 
                         <EditText
                             android:id="@+id/edtPhone"
@@ -300,14 +250,8 @@
                             android:singleLine="true"
                             android:textSize="15sp"
                             android:layout_height="40dp"
-                            android:textColorHint="@color/DodgerBlue"
-                            android:textColor="@color/DodgerBlue"/>
+                            android:hint="@string/TYPE_FOR_ADD_PHONE"/>
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="0.7dp"
-                            android:layout_weight="1"
-                            android:background="@color/fab_color_shadow" />
                     </LinearLayout>
 
 

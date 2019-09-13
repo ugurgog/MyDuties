@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
@@ -30,20 +31,12 @@ public class MyTaskFragment extends BaseFragment implements View.OnClickListener
     View mView;
     FeedPagerAdapter feedPagerAdapter;
 
-   /* @BindView(R.id.imgFilter)
-    ClickableImageView imgFilter;
-    @BindView(R.id.llFilter)
-    RelativeLayout llFilter;*/
     @BindView(R.id.llSearch)
-    LinearLayout llSearch;
+    RelativeLayout llSearch;
     @BindView(R.id.toolbarLayout)
     Toolbar toolbar;
     @BindView(R.id.htab_viewpager)
     ViewPager viewPager;
-    /*@BindView(R.id.unreadMsgCntTv)
-    TextView unreadMsgCntTv;
-    @BindView(R.id.myMessagesImgv)
-    ClickableImageView myMessagesImgv;*/
 
     @BindView(R.id.llSharing)
     LinearLayout llSharing;
@@ -114,7 +107,6 @@ public class MyTaskFragment extends BaseFragment implements View.OnClickListener
 
     private void initListeners() {
         llSearch.setOnClickListener(this);
-        //menuImgv.setOnClickListener(this);
     }
 
     private void setUpPager() {

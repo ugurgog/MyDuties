@@ -28,6 +28,7 @@ import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.OnCompleteCallback;
+import uren.com.myduties.messaging.NotificationHandler;
 import uren.com.myduties.models.Friend;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.CommonUtils;
@@ -177,6 +178,9 @@ public class SearchResultAdapter extends RecyclerView.Adapter {
                     friend.setFriendStatus(fb_child_status_sendedrequest);
                     friendList.set(position, friend);
                     notifyItemChanged(position);
+                    NotificationHandler.sendUserNotification(mContext, accountholderUser, friend.getUser(),
+                            UserDataUtil.getNameOrUsernameFromUser(accountholderUser) + " " +
+                            mContext.getResources().getString(R.string.sentYouFriendRequest), "");
                 }
 
                 @Override

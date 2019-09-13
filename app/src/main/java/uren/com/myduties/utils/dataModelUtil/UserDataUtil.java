@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
 import uren.com.myduties.R;
+import uren.com.myduties.models.User;
 import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.ShapeUtil;
 
@@ -55,6 +56,24 @@ public class UserDataUtil {
             return "unknown";
     }
 
+    public static String getNameOrUsernameFromUser(User user) {
+        int nameMaxLen = 25;
+
+        if(user == null) return "unknown";
+
+        if (user.getName() != null && !user.getName().isEmpty()) {
+            if (user.getName().length() > nameMaxLen)
+                return user.getName().trim().substring(0, nameMaxLen) + "...";
+            else
+                return user.getName();
+        } else if (user.getUsername() != null && !user.getUsername().isEmpty()) {
+            if (user.getUsername().length() > nameMaxLen)
+                return CHAR_AMPERSAND + user.getUsername().trim().substring(0, nameMaxLen) + "...";
+            else
+                return CHAR_AMPERSAND + user.getUsername();
+        }else
+            return "unknown";
+    }
 
     public static void setName(String name, TextView nameTextView) {
         int nameMaxLen = 25;

@@ -15,6 +15,7 @@ import uren.com.myduties.models.GroupTask;
 import uren.com.myduties.models.Task;
 import uren.com.myduties.models.TaskType;
 import uren.com.myduties.models.User;
+import uren.com.myduties.utils.dataModelUtil.UserDataUtil;
 
 import static uren.com.myduties.constants.StringConstants.fb_child_grouptask;
 import static uren.com.myduties.constants.StringConstants.fb_child_usertask;
@@ -78,7 +79,7 @@ public class CheckTaskItems {
             @Override
             public void OnCompleted() {
                 NotificationHandler.sendUserNotification(context, assignedFrom, assignedTo,
-                        assignedFrom.getName() + " " + context.getResources().getString(R.string.assignedTaskToYou),
+                        UserDataUtil.getNameOrUsernameFromUser(assignedFrom) + " " + context.getResources().getString(R.string.assignedTaskToYou),
                         taskDesc);
                 onCompleteCallback.OnCompleted();
             }
@@ -108,7 +109,7 @@ public class CheckTaskItems {
             @Override
             public void OnCompleted() {
                 NotificationHandler.sendNotificationToGroupParticipants(context, assignedFrom, group,
-                        assignedFrom.getName() + " " + context.getResources().getString(R.string.assignedTaskTo) + " " +
+                        UserDataUtil.getNameOrUsernameFromUser(assignedFrom) + " " + context.getResources().getString(R.string.assignedTaskTo) + " " +
                         groupTask.getGroup().getName(), taskDesc);
                 onCompleteCallback.OnCompleted();
             }
