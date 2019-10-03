@@ -351,47 +351,6 @@ public class CommonUtils {
         return drawable;
     }
 
-    public static void setTaskTypeImage(Context context, ImageView taskTypeImgv, String type, TaskTypeHelper taskTypeHelper) {
-        if (type == null || type.isEmpty()) return;
-        int typeVal = 0;
-
-        for (TaskType taskType : taskTypeHelper.getTypes())
-            if (taskType.getKey().equals(type)) {
-                typeVal = taskType.getImgId();
-                break;
-            }
-
-        Glide.with(context)
-                .load(typeVal)
-                .apply(RequestOptions.centerInsideTransform())
-                .into(taskTypeImgv);
-    }
-
-    public static void setUrgencyTv(boolean urgencyVal, TextView tvUrgency) {
-        if (tvUrgency != null) {
-            if (urgencyVal)
-                tvUrgency.setVisibility(View.VISIBLE);
-            else
-                tvUrgency.setVisibility(View.GONE);
-        }
-    }
-
-    public static void setClosedTv(boolean closed, TextView tvClosed) {
-        if (tvClosed != null) {
-            if (closed)
-                tvClosed.setVisibility(View.VISIBLE);
-            else
-                tvClosed.setVisibility(View.GONE);
-        }
-    }
-
-    public static void setCompletedImgv(Context context, boolean completed, ImageView completedImgv) {
-        if (completed)
-            completedImgv.setColorFilter(context.getResources().getColor(R.color.Green, null), PorterDuff.Mode.SRC_IN);
-        else
-            completedImgv.setColorFilter(context.getResources().getColor(R.color.Red, null), PorterDuff.Mode.SRC_IN);
-    }
-
     public static String readCountryCodes(Context context) {
         InputStream inputStream = context.getResources().openRawResource(R.raw.country_codes);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

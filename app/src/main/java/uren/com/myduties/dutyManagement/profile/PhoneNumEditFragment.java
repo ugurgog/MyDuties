@@ -254,10 +254,10 @@ public class PhoneNumEditFragment extends BaseFragment {
     }
 
     public void setSelectedPhone(Country country) {
-        countryDialCodeTv.setText(country.getDial_code());
+        countryDialCodeTv.setText(country.getDialCode());
         countryCodeTv.setText(country.getCode());
         selectedPhone.setCountryCode(country.getCode());
-        selectedPhone.setDialCode(country.getDial_code());
+        selectedPhone.setDialCode(country.getDialCode());
     }
 
     public void clearUserPhoneNum() {

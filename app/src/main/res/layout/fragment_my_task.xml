@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/mainRl">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/content"
@@ -38,7 +39,6 @@
 
 
                     <RelativeLayout
-                        android:id="@+id/llSearch"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center">
@@ -52,6 +52,7 @@
                             android:gravity="center">
 
                             <LinearLayout
+                                android:id="@+id/llSearch"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
@@ -159,7 +160,7 @@
                 app:ntb_swiped="true"
                 app:ntb_tinted="true"
                 app:ntb_title_mode="all"
-                app:ntb_titled="true" />
+                app:ntb_titled="true"/>
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -167,6 +168,7 @@
             android:id="@+id/htab_viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/White"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

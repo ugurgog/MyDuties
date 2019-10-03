@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/mainFl">
 
     <include layout="@layout/layout_avloading" />
     <include layout="@layout/task_exception_layout" />
@@ -12,6 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_feed"
@@ -26,6 +29,15 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+   <!-- <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/filterFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/colorAccent"
+        android:src="@drawable/ic_filter_list_white_12dp"
+        app:fabCustomSize="30dp"/>-->
 
 </FrameLayout>
 

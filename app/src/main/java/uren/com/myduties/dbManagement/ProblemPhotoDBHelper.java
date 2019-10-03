@@ -92,4 +92,6 @@ public class ProblemPhotoDBHelper {
         } else
             completeCallback.onComplete(null);
     }
+
+    // TODO: 2019-09-23 - photo silme akisi eklenecek. 
 }

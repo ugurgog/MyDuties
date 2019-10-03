@@ -159,7 +159,6 @@ public class GroupAllTasksFragment extends BaseFragment {
     private void setLayoutManager() {
         mLayoutManager = new CustomLinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
-        //recyclerView.setItemAnimator(new FeedItemAnimator());
     }
 
     private void setAdapter() {

@@ -25,8 +25,12 @@ import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.OnCompleteCallback;
 import uren.com.myduties.interfaces.ReturnCallback;
 import uren.com.myduties.models.Task;
+import uren.com.myduties.models.TaskSelectionFilter;
 import uren.com.myduties.models.User;
 
+import static uren.com.myduties.constants.StringConstants.ALL_URGENT;
+import static uren.com.myduties.constants.StringConstants.NOT_URGENT;
+import static uren.com.myduties.constants.StringConstants.URGENT;
 import static uren.com.myduties.constants.StringConstants.fb_child_assignedfrom;
 import static uren.com.myduties.constants.StringConstants.fb_child_assignedfromid;
 import static uren.com.myduties.constants.StringConstants.fb_child_assignedtime;
@@ -51,9 +55,6 @@ public class UserTaskDBHelper {
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance()
                 .getReference(fb_child_usertask).child(assignedTo.getUserid());
-
-        //Query query = databaseReference
-        //            .orderByChild(assignedTo.getUserid() + "/" + fb_child_assignedtime).limitToFirst(limitValue);
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -99,6 +100,67 @@ public class UserTaskDBHelper {
             }
         });
     }
+
+    /*public static void getUserWaitingTasksWithFilterValues(User assignedTo, TaskSelectionFilter taskSelectionFilter,
+                                                           final CompleteCallback completeCallback) {
+        final List<Task> taskList = new ArrayList<>();
+
+        if (assignedTo == null || assignedTo.getUserid() == null) {
+            completeCallback.onComplete(null);
+            return;
+        }
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance()
+                .getReference(fb_child_usertask).child(assignedTo.getUserid());
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot outboundSnapshot : dataSnapshot.getChildren()) {
+
+                    String taskId = outboundSnapshot.getKey();
+
+                    Map<String, Object> map = (Map) outboundSnapshot.getValue();
+
+                    boolean completedVal = (boolean) map.get(fb_child_completed);
+
+                    if (completedVal == false) {
+                        String taskDesc = (String) map.get(fb_child_taskdesc);
+                        long assignedTime = (long) map.get(fb_child_assignedtime);
+                        boolean closedVal = (boolean) map.get(fb_child_closed);
+                        boolean urgency = (boolean) map.get(fb_child_urgency);
+                        String taskType = (String) map.get(fb_child_type);
+
+                        long completedTime = 0;
+                        if (map.get(fb_child_completedtime) != null)
+                            completedTime = (long) map.get(fb_child_completedtime);
+
+                        String assignedFromId = (String) map.get(fb_child_assignedfromid);
+                        User assignedFrom = new User();
+                        assignedFrom.setUserid(assignedFromId);
+
+                        if((taskSelectionFilter.getTaskType() == null || (taskSelectionFilter.getTaskType() != null && taskSelectionFilter.getTaskType().equals(taskType))) &&
+                                ((taskSelectionFilter.getUrgencyText().equals(URGENT) && urgency) ||
+                                        ((taskSelectionFilter.getUrgencyText().equals(NOT_URGENT) && !urgency)) ||
+                                        (taskSelectionFilter.getUrgencyText().equals(ALL_URGENT)))) {
+                            Task task = new Task(taskId, taskDesc, assignedFrom, completedVal,
+                                    assignedTo, assignedTime, completedTime, closedVal, taskType, urgency);
+                            taskList.add(task);
+                        }
+                    }
+                }
+
+                completeCallback.onComplete(taskList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                completeCallback.onFailed(databaseError.getMessage());
+            }
+        });
+    }*/
 
     public static void getUserCompletedTasks(User assignedTo, final CompleteCallback completeCallback) {
         final List<Task> taskList = new ArrayList<>();

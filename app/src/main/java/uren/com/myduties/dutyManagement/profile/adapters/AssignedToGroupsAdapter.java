@@ -1,5 +1,6 @@
 package uren.com.myduties.dutyManagement.profile.adapters;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.PorterDuff;
@@ -33,6 +34,7 @@ import uren.com.myduties.messaging.NotificationHandler;
 import uren.com.myduties.models.GroupTask;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.CommonUtils;
+import uren.com.myduties.utils.MyDutiesUtil;
 import uren.com.myduties.utils.TaskTypeHelper;
 import uren.com.myduties.utils.dataModelUtil.GroupDataUtil;
 import uren.com.myduties.utils.dataModelUtil.UserDataUtil;
@@ -43,7 +45,6 @@ public class AssignedToGroupsAdapter extends RecyclerView.Adapter {
     private Context mContext;
     private List<GroupTask> taskList;
     private BaseFragment.FragmentNavigation fragmentNavigation;
-    private HashMap<String, Integer> taskPositionHashMap;
     private TaskTypeHelper taskTypeHelper;
     private User accountholderUser;
 
@@ -53,7 +54,6 @@ public class AssignedToGroupsAdapter extends RecyclerView.Adapter {
         this.mContext = context;
         this.fragmentNavigation = fragmentNavigation;
         this.taskList = new ArrayList<>();
-        this.taskPositionHashMap = new HashMap<>();
         EventBus.getDefault().register(this);
     }
 
@@ -109,7 +109,6 @@ public class AssignedToGroupsAdapter extends RecyclerView.Adapter {
         ImageView imgAssignedToPic;
         TextView txtAssignedToPic;
         PopupMenu popupMenu = null;
-        User assignedFrom = null;
         GroupTask groupTask;
 
         public MyViewHolder(View view) {
@@ -234,17 +233,17 @@ public class AssignedToGroupsAdapter extends RecyclerView.Adapter {
         public void setData(GroupTask groupTask, int position) {
             this.groupTask = groupTask;
             this.position = position;
-            taskPositionHashMap.put(groupTask.getTaskId(), position);
-            setTaskTypeImage();
-            setUrgency();
-            setCompletedImage();
-            setTaskDesc();
-            setCreatedAtValue();
             setAssignedFromValues();
-            setCompletedTime();
-            setClosedImgv();
             setWhoCompleted();
             setGroupValues();
+            MyDutiesUtil.setGroupTaskCompletedTimeValueAndSetLayoutVisibility(groupTask, llcompleted);
+            MyDutiesUtil.setGroupTaskDescription(groupTask, txtDetail);
+            MyDutiesUtil.setGroupTaskCreatedAtValue(mContext, groupTask, txtCreateAt);
+            MyDutiesUtil.setGroupTaskCompletedAtValue(mContext, groupTask, txtCompletedAt);
+            MyDutiesUtil.setUrgency(mContext, groupTask.isUrgency(), tvUrgency, cardView);
+            MyDutiesUtil.setClosedTv(groupTask.isClosed(), tvClosed);
+            MyDutiesUtil.setCompletedImgv(mContext, groupTask.isCompleted(), existLibImgv);
+            MyDutiesUtil.setTaskTypeImage(mContext, taskTypeImgv, groupTask.getType(), taskTypeHelper);
         }
 
         private void setGroupValues() {
@@ -253,6 +252,7 @@ public class AssignedToGroupsAdapter extends RecyclerView.Adapter {
             GroupDataUtil.setGroupName(groupTask.getGroup(), txtAssignedToName);
         }
 
+        @SuppressLint("SetTextI18n")
         private void setWhoCompleted() {
             if (groupTask.getWhoCompleted() != null && groupTask.getWhoCompleted().getName() != null &&
                     !groupTask.getWhoCompleted().getName().isEmpty()) {
@@ -262,59 +262,11 @@ public class AssignedToGroupsAdapter extends RecyclerView.Adapter {
                 tvWhoCompleted.setVisibility(View.GONE);
         }
 
-        private void setClosedImgv() {
-            if (groupTask.isClosed())
-                tvClosed.setVisibility(View.VISIBLE);
-            else
-                tvClosed.setVisibility(View.GONE);
-        }
-
-        private void setCompletedTime() {
-            //Completed at
-            if (groupTask.getCompletedTime() != 0) {
-                llcompleted.setVisibility(View.VISIBLE);
-                txtCompletedAt.setText(CommonUtils.getMessageTime(mContext, groupTask.getCompletedTime()));
-            } else
-                llcompleted.setVisibility(View.GONE);
-        }
 
         private void setAssignedFromValues() {
-            assignedFrom = groupTask.getAssignedFrom();
-            //profile picture
-            UserDataUtil.setProfilePicture(mContext, assignedFrom.getProfilePhotoUrl(), assignedFrom.getName(), assignedFrom.getUsername()
-                    , txtProfilePic, imgProfilePic, true);
-
-            //username of user who assigned the task
-            txtUserName.setText(UserDataUtil.getNameOrUsername(assignedFrom.getName(), assignedFrom.getUsername()));
-        }
-
-        private void setCreatedAtValue() {
-            if (groupTask.getAssignedTime() != 0)
-                txtCreateAt.setText(CommonUtils.getMessageTime(mContext, groupTask.getAssignedTime()));
-        }
-
-        private void setTaskDesc() {
-            if (groupTask.getTaskDesc() != null && !groupTask.getTaskDesc().isEmpty()) {
-                txtDetail.setText(groupTask.getTaskDesc());
-                txtDetail.setVisibility(View.VISIBLE);
-            } else {
-                txtDetail.setVisibility(View.GONE);
-            }
-        }
-
-        private void setCompletedImage() {
-            if (groupTask.isCompleted())
-                existLibImgv.setColorFilter(mContext.getResources().getColor(R.color.Green, null), PorterDuff.Mode.SRC_IN);
-            else
-                existLibImgv.setColorFilter(mContext.getResources().getColor(R.color.Red, null), PorterDuff.Mode.SRC_IN);
-        }
-
-        private void setUrgency() {
-            CommonUtils.setUrgencyTv( groupTask.isUrgency(), tvUrgency);
-        }
-
-        private void setTaskTypeImage() {
-            CommonUtils.setTaskTypeImage(mContext, taskTypeImgv, groupTask.getType(), taskTypeHelper);
+            UserDataUtil.setProfilePicture(mContext, groupTask.getAssignedFrom().getProfilePhotoUrl(),
+                    groupTask.getAssignedFrom().getName(), groupTask.getAssignedFrom().getUsername(), txtProfilePic, imgProfilePic, true);
+            txtUserName.setText(UserDataUtil.getNameOrUsername(groupTask.getAssignedFrom().getName(), groupTask.getAssignedFrom().getUsername()));
         }
     }
 

@@ -36,6 +36,7 @@ import uren.com.myduties.interfaces.ReturnCallback;
 import uren.com.myduties.models.Task;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.CommonUtils;
+import uren.com.myduties.utils.MyDutiesUtil;
 import uren.com.myduties.utils.TaskTypeHelper;
 import uren.com.myduties.utils.dataModelUtil.UserDataUtil;
 
@@ -49,7 +50,6 @@ public class CompletedTaskAdapter extends RecyclerView.Adapter {
     private Context mContext;
     private List<Task> taskList;
     private BaseFragment.FragmentNavigation fragmentNavigation;
-    private HashMap<String, Integer> taskPositionHashMap;
     private ReturnCallback returnCallback;
     private User user;
     private TaskTypeHelper taskTypeHelper;
@@ -60,7 +60,6 @@ public class CompletedTaskAdapter extends RecyclerView.Adapter {
         this.mContext = context;
         this.fragmentNavigation = fragmentNavigation;
         this.taskList = new ArrayList<>();
-        this.taskPositionHashMap = new HashMap<>();
         this.user = user;
         EventBus.getDefault().register(this);
     }
@@ -72,15 +71,6 @@ public class CompletedTaskAdapter extends RecyclerView.Adapter {
 
     public void setReturnCallback(ReturnCallback returnCallback) {
         this.returnCallback = returnCallback;
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        if (taskList.size() > 0 && position >= 0) {
-            return taskList.get(position) != null ? VIEW_ITEM : VIEW_PROG;
-        } else {
-            return VIEW_NULL;
-        }
     }
 
     @Override
@@ -118,7 +108,6 @@ public class CompletedTaskAdapter extends RecyclerView.Adapter {
         AppCompatTextView tvUrgency;
         ImageView completedImgv;
         PopupMenu popupMenu = null;
-        User assignedFrom = null;
 
         public MyViewHolder(View view) {
             super(view);
@@ -150,9 +139,9 @@ public class CompletedTaskAdapter extends RecyclerView.Adapter {
             imgProfilePic.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (assignedFrom != null && assignedFrom.getProfilePhotoUrl() != null &&
-                            !assignedFrom.getProfilePhotoUrl().isEmpty()) {
-                        fragmentNavigation.pushFragment(new ShowSelectedPhotoFragment(assignedFrom.getProfilePhotoUrl()));
+                    if (task.getAssignedFrom() != null && task.getAssignedFrom().getProfilePhotoUrl() != null &&
+                            !task.getAssignedFrom().getProfilePhotoUrl().isEmpty()) {
+                        fragmentNavigation.pushFragment(new ShowSelectedPhotoFragment(task.getAssignedFrom().getProfilePhotoUrl()));
                     }
                 }
             });
@@ -165,29 +154,26 @@ public class CompletedTaskAdapter extends RecyclerView.Adapter {
                         public boolean onMenuItemClick(MenuItem item) {
                             switch (item.getItemId()) {
                                 case R.id.callUser:
+                                    if (task.getAssignedFrom().getUsername() == null || task.getAssignedFrom().getUsername().trim().isEmpty()) {
 
-                                    UserDBHelper.getUser(task.getAssignedFrom().getUserid(), new CompleteCallback() {
-                                        @Override
-                                        public void onComplete(Object object) {
-                                            User user = (User) object;
+                                        UserDBHelper.getUser(task.getAssignedFrom().getUserid(), new CompleteCallback() {
+                                            @Override
+                                            public void onComplete(Object object) {
 
-                                            try {
-                                                if (user != null && user.getPhone() != null) {
-                                                    String phoneNumber = user.getPhone().getDialCode() + user.getPhone().getPhoneNumber();
-                                                    mContext.startActivity(new Intent(Intent.ACTION_DIAL,
-                                                            Uri.fromParts("tel", phoneNumber, null)));
-                                                }
-                                            } catch (Exception e) {
-                                                CommonUtils.showToastShort(mContext, mContext.getResources().getString(R.string.users_phone_not_defined));
-                                                e.printStackTrace();
+                                                if (object != null) {
+                                                    task.setAssignedFrom((User) object);
+                                                    MyDutiesUtil.callAssignedFromTaskUser(mContext, task, user);
+                                                } else
+                                                    CommonUtils.showToastShort(mContext, mContext.getResources().getString(R.string.UNEXPECTED_ERROR));
                                             }
-                                        }
 
-                                        @Override
-                                        public void onFailed(String message) {
-                                            CommonUtils.showToastShort(mContext, message);
-                                        }
-                                    });
+                                            @Override
+                                            public void onFailed(String message) {
+                                                CommonUtils.showToastShort(mContext, message);
+                                            }
+                                        });
+                                    } else
+                                        MyDutiesUtil.callAssignedFromTaskUser(mContext, task, user);
 
                                     break;
                             }
@@ -200,68 +186,42 @@ public class CompletedTaskAdapter extends RecyclerView.Adapter {
         }
 
         public void setData(Task task, int position) {
-
-            //her postID bir position ile entegre halde...
             this.task = task;
             this.position = position;
-            taskPositionHashMap.put(task.getTaskId(), position);
-            setTaskTypeImage();
-            setUrgency();
-            setClosedTv();
-            setCompletedImage();
-
-            //Task Description
-            if (task.getTaskDesc() != null && !task.getTaskDesc().isEmpty()) {
-                txtDetail.setText(task.getTaskDesc());
-                txtDetail.setVisibility(View.VISIBLE);
-            } else {
-                txtDetail.setVisibility(View.GONE);
-            }
-
-            //Create at
-            if (task.getAssignedTime() != 0)
-                txtCreateAt.setText(CommonUtils.getMessageTime(mContext, task.getAssignedTime()));
-
-            //Completed at
-            if (task.getCompletedTime() != 0)
-                txtCompletedAt.setText(CommonUtils.getMessageTime(mContext, task.getCompletedTime()));
-
-            UserDBHelper.getUser(task.getAssignedFrom().getUserid(), new CompleteCallback() {
-                @Override
-                public void onComplete(Object object) {
-                    assignedFrom = (User) object;
-
-                    //profile picture
-                    UserDataUtil.setProfilePicture(mContext, assignedFrom.getProfilePhotoUrl(), assignedFrom.getName(), assignedFrom.getUsername()
-                            , txtProfilePic, imgProfilePic, true);
-
-                    //username of user who assigned the task
-                    txtUserName.setText(UserDataUtil.getNameOrUsername(assignedFrom.getName(), assignedFrom.getUsername()));
-                }
-
-                @Override
-                public void onFailed(String message) {
-
-                }
-            });
+            MyDutiesUtil.setTaskTypeImage(mContext, taskTypeImgv, task.getType(), taskTypeHelper);
+            MyDutiesUtil.setUrgency(mContext, task.isUrgency(), tvUrgency, cardView);
+            MyDutiesUtil.setClosedTv(task.isClosed(), tvClosed);
+            MyDutiesUtil.setCompletedImgv(mContext, task.isCompleted(), completedImgv);
+            MyDutiesUtil.setTaskCreatedAtValue(mContext, task, txtCreateAt);
+            MyDutiesUtil.setTaskCompletedAtValue(mContext, task, txtCompletedAt);
+            MyDutiesUtil.setTaskDescription(task, txtDetail);
+            getAssignedFromUser();
         }
 
-        private void setUrgency() {
-            CommonUtils.setUrgencyTv(task.isUrgency(), tvUrgency);
+        private void getAssignedFromUser() {
+            if (task.getAssignedFrom().getUsername() == null || task.getAssignedFrom().getUsername().trim().isEmpty()) {
+                UserDBHelper.getUser(task.getAssignedFrom().getUserid(), new CompleteCallback() {
+                    @Override
+                    public void onComplete(Object object) {
+                        task.setAssignedFrom((User) object);
+                        setAssignedFromUserViews();
+                    }
+
+                    @Override
+                    public void onFailed(String message) {
+
+                    }
+                });
+            }else
+                setAssignedFromUserViews();
         }
 
-        private void setClosedTv() {
-            CommonUtils.setClosedTv(task.isClosed(), tvClosed);
+        private void setAssignedFromUserViews(){
+            UserDataUtil.setProfilePicture(mContext, task.getAssignedFrom().getProfilePhotoUrl(),
+                    task.getAssignedFrom().getName(), task.getAssignedFrom().getUsername()
+                    , txtProfilePic, imgProfilePic, true);
+            txtUserName.setText(UserDataUtil.getNameOrUsername(task.getAssignedFrom().getName(), task.getAssignedFrom().getUsername()));
         }
-
-        private void setCompletedImage() {
-            CommonUtils.setCompletedImgv(mContext, task.isCompleted(), completedImgv);
-        }
-
-        private void setTaskTypeImage() {
-            CommonUtils.setTaskTypeImage(mContext, taskTypeImgv, task.getType(), taskTypeHelper);
-        }
-
     }
 
     @Override

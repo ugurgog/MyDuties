@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#607D8B</color>
-    <color name="colorPrimaryDark">#455A64</color>
-    <color name="colorAccent">#FF861F</color>
+    <color name="colorPrimary">#546E7A</color>
+    <color name="colorPrimaryDark">#37474F</color>
+    <color name="colorAccent">#FFC400</color>
 
     <color name="gray">#444440</color>
     <color name="white">#FFFFFF</color>
@@ -12,6 +12,7 @@
     <color name="transparent">#00000000</color>
     <color name="toastBackground">#E1E7EA</color>
     <color name="transparentBlack">#80000000</color>
+    <color name="urgentColor">#E7ECCD</color>
 
     <!--Indigo 500-->
     <!--Indigo 700-->

@@ -45,6 +45,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <include layout="@layout/layout_adview" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.7dp"
@@ -54,7 +56,7 @@
                 android:id="@+id/tablayout"
                 style="@style/BottomTabLayout"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:background="@color/colorPrimaryDark"
                 app:tabTextAppearance="@style/MainTabLayoutTextAppearance" />

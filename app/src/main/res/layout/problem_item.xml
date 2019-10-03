@@ -23,7 +23,7 @@
                 <!-- Top of Post Text /-->
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:orientation="horizontal">
 
                     <!-- Profile layout /-->
@@ -35,21 +35,19 @@
 
                         <!-- Profile Picture /-->
                         <LinearLayout
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
+                            android:layout_width="60dp"
+                            android:layout_height="match_parent"
                             android:padding="5dp">
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
+                                android:layout_height="match_parent">
 
                                 <ImageView
                                     android:id="@+id/imgProfilePic"
-                                    android:layout_width="65dp"
-                                    android:layout_height="65dp"
-                                    android:layout_alignParentEnd="true"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
                                     android:layout_gravity="center"
-                                    android:layout_marginEnd="0dp"
                                     android:contentDescription="TODO"
                                     android:padding="4dp" />
 
@@ -75,14 +73,13 @@
                             android:orientation="vertical">
 
                             <androidx.appcompat.widget.AppCompatTextView
-                                android:fontFamily="@font/amiko"
                                 android:id="@+id/txtUserName"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="3dp"
+                                android:fontFamily="@font/amiko"
                                 android:textColor="@color/colorPrimaryDark"
-                                android:textSize="14sp"
-                                android:text="@string/undefined_user"/>
+                                android:textSize="15sp" />
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -99,17 +96,17 @@
                                     android:src="@drawable/ic_time_black_24dp" />
 
                                 <androidx.appcompat.widget.AppCompatTextView
-                                    android:fontFamily="@font/amiko"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:textColor="@color/DodgerBlue"
+                                    android:fontFamily="@font/amiko"
                                     android:text="@string/createdAt"
+                                    android:textColor="@color/DodgerBlue"
                                     android:textSize="11sp" />
 
                                 <View
                                     android:layout_width="5dp"
-                                    android:layout_height="1dp"/>
+                                    android:layout_height="1dp" />
 
                                 <TextView
                                     android:id="@+id/txtCreateAt"
@@ -117,7 +114,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:textColor="@color/gray"
-                                    android:textSize="11sp"/>
+                                    android:textSize="11sp" />
 
                             </LinearLayout>
 
@@ -138,10 +135,10 @@
                                     android:src="@drawable/ic_time_black_24dp" />
 
                                 <androidx.appcompat.widget.AppCompatTextView
-                                    android:fontFamily="@font/amiko"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
+                                    android:fontFamily="@font/amiko"
                                     android:text="@string/completedAt"
                                     android:textColor="@color/DodgerBlue"
                                     android:textSize="11sp" />
@@ -160,6 +157,7 @@
 
                             </LinearLayout>
 
+
                         </LinearLayout>
 
                     </LinearLayout>
@@ -171,36 +169,17 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="3dp"
-                    android:layout_marginRight="8dp">
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="8dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
-                        android:gravity="center"
                         android:orientation="horizontal">
 
-                        <ImageView
-                            android:id="@+id/taskTypeImgv"
-                            android:layout_width="17dp"
-                            android:layout_height="17dp"
-                            android:layout_alignParentTop="true"
-                            android:layout_alignParentEnd="true"
-                            android:layout_gravity="center"
-                            android:layout_marginRight="15dp" />
-
-                        <ImageView
-                            android:id="@+id/completedImgv"
-                            android:layout_width="13dp"
-                            android:layout_height="13dp"
-                            android:layout_alignParentTop="true"
-                            android:layout_alignParentEnd="true"
-                            android:layout_gravity="center"
-                            android:layout_marginRight="15dp"
-                            android:src="@drawable/icon_red_circle" />
 
                         <ImageView
                             android:id="@+id/moreImgv"
@@ -212,64 +191,55 @@
 
                     </LinearLayout>
 
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1"
-                        android:layout_marginTop="2dp"
-                        android:gravity="center">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvUrgency"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/amiko"
-                            android:text="@string/urgent"
-                            android:textColor="@color/Red"
-                            android:textSize="10sp"
-                            android:textStyle="bold" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvClosed"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/amiko"
-                            android:text="@string/closed"
-                            android:textColor="@color/Red"
-                            android:textSize="10sp"
-                            android:textStyle="bold"
-                            android:layout_marginTop="3dp"/>
-
-                    </LinearLayout>
                 </LinearLayout>
-
 
             </RelativeLayout>
 
+
+            <!-- ViewPager /-->
+
+            <!-- SliderDots /-->
             <androidx.appcompat.widget.AppCompatTextView
-                android:fontFamily="@font/amiko"
                 android:id="@+id/txtDetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/Black"
-                android:textSize="14sp"
-                android:layout_marginBottom="3dp"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
                 android:fontFamily="@font/amiko"
-                android:id="@+id/tvWhoCompleted"
+                android:textColor="@color/Black"
+                android:textSize="14sp" />
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/dot_dark_screen1"
-                android:textSize="11sp"
-                android:layout_marginBottom="7dp" />
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="2dp"
+                android:baselineAligned="false"
+                android:gravity="left"
+                android:orientation="horizontal"
+                android:weightSum="3" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:alpha="0.1"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@android:color/black" />
+
+            <ImageView
+                android:layout_gravity="center"
+                android:id="@+id/problemImgv"
+                android:layout_width="100dp"
+                android:layout_height="150dp"
+                android:scaleType="centerCrop"
+                android:contentDescription="TODO"
+                android:visibility="gone">
+
+            </ImageView>
 
 
         </LinearLayout>

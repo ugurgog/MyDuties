@@ -101,4 +101,8 @@ public class StringConstants {
     public static final String ALGOLIA_APP_ID = "0NXABIBM4D";
     public static final String ALGOLIA_SEARCH_API_KEY = "c93cf7a717073098d2d25938b3ee8d27";
     public static final String ALGOLIA_INDEX_NAME = "MyDuties";
+
+    public static final String URGENT = "urgent";
+    public static final String NOT_URGENT = "noturgent";
+    public static final String ALL_URGENT = "allurgent";
 }

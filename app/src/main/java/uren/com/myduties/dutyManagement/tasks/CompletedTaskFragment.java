@@ -37,6 +37,7 @@ import uren.com.myduties.interfaces.ReturnCallback;
 import uren.com.myduties.models.Task;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.ClickableImage.ClickableImageView;
+import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.dialogBoxUtil.DialogBoxUtil;
 import uren.com.myduties.utils.dialogBoxUtil.Interfaces.InfoDialogBoxCallback;
 import uren.com.myduties.utils.layoutManager.CustomLinearLayoutManager;
@@ -130,7 +131,6 @@ public class CompletedTaskFragment extends BaseFragment {
     private void setLayoutManager() {
         mLayoutManager = new CustomLinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
-        //recyclerView.setItemAnimator(new FeedItemAnimator());
     }
 
     private void setAdapter() {
@@ -191,12 +191,8 @@ public class CompletedTaskFragment extends BaseFragment {
                 refresh_layout.setRefreshing(false);
 
                 if (taskList.size() > 0) {
-                    DialogBoxUtil.showErrorDialog(getContext(), Objects.requireNonNull(getContext()).getResources().getString(R.string.serverError), new InfoDialogBoxCallback() {
-                        @Override
-                        public void okClick() {
-
-                        }
-                    });
+                    CommonUtils.showToastShort(getContext(),
+                            Objects.requireNonNull(getContext()).getResources().getString(R.string.serverError));
                     showExceptionLayout(false, -1);
                 } else {
                     showExceptionLayout(true, VIEW_SERVER_ERROR);
@@ -239,7 +235,6 @@ public class CompletedTaskFragment extends BaseFragment {
 
     public void scrollRecViewInitPosition() {
         mLayoutManager.smoothScrollToPosition(recyclerView, null, 0);
-        //recyclerView.smoothScrollToPosition(0);
     }
 
 

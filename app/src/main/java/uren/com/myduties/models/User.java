@@ -2,13 +2,7 @@ package uren.com.myduties.models;
 
 
 import java.util.List;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class User {
 
     private String userid = null;
@@ -20,17 +14,7 @@ public class User {
     private List<String> groupIdList;
     private boolean admin;
 
-    public User(String userid) {
-        this.userid = userid;
-    }
-
-    public User(String userid, String name, String profilePhotoUrl) {
-        this.userid = userid;
-        this.name = name;
-        this.profilePhotoUrl = profilePhotoUrl;
-    }
-
-    /*public User() {
+    public User() {
     }
 
     public User(String userid, String name, String username, String email, String profilePhotoUrl,
@@ -52,6 +36,18 @@ public class User {
         this.userid = userid;
         this.name = name;
         this.profilePhotoUrl = profilePhotoUrl;
+    }
+
+    public User(String userid, String name, String username, String email, String photoUrl,
+                Phone phone, List<String> groupList, boolean admin) {
+        this.userid = userid;
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.profilePhotoUrl = photoUrl;
+        this.phone = phone;
+        this.groupIdList = groupList;
+        this.admin = admin;
     }
 
     public String getUserid() {
@@ -116,5 +112,5 @@ public class User {
 
     public void setAdmin(boolean admin) {
         this.admin = admin;
-    }*/
+    }
 }

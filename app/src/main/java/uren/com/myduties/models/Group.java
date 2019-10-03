@@ -2,13 +2,6 @@ package uren.com.myduties.models;
 
 import java.util.ArrayList;
 import java.util.List;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class Group {
     private String groupid = null;
     private String name = null;
@@ -17,12 +10,7 @@ public class Group {
     private String groupAdmin = null;
     private List<User> memberList = new ArrayList<>();
 
-    public Group(String groupid) {
-        this.groupid = groupid;
-    }
-
-
-    /*public Group() {
+    public Group() {
     }
 
     public Group(String groupid, String name, String groupPhotoUrl, long createAt, String groupAdmin,
@@ -85,6 +73,6 @@ public class Group {
 
     public void setGroupAdmin(String groupAdmin) {
         this.groupAdmin = groupAdmin;
-    }*/
+    }
 
 }

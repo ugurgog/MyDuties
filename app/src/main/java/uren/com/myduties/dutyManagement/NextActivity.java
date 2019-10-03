@@ -19,6 +19,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.tabs.TabLayout;
 
 import org.greenrobot.eventbus.EventBus;
@@ -43,6 +45,7 @@ import uren.com.myduties.dutyManagement.tasks.MyTaskFragment;
 import uren.com.myduties.dutyManagement.tasks.WaitingTaskFragment;
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.models.User;
+import uren.com.myduties.utils.AdMobUtils;
 import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.ShapeUtil;
 
@@ -88,6 +91,8 @@ public class NextActivity extends FragmentActivity implements
 
     private FragmentHistory fragmentHistory;
 
+    private AdView adView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +101,7 @@ public class NextActivity extends FragmentActivity implements
         thisActivity = this;
 
         unSelectedTabColor = this.getResources().getColor(R.color.DarkGray, null);
-        selectedTabColor = this.getResources().getColor(R.color.colorAccent, null);
+        selectedTabColor = this.getResources().getColor(R.color.White, null);
 
         initValues();
 
@@ -154,11 +159,14 @@ public class NextActivity extends FragmentActivity implements
         screenShotMainLayout = findViewById(R.id.screenShotMainLayout);
         screenShotCancelBtn = findViewById(R.id.screenShotCancelBtn);
         screenShotApproveBtn = findViewById(R.id.screenShotApproveBtn);
+        adView = findViewById(R.id.adView);
         TABS = getResources().getStringArray(R.array.tab_name);
         setShapes();
 
         //setStatusBarTransparent();
         initTab();
+        MobileAds.initialize(NextActivity.this, getResources().getString(R.string.ADMOB_APP_ID));
+        AdMobUtils.loadBannerAd(adView);
     }
 
     public void checkFeedFragmentReselected(TabLayout.Tab tab) {
@@ -219,7 +227,7 @@ public class NextActivity extends FragmentActivity implements
 
                 if(tab != null){
                     tab.setIcon(mTabIconsSelected[i]);
-                    //tab.setText(TABS[i]);
+                    tab.setText(TABS[i]);
 
                   /*  if(i == TAB1)
                         tab.getIcon().setColorFilter(selectedTabColor, PorterDuff.Mode.SRC_IN);*/
@@ -231,6 +239,7 @@ public class NextActivity extends FragmentActivity implements
                 }*/
             }
             Objects.requireNonNull(bottomTabLayout.getTabAt(0).getIcon()).setColorFilter(selectedTabColor, PorterDuff.Mode.SRC_IN);
+            bottomTabLayout.setTabTextColors(unSelectedTabColor, selectedTabColor);
         }
     }
 

@@ -1,16 +1,11 @@
 package uren.com.myduties.models;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+
 public class Friend {
     User user;
     String friendStatus;
 
-    /*public Friend() {
+    public Friend() {
     }
 
     public Friend(User user, String friendStatus) {
@@ -32,5 +27,5 @@ public class Friend {
 
     public void setFriendStatus(String friendStatus) {
         this.friendStatus = friendStatus;
-    }*/
+    }
 }

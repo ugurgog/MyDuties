@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">My Duties</string>
 
     <!-- App introduction variables-->
@@ -11,8 +11,8 @@
     <string name="LOCATION_DUTY_DESC">You will be able to receive notifications for the tasks you have forgotten with location definitions.</string>
 
     <array name="tab_name">
-        <item>Home</item>
-        <item>Share</item>
+        <item>My Duties</item>
+        <item>Assign</item>
         <item>Profile</item>
     </array>
 
@@ -126,7 +126,7 @@
     <string name="ABOUT_APP">My Duties: If you have any questions
         or suggestions about the application, please write to us.
     </string>
-    <string name="authoremail">catchuren@gmail.com</string> 
+    <string name="authoremail">mydutiess@gmail.com</string> 
 
     <!-- Change Password variables-->
     <string name="CURRENT_PASSWORD">Current password</string>
@@ -208,6 +208,7 @@
     <string name="serverError">Server Error</string>
     <string name="swipeDownForRefresh">Swipe down for refresh</string>
     <string name="delete">Delete</string>
+    <string name="fixed">Fixed</string>
 
     <string name="WRITE_YOUR_NAME">Type your name..</string>
     <string name="WRITE_USERNAME">Type your username..</string>
@@ -241,6 +242,8 @@
     <string name="call_user">Call</string>
 
     <string name="users_phone_not_defined">User\'s phone is not defined.</string>
+    <string name="phone_not_defined">\'s phone is not defined.</string>
+    <string name="notCallableItsYou">You\'re the one who made the assignment. You cannot make a phone call.</string>
     <string name="see_all_tasks">See all group tasks -></string>
     <string name="group_with_twodot">Group:</string>
     <string name="completed_this_task">completed this task</string>
@@ -257,6 +260,8 @@
     <string name="whomorwhichgrouptask">Whom or which group will the task be assigned to? Please select.</string>
     <string name="remind">Remind</string>
     <string name="urgent">Urgent</string>
+    <string name="noturgent">Not Urgent</string>
+    <string name="all">All</string>
     <string name="closed">Closed</string>
     <string name="taskIsClosedAlready">This task is already closed.</string>
     <string name="markAsUrgent">Mark as urgent</string>
@@ -291,6 +296,13 @@
 
     <string name="FCM_SERVER_KEY">AAAA4JR4Gec:APA91bGLWhwgn6JuvSPzJVWUw-LTiu3rW48ihDO--ulWaWja8s8f6M9v4fy_Y2pMOx8cqrB8NwzT-XB9cqfMpsYpgQ8yAksP6xK8A9rG5nOpbwUJQkr04xgG9aI4Qbf4P16XxuzMYvWv</string>
 
+    <string name="ADMOB_APP_ID" tools:ignore="MissingTranslation">ca-app-pub-7227467199436307~5044253017</string>
+    <!--<string name="ADMOB_BANNER_AD_UNIT_ID">ca-app-pub-7227467199436307/5419302311</string>
+    <string name="ADMOB_INTERSITITIAL_AD_UNIT_ID">ca-app-pub-7227467199436307/3914648950</string>-->
 
+
+    <!--Test-->
+    <string name="ADMOB_BANNER_AD_UNIT_ID" tools:ignore="MissingTranslation">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="ADMOB_INTERSITITIAL_AD_UNIT_ID" tools:ignore="MissingTranslation">ca-app-pub-3940256099942544/1033173712</string>
 
 </resources>

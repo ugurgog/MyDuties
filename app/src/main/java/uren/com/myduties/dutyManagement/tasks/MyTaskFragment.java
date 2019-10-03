@@ -1,15 +1,21 @@
 package uren.com.myduties.dutyManagement.tasks;
 
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.ToxicBakery.viewpager.transforms.RotateUpTransformer;
@@ -25,6 +31,10 @@ import uren.com.myduties.R;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.dutyManagement.tasks.adapters.FeedPagerAdapter;
 import uren.com.myduties.dutyManagement.tasks.helper.TaskHelper;
+import uren.com.myduties.models.TaskSelectionFilter;
+import uren.com.myduties.utils.ResizeAnimation;
+
+import static uren.com.myduties.constants.StringConstants.URGENT;
 
 public class MyTaskFragment extends BaseFragment implements View.OnClickListener {
 
@@ -32,7 +42,7 @@ public class MyTaskFragment extends BaseFragment implements View.OnClickListener
     FeedPagerAdapter feedPagerAdapter;
 
     @BindView(R.id.llSearch)
-    RelativeLayout llSearch;
+    LinearLayout llSearch;
     @BindView(R.id.toolbarLayout)
     Toolbar toolbar;
     @BindView(R.id.htab_viewpager)
@@ -44,6 +54,8 @@ public class MyTaskFragment extends BaseFragment implements View.OnClickListener
     SmoothProgressBar smoothProgressBar;
     @BindView(R.id.ntb_horizontal)
     NavigationTabBar navigationTabBar;
+    @BindView(R.id.mainRl)
+    RelativeLayout mainRl;
 
     private static final int TAB_WAITING = 0;
     private static final int TAB_COMPLETED = 1;
@@ -122,7 +134,6 @@ public class MyTaskFragment extends BaseFragment implements View.OnClickListener
         navigationTabBar.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(final int position, final float positionOffset, final int positionOffsetPixels) {
-                //viewPager.setCurrentItem(position);
                 selectedTabPosition = position;
             }
 
@@ -149,16 +160,6 @@ public class MyTaskFragment extends BaseFragment implements View.OnClickListener
         if (view == llSearch) {
             mFragmentNavigation.pushFragment(new SearchFragment(), "");
         }
-
     }
 
-    public void startProgressBar() {
-        llSharing.setVisibility(View.VISIBLE);
-        smoothProgressBar.progressiveStart();
-    }
-
-    public void stopProgressBar() {
-        llSharing.setVisibility(View.GONE);
-        smoothProgressBar.progressiveStop();
-    }
 }

@@ -32,6 +32,7 @@ import uren.com.myduties.dbManagement.UserDBHelper;
 import uren.com.myduties.dbManagement.UserTaskDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.evetBusModels.TaskTypeBus;
+import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.OnCompleteCallback;
 import uren.com.myduties.interfaces.ReturnCallback;
@@ -39,6 +40,7 @@ import uren.com.myduties.messaging.NotificationHandler;
 import uren.com.myduties.models.Task;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.CommonUtils;
+import uren.com.myduties.utils.MyDutiesUtil;
 import uren.com.myduties.utils.TaskTypeHelper;
 import uren.com.myduties.utils.dataModelUtil.UserDataUtil;
 
@@ -52,9 +54,9 @@ public class WaitingTaskAdapter extends RecyclerView.Adapter {
     private Context mContext;
     private List<Task> taskList;
     private BaseFragment.FragmentNavigation fragmentNavigation;
-    private HashMap<String, Integer> taskPositionHashMap;
     private ReturnCallback returnCallback;
     private TaskTypeHelper taskTypeHelper;
+    private User accountHolderUser;
 
     public WaitingTaskAdapter(Activity activity, Context context,
                               BaseFragment.FragmentNavigation fragmentNavigation) {
@@ -62,13 +64,17 @@ public class WaitingTaskAdapter extends RecyclerView.Adapter {
         this.mContext = context;
         this.fragmentNavigation = fragmentNavigation;
         this.taskList = new ArrayList<>();
-        this.taskPositionHashMap = new HashMap<>();
         EventBus.getDefault().register(this);
     }
 
     @Subscribe(sticky = true)
     public void taskTypeReceived(TaskTypeBus taskTypeBus) {
         taskTypeHelper = taskTypeBus.getTypeMap();
+    }
+
+    @Subscribe(sticky = true)
+    public void userReceived(UserBus userBus) {
+        accountHolderUser = userBus.getUser();
     }
 
     public void setReturnCallback(ReturnCallback returnCallback) {
@@ -118,7 +124,6 @@ public class WaitingTaskAdapter extends RecyclerView.Adapter {
         AppCompatTextView tvClosed;
         AppCompatTextView tvUrgency;
         PopupMenu popupMenu = null;
-        User assignedFrom = null;
 
         public MyViewHolder(View view) {
             super(view);
@@ -148,9 +153,9 @@ public class WaitingTaskAdapter extends RecyclerView.Adapter {
             imgProfilePic.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (assignedFrom != null && assignedFrom.getProfilePhotoUrl() != null &&
-                            !assignedFrom.getProfilePhotoUrl().isEmpty()) {
-                        fragmentNavigation.pushFragment(new ShowSelectedPhotoFragment(assignedFrom.getProfilePhotoUrl()));
+                    if (task.getAssignedFrom() != null && task.getAssignedFrom().getProfilePhotoUrl() != null &&
+                            !task.getAssignedFrom().getProfilePhotoUrl().isEmpty()) {
+                        fragmentNavigation.pushFragment(new ShowSelectedPhotoFragment(task.getAssignedFrom().getProfilePhotoUrl()));
                     }
                 }
             });
@@ -186,29 +191,26 @@ public class WaitingTaskAdapter extends RecyclerView.Adapter {
                                     break;
                                 case R.id.callUser:
 
-                                    UserDBHelper.getUser(task.getAssignedFrom().getUserid(), new CompleteCallback() {
-                                        @Override
-                                        public void onComplete(Object object) {
-                                            User user = (User) object;
+                                    if (task.getAssignedFrom().getUsername() == null || task.getAssignedFrom().getUsername().trim().isEmpty()) {
 
-                                            try {
-                                                if (user != null && user.getPhone() != null) {
-                                                    String phoneNumber = user.getPhone().getDialCode() + user.getPhone().getPhoneNumber();
-                                                    mContext.startActivity(new Intent(Intent.ACTION_DIAL,
-                                                            Uri.fromParts("tel", phoneNumber, null)));
-                                                }
-                                            } catch (Exception e) {
-                                                CommonUtils.showToastShort(mContext, mContext.getResources().getString(R.string.users_phone_not_defined));
-                                                e.printStackTrace();
+                                        UserDBHelper.getUser(task.getAssignedFrom().getUserid(), new CompleteCallback() {
+                                            @Override
+                                            public void onComplete(Object object) {
+
+                                                if (object != null) {
+                                                    task.setAssignedFrom((User) object);
+                                                    MyDutiesUtil.callAssignedFromTaskUser(mContext, task, accountHolderUser);
+                                                } else
+                                                    CommonUtils.showToastShort(mContext, mContext.getResources().getString(R.string.UNEXPECTED_ERROR));
                                             }
-                                        }
 
-                                        @Override
-                                        public void onFailed(String message) {
-                                            CommonUtils.showToastShort(mContext, message);
-                                        }
-                                    });
-
+                                            @Override
+                                            public void onFailed(String message) {
+                                                CommonUtils.showToastShort(mContext, message);
+                                            }
+                                        });
+                                    } else
+                                        MyDutiesUtil.callAssignedFromTaskUser(mContext, task, accountHolderUser);
                                     break;
                             }
                             return false;
@@ -220,57 +222,39 @@ public class WaitingTaskAdapter extends RecyclerView.Adapter {
         }
 
         public void setData(Task task, int position) {
-
-            //her postID bir position ile entegre halde...
             this.task = task;
             this.position = position;
-            taskPositionHashMap.put(task.getTaskId(), position);
-            setTaskTypeImage();
-            setUrgency();
-            setClosedTv();
-
-            //Task Description
-            if (task.getTaskDesc() != null && !task.getTaskDesc().isEmpty()) {
-                txtDetail.setText(task.getTaskDesc());
-                txtDetail.setVisibility(View.VISIBLE);
-            } else {
-                txtDetail.setVisibility(View.GONE);
-            }
-
-            //Create at
-            if (task.getAssignedTime() != 0)
-                txtCreateAt.setText(CommonUtils.getMessageTime(mContext, task.getAssignedTime()));
-
-            UserDBHelper.getUser(task.getAssignedFrom().getUserid(), new CompleteCallback() {
-                @Override
-                public void onComplete(Object object) {
-                    assignedFrom = (User) object;
-
-                    //profile picture
-                    UserDataUtil.setProfilePicture(mContext, assignedFrom.getProfilePhotoUrl(), assignedFrom.getName(), assignedFrom.getUsername()
-                            , txtProfilePic, imgProfilePic, true);
-
-                    //username of user who assigned the task
-                    txtUserName.setText(UserDataUtil.getNameOrUsername(assignedFrom.getName(), assignedFrom.getUsername()));
-                }
-
-                @Override
-                public void onFailed(String message) {
-
-                }
-            });
+            MyDutiesUtil.setUrgency(mContext, task.isUrgency(), tvUrgency, cardView);
+            MyDutiesUtil.setClosedTv(task.isClosed(), tvClosed);
+            MyDutiesUtil.setTaskTypeImage(mContext, taskTypeImgv, task.getType(), taskTypeHelper);
+            MyDutiesUtil.setTaskDescription(task, txtDetail);
+            MyDutiesUtil.setTaskCreatedAtValue(mContext, task, txtCreateAt);
+            getAssignedFromUser();
         }
 
-        private void setUrgency() {
-            CommonUtils.setUrgencyTv( task.isUrgency(), tvUrgency);
+        private void getAssignedFromUser() {
+            if (task.getAssignedFrom().getUsername() == null || task.getAssignedFrom().getUsername().trim().isEmpty()) {
+                UserDBHelper.getUser(task.getAssignedFrom().getUserid(), new CompleteCallback() {
+                    @Override
+                    public void onComplete(Object object) {
+                        task.setAssignedFrom((User) object);
+                        setAssignedFromUserViews();
+                    }
+
+                    @Override
+                    public void onFailed(String message) {
+
+                    }
+                });
+            }else
+                setAssignedFromUserViews();
         }
 
-        private void setClosedTv() {
-            CommonUtils.setClosedTv(task.isClosed(), tvClosed);
-        }
-
-        private void setTaskTypeImage() {
-            CommonUtils.setTaskTypeImage(mContext, taskTypeImgv, task.getType(), taskTypeHelper);
+        private void setAssignedFromUserViews(){
+            UserDataUtil.setProfilePicture(mContext, task.getAssignedFrom().getProfilePhotoUrl(),
+                    task.getAssignedFrom().getName(), task.getAssignedFrom().getUsername()
+                    , txtProfilePic, imgProfilePic, true);
+            txtUserName.setText(UserDataUtil.getNameOrUsername(task.getAssignedFrom().getName(), task.getAssignedFrom().getUsername()));
         }
     }
 

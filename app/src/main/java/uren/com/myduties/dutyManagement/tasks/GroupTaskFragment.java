@@ -132,7 +132,6 @@ public class GroupTaskFragment extends BaseFragment {
     private void setLayoutManager() {
         mLayoutManager = new CustomLinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
-        //recyclerView.setItemAnimator(new FeedItemAnimator());
     }
 
     private void setAdapter() {
@@ -208,7 +207,6 @@ public class GroupTaskFragment extends BaseFragment {
 
     public void scrollRecViewInitPosition() {
         mLayoutManager.smoothScrollToPosition(recyclerView, null, 0);
-        //recyclerView.smoothScrollToPosition(0);
     }
 
 

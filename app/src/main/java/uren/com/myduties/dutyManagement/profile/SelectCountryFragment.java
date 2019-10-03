@@ -124,8 +124,8 @@ public class SelectCountryFragment extends Fragment implements Filterable {
         String countryDialCode = parts2[0];
 
         for (Country country : countries) {
-            if (country != null && country.getDial_code() != null && !country.getDial_code().trim().isEmpty()) {
-                if (countryDialCode.trim().equals(country.getDial_code())) {
+            if (country != null && country.getDialCode() != null && !country.getDialCode().trim().isEmpty()) {
+                if (countryDialCode.trim().equals(country.getDialCode())) {
                     myCountry = country;
                     break;
                 }
@@ -149,8 +149,8 @@ public class SelectCountryFragment extends Fragment implements Filterable {
             String countryItem = "";
 
             if (country.getName() != null && !country.getName().trim().isEmpty() &&
-                    country.getDial_code() != null && !country.getDial_code().trim().isEmpty()) {
-                countryItem = country.getName() + "(" + country.getDial_code() + ")";
+                    country.getDialCode() != null && !country.getDialCode().trim().isEmpty()) {
+                countryItem = country.getName() + "(" + country.getDialCode() + ")";
                 orgCountryList.add(countryItem);
             }
         }

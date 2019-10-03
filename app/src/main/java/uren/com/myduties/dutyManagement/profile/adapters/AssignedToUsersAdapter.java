@@ -30,11 +30,13 @@ import uren.com.myduties.R;
 import uren.com.myduties.dbManagement.UserTaskDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.evetBusModels.TaskTypeBus;
+import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.OnCompleteCallback;
 import uren.com.myduties.messaging.NotificationHandler;
 import uren.com.myduties.models.Task;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.CommonUtils;
+import uren.com.myduties.utils.MyDutiesUtil;
 import uren.com.myduties.utils.TaskTypeHelper;
 import uren.com.myduties.utils.dataModelUtil.UserDataUtil;
 
@@ -44,22 +46,25 @@ public class AssignedToUsersAdapter extends RecyclerView.Adapter {
     private Context mContext;
     private List<Task> taskList;
     private BaseFragment.FragmentNavigation fragmentNavigation;
-    private HashMap<String, Integer> taskPositionHashMap;
     private TaskTypeHelper taskTypeHelper;
+    private User accountHolderUser;
 
     public AssignedToUsersAdapter(Activity activity, Context context,
-                              BaseFragment.FragmentNavigation fragmentNavigation) {
+                                  BaseFragment.FragmentNavigation fragmentNavigation) {
         this.mActivity = activity;
         this.mContext = context;
         this.fragmentNavigation = fragmentNavigation;
         this.taskList = new ArrayList<>();
-        this.taskPositionHashMap = new HashMap<>();
         EventBus.getDefault().register(this);
     }
 
     @Subscribe(sticky = true)
-    public void taskTypeReceived(TaskTypeBus taskTypeBus){
+    public void taskTypeReceived(TaskTypeBus taskTypeBus) {
         taskTypeHelper = taskTypeBus.getTypeMap();
+    }
+    @Subscribe(sticky = true)
+    public void userReceived(UserBus userBus) {
+        accountHolderUser = userBus.getUser();
     }
 
     @Override
@@ -104,7 +109,6 @@ public class AssignedToUsersAdapter extends RecyclerView.Adapter {
         ImageView imgAssignedToPic;
         TextView txtAssignedToPic;
         PopupMenu popupMenu = null;
-        User assignedFrom = null;
 
         public MyViewHolder(View view) {
             super(view);
@@ -146,8 +150,10 @@ public class AssignedToUsersAdapter extends RecyclerView.Adapter {
                         public boolean onMenuItemClick(MenuItem item) {
                             switch (item.getItemId()) {
                                 case R.id.close:
-                                    if(task.isClosed())
+                                    if (task.isClosed()) {
                                         CommonUtils.showToastShort(mContext, mContext.getResources().getString(R.string.taskIsClosedAlready));
+                                        return false;
+                                    }
 
                                     task.setClosed(true);
 
@@ -166,23 +172,11 @@ public class AssignedToUsersAdapter extends RecyclerView.Adapter {
 
                                     break;
                                 case R.id.callUser:
-
-                                    if(task.getAssignedTo() != null && task.getAssignedTo().getPhone() != null){
-                                        try {
-                                            String phoneNumber = task.getAssignedTo().getPhone().getDialCode() + task.getAssignedTo().getPhone().getPhoneNumber();
-                                            mContext.startActivity(new Intent(Intent.ACTION_DIAL,
-                                                    Uri.fromParts("tel", phoneNumber, null)));
-                                        } catch (Exception e) {
-                                            CommonUtils.showToastShort(mContext, mContext.getResources().getString(R.string.users_phone_not_defined));
-                                            e.printStackTrace();
-                                        }
-                                    }else
-                                        CommonUtils.showToastShort(mContext, mContext.getResources().getString(R.string.users_phone_not_defined));
-
+                                    MyDutiesUtil.callAssignedToTaskUser(mContext, task, accountHolderUser);
                                     break;
 
                                 case R.id.remind:
-                                    NotificationHandler.sendUserNotification(mContext, assignedFrom, task.getAssignedTo(),
+                                    NotificationHandler.sendUserNotification(mContext, task.getAssignedFrom(), task.getAssignedTo(),
                                             mContext.getResources().getString(R.string.letsRememberThisTask), task.getTaskDesc());
                                     break;
                             }
@@ -195,27 +189,18 @@ public class AssignedToUsersAdapter extends RecyclerView.Adapter {
         }
 
         public void setData(Task task, int position) {
-
-            //her postID bir position ile entegre halde...
             this.task = task;
             this.position = position;
-            taskPositionHashMap.put(task.getTaskId(), position);
-            setTaskTypeImage();
-            setUrgency();
-            setCompletedImage();
-            setTaskDesc();
-            setCreatedAtValue();
+            MyDutiesUtil.setUrgency(mContext, task.isUrgency(), tvUrgency, cardView);
+            MyDutiesUtil.setTaskTypeImage(mContext, taskTypeImgv, task.getType(), taskTypeHelper);
+            MyDutiesUtil.setClosedTv(task.isClosed(), tvClosed);
+            MyDutiesUtil.setTaskCompletedAtValue(mContext, task, txtCompletedAt);
+            MyDutiesUtil.setTaskCompletedTimeValueAndSetLayoutVisibility(task, llcompleted);
+            MyDutiesUtil.setCompletedImgv(mContext, task.isCompleted(), existLibImgv);
+            MyDutiesUtil.setTaskDescription(task, txtDetail);
+            MyDutiesUtil.setTaskCreatedAtValue(mContext, task, txtCreateAt);
             setAssignedFromValues();
             setAssignedToValues();
-            setCompletedTime();
-            setClosedImgv();
-        }
-
-        private void setClosedImgv() {
-            if(task.isClosed())
-                tvClosed.setVisibility(View.VISIBLE);
-            else
-                tvClosed.setVisibility(View.GONE);
         }
 
         private void setAssignedToValues() {
@@ -225,52 +210,10 @@ public class AssignedToUsersAdapter extends RecyclerView.Adapter {
             txtAssignedToName.setText(UserDataUtil.getNameOrUsername(assignedTo.getName(), assignedTo.getUsername()));
         }
 
-        private void setCompletedTime() {
-            //Completed at
-            if (task.getCompletedTime() != 0) {
-                llcompleted.setVisibility(View.VISIBLE);
-                txtCompletedAt.setText(CommonUtils.getMessageTime(mContext, task.getCompletedTime()));
-            }else
-                llcompleted.setVisibility(View.GONE);
-        }
-
         private void setAssignedFromValues() {
-            assignedFrom = task.getAssignedFrom();
-            //profile picture
-            UserDataUtil.setProfilePicture(mContext, assignedFrom.getProfilePhotoUrl(), assignedFrom.getName(), assignedFrom.getUsername()
-                    , txtProfilePic, imgProfilePic, true);
-
-            //username of user who assigned the task
-            txtUserName.setText(UserDataUtil.getNameOrUsername(assignedFrom.getName(), assignedFrom.getUsername()));
-        }
-
-        private void setCreatedAtValue() {
-            if (task.getAssignedTime() != 0)
-                txtCreateAt.setText(CommonUtils.getMessageTime(mContext, task.getAssignedTime()));
-        }
-
-        private void setTaskDesc() {
-            if (task.getTaskDesc() != null && !task.getTaskDesc().isEmpty()) {
-                txtDetail.setText(task.getTaskDesc());
-                txtDetail.setVisibility(View.VISIBLE);
-            } else {
-                txtDetail.setVisibility(View.GONE);
-            }
-        }
-
-        private void setCompletedImage() {
-            if (task.isCompleted())
-                existLibImgv.setColorFilter(mContext.getResources().getColor(R.color.Green, null), PorterDuff.Mode.SRC_IN);
-            else
-                existLibImgv.setColorFilter(mContext.getResources().getColor(R.color.Red, null), PorterDuff.Mode.SRC_IN);
-        }
-
-        private void setUrgency() {
-            CommonUtils.setUrgencyTv(task.isUrgency(), tvUrgency);
-        }
-
-        private void setTaskTypeImage() {
-            CommonUtils.setTaskTypeImage(mContext, taskTypeImgv, task.getType(), taskTypeHelper);
+            UserDataUtil.setProfilePicture(mContext, task.getAssignedFrom().getProfilePhotoUrl(),
+                    task.getAssignedFrom().getName(), task.getAssignedFrom().getUsername(), txtProfilePic, imgProfilePic, true);
+            txtUserName.setText(UserDataUtil.getNameOrUsername(task.getAssignedFrom().getName(), task.getAssignedFrom().getUsername()));
         }
     }
 

@@ -39,6 +39,7 @@ import uren.com.myduties.models.Group;
 import uren.com.myduties.models.GroupTask;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.CommonUtils;
+import uren.com.myduties.utils.MyDutiesUtil;
 import uren.com.myduties.utils.TaskTypeHelper;
 import uren.com.myduties.utils.dataModelUtil.UserDataUtil;
 
@@ -52,7 +53,6 @@ public class GroupAllTasksAdapter extends RecyclerView.Adapter {
     private Context mContext;
     private List<GroupTask> taskList;
     private BaseFragment.FragmentNavigation fragmentNavigation;
-    private HashMap<String, Integer> taskPositionHashMap;
     private User user;
     private Group group;
     private TaskTypeHelper taskTypeHelper;
@@ -63,7 +63,6 @@ public class GroupAllTasksAdapter extends RecyclerView.Adapter {
         this.mContext = context;
         this.fragmentNavigation = fragmentNavigation;
         this.taskList = new ArrayList<>();
-        this.taskPositionHashMap = new HashMap<>();
         this.user = user;
         this.group = group;
         EventBus.getDefault().register(this);
@@ -111,11 +110,8 @@ public class GroupAllTasksAdapter extends RecyclerView.Adapter {
         LinearLayout profileMainLayout;
         TextView txtCreateAt;
         TextView txtCompletedAt;
-
         PopupMenu popupMenu = null;
 
-        User assignedFrom = null;
-        User whoCompleted = null;
 
         public MyViewHolder(View view) {
             super(view);
@@ -136,7 +132,6 @@ public class GroupAllTasksAdapter extends RecyclerView.Adapter {
             taskTypeImgv = view.findViewById(R.id.taskTypeImgv);
             tvClosed = view.findViewById(R.id.tvClosed);
             tvUrgency = view.findViewById(R.id.tvUrgency);
-
             setListeners();
         }
 
@@ -144,9 +139,9 @@ public class GroupAllTasksAdapter extends RecyclerView.Adapter {
             imgProfilePic.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (assignedFrom != null && assignedFrom.getProfilePhotoUrl() != null &&
-                            !assignedFrom.getProfilePhotoUrl().isEmpty()) {
-                        fragmentNavigation.pushFragment(new ShowSelectedPhotoFragment(assignedFrom.getProfilePhotoUrl()));
+                    if (task.getAssignedFrom() != null && task.getAssignedFrom().getProfilePhotoUrl() != null &&
+                            !task.getAssignedFrom().getProfilePhotoUrl().isEmpty()) {
+                        fragmentNavigation.pushFragment(new ShowSelectedPhotoFragment(task.getAssignedFrom().getProfilePhotoUrl()));
                     }
                 }
             });
@@ -183,12 +178,12 @@ public class GroupAllTasksAdapter extends RecyclerView.Adapter {
                                     break;
                                 case R.id.callUser:
 
-                                    if (assignedFrom == null) {
+                                    if (task.getAssignedFrom().getUsername() == null || task.getAssignedFrom().getUsername().trim().isEmpty()) {
                                         UserDBHelper.getUser(task.getAssignedFrom().getUserid(), new CompleteCallback() {
                                             @Override
                                             public void onComplete(Object object) {
-                                                assignedFrom = (User) object;
-                                                callAssignedFromUser();
+                                                task.setAssignedFrom((User) object);
+                                                MyDutiesUtil.callAssignedFromGroupTaskUser(mContext, task, user);
                                             }
 
                                             @Override
@@ -197,7 +192,7 @@ public class GroupAllTasksAdapter extends RecyclerView.Adapter {
                                             }
                                         });
                                     } else
-                                        callAssignedFromUser();
+                                        MyDutiesUtil.callAssignedFromGroupTaskUser(mContext, task, user);
 
                                     break;
                             }
@@ -226,50 +221,20 @@ public class GroupAllTasksAdapter extends RecyclerView.Adapter {
             });
         }
 
-        public void callAssignedFromUser() {
-            try {
-                if (assignedFrom != null && assignedFrom.getPhone() != null) {
-                    String phoneNumber = assignedFrom.getPhone().getDialCode() + assignedFrom.getPhone().getPhoneNumber();
-                    mContext.startActivity(new Intent(Intent.ACTION_DIAL,
-                            Uri.fromParts("tel", phoneNumber, null)));
-                }
-            } catch (Exception e) {
-                CommonUtils.showToastShort(mContext, mContext.getResources().getString(R.string.users_phone_not_defined));
-                e.printStackTrace();
-            }
-        }
-
         public void setData(GroupTask task, int position) {
-
-            //her postID bir position ile entegre halde...
             this.task = task;
             this.position = position;
-            taskPositionHashMap.put(task.getTaskId(), position);
-            setTaskItems();
-            setTaskAssignedFrom();
-            setCompletedTimeVal();
-            setWhoCompleted();
-            setCompletedImage();
             setPopupMenu();
-            setTaskTypeImage();
-            setClosedTv();
-            setUrgency();
-        }
-
-        private void setUrgency() {
-            CommonUtils.setUrgencyTv(task.isUrgency(), tvUrgency);
-        }
-
-        private void setClosedTv() {
-            CommonUtils.setClosedTv(task.isClosed(), tvClosed);
-        }
-
-        private void setCompletedImage() {
-            CommonUtils.setCompletedImgv(mContext, task.isCompleted(), completedImgv);
-        }
-
-        private void setTaskTypeImage() {
-            CommonUtils.setTaskTypeImage(mContext, taskTypeImgv, task.getType(), taskTypeHelper);
+            setTaskAssignedFrom();
+            setWhoCompleted();
+            MyDutiesUtil.setGroupTaskDescription(task, txtDetail);
+            MyDutiesUtil.setGroupTaskCreatedAtValue(mContext, task, txtCreateAt);
+            MyDutiesUtil.setGroupTaskCompletedAtValue(mContext, task, txtCompletedAt);
+            MyDutiesUtil.setGroupTaskCompletedTimeValueAndSetLayoutVisibility(task, llcompleted);
+            MyDutiesUtil.setCompletedImgv(mContext, task.isCompleted(), completedImgv);
+            MyDutiesUtil.setTaskTypeImage(mContext, taskTypeImgv, task.getType(), taskTypeHelper);
+            MyDutiesUtil.setClosedTv(task.isClosed(), tvClosed);
+            MyDutiesUtil.setUrgency(mContext, task.isUrgency(), tvUrgency, cardView);
         }
 
         private void setWhoCompleted() {
@@ -278,78 +243,60 @@ public class GroupAllTasksAdapter extends RecyclerView.Adapter {
             else {
                 tvWhoCompleted.setVisibility(View.VISIBLE);
 
-                UserDBHelper.getUser(task.getWhoCompleted().getUserid(), new CompleteCallback() {
-                    @SuppressLint("SetTextI18n")
+                if (task.getWhoCompleted().getUsername() == null || task.getWhoCompleted().getUsername().trim().isEmpty()) {
+                    UserDBHelper.getUser(task.getWhoCompleted().getUserid(), new CompleteCallback() {
+                        @Override
+                        public void onComplete(Object object) {
+                            task.setWhoCompleted((User) object);
+                            setWhoCompletedUserViews();
+                        }
+
+                        @Override
+                        public void onFailed(String message) {
+                            tvWhoCompleted.setVisibility(View.GONE);
+                        }
+                    });
+                } else
+                    setWhoCompletedUserViews();
+            }
+        }
+
+        @SuppressLint("SetTextI18n")
+        private void setWhoCompletedUserViews() {
+            if (task.getWhoCompleted() != null) {
+                if (task.getWhoCompleted().getName() != null)
+                    tvWhoCompleted.setText(task.getWhoCompleted().getName() + " " + mContext.getResources().getString(R.string.completed_this_task));
+                else if (task.getWhoCompleted().getUsername() != null)
+                    tvWhoCompleted.setText(CHAR_AMPERSAND + task.getWhoCompleted().getUsername() + " " + mContext.getResources().getString(R.string.completed_this_task));
+                else
+                    tvWhoCompleted.setVisibility(View.GONE);
+            }
+        }
+
+        private void setTaskAssignedFrom() {
+            if (task.getAssignedFrom().getUsername() == null || task.getAssignedFrom().getUsername().trim().isEmpty()) {
+                UserDBHelper.getUser(task.getAssignedFrom().getUserid(), new CompleteCallback() {
                     @Override
                     public void onComplete(Object object) {
-
-                        whoCompleted = (User) object;
-                        if (whoCompleted != null) {
-                            if (whoCompleted.getName() != null)
-                                tvWhoCompleted.setText(whoCompleted.getName() + " " + mContext.getResources().getString(R.string.completed_this_task));
-                            else if (whoCompleted.getUsername() != null)
-                                tvWhoCompleted.setText(CHAR_AMPERSAND + whoCompleted.getUsername() + " " + mContext.getResources().getString(R.string.completed_this_task));
-                            else
-                                tvWhoCompleted.setVisibility(View.GONE);
-                        }
+                        task.setAssignedFrom((User) object);
+                        setAssignedFromUserViews();
                     }
 
                     @Override
                     public void onFailed(String message) {
-                        tvWhoCompleted.setVisibility(View.GONE);
+                        UserDataUtil.setProfilePicture(mContext, null, null, null, txtProfilePic, imgProfilePic, true);
+                        txtUserName.setText(UserDataUtil.getNameOrUsername(null, null));
                     }
                 });
-            }
+            } else
+                setAssignedFromUserViews();
         }
 
-        private void setCompletedTimeVal() {
-            if (task.getCompletedTime() != 0)
-                llcompleted.setVisibility(View.VISIBLE);
-            else
-                llcompleted.setVisibility(View.GONE);
-        }
-
-        private void setTaskItems() {
-            //Task Description
-            if (task.getTaskDesc() != null && !task.getTaskDesc().isEmpty()) {
-                txtDetail.setText(task.getTaskDesc());
-                txtDetail.setVisibility(View.VISIBLE);
-            } else {
-                txtDetail.setVisibility(View.GONE);
-            }
-
-            //Create at
-            if (task.getAssignedTime() != 0)
-                txtCreateAt.setText(CommonUtils.getMessageTime(mContext, task.getAssignedTime()));
-
-            //Completed at
-            if (task.getCompletedTime() != 0)
-                txtCompletedAt.setText(CommonUtils.getMessageTime(mContext, task.getCompletedTime()));
-        }
-
-        private void setTaskAssignedFrom() {
-            UserDBHelper.getUser(task.getAssignedFrom().getUserid(), new CompleteCallback() {
-                @Override
-                public void onComplete(Object object) {
-                    assignedFrom = (User) object;
-
-                    //profile picture
-                    UserDataUtil.setProfilePicture(mContext, assignedFrom.getProfilePhotoUrl(), assignedFrom.getName(), assignedFrom.getUsername()
-                            , txtProfilePic, imgProfilePic, true);
-
-                    //username of user who assigned the task
-                    txtUserName.setText(UserDataUtil.getNameOrUsername(assignedFrom.getName(), assignedFrom.getUsername()));
-                }
-
-                @Override
-                public void onFailed(String message) {
-                    //profile picture
-                    UserDataUtil.setProfilePicture(mContext, null, null, null, txtProfilePic, imgProfilePic, true);
-
-                    //username of user who assigned the task
-                    txtUserName.setText(UserDataUtil.getNameOrUsername(null, null));
-                }
-            });
+        private void setAssignedFromUserViews() {
+            UserDataUtil.setProfilePicture(mContext, task.getAssignedFrom().getProfilePhotoUrl(),
+                    task.getAssignedFrom().getName(), task.getAssignedFrom().getUsername()
+                    , txtProfilePic, imgProfilePic, true);
+            txtUserName.setText(UserDataUtil.getNameOrUsername(task.getAssignedFrom().getName(), task.getAssignedFrom().getUsername()));
         }
 
         private void setPopupMenu() {
@@ -379,12 +326,5 @@ public class GroupAllTasksAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         return (taskList != null ? taskList.size() : 0);
-    }
-
-    public void addGroupTask(GroupTask groupTask) {
-        if (groupTask != null) {
-            taskList.add(groupTask);
-            notifyItemInserted(taskList.size() - 1);
-        }
     }
 }

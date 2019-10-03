@@ -24,9 +24,9 @@ public class PhoneNumberFormatUtil {
 
         for (Country country : countries) {
             if (country != null && country.getCode() != null && !country.getCode().trim().isEmpty() &&
-                    country.getDial_code() != null && !country.getDial_code().isEmpty()) {
+                    country.getDialCode() != null && !country.getDialCode().isEmpty()) {
                 if (country.getCode().trim().equals(locale)) {
-                    formatNumbersWithDialCode(country.getDial_code(), locale, contactList,
+                    formatNumbersWithDialCode(country.getDialCode(), locale, contactList,
                             completeCallback, context);
                     break;
                 }
@@ -39,7 +39,8 @@ public class PhoneNumberFormatUtil {
         List<Contact> reformedContactList = new ArrayList<>();
 
         if (locale.equals("TR")) {
-            for (Contact contact : contactList) {
+
+            contactList.forEach(contact -> {
                 if (contact != null && contact.getPhoneNumber() != null && !contact.getPhoneNumber().isEmpty()) {
 
                     try {
@@ -54,7 +55,7 @@ public class PhoneNumberFormatUtil {
                         e.printStackTrace();
                     }
                 }
-            }
+            });
         }
         completeCallback.onComplete(reformedContactList);
     }

@@ -11,6 +11,12 @@
     <string name="GROUP_DUTY_DESC">Görev atamaları için gruplar oluşturabilecek ve grup arkadaşlarınız için hatırlatma yapabileceksiniz.</string>
     <string name="LOCATION_DUTY_DESC">Lokasyon bazında görev tanımlamaları ile unuttuğunuz görevler için bildirim alabileceksiniz.</string>
 
+    <array name="tab_name">
+        <item>Görevlerim</item>
+        <item>Görev Ata</item>
+        <item>Profil</item>
+    </array>
+
     <string name="search">Ara</string>
     <string name="FACEBOOK">FACEBOOK</string>
     <string name="CONTACTS">BAĞLANTILAR</string>
@@ -126,7 +132,7 @@
     <string name="ABOUT_APP">My Duties: Uygulama hakkında herhangi
         bir sorunuz ya da öneriniz var ise lütfen bize yazın.
     </string>
-    <string name="authoremail">catchuren@gmail.com</string> 
+    <string name="authoremail">mydutiess@gmail.com</string> 
 
     <!-- Change Password variables-->
     <string name="CURRENT_PASSWORD">Mevcut şifre</string>
@@ -195,6 +201,7 @@
     <string name="loading">Yükleniyor…</string>
     <string name="swipeDownForRefresh">Yenilemek için aşağı sürükleyin.</string>
     <string name="delete">Sil</string>
+    <string name="fixed">Fixed</string>
     <string name="rateus">Bizi Değerlendir</string>
     <string name="commentFailed">Google Play kurulu değil</string><![CDATA[ 
 
@@ -229,6 +236,8 @@
     <string name="call_user">Ara</string>
 
     <string name="users_phone_not_defined">Kullanıcının telefonu tanımlı değil.</string>
+    <string name="phone_not_defined">\'nın telefonu tanımlı değil.</string>
+    <string name="notCallableItsYou">Görev atamasını yapan sizsiniz. Telefon araması yapamazsınız.</string>
     <string name="see_all_tasks">Tüm grup görevlerini gör</string>
     <string name="group_with_twodot">Grup:</string>
     <string name="completed_this_task">bu görevi tamamladı</string>
@@ -245,6 +254,8 @@
     <string name="whomorwhichgrouptask">Görev kime yada hangi gruba atanacak?. Lütfen seçiniz.</string>
     <string name="remind">Hatırlat</string>
     <string name="urgent">Acil</string>
+    <string name="noturgent">Acil Değil</string>
+    <string name="all">Hepsi</string>
     <string name="closed">Kapalı</string>
     <string name="taskIsClosedAlready">Bu görev zaten kapatılmış.</string>
     <string name="markAsUrgent">Acil yap</string>
