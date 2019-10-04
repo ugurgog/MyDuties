@@ -462,13 +462,26 @@ public class UserTaskDBHelper {
         });
     }
 
-    public static void deleteUserTask(String userid, String taskid, final OnCompleteCallback onCompleteCallback) {
+    public static void deleteUserTask(String userid, String assignedToId, String taskid, final OnCompleteCallback onCompleteCallback) {
 
         FirebaseDatabase.getInstance().getReference(fb_child_usertask).child(userid).child(taskid)
                 .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                onCompleteCallback.OnCompleted();
+
+                FirebaseDatabase.getInstance().getReference(fb_child_assignedfrom).child(userid).child(fb_child_users)
+                        .child(assignedToId).child(taskid)
+                        .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        onCompleteCallback.OnCompleted();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        onCompleteCallback.OnFailed(e.getMessage());
+                    }
+                });
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

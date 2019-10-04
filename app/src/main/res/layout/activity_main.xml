@@ -18,14 +18,14 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/White">
+            android:background="@drawable/login_background2">
 
             <ImageView
                 android:id="@+id/appIconImgv"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
                 android:layout_centerInParent="true"
-                android:src="@mipmap/ic_launcher"
+                android:src="@mipmap/ic_launcher_foreground"
                 android:contentDescription="TODO" />
 
             <TextView
@@ -37,7 +37,8 @@
                 android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:text="@string/TRY_AGAIN_AFTER_CHECK_YOUR_NETWORK"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:textColor="@color/white"/>
 
             <Button
                 android:id="@+id/tryAgainButton"

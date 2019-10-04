@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -33,6 +34,7 @@ import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.models.GroupTask;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.ClickableImage.ClickableImageView;
+import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.layoutManager.CustomLinearLayoutManager;
 
 import static uren.com.myduties.constants.NumericConstants.VIEW_NO_POST_FOUND;
@@ -58,14 +60,10 @@ public class GroupTaskFragment extends BaseFragment {
     RelativeLayout mainExceptionLayout;
     @BindView(R.id.noPostFoundLayout)
     LinearLayout noPostFoundLayout;
-    @BindView(R.id.retryLayout)
-    LinearLayout retryLayout;
     @BindView(R.id.serverError)
     LinearLayout serverError;
-    @BindView(R.id.imgRetry)
-    ClickableImageView imgRetry;
     @BindView(R.id.txtNoItemFound)
-    TextView txtNoItemFound;
+    AppCompatTextView txtNoItemFound;
 
     private boolean loading = true;
     private int pastVisibleItems, visibleItemCount, totalItemCount;
@@ -104,7 +102,8 @@ public class GroupTaskFragment extends BaseFragment {
     }
 
     private void initVariables() {
-        showExceptionLayout(true, VIEW_NO_POST_FOUND);
+        CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
+                getResources().getString(R.string.there_is_no_group_task));
     }
 
     private void initListeners() {
@@ -144,7 +143,8 @@ public class GroupTaskFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 groupTaskAdapter.updatePostListItems();
-                showExceptionLayout(true, VIEW_NO_POST_FOUND);
+                CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
+                        getResources().getString(R.string.there_is_no_group_task));
                 refreshFeed();
             }
         });
@@ -184,7 +184,8 @@ public class GroupTaskFragment extends BaseFragment {
             public void onFailed(String message) {
                 loadingView.hide();
                 refresh_layout.setRefreshing(false);
-                showExceptionLayout(true, VIEW_SERVER_ERROR);
+                CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
+                        getResources().getString(R.string.there_is_no_group_task));
             }
         });
     }
@@ -200,41 +201,13 @@ public class GroupTaskFragment extends BaseFragment {
     }
 
     private void setUpRecyclerView(GroupTask groupTask) {
-        showExceptionLayout(false, VIEW_NO_POST_FOUND);
+        CommonUtils.showExceptionLayout(false, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
+                getResources().getString(R.string.there_is_no_group_task));
         loading = true;
         groupTaskAdapter.addGroupTask(groupTask);
     }
 
     public void scrollRecViewInitPosition() {
         mLayoutManager.smoothScrollToPosition(recyclerView, null, 0);
-    }
-
-
-    /**********************************************/
-    private void showExceptionLayout(boolean showException, int viewType) {
-
-        if (showException) {
-
-            refresh_layout.setRefreshing(false);
-            loadingView.hide();
-            mainExceptionLayout.setVisibility(View.VISIBLE);
-            retryLayout.setVisibility(View.GONE);
-            noPostFoundLayout.setVisibility(View.GONE);
-            serverError.setVisibility(View.GONE);
-
-            if (viewType == VIEW_RETRY) {
-                if (getContext() != null)
-                    imgRetry.setColorFilter(ContextCompat.getColor(getContext(), R.color.tintColor), android.graphics.PorterDuff.Mode.SRC_IN);
-                retryLayout.setVisibility(View.VISIBLE);
-            } else if (viewType == VIEW_NO_POST_FOUND) {
-                noPostFoundLayout.setVisibility(View.VISIBLE);
-                txtNoItemFound.setText(getResources().getString(R.string.there_is_no_group_task));
-            }  else if (viewType == VIEW_SERVER_ERROR) {
-                serverError.setVisibility(View.VISIBLE);
-            }
-
-        } else {
-            mainExceptionLayout.setVisibility(View.GONE);
-        }
     }
 }

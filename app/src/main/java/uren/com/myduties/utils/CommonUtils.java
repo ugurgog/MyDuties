@@ -23,14 +23,19 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.snackbar.Snackbar;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -48,6 +53,8 @@ import java.util.concurrent.TimeUnit;
 import uren.com.myduties.R;
 import uren.com.myduties.models.TaskType;
 
+import static uren.com.myduties.constants.NumericConstants.VIEW_NO_POST_FOUND;
+import static uren.com.myduties.constants.NumericConstants.VIEW_SERVER_ERROR;
 import static uren.com.myduties.constants.StringConstants.APP_GOOGLE_PLAY_DEFAULT_LINK;
 
 public class CommonUtils {
@@ -380,6 +387,28 @@ public class CommonUtils {
             Objects.requireNonNull(imm).hideSoftInputFromWindow(editText.getWindowToken(), 0);
             editText.setFocusable(false);
             editText.setFocusableInTouchMode(true);
+        }
+    }
+
+    public static void showExceptionLayout(boolean showException, int viewType, SwipeRefreshLayout swipeRefreshLayout, AVLoadingIndicatorView loadingView,
+                                     RelativeLayout mainExceptionLayout, String errText) {
+        if (showException) {
+            swipeRefreshLayout.setRefreshing(false);
+            loadingView.hide();
+            mainExceptionLayout.setVisibility(View.VISIBLE);
+
+            if (viewType == VIEW_NO_POST_FOUND) {
+                LinearLayout noPostFoundLayout = mainExceptionLayout.findViewById(R.id.noPostFoundLayout);
+                AppCompatTextView txtNoItemFound = mainExceptionLayout.findViewById(R.id.txtNoItemFound);
+                noPostFoundLayout.setVisibility(View.VISIBLE);
+                txtNoItemFound.setText(errText);
+            }  else if (viewType == VIEW_SERVER_ERROR) {
+                LinearLayout serverError = mainExceptionLayout.findViewById(R.id.serverError);
+                serverError.setVisibility(View.VISIBLE);
+            }
+
+        } else {
+            mainExceptionLayout.setVisibility(View.GONE);
         }
     }
 }

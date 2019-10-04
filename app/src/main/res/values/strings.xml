@@ -4,11 +4,11 @@
     <!-- App introduction variables-->
     <string name="DUTY_TRACE">Task Tracking</string>
     <string name="GROUP_DUTY">Group Task Tracing</string>
-    <string name="LOCATION_DUTY">Location Based Task Tracing</string>
+    <string name="LOCATION_DUTY">Task Type Definition</string>
 
     <string name="DUTY_TRACE_DESC">You will be able to see the tasks assigned to you and receive notifications for unfinished tasks.</string>
     <string name="GROUP_DUTY_DESC">You will be able to create groups for task assignments and make reminders for your group friends.</string>
-    <string name="LOCATION_DUTY_DESC">You will be able to receive notifications for the tasks you have forgotten with location definitions.</string>
+    <string name="LOCATION_DUTY_DESC">You will be able to determine the type of tasks you assign, and thus you will be able to follow them easily.</string>
 
     <array name="tab_name">
         <item>My Duties</item>
@@ -52,6 +52,7 @@
     <string name="secondShort">sec</string>
     <string name="searchGroup">Search Group</string>
     <string name="searchContact">Search Contact</string>
+    <string name="taskClosedNoRemind"></string>
 
     <string name="writetaskdesc">Write something…</string>
     <string name="UPDATING">Updating…</string>
@@ -277,6 +278,10 @@
     <string name="selectTaskType">Please Select Task Type</string>
     <string name="selectUserOrGroupToAssignTask">Please select user or group to assign a task!</string>
     <string name="pleaseEnterTaskDesc">Please write task description!</string>
+    <string name="there_is_no_task_I_assigned">There is no task that I have assigned to user.</string>
+    <string name="there_is_no_task_I_assigned_to_groups">I haven\'t yet assigned a task to groups.</string>
+    <string name="addFriendFirst">To create a group, you must have at least one friend!</string>
+    <string name="THERE_IS_NO_GROUP_CREATE_OR_INCLUDE">There is no group you created or included</string>
 
     <string name="assignedTaskToYou">has assigned you a task</string>
     <string name="assignedTaskTo">has assigned a task</string>

@@ -9,6 +9,12 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/makeUrgent"
+        android:orderInCategory="100"
+        android:title="@string/markAsUrgent"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/callUser"
         android:orderInCategory="100"
         android:title="@string/call_user"
@@ -18,6 +24,12 @@
         android:id="@+id/remind"
         android:orderInCategory="100"
         android:title="@string/remind"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/delete"
+        android:orderInCategory="100"
+        android:title="@string/delete"
         app:showAsAction="never" />
 
 </menu>

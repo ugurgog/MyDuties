@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">My Duties</string>
+    <string name="app_name">Görev Listem</string>
 
     <!-- App introduction variables-->
     <string name="DUTY_TRACE">Görev Takibi</string>
     <string name="GROUP_DUTY">Grup İçi Takip</string>
-    <string name="LOCATION_DUTY">Lokasyon Bazında Takip</string>
+    <string name="LOCATION_DUTY">Görev Tipi Tanımı</string>
 
     <string name="DUTY_TRACE_DESC">Size atanan görevleri görebilecek ve tamamlanmayan görevler için bildirim alabileceksiniz.</string>
     <string name="GROUP_DUTY_DESC">Görev atamaları için gruplar oluşturabilecek ve grup arkadaşlarınız için hatırlatma yapabileceksiniz.</string>
-    <string name="LOCATION_DUTY_DESC">Lokasyon bazında görev tanımlamaları ile unuttuğunuz görevler için bildirim alabileceksiniz.</string>
+    <string name="LOCATION_DUTY_DESC">Atadığınız görevlerin tipini belirleyebilecek ve bu sayede takibini kolay bir şekilde yapabileceksiniz.</string>
 
     <array name="tab_name">
         <item>Görevlerim</item>
@@ -250,7 +250,7 @@
 
     <string name="phoneNotDefined">Telefon bilgisi henüz tanımlanmadı.</string>
     <string name="thisTaskAssignedTo">Bu görev şu kişiye atandı</string>
-    <string name="defaultHomeSelected">The task type is default home. Click the picture to change it.</string>
+    <string name="defaultHomeSelected">Görev tipi varsayılan Ev\'dir. Değiştirmek için resme tıklayın.</string>
     <string name="whomorwhichgrouptask">Görev kime yada hangi gruba atanacak?. Lütfen seçiniz.</string>
     <string name="remind">Hatırlat</string>
     <string name="urgent">Acil</string>
@@ -271,6 +271,10 @@
     <string name="selectTaskType">Lütfen Görevin Tipini Seçiniz</string>
     <string name="selectUserOrGroupToAssignTask">Görev ataması için lütfen kullanıcı yada grup seçin!</string>
     <string name="pleaseEnterTaskDesc">Lütfen görev açıkmasını yazın!</string>
+    <string name="there_is_no_task_I_assigned">Benim atadığım bir görev henüz bulunmuyor.</string>
+    <string name="there_is_no_task_I_assigned_to_groups">Henüz gruplara atadığım bir görev bulunmuyor.</string>
+    <string name="addFriendFirst">Grup oluşturmak için önce arkadaş edinmelisiniz!</string>
+    <string name="THERE_IS_NO_GROUP_CREATE_OR_INCLUDE">Oluşturduğunuz veya dahil olduğunuz bir grup bulunmamaktadır</string>
 
     <string name="assignedTaskToYou">size bir görev atadı</string>
     <string name="assignedTaskTo">bu gruba bir görev atadı</string>

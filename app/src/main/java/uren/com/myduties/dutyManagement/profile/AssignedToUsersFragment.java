@@ -3,12 +3,15 @@ package uren.com.myduties.dutyManagement.profile;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -17,6 +20,8 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,6 +34,7 @@ import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.models.Task;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.ClickableImage.ClickableImageView;
+import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.layoutManager.CustomLinearLayoutManager;
 
 import static uren.com.myduties.constants.NumericConstants.VIEW_NO_POST_FOUND;
@@ -54,12 +60,10 @@ public class AssignedToUsersFragment extends BaseFragment {
     RelativeLayout mainExceptionLayout;
     @BindView(R.id.noPostFoundLayout)
     LinearLayout noPostFoundLayout;
-    @BindView(R.id.retryLayout)
-    LinearLayout retryLayout;
     @BindView(R.id.serverError)
     LinearLayout serverError;
-    @BindView(R.id.imgRetry)
-    ClickableImageView imgRetry;
+    @BindView(R.id.txtNoItemFound)
+    AppCompatTextView txtNoItemFound;
 
     private boolean loading = true;
     private int pastVisibleItems, visibleItemCount, totalItemCount;
@@ -70,6 +74,12 @@ public class AssignedToUsersFragment extends BaseFragment {
 
     public AssignedToUsersFragment(){
 
+    }
+
+    @Override
+    public void onStart() {
+        Objects.requireNonNull(getActivity()).findViewById(R.id.tabMainLayout).setVisibility(View.VISIBLE);
+        super.onStart();
     }
 
     @Override
@@ -164,6 +174,15 @@ public class AssignedToUsersFragment extends BaseFragment {
                 refresh_layout.setRefreshing(false);
             }
         });
+
+        new Handler().postDelayed(() -> {
+            if(assignedToUsersAdapter.getItemCount() == 0){
+                refresh_layout.setRefreshing(false);
+                //showExceptionLayout(true, VIEW_NO_POST_FOUND);
+                CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
+                        getResources().getString(R.string.there_is_no_task_I_assigned));
+            }
+        }, 3000);
     }
 
     private void setFetchData(Task task) {
@@ -172,6 +191,8 @@ public class AssignedToUsersFragment extends BaseFragment {
             isFirstFetch = false;
             loadingView.smoothToHide();
         }
+        CommonUtils.showExceptionLayout(false, -1, refresh_layout, loadingView, mainExceptionLayout,
+                null);
         setUpRecyclerView(task);
         refresh_layout.setRefreshing(false);
     }
@@ -179,32 +200,5 @@ public class AssignedToUsersFragment extends BaseFragment {
     private void setUpRecyclerView(Task task) {
         loading = true;
         assignedToUsersAdapter.addTask(task);
-    }
-
-    /**********************************************/
-    private void showExceptionLayout(boolean showException, int viewType) {
-
-        if (showException) {
-
-            refresh_layout.setRefreshing(false);
-            loadingView.hide();
-            mainExceptionLayout.setVisibility(View.VISIBLE);
-            retryLayout.setVisibility(View.GONE);
-            noPostFoundLayout.setVisibility(View.GONE);
-            serverError.setVisibility(View.GONE);
-
-            if (viewType == VIEW_RETRY) {
-                if (getContext() != null)
-                    imgRetry.setColorFilter(ContextCompat.getColor(getContext(), R.color.tintColor), android.graphics.PorterDuff.Mode.SRC_IN);
-                retryLayout.setVisibility(View.VISIBLE);
-            } else if (viewType == VIEW_NO_POST_FOUND) {
-                noPostFoundLayout.setVisibility(View.VISIBLE);
-            }  else if (viewType == VIEW_SERVER_ERROR) {
-                serverError.setVisibility(View.VISIBLE);
-            }
-
-        } else {
-            mainExceptionLayout.setVisibility(View.GONE);
-        }
     }
 }

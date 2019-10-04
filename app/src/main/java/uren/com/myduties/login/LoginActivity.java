@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -54,8 +55,8 @@ public class LoginActivity extends AppCompatActivity
     RelativeLayout backgroundLayout;
     EditText emailET;
     EditText passwordET;
-    TextView registerText;
-    TextView forgetPasText;
+    AppCompatTextView registerText;
+    AppCompatTextView forgetPasText;
     Button btnLogin;
     Button forgetPasswordBtn;
     Button createAccBtn;
@@ -87,8 +88,8 @@ public class LoginActivity extends AppCompatActivity
 
         initVariables();
         setShapes();
-        BitmapConversion.setBlurBitmap(LoginActivity.this, backgroundLayout,
-                R.drawable.login_background, 0.3f, 15f, null);
+        //BitmapConversion.setBlurBitmap(LoginActivity.this, backgroundLayout,
+        //        R.drawable.login_background, 0.3f, 15f, null);
     }
 
     public void setShapes() {

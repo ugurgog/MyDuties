@@ -55,9 +55,6 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     User user;
-    String receiptUserId = null;
-    String senderUserId = null;
-    String messagingType = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,32 +109,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void fillUserInfo() {
         loginProcess();
-
-        /*user = new User();
-        Bundle extras = getIntent().getExtras();
-        LoginUser loginUser = (LoginUser) getIntent().getSerializableExtra(LOGIN_USER);
-
-        if (extras != null && loginUser != null) {
-
-            user.setUserid(loginUser.getUserId());
-            user.setUsername(loginUser.getUsername());
-            user.setEmail(loginUser.getEmail());
-
-            if (loginUser.getName() != null && !loginUser.getName().isEmpty()) {
-                user.setName(loginUser.getName());
-            }
-            if (loginUser.getProfilePhotoUrl() != null && !loginUser.getProfilePhotoUrl().isEmpty()) {
-                user.setProfilePhotoUrl(loginUser.getProfilePhotoUrl());
-            }
-
-            loginProcess();
-
-        } else {
-            user.setUserid(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
-            user.setEmail(firebaseAuth.getCurrentUser().getEmail());
-            user.setUsername("default");
-            loginProcess();
-        }*/
     }
 
     public void loginProcess() {
@@ -177,28 +148,6 @@ public class MainActivity extends AppCompatActivity {
                 refresh_layout.setRefreshing(false);
             }
         });
-
-       /* AccountHolderInfo.getInstance(new CompleteCallback() {
-            @Override
-            public void onComplete(Object object) {
-
-                User user = (User) object;
-
-                if (user != null) {
-                    EventBus.getDefault().postSticky(new UserBus(user));
-                    refresh_layout.setRefreshing(false);
-                    updateDeviceTokenForFCM();
-                    startActivity(new Intent(MainActivity.this, NextActivity.class));
-                    finish();
-                }
-            }
-
-            @Override
-            public void onFailed(String message) {
-                CommonUtils.showToastShort(MainActivity.this, message);
-                refresh_layout.setRefreshing(false);
-            }
-        });*/
     }
 
     public void updateDeviceTokenForFCM() {

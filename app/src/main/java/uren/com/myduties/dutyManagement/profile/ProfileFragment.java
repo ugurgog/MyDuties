@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -88,6 +89,13 @@ public class ProfileFragment extends BaseFragment {
     @BindView(R.id.tasksCntTv)
     TextView tasksCntTv;
 
+    @BindView(R.id.progressBar1)
+    ProgressBar progressBar1;
+    @BindView(R.id.progressBar2)
+    ProgressBar progressBar2;
+    @BindView(R.id.progressBar3)
+    ProgressBar progressBar3;
+
     TextView navViewNameTv;
     TextView navViewEmailTv;
     ImageView navImgProfile;
@@ -95,6 +103,8 @@ public class ProfileFragment extends BaseFragment {
 
     @BindView(R.id.llFollowInfo)
     RelativeLayout llFollowInfo;
+    @BindView(R.id.rlOut)
+    RelativeLayout rlOut;
 
     @BindView(R.id.friendsLayout)
     LinearLayout friendsLayout;
@@ -148,28 +158,32 @@ public class ProfileFragment extends BaseFragment {
     }
 
     private void setFriendsCntTv() {
-        friendsCntTv.setText(Integer.toString(0));
+        //friendsCntTv.setText(Integer.toString(0));
         FriendsDBHelper.getFriendCountByStatus(user.getUserid(), fb_child_status_friend, new CompleteCallback() {
             @Override
             public void onComplete(Object object) {
+                progressBar1.setVisibility(View.GONE);
                 int count = (int) object;
                 friendsCntTv.setText(Integer.toString(count));
             }
 
             @Override
             public void onFailed(String message) {
-
+                progressBar1.setVisibility(View.GONE);
+                friendsCntTv.setText(Integer.toString(0));
             }
         });
     }
 
     private void setGroupsCntTv() {
-        if (user.getGroupIdList() != null)
+        if (user.getGroupIdList() != null) {
+            progressBar2.setVisibility(View.GONE);
             groupsCntTv.setText(Integer.toString(user.getGroupIdList().size()));
-        else {
+        }else {
             GroupDBHelper.getUserGroupsCount(user.getUserid(), new ReturnCallback() {
                 @Override
                 public void OnReturn(Object object) {
+                    progressBar2.setVisibility(View.GONE);
                     int count = (int) object;
                     groupsCntTv.setText(Integer.toString(count));
                 }
@@ -182,6 +196,7 @@ public class ProfileFragment extends BaseFragment {
         UserTaskDBHelper.getIAssignedTasksToUsersCount(user.getUserid(), new ReturnCallback() {
             @Override
             public void OnReturn(Object object) {
+                progressBar3.setVisibility(View.GONE);
                 assignedTaskCnt = assignedTaskCnt + (int) object;
                 tasksCntTv.setText(Integer.toString(assignedTaskCnt));
             }
@@ -191,6 +206,7 @@ public class ProfileFragment extends BaseFragment {
         GroupTaskDBHelper.getIAssignedTasksToGroupsCount(user.getUserid(), new ReturnCallback() {
             @Override
             public void OnReturn(Object object) {
+                progressBar3.setVisibility(View.GONE);
                 assignedTaskCnt = assignedTaskCnt + (int) object;
                 tasksCntTv.setText(Integer.toString(assignedTaskCnt));
             }
@@ -241,6 +257,8 @@ public class ProfileFragment extends BaseFragment {
     private void initVariables() {
         llFollowInfo.setBackground(ShapeUtil.getShape(getContext().getResources().getColor(R.color.White, null),
                 getContext().getResources().getColor(R.color.DarkGray, null), GradientDrawable.RECTANGLE, 30, 2));
+        rlOut.setBackground(ShapeUtil.getShape(getContext().getResources().getColor(R.color.White, null),
+                0, GradientDrawable.RECTANGLE, 30, 0));
 
         setNavViewItems();
         setFriendsCntTv();

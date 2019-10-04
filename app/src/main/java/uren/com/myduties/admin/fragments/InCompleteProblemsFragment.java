@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -50,6 +51,12 @@ public class InCompleteProblemsFragment extends BaseFragment {
 
     @BindView(R.id.rv_feed)
     RecyclerView recyclerView;
+    @BindView(R.id.commonToolbarbackImgv)
+    ClickableImageView commonToolbarbackImgv;
+    @BindView(R.id.toolbarTitleTv)
+    AppCompatTextView toolbarTitleTv;
+
+
     User user;
 
     public InCompleteProblemsFragment(){
@@ -74,11 +81,26 @@ public class InCompleteProblemsFragment extends BaseFragment {
         if (mView == null) {
             mView = inflater.inflate(R.layout.fragment_problems, container, false);
             ButterKnife.bind(this, mView);
+            initVariables();
             initRecyclerView();
+            setListeners();
             startGetPosts();
         }
 
         return mView;
+    }
+
+    private void initVariables() {
+        toolbarTitleTv.setText(getContext().getResources().getString(R.string.viewUncompletedProblems));
+    }
+
+    private void setListeners() {
+        commonToolbarbackImgv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Objects.requireNonNull(getActivity()).onBackPressed();
+            }
+        });
     }
 
     private void initRecyclerView() {

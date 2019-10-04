@@ -80,8 +80,8 @@ public class RegisterActivity extends AppCompatActivity
 
         init();
         setShapes();
-        BitmapConversion.setBlurBitmap(RegisterActivity.this, registerLayout,
-                R.drawable.login_background, 0.2f, 20.5f, null);
+        //BitmapConversion.setBlurBitmap(RegisterActivity.this, registerLayout,
+        //        R.drawable.login_background, 0.2f, 20.5f, null);
     }
 
     public void setShapes(){

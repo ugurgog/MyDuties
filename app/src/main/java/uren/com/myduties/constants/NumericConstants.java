@@ -65,8 +65,6 @@ public class NumericConstants {
     //FEED Exceptions
     public static final int VIEW_RETRY = 0;
     public static final int VIEW_NO_POST_FOUND = 1;
-    public static final int VIEW_LOCATION_SERVICE_ERROR = 2;
-    public static final int VIEW_LOCATION_PERMISSION = 3;
     public static final int VIEW_SERVER_ERROR = 4;
 
     //Orientation constants

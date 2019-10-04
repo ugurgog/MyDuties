@@ -71,12 +71,8 @@ public class WaitingTaskFragment extends BaseFragment {
     RelativeLayout mainExceptionLayout;
     @BindView(R.id.noPostFoundLayout)
     LinearLayout noPostFoundLayout;
-    @BindView(R.id.retryLayout)
-    LinearLayout retryLayout;
     @BindView(R.id.serverError)
     LinearLayout serverError;
-    @BindView(R.id.imgRetry)
-    ClickableImageView imgRetry;
 
     private boolean loading = true;
     private List<Task> taskList = new ArrayList<>();
@@ -133,7 +129,8 @@ public class WaitingTaskFragment extends BaseFragment {
             public void OnReturn(Object object) {
                 List<Task> returnList = (ArrayList<Task>) object;
                 if (returnList != null && returnList.size() == 0)
-                    showExceptionLayout(true, VIEW_NO_POST_FOUND);
+                    CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
+                            getResources().getString(R.string.emptyFeed));
             }
         });
     }
@@ -185,10 +182,12 @@ public class WaitingTaskFragment extends BaseFragment {
                 if (taskList.size() > 0) {
                     CommonUtils.showToastShort(getContext(),
                             Objects.requireNonNull(getContext()).getResources().getString(R.string.serverError));
-                    showExceptionLayout(false, -1);
+                    CommonUtils.showExceptionLayout(false, -1, refresh_layout, loadingView, mainExceptionLayout,
+                            null);
 
                 } else {
-                    showExceptionLayout(true, VIEW_SERVER_ERROR);
+                    CommonUtils.showExceptionLayout(true, VIEW_SERVER_ERROR, refresh_layout, loadingView, mainExceptionLayout,
+                            null);
                 }
             }
         });
@@ -203,13 +202,16 @@ public class WaitingTaskFragment extends BaseFragment {
 
         if (taskList != null) {
             if (taskList.size() == 0) {
-                showExceptionLayout(true, VIEW_NO_POST_FOUND);
+                CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
+                        getResources().getString(R.string.emptyFeed));
             } else {
-                showExceptionLayout(false, -1);
+                CommonUtils.showExceptionLayout(false, -1, refresh_layout, loadingView, mainExceptionLayout,
+                        null);
             }
             setUpRecyclerView(taskList);
-        }else
-            showExceptionLayout(true, VIEW_NO_POST_FOUND);
+        } else
+            CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
+                    getResources().getString(R.string.emptyFeed));
 
         refresh_layout.setRefreshing(false);
     }
@@ -228,34 +230,6 @@ public class WaitingTaskFragment extends BaseFragment {
 
     public void scrollRecViewInitPosition() {
         mLayoutManager.smoothScrollToPosition(recyclerView, null, 0);
-    }
-
-
-    /**********************************************/
-    private void showExceptionLayout(boolean showException, int viewType) {
-
-        if (showException) {
-
-            refresh_layout.setRefreshing(false);
-            loadingView.hide();
-            mainExceptionLayout.setVisibility(View.VISIBLE);
-            retryLayout.setVisibility(View.GONE);
-            noPostFoundLayout.setVisibility(View.GONE);
-            serverError.setVisibility(View.GONE);
-
-            if (viewType == VIEW_RETRY) {
-                if (getContext() != null)
-                    imgRetry.setColorFilter(ContextCompat.getColor(getContext(), R.color.tintColor), android.graphics.PorterDuff.Mode.SRC_IN);
-                retryLayout.setVisibility(View.VISIBLE);
-            } else if (viewType == VIEW_NO_POST_FOUND) {
-                noPostFoundLayout.setVisibility(View.VISIBLE);
-            } else if (viewType == VIEW_SERVER_ERROR) {
-                serverError.setVisibility(View.VISIBLE);
-            }
-
-        } else {
-            mainExceptionLayout.setVisibility(View.GONE);
-        }
     }
 
     public WaitingTaskAdapter getAdapter() {

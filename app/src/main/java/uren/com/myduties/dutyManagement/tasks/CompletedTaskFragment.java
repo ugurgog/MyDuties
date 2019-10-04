@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -66,14 +67,10 @@ public class CompletedTaskFragment extends BaseFragment {
     RelativeLayout mainExceptionLayout;
     @BindView(R.id.noPostFoundLayout)
     LinearLayout noPostFoundLayout;
-    @BindView(R.id.retryLayout)
-    LinearLayout retryLayout;
     @BindView(R.id.serverError)
     LinearLayout serverError;
-    @BindView(R.id.imgRetry)
-    ClickableImageView imgRetry;
     @BindView(R.id.txtNoItemFound)
-    TextView txtNoItemFound;
+    AppCompatTextView txtNoItemFound;
 
     private int limitValue;
     private boolean loading = true;
@@ -141,7 +138,8 @@ public class CompletedTaskFragment extends BaseFragment {
             public void OnReturn(Object object) {
                 List<Task> returnList = (ArrayList<Task>) object;
                 if (returnList != null && returnList.size() == 0 )
-                    showExceptionLayout(true, VIEW_NO_POST_FOUND);
+                    CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
+                            getResources().getString(R.string.there_is_no_completed_task));
             }
         });
     }
@@ -193,9 +191,11 @@ public class CompletedTaskFragment extends BaseFragment {
                 if (taskList.size() > 0) {
                     CommonUtils.showToastShort(getContext(),
                             Objects.requireNonNull(getContext()).getResources().getString(R.string.serverError));
-                    showExceptionLayout(false, -1);
+                    CommonUtils.showExceptionLayout(false, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
+                            getResources().getString(R.string.there_is_no_completed_task));
                 } else {
-                    showExceptionLayout(true, VIEW_SERVER_ERROR);
+                    CommonUtils.showExceptionLayout(true, VIEW_SERVER_ERROR, refresh_layout, loadingView, mainExceptionLayout,
+                            getResources().getString(R.string.there_is_no_completed_task));
                 }
             }
         });
@@ -210,9 +210,11 @@ public class CompletedTaskFragment extends BaseFragment {
 
         if (taskList != null) {
             if (taskList.size() == 0 ) {
-                showExceptionLayout(true, VIEW_NO_POST_FOUND);
+                CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
+                        getResources().getString(R.string.there_is_no_completed_task));
             } else {
-                showExceptionLayout(false, -1);
+                CommonUtils.showExceptionLayout(false, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
+                        getResources().getString(R.string.there_is_no_completed_task));
             }
             setUpRecyclerView(taskList);
         }
@@ -235,34 +237,5 @@ public class CompletedTaskFragment extends BaseFragment {
 
     public void scrollRecViewInitPosition() {
         mLayoutManager.smoothScrollToPosition(recyclerView, null, 0);
-    }
-
-
-    /**********************************************/
-    private void showExceptionLayout(boolean showException, int viewType) {
-
-        if (showException) {
-
-            refresh_layout.setRefreshing(false);
-            loadingView.hide();
-            mainExceptionLayout.setVisibility(View.VISIBLE);
-            retryLayout.setVisibility(View.GONE);
-            noPostFoundLayout.setVisibility(View.GONE);
-            serverError.setVisibility(View.GONE);
-
-            if (viewType == VIEW_RETRY) {
-                if (getContext() != null)
-                    imgRetry.setColorFilter(ContextCompat.getColor(getContext(), R.color.tintColor), android.graphics.PorterDuff.Mode.SRC_IN);
-                retryLayout.setVisibility(View.VISIBLE);
-            } else if (viewType == VIEW_NO_POST_FOUND) {
-                noPostFoundLayout.setVisibility(View.VISIBLE);
-                txtNoItemFound.setText(getResources().getString(R.string.there_is_no_completed_task));
-            }  else if (viewType == VIEW_SERVER_ERROR) {
-                serverError.setVisibility(View.VISIBLE);
-            }
-
-        } else {
-            mainExceptionLayout.setVisibility(View.GONE);
-        }
     }
 }

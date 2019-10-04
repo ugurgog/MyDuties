@@ -124,9 +124,9 @@ public class UserDBHelper {
         if (user.getGroupIdList() != null) {
             Map<String, Object> groupMap = new HashMap<>();
 
-            user.getGroupIdList().forEach(groupId -> {
+            for(String groupId : user.getGroupIdList())
                 groupMap.put(groupId, " ");
-            });
+
             values.put(fb_child_groups, groupMap);
         }
 

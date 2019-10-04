@@ -105,7 +105,7 @@ public class FriendGridListAdapter extends RecyclerView.Adapter<FriendGridListAd
             setProfileName();
             UserDataUtil.setProfilePicture(context, selectedFriend.getProfilePhotoUrl(),
                     selectedFriend.getName(), selectedFriend.getUsername(),
-                    shortUserNameTv, specialProfileImgView, false);
+                    shortUserNameTv, specialProfileImgView, true);
         }
 
         public void setProfileName() {

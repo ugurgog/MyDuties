@@ -40,7 +40,6 @@ public class ForgetPasswordActivity extends AppCompatActivity implements View.On
     RelativeLayout forgetPasswordLayout;
     EditText emailET;
     Button btnSendLink;
-    ImageView lockImgv;
 
     String userEmail;
     ProgressDialog progressDialog;
@@ -56,10 +55,10 @@ public class ForgetPasswordActivity extends AppCompatActivity implements View.On
     }
 
     private void setShapes() {
-        lockImgv.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.transparentBlack, null),
-                0, GradientDrawable.OVAL, 50, 0));
-        emailET.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.White, null),
-                0, GradientDrawable.RECTANGLE, 20, 0));
+     /*   lockImgv.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.transparentBlack, null),
+                0, GradientDrawable.OVAL, 50, 0));*/
+        emailET.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.transparent, null),
+                getResources().getColor(R.color.White, null), GradientDrawable.RECTANGLE, 20, 4));
         btnSendLink.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.colorPrimary, null),
                 getResources().getColor(R.color.White, null), GradientDrawable.RECTANGLE, 20, 3));
     }
@@ -68,7 +67,7 @@ public class ForgetPasswordActivity extends AppCompatActivity implements View.On
         emailET = findViewById(R.id.input_email);
         btnSendLink = findViewById(R.id.btnSendLink);
         forgetPasswordLayout = findViewById(R.id.forgetPasswordLayout);
-        lockImgv = findViewById(R.id.lockImgv);
+        //lockImgv = findViewById(R.id.lockImgv);
         forgetPasswordLayout.setOnClickListener(this);
         emailET.setOnClickListener(this);
         btnSendLink.setOnClickListener(this);

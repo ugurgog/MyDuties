@@ -27,6 +27,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import uren.com.myduties.R;
+import uren.com.myduties.common.ShowSelectedPhotoFragment;
+import uren.com.myduties.dbManagement.GroupTaskDBHelper;
 import uren.com.myduties.dbManagement.UserTaskDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.evetBusModels.TaskTypeBus;
@@ -62,6 +64,7 @@ public class AssignedToUsersAdapter extends RecyclerView.Adapter {
     public void taskTypeReceived(TaskTypeBus taskTypeBus) {
         taskTypeHelper = taskTypeBus.getTypeMap();
     }
+
     @Subscribe(sticky = true)
     public void userReceived(UserBus userBus) {
         accountHolderUser = userBus.getUser();
@@ -179,11 +182,78 @@ public class AssignedToUsersAdapter extends RecyclerView.Adapter {
                                     NotificationHandler.sendUserNotification(mContext, task.getAssignedFrom(), task.getAssignedTo(),
                                             mContext.getResources().getString(R.string.letsRememberThisTask), task.getTaskDesc());
                                     break;
+
+                                case R.id.makeUrgent:
+                                    if (task.isUrgency()) {
+                                        CommonUtils.showToastShort(mContext, mContext.getResources().getString(R.string.taskIsUrgentAlready));
+                                        break;
+                                    }
+
+                                    if (task.isClosed()) {
+                                        CommonUtils.showToastShort(mContext, mContext.getResources().getString(R.string.closedTaskNotMarkedUrgent));
+                                        break;
+                                    }
+
+                                    task.setUrgency(true);
+                                    updateUserTask();
+                                    break;
+
+                                case R.id.delete:
+                                    if (!task.isClosed()) {
+                                        CommonUtils.showToastShort(mContext, mContext.getResources().getString(R.string.openTasksCouldNotBeDeleted));
+                                        break;
+                                    }
+
+                                    UserTaskDBHelper.deleteUserTask(accountHolderUser.getUserid(),
+                                            task.getAssignedTo().getUserid(), task.getTaskId(), new OnCompleteCallback() {
+                                        @Override
+                                        public void OnCompleted() {
+                                            taskList.remove(position);
+                                            notifyItemRemoved(position);
+                                            notifyItemRangeChanged(position, getItemCount());
+                                        }
+
+                                        @Override
+                                        public void OnFailed(String message) {
+                                            CommonUtils.showToastShort(mContext, message);
+                                        }
+                                    });
+
+                                    break;
+
                             }
                             return false;
                         }
                     });
                     popupMenu.show();
+                }
+            });
+
+            imgAssignedToPic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (task.getAssignedTo() != null && task.getAssignedTo().getProfilePhotoUrl() != null &&
+                            !task.getAssignedTo().getProfilePhotoUrl().isEmpty()) {
+                        fragmentNavigation.pushFragment(new ShowSelectedPhotoFragment(task.getAssignedTo().getProfilePhotoUrl()));
+                    }
+                }
+            });
+        }
+
+        private void updateUserTask() {
+            UserTaskDBHelper.updateUserTask(task, false, new OnCompleteCallback() {
+                @Override
+                public void OnCompleted() {
+                    taskList.set(position, task);
+                    notifyItemChanged(position);
+                    NotificationHandler.sendUserNotification(mContext, task.getAssignedFrom(), task.getAssignedTo(),
+                            UserDataUtil.getNameOrUsernameFromUser(task.getAssignedFrom()) + " " + mContext.getResources().getString(R.string.markedThisTaskUrgent),
+                            task.getTaskDesc());
+                }
+
+                @Override
+                public void OnFailed(String message) {
+                    CommonUtils.showToastShort(mContext, message);
                 }
             });
         }
@@ -206,7 +276,7 @@ public class AssignedToUsersAdapter extends RecyclerView.Adapter {
         private void setAssignedToValues() {
             User assignedTo = task.getAssignedTo();
             UserDataUtil.setProfilePicture(mContext, assignedTo.getProfilePhotoUrl(), assignedTo.getName(), assignedTo.getUsername()
-                    , txtAssignedToPic, imgAssignedToPic, false);
+                    , txtAssignedToPic, imgAssignedToPic, true);
             txtAssignedToName.setText(UserDataUtil.getNameOrUsername(assignedTo.getName(), assignedTo.getUsername()));
         }
 

@@ -4,7 +4,8 @@
     android:id="@+id/registerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".login.RegisterActivity">
+    tools:context=".login.RegisterActivity"
+    android:background="@drawable/login_background2">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,7 +13,8 @@
         android:orientation="vertical">
 
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
+            android:fontFamily="@font/amiko"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

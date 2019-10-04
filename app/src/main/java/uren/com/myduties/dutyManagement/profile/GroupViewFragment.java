@@ -3,6 +3,7 @@ package uren.com.myduties.dutyManagement.profile;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -25,10 +26,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import uren.com.myduties.R;
+import uren.com.myduties.dbManagement.FriendsDBHelper;
 import uren.com.myduties.dbManagement.GroupDBHelper;
+import uren.com.myduties.dbManagement.UserDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.dutyManagement.NextActivity;
 import uren.com.myduties.dutyManagement.profile.adapters.GroupViewAdapter;
@@ -39,8 +44,10 @@ import uren.com.myduties.models.Group;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.CommonUtils;
 
+import static uren.com.myduties.constants.NumericConstants.VIEW_NO_POST_FOUND;
 import static uren.com.myduties.constants.StringConstants.ANIMATE_LEFT_TO_RIGHT;
 import static uren.com.myduties.constants.StringConstants.ANIMATE_RIGHT_TO_LEFT;
+import static uren.com.myduties.constants.StringConstants.fb_child_status_friend;
 
 public class GroupViewFragment extends BaseFragment {
 
@@ -59,10 +66,13 @@ public class GroupViewFragment extends BaseFragment {
 
     @BindView(R.id.searchEdittext)
     EditText searchEdittext;
-    @BindView(R.id.searchResultTv)
-    AppCompatTextView searchResultTv;
     @BindView(R.id.nextFab)
     FloatingActionButton nextFab;
+
+    @BindView(R.id.warningMsgLayout)
+    LinearLayout warningMsgLayout;
+    @BindView(R.id.warningMsgTv)
+    AppCompatTextView warningMsgTv;
 
     private Group selectedGroupItem;
     private ReturnCallback returnCallback;
@@ -188,12 +198,13 @@ public class GroupViewFragment extends BaseFragment {
                     int itemSize = (int) object;
 
                     if (!groupName.isEmpty()) {
-                        if (itemSize == 0)
-                            searchResultTv.setVisibility(View.VISIBLE);
-                        else
-                            searchResultTv.setVisibility(View.GONE);
+                        if (itemSize == 0) {
+                            warningMsgLayout.setVisibility(View.VISIBLE);
+                            warningMsgTv.setText(Objects.requireNonNull(getActivity()).getResources().getString(R.string.THERE_IS_NO_SEARCH_RESULT));
+                        }else
+                            warningMsgLayout.setVisibility(View.GONE);
                     } else
-                        searchResultTv.setVisibility(View.GONE);
+                        warningMsgLayout.setVisibility(View.GONE);
                 }
             });
     }
@@ -212,9 +223,19 @@ public class GroupViewFragment extends BaseFragment {
 
             @Override
             public void onFailed(String message) {
+                progressBar.setVisibility(View.GONE);
                 CommonUtils.showToastShort(getContext(), message);
             }
         });
+
+        new Handler().postDelayed(() -> {
+            if(groupViewAdapter.getItemCount() == 0){
+                progressBar.setVisibility(View.GONE);
+                warningMsgLayout.setVisibility(View.VISIBLE);
+                warningMsgTv.setText(Objects.requireNonNull(getActivity()).getResources().getString(R.string.THERE_IS_NO_GROUP_CREATE_OR_INCLUDE));
+            }else
+                warningMsgLayout.setVisibility(View.GONE);
+        }, 3000);
     }
 
     private void setGroupsListAdapter() {
@@ -232,7 +253,22 @@ public class GroupViewFragment extends BaseFragment {
     }
 
     public void addNewGroup() {
-        startSelectFriendFragment();
+        FriendsDBHelper.getFriendCountByStatus(accountHolder.getUserid(), fb_child_status_friend, new CompleteCallback() {
+            @Override
+            public void onComplete(Object object) {
+                int count = (int) object;
+
+                if(count == 0)
+                    CommonUtils.showToastShort(getContext(), getContext().getResources().getString(R.string.addFriendFirst));
+                else
+                    startSelectFriendFragment();
+            }
+
+            @Override
+            public void onFailed(String message) {
+                CommonUtils.showToastShort(getContext(), message);
+            }
+        });
     }
 
     private void startSelectFriendFragment() {

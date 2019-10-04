@@ -40,7 +40,7 @@ public class PhoneNumberFormatUtil {
 
         if (locale.equals("TR")) {
 
-            contactList.forEach(contact -> {
+            for(Contact contact: contactList){
                 if (contact != null && contact.getPhoneNumber() != null && !contact.getPhoneNumber().isEmpty()) {
 
                     try {
@@ -55,7 +55,7 @@ public class PhoneNumberFormatUtil {
                         e.printStackTrace();
                     }
                 }
-            });
+            }
         }
         completeCallback.onComplete(reformedContactList);
     }

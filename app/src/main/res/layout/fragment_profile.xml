@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_gravity="top"
-                android:background="@color/DodgerBlue"
+                android:background="@drawable/login_background"
                 android:minHeight="?attr/actionBarSize"
                 app:elevation="@dimen/default_elevation"
                 app:layout_collapseMode="pin"
@@ -143,7 +143,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="220dp"
                         android:layout_gravity="center"
-                        android:background="@color/DodgerBlue"
+                        android:background="@drawable/login_background"
                         android:clipChildren="false"
                         android:orientation="vertical"
                         android:padding="10dp">
@@ -198,127 +198,175 @@
                     </LinearLayout>
 
                     <RelativeLayout
-                        android:id="@+id/llFollowInfo"
+                        android:id="@+id/rlOut"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="-35dp"
-                        android:background="@color/white"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="15dp"
                         android:layout_marginRight="30dp"
-                        android:layout_marginLeft="30dp">
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="-40dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:padding="7dp"
+                        android:background="@color/white">
 
-                        <LinearLayout
+                        <RelativeLayout
+                            android:id="@+id/llFollowInfo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center"
-                            android:layout_marginRight="15dp"
-                            android:layout_marginLeft="15dp">
+                            android:layout_gravity="center"
+                            android:background="@color/white"
+                            android:orientation="vertical"
+                            android:padding="15dp">
 
-                            <!-- Friends -->
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:id="@+id/friendsLayout">
+                                android:orientation="horizontal"
+                                android:gravity="center"
+                                android:layout_marginRight="15dp"
+                                android:layout_marginLeft="15dp">
 
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:fontFamily="@font/amiko"
+                                <!-- Friends -->
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:text="@string/friends"
-                                    android:textColor="@color/Gray"
-                                    android:textSize="13sp" />
+                                    android:orientation="vertical"
+                                    android:id="@+id/friendsLayout">
 
 
-                                <TextView
-                                    android:id="@+id/friendsCntTv"
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:fontFamily="@font/amiko"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:text="@string/friends"
+                                        android:textColor="@color/Gray"
+                                        android:textSize="13sp" />
+
+
+                                    <RelativeLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center">
+
+                                        <TextView
+                                            android:id="@+id/friendsCntTv"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center"
+                                            android:textColor="@color/DodgerBlue"
+                                            android:textSize="15sp"
+                                            android:textStyle="bold" />
+
+                                        <ProgressBar
+                                            android:id="@+id/progressBar1"
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp">
+                                        </ProgressBar>
+
+                                    </RelativeLayout>
+
+
+                                </LinearLayout>
+
+                                <!-- Groups -->
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:textColor="@color/DodgerBlue"
-                                    android:layout_marginTop="5dp"
-                                    android:textSize="15sp"
-                                    android:textStyle="bold" />
+                                    android:orientation="vertical"
+                                    android:layout_marginStart="30dp"
+                                    android:id="@+id/groupsLayout">
 
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:fontFamily="@font/amiko"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:text="@string/groupsShareText"
+                                        android:textColor="@color/Gray"
+                                        android:textSize="13sp"
+                                        />
+
+                                    <RelativeLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center">
+
+                                        <TextView
+                                            android:id="@+id/groupsCntTv"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center"
+                                            android:textColor="@color/DodgerBlue"
+                                            android:textSize="15sp"
+                                            android:textStyle="bold" />
+
+                                        <ProgressBar
+                                            android:id="@+id/progressBar2"
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp">
+                                        </ProgressBar>
+
+                                    </RelativeLayout>
+
+                                </LinearLayout>
+
+                                <!-- Tasks -->
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_marginStart="30dp"
+                                    android:id="@+id/tasksLayout">
+
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:fontFamily="@font/amiko"
+                                        android:text="@string/tasksmyassignedDesc"
+                                        android:textColor="@color/Gray"
+                                        android:textSize="13sp" />
+
+                                    <RelativeLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center">
+
+                                        <TextView
+                                            android:id="@+id/tasksCntTv"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center"
+                                            android:textColor="@color/DodgerBlue"
+                                            android:textSize="15sp"
+                                            android:textStyle="bold" />
+
+                                        <ProgressBar
+                                            android:id="@+id/progressBar3"
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp">
+                                        </ProgressBar>
+
+                                    </RelativeLayout>
+
+                                </LinearLayout>
                             </LinearLayout>
 
-                            <!-- Groups -->
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:layout_marginStart="30dp"
-                                android:id="@+id/groupsLayout">
-
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:fontFamily="@font/amiko"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:text="@string/groupsShareText"
-                                    android:textColor="@color/Gray"
-                                    android:textSize="13sp"
-                                    />
-
-
-                                <TextView
-                                    android:id="@+id/groupsCntTv"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:textColor="@color/DodgerBlue"
-                                    android:textSize="15sp"
-                                    android:layout_marginTop="5dp"
-                                    android:textStyle="bold" />
-
-                            </LinearLayout>
-
-                            <!-- Tasks -->
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:layout_marginStart="30dp"
-                                android:id="@+id/tasksLayout">
-
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:fontFamily="@font/amiko"
-                                    android:text="@string/tasksmyassignedDesc"
-                                    android:textColor="@color/Gray"
-                                    android:textSize="13sp" />
-
-                                <TextView
-                                    android:id="@+id/tasksCntTv"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:layout_marginTop="5dp"
-                                    android:textColor="@color/DodgerBlue"
-                                    android:textSize="15sp"
-                                    android:textStyle="bold" />
-
-                            </LinearLayout>
-                        </LinearLayout>
 
 
 
 
+                        </RelativeLayout>
 
                     </RelativeLayout>
+
+
 
                 </LinearLayout>
 

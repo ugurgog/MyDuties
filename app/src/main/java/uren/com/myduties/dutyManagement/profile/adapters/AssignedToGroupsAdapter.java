@@ -157,11 +157,15 @@ public class AssignedToGroupsAdapter extends RecyclerView.Adapter {
                                         break;
                                     }
                                     groupTask.setClosed(true);
-                                    updateGroup();
+                                    updateGroupTask();
 
                                     break;
 
                                 case R.id.remind:
+                                    if (groupTask.isClosed()) {
+                                        CommonUtils.showToastShort(mContext, mContext.getResources().getString(R.string.taskClosedNoRemind));
+                                        break;
+                                    }
                                     NotificationHandler.sendNotificationToGroupParticipants(mContext, accountholderUser, groupTask.getGroup(),
                                             mContext.getResources().getString(R.string.letsRememberThisTask), groupTask.getTaskDesc());
                                     break;
@@ -178,7 +182,7 @@ public class AssignedToGroupsAdapter extends RecyclerView.Adapter {
                                     }
 
                                     groupTask.setUrgency(true);
-                                    updateGroup();
+                                    updateGroupTask();
                                     break;
 
                                 case R.id.delete:
@@ -212,7 +216,7 @@ public class AssignedToGroupsAdapter extends RecyclerView.Adapter {
             });
         }
 
-        private void updateGroup() {
+        private void updateGroupTask() {
             GroupTaskDBHelper.updateGroupTask(groupTask, false, new OnCompleteCallback() {
                 @Override
                 public void OnCompleted() {

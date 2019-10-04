@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/loginLayout">
+    android:id="@+id/loginLayout"
+    android:background="@drawable/login_background2">
 
 
     <LinearLayout
@@ -20,7 +21,8 @@
             android:layout_weight="1.5"
             android:gravity="bottom">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
+                android:fontFamily="@font/amiko"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="bottom"
@@ -79,7 +81,13 @@
                 android:layout_height="wrap_content"
                 android:text="@string/rememberMe"
                 android:textColor="@color/White"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textColorHint="@color/white"
+                android:outlineAmbientShadowColor="@color/white"
+                android:outlineSpotShadowColor="@color/white"
+                android:shadowColor="@color/white"
+                android:textColorHighlight="@color/white"
+                android:textColorLink="@color/white"/>
 
             <Button
                 android:id="@+id/btnLogin"
@@ -122,7 +130,8 @@
                 android:textColor="@color/White"
                 android:visibility="gone"/>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
+                android:fontFamily="@font/amiko"
                 android:id="@+id/btnForgetPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -137,7 +146,8 @@
                 android:text="|"
                 android:textStyle="bold" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
+                android:fontFamily="@font/amiko"
                 android:id="@+id/btnRegister"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

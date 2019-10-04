@@ -40,6 +40,7 @@ import uren.com.myduties.models.Group;
 import uren.com.myduties.models.GroupTask;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.ClickableImage.ClickableImageView;
+import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.layoutManager.CustomLinearLayoutManager;
 
 import static uren.com.myduties.constants.NumericConstants.VIEW_NO_POST_FOUND;
@@ -66,14 +67,10 @@ public class GroupAllTasksFragment extends BaseFragment {
     RelativeLayout mainExceptionLayout;
     @BindView(R.id.noPostFoundLayout)
     LinearLayout noPostFoundLayout;
-    @BindView(R.id.retryLayout)
-    LinearLayout retryLayout;
     @BindView(R.id.serverError)
     LinearLayout serverError;
-    @BindView(R.id.imgRetry)
-    ClickableImageView imgRetry;
     @BindView(R.id.txtNoItemFound)
-    TextView txtNoItemFound;
+    AppCompatTextView txtNoItemFound;
 
     //toolbar items
     @BindView(R.id.toolbar)
@@ -170,7 +167,8 @@ public class GroupAllTasksFragment extends BaseFragment {
         refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                showExceptionLayout(true, VIEW_NO_POST_FOUND);
+                CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
+                        getResources().getString(R.string.there_is_no_group_task));
                 refreshFeed();
             }
         });
@@ -210,7 +208,8 @@ public class GroupAllTasksFragment extends BaseFragment {
             public void onFailed(String message) {
                 loadingView.hide();
                 refresh_layout.setRefreshing(false);
-                showExceptionLayout(true, VIEW_SERVER_ERROR);
+                CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
+                        getResources().getString(R.string.there_is_no_group_task));
             }
         });
     }
@@ -234,34 +233,6 @@ public class GroupAllTasksFragment extends BaseFragment {
             pulledToRefresh = false;
         } else {
             groupAllTasksAdapter.addAll(groupTaskList);
-        }
-    }
-
-    /**********************************************/
-    private void showExceptionLayout(boolean showException, int viewType) {
-
-        if (showException) {
-
-            refresh_layout.setRefreshing(false);
-            loadingView.hide();
-            mainExceptionLayout.setVisibility(View.VISIBLE);
-            retryLayout.setVisibility(View.GONE);
-            noPostFoundLayout.setVisibility(View.GONE);
-            serverError.setVisibility(View.GONE);
-
-            if (viewType == VIEW_RETRY) {
-                if (getContext() != null)
-                    imgRetry.setColorFilter(ContextCompat.getColor(getContext(), R.color.tintColor), android.graphics.PorterDuff.Mode.SRC_IN);
-                retryLayout.setVisibility(View.VISIBLE);
-            } else if (viewType == VIEW_NO_POST_FOUND) {
-                noPostFoundLayout.setVisibility(View.VISIBLE);
-                txtNoItemFound.setText(getResources().getString(R.string.there_is_no_completed_task));
-            } else if (viewType == VIEW_SERVER_ERROR) {
-                serverError.setVisibility(View.VISIBLE);
-            }
-
-        } else {
-            mainExceptionLayout.setVisibility(View.GONE);
         }
     }
 }

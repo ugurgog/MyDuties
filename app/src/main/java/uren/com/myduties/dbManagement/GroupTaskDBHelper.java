@@ -464,6 +464,7 @@ public class GroupTaskDBHelper {
                                     public void onComplete(Object object) {
                                         GroupTask groupTask = (GroupTask) object;
                                         groupTask.setGroup(group);
+                                        groupTask.setAssignedFrom(assignedFrom);
 
                                         if (groupTask.getWhoCompleted() != null && groupTask.getWhoCompleted().getUserid() != null &&
                                                 !groupTask.getWhoCompleted().getUserid().isEmpty()) {
