@@ -13,12 +13,12 @@ public class ExifUtil {
         ExifInterface ei;
         Bitmap rotatedBitmap;
 
-        if (bitmap == null)
+        if (bitmap == null || photoPath == null)
             return null;
 
         try {
             ei = new ExifInterface(photoPath);
-        } catch (IOException e) {
+        } catch (Exception e) {
             return null;
         }
 

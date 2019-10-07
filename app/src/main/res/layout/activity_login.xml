@@ -28,7 +28,7 @@
                 android:gravity="bottom"
                 android:text="@string/app_name"
                 android:textColor="@color/White"
-                android:textSize="50sp" />
+                android:textSize="35sp" />
 
 
         </LinearLayout>

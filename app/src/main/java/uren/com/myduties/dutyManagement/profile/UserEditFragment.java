@@ -163,7 +163,7 @@ public class UserEditFragment extends BaseFragment
     }
 
     @Subscribe(sticky = true)
-    public void accountHolderUserReceived(UserBus userBus){
+    public void accountHolderUserReceived(UserBus userBus) {
         user = userBus.getUser();
     }
 
@@ -183,7 +183,7 @@ public class UserEditFragment extends BaseFragment
             }
             if (user.getPhone() != null) {
                 if (user.getPhone().getDialCode() != null && !user.getPhone().getDialCode().isEmpty() &&
-                        user.getPhone().getPhoneNumber() != 0 )
+                        user.getPhone().getPhoneNumber() != 0)
                     edtPhone.setText(user.getPhone().getDialCode() + user.getPhone().getPhoneNumber());
             }
 
@@ -300,7 +300,7 @@ public class UserEditFragment extends BaseFragment
     private void updateOperation() {
 
         progressDialogUtil.dialogShow();
-        if(profilPicChanged) {
+        if (profilPicChanged) {
             UserPhotoDBHelper.uploadUserPhoto(getContext(), user.getUserid(), photoSelectUtil, new CompleteCallback() {
                 @Override
                 public void onComplete(Object object) {
@@ -315,12 +315,12 @@ public class UserEditFragment extends BaseFragment
                     progressDialogUtil.dialogDismiss();
                 }
             });
-        }else {
+        } else {
             updateUserPersonalInfo();
         }
     }
 
-    private void updateUserPersonalInfo(){
+    private void updateUserPersonalInfo() {
         UserDBHelper.updateUser(user, true, new OnCompleteCallback() {
             @Override
             public void OnCompleted() {
@@ -360,13 +360,9 @@ public class UserEditFragment extends BaseFragment
     }
 
     private void getGalleryPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (!permissionModule.checkWriteExternalStoragePermission())
-                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PermissionModule.PERMISSION_WRITE_EXTERNAL_STORAGE);
-            else
-                startActivityForResult(Intent.createChooser(IntentSelectUtil.getGalleryIntent(),
-                        getResources().getString(R.string.selectPicture)), ACTIVITY_REQUEST_CODE_OPEN_GALLERY);
-        } else
+        if (!permissionModule.checkWriteExternalStoragePermission())
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PermissionModule.PERMISSION_WRITE_EXTERNAL_STORAGE);
+        else
             startActivityForResult(Intent.createChooser(IntentSelectUtil.getGalleryIntent(),
                     getResources().getString(R.string.selectPicture)), ACTIVITY_REQUEST_CODE_OPEN_GALLERY);
     }

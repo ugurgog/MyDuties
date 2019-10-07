@@ -152,6 +152,7 @@ public class FriendsAdapter extends RecyclerView.Adapter implements Filterable {
                     .setPositiveBtnBackground(mContext.getResources().getColor(R.color.bg_screen1, null))
                     .setDurationTime(0)
                     .isCancellable(true)
+                    .setEditTextVisibility(View.GONE)
                     .OnPositiveClicked(new CustomDialogListener() {
                         @Override
                         public void OnClick() {
@@ -179,6 +180,7 @@ public class FriendsAdapter extends RecyclerView.Adapter implements Filterable {
                     .setPositiveBtnBackground(mContext.getResources().getColor(R.color.bg_screen1, null))
                     .setDurationTime(0)
                     .isCancellable(true)
+                    .setEditTextVisibility(View.GONE)
                     .OnPositiveClicked(new CustomDialogListener() {
                         @Override
                         public void OnClick() {

@@ -20,6 +20,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.crashlytics.android.core.UserMetaData;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.greenrobot.eventbus.EventBus;
@@ -318,9 +319,7 @@ public class AssignTaskFragment extends BaseFragment {
 
     public void setSelectedUserViews(User user) {
         if (user != null) {
-            if (user.getName() != null && !user.getName().isEmpty()) {
-                UserDataUtil.setName(user.getName(), selectedNameTv);
-            }
+            UserDataUtil.setNameOrUserName(user.getName(), user.getUsername(), selectedNameTv);
             UserDataUtil.setProfilePicture(getContext(), user.getProfilePhotoUrl(), user.getName(),
                     user.getUsername(), selectedShortNameTv, selectedPicImgView, false);
             fillUserSelectImgv();

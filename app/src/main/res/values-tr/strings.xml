@@ -248,6 +248,7 @@
     <string name="acceptReq">Kabul Et</string>
     <string name="friend">Arkadaş</string>
 
+    <string name="typeToAddText">Bir şeyler yaz…</string>
     <string name="phoneNotDefined">Telefon bilgisi henüz tanımlanmadı.</string>
     <string name="thisTaskAssignedTo">Bu görev şu kişiye atandı</string>
     <string name="defaultHomeSelected">Görev tipi varsayılan Ev\'dir. Değiştirmek için resme tıklayın.</string>
@@ -259,6 +260,7 @@
     <string name="closed">Kapalı</string>
     <string name="taskIsClosedAlready">Bu görev zaten kapatılmış.</string>
     <string name="markAsUrgent">Acil yap</string>
+    <string name="editTaskText">Açıklamayı Düzenle</string>
     <string name="taskIsUrgentAlready">Bu görev zaten acil.</string>
     <string name="closedTaskNotMarkedUrgent">Kapalı görevler acil işaretlenemez.</string>
     <string name="openTasksCouldNotBeDeleted">Kapanmayan görevler silinemez.</string>
@@ -275,6 +277,8 @@
     <string name="there_is_no_task_I_assigned_to_groups">Henüz gruplara atadığım bir görev bulunmuyor.</string>
     <string name="addFriendFirst">Grup oluşturmak için önce arkadaş edinmelisiniz!</string>
     <string name="THERE_IS_NO_GROUP_CREATE_OR_INCLUDE">Oluşturduğunuz veya dahil olduğunuz bir grup bulunmamaktadır</string>
+    <string name="sureToChangeTaskText">Görev açıklamasını değiştirmek istediğinize emin misiniz?</string>
+    <string name="closedTaskNotEdited">Kapalı görevler için bu işlem yapılamaz.</string>
 
     <string name="assignedTaskToYou">size bir görev atadı</string>
     <string name="assignedTaskTo">bu gruba bir görev atadı</string>

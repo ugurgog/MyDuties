@@ -52,7 +52,6 @@
     <string name="secondShort">sec</string>
     <string name="searchGroup">Search Group</string>
     <string name="searchContact">Search Contact</string>
-    <string name="taskClosedNoRemind"></string>
 
     <string name="writetaskdesc">Write something…</string>
     <string name="UPDATING">Updating…</string>
@@ -255,6 +254,7 @@
     <string name="acceptReq">Accept</string>
     <string name="friend">Friend</string>
 
+    <string name="typeToAddText">Say something…</string>
     <string name="phoneNotDefined">Phone info is not yet defined.</string>
     <string name="thisTaskAssignedTo">This task assigned to</string>
     <string name="defaultHomeSelected">The task type is default home. Click the picture to change it.</string>
@@ -266,6 +266,7 @@
     <string name="closed">Closed</string>
     <string name="taskIsClosedAlready">This task is already closed.</string>
     <string name="markAsUrgent">Mark as urgent</string>
+    <string name="editTaskText">Edit Text</string>
     <string name="taskIsUrgentAlready">This task is already urgent.</string>
     <string name="closedTaskNotMarkedUrgent">Closed tasks cannot be marked urgently.</string>
     <string name="openTasksCouldNotBeDeleted">Tasks that are not closed cannot be deleted.</string>
@@ -282,6 +283,8 @@
     <string name="there_is_no_task_I_assigned_to_groups">I haven\'t yet assigned a task to groups.</string>
     <string name="addFriendFirst">To create a group, you must have at least one friend!</string>
     <string name="THERE_IS_NO_GROUP_CREATE_OR_INCLUDE">There is no group you created or included</string>
+    <string name="sureToChangeTaskText">Are you sure you want to change the task description?</string>
+    <string name="closedTaskNotEdited">This cannot be done for closed tasks.</string>
 
     <string name="assignedTaskToYou">has assigned you a task</string>
     <string name="assignedTaskTo">has assigned a task</string>

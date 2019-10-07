@@ -171,6 +171,7 @@ public class GroupsListAdapter extends RecyclerView.Adapter<GroupsListAdapter.Us
                     .setPositiveBtnBackground(context.getResources().getColor(R.color.DodgerBlue, null))
                     .setDurationTime(0)
                     .isCancellable(true)
+                    .setEditTextVisibility(View.GONE)
                     .OnPositiveClicked(() -> exitFromGroup(accountholderUser.getUserid()))
                     .OnNegativeClicked(() -> {
 

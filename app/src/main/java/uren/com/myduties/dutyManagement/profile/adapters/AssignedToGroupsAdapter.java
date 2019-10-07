@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
@@ -38,6 +39,9 @@ import uren.com.myduties.utils.MyDutiesUtil;
 import uren.com.myduties.utils.TaskTypeHelper;
 import uren.com.myduties.utils.dataModelUtil.GroupDataUtil;
 import uren.com.myduties.utils.dataModelUtil.UserDataUtil;
+import uren.com.myduties.utils.dialogBoxUtil.CustomDialogBox;
+import uren.com.myduties.utils.dialogBoxUtil.Interfaces.CustomDialogListener;
+import uren.com.myduties.utils.dialogBoxUtil.Interfaces.CustomDialogReturnListener;
 
 public class AssignedToGroupsAdapter extends RecyclerView.Adapter {
 
@@ -104,6 +108,7 @@ public class AssignedToGroupsAdapter extends RecyclerView.Adapter {
         AppCompatTextView tvClosed;
         AppCompatTextView tvUrgency;
         AppCompatTextView tvWhoCompleted;
+        ProgressBar textProgressBar;
 
         AppCompatTextView txtAssignedToName;
         ImageView imgAssignedToPic;
@@ -133,6 +138,7 @@ public class AssignedToGroupsAdapter extends RecyclerView.Adapter {
             tvClosed = view.findViewById(R.id.tvClosed);
             tvUrgency = view.findViewById(R.id.tvUrgency);
             tvWhoCompleted = view.findViewById(R.id.tvWhoCompleted);
+            textProgressBar = view.findViewById(R.id.textProgressBar);
             setListeners();
             setPopupMenu();
         }
@@ -163,11 +169,52 @@ public class AssignedToGroupsAdapter extends RecyclerView.Adapter {
 
                                 case R.id.remind:
                                     if (groupTask.isClosed()) {
-                                        CommonUtils.showToastShort(mContext, mContext.getResources().getString(R.string.taskClosedNoRemind));
+                                        CommonUtils.showToastShort(mContext, mContext.getResources().getString(R.string.closedTaskNotEdited));
                                         break;
                                     }
                                     NotificationHandler.sendNotificationToGroupParticipants(mContext, accountholderUser, groupTask.getGroup(),
                                             mContext.getResources().getString(R.string.letsRememberThisTask), groupTask.getTaskDesc());
+                                    break;
+
+                                case R.id.editText:
+                                    if (groupTask.isClosed()) {
+                                        CommonUtils.showToastShort(mContext, mContext.getResources().getString(R.string.closedTaskNotEdited));
+                                        break;
+                                    }
+
+                                    new CustomDialogBox.Builder((Activity) mContext)
+                                            .setMessage(mContext.getResources().getString(R.string.sureToChangeTaskText))
+                                            .setNegativeBtnVisibility(View.VISIBLE)
+                                            .setNegativeBtnText(mContext.getResources().getString(R.string.cancel))
+                                            .setNegativeBtnBackground(mContext.getResources().getColor(R.color.Silver, null))
+                                            .setPositiveBtnVisibility(View.VISIBLE)
+                                            .setPositiveBtnText(mContext.getResources().getString(R.string.ok))
+                                            .setPositiveBtnBackground(mContext.getResources().getColor(R.color.bg_screen1, null))
+                                            .setDurationTime(0)
+                                            .isCancellable(true)
+                                            .setEditTextVisibility(View.VISIBLE)
+                                            .setEditTextMessage(groupTask.getTaskDesc())
+                                            .OnNegativeClicked(new CustomDialogListener() {
+                                                @Override
+                                                public void OnClick() {
+                                                    CommonUtils.hideKeyBoard(mContext);
+                                                }
+                                            })
+                                            .OnPositiveClicked(new CustomDialogListener() {
+                                                @Override
+                                                public void OnClick() {
+                                                    textProgressBar.setVisibility(View.VISIBLE);
+                                                }
+                                            })
+                                            .OnReturnListenerSet(new CustomDialogReturnListener() {
+                                                @Override
+                                                public void OnReturn(String val) {
+                                                    CommonUtils.hideKeyBoard(mContext);
+                                                    groupTask.setTaskDesc(val);
+                                                    updateGroupTask();
+                                                }
+                                            }).build();
+
                                     break;
 
                                 case R.id.makeUrgent:
@@ -222,6 +269,7 @@ public class AssignedToGroupsAdapter extends RecyclerView.Adapter {
                 public void OnCompleted() {
                     taskList.set(position, groupTask);
                     notifyItemChanged(position);
+                    textProgressBar.setVisibility(View.GONE);
                     NotificationHandler.sendNotificationToGroupParticipants(mContext, accountholderUser, groupTask.getGroup(),
                             UserDataUtil.getNameOrUsernameFromUser(accountholderUser) + " " + mContext.getResources().getString(R.string.markedThisTaskUrgent),
                             groupTask.getTaskDesc());
@@ -230,6 +278,7 @@ public class AssignedToGroupsAdapter extends RecyclerView.Adapter {
                 @Override
                 public void OnFailed(String message) {
                     CommonUtils.showToastShort(mContext, message);
+                    textProgressBar.setVisibility(View.GONE);
                 }
             });
         }

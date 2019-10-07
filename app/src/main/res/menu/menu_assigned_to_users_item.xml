@@ -14,16 +14,23 @@
         android:title="@string/markAsUrgent"
         app:showAsAction="never" />
 
+
     <item
-        android:id="@+id/callUser"
+        android:id="@+id/editText"
         android:orderInCategory="100"
-        android:title="@string/call_user"
+        android:title="@string/editTaskText"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/remind"
         android:orderInCategory="100"
         android:title="@string/remind"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/callUser"
+        android:orderInCategory="100"
+        android:title="@string/call_user"
         app:showAsAction="never" />
 
     <item

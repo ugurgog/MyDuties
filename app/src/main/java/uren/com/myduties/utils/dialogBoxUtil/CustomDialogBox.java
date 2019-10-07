@@ -8,6 +8,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -20,19 +21,23 @@ import uren.com.myduties.models.User;
 import uren.com.myduties.utils.dataModelUtil.GroupDataUtil;
 import uren.com.myduties.utils.dataModelUtil.UserDataUtil;
 import uren.com.myduties.utils.dialogBoxUtil.Interfaces.CustomDialogListener;
+import uren.com.myduties.utils.dialogBoxUtil.Interfaces.CustomDialogReturnListener;
 
 public class CustomDialogBox {
 
     private CustomDialogBox(CustomDialogBox.Builder builder) {
         String title = builder.title;
         String message = builder.message;
+        String edittextMsg = builder.edittextMsg;
         Activity activity = builder.activity;
         CustomDialogListener pListener = builder.pListener;
         CustomDialogListener nListener = builder.nListener;
+        CustomDialogReturnListener returnListener = builder.returnListener;
         int pBtnColor = builder.pBtnColor;
         int nBtnColor = builder.nBtnColor;
         int pBtnVisibleType = builder.pBtnVisibleType;
         int nBtnVisibleType = builder.nBtnVisibleType;
+        int editTextVisibleType = builder.editTextVisibleType;
         String positiveBtnText = builder.positiveBtnText;
         String negativeBtnText = builder.negativeBtnText;
         User user = builder.user;
@@ -46,13 +51,16 @@ public class CustomDialogBox {
         private String message;
         private String positiveBtnText;
         private String negativeBtnText;
+        private String edittextMsg;
         private int pBtnColor;
         private int nBtnColor;
         private int pBtnVisibleType;
         private int nBtnVisibleType;
+        private int editTextVisibleType;
         private Activity activity;
         private CustomDialogListener pListener;
         private CustomDialogListener nListener;
+        private CustomDialogReturnListener returnListener;
         private boolean cancel;
         private User user;
         private Group group;
@@ -67,8 +75,18 @@ public class CustomDialogBox {
             return this;
         }
 
+        public CustomDialogBox.Builder setEditTextVisibility(int visibleType) {
+            this.editTextVisibleType = visibleType;
+            return this;
+        }
+
         public CustomDialogBox.Builder setMessage(String message) {
             this.message = message;
+            return this;
+        }
+
+        public CustomDialogBox.Builder setEditTextMessage(String edittextMsg) {
+            this.edittextMsg = edittextMsg;
             return this;
         }
 
@@ -118,6 +136,11 @@ public class CustomDialogBox {
             return this;
         }
 
+        public CustomDialogBox.Builder OnReturnListenerSet(CustomDialogReturnListener listener) {
+            this.returnListener = listener;
+            return this;
+        }
+
         public CustomDialogBox.Builder isCancellable(boolean cancel) {
             this.cancel = cancel;
             return this;
@@ -147,10 +170,12 @@ public class CustomDialogBox {
             Button nBtn = dialog.findViewById(R.id.negativeBtn);
             Button pBtn = dialog.findViewById(R.id.positiveBtn);
             RelativeLayout relativelayout1 = dialog.findViewById(R.id.relativelayout1);
+            EditText editText = dialog.findViewById(R.id.editText);
             View buttonsView = dialog.findViewById(R.id.buttonsView);
 
             nBtn.setVisibility(nBtnVisibleType);
             pBtn.setVisibility(pBtnVisibleType);
+            editText.setVisibility(editTextVisibleType);
 
             if(nBtnVisibleType == View.GONE || pBtnVisibleType == View.GONE)
                 buttonsView.setVisibility(View.GONE);
@@ -159,6 +184,9 @@ public class CustomDialogBox {
                 message1.setText(this.message);
             else
                 message1.setVisibility(View.GONE);
+
+            if(edittextMsg!= null && !edittextMsg.isEmpty())
+                editText.setText(edittextMsg);
 
             if (title != null && !title.isEmpty())
                 title1.setText(this.title);
@@ -198,42 +226,34 @@ public class CustomDialogBox {
             }
 
             if (this.pListener != null) {
-                pBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+                pBtn.setOnClickListener(view -> {
+
+                    if (Builder.this.returnListener != null && editText.getText() != null && !editText.getText().toString().isEmpty()) {
+                        Builder.this.returnListener.OnReturn(editText.getText().toString());
+                        dialog.dismiss();
+                    } else {
                         Builder.this.pListener.OnClick();
                         dialog.dismiss();
                     }
                 });
             } else {
-                pBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
+                pBtn.setOnClickListener(view -> dialog.dismiss());
             }
 
             if (this.nListener != null) {
                 nBtn.setVisibility(View.VISIBLE);
-                nBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Builder.this.nListener.OnClick();
-                        dialog.dismiss();
-                    }
+                nBtn.setOnClickListener(view -> {
+                    Builder.this.nListener.OnClick();
+                    dialog.dismiss();
                 });
             }
 
             dialog.show();
 
             if (this.durationTime > 0) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (dialog.isShowing())
-                            dialog.dismiss();
-                    }
+                new Handler().postDelayed(() -> {
+                    if (dialog.isShowing())
+                        dialog.dismiss();
                 }, this.durationTime);
             }
             return new CustomDialogBox(this);

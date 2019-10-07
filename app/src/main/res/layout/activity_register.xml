@@ -14,14 +14,14 @@
 
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:fontFamily="@font/amiko"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="60dp"
+            android:fontFamily="@font/amiko"
             android:text="@string/register"
             android:textColor="@color/White"
-            android:textSize="45sp" />
+            android:textSize="35sp" />
 
 
         <LinearLayout
