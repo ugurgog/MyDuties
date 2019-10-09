@@ -1,10 +1,7 @@
 package uren.com.myduties.dutyManagement.tasks.adapters;
 
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
@@ -23,7 +19,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import uren.com.myduties.R;
@@ -46,7 +41,6 @@ public class CompletedTaskAdapter extends RecyclerView.Adapter {
     public static final int VIEW_ITEM = 1;
     public static final int VIEW_NULL = 2;
 
-    private Activity mActivity;
     private Context mContext;
     private List<Task> taskList;
     private BaseFragment.FragmentNavigation fragmentNavigation;
@@ -54,9 +48,8 @@ public class CompletedTaskAdapter extends RecyclerView.Adapter {
     private User user;
     private TaskTypeHelper taskTypeHelper;
 
-    public CompletedTaskAdapter(Activity activity, Context context,
+    public CompletedTaskAdapter(Context context,
                                 BaseFragment.FragmentNavigation fragmentNavigation, User user) {
-        this.mActivity = activity;
         this.mContext = context;
         this.fragmentNavigation = fragmentNavigation;
         this.taskList = new ArrayList<>();

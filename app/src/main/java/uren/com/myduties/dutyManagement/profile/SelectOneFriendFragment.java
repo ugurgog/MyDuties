@@ -43,7 +43,6 @@ import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.ProgressDialogUtil;
 import uren.com.myduties.utils.ShapeUtil;
 
-import static uren.com.myduties.constants.NumericConstants.DEFAULT_GET_FOLLOWER_PERPAGE_COUNT;
 import static uren.com.myduties.constants.StringConstants.fb_child_status_friend;
 
 public class SelectOneFriendFragment extends BaseFragment {
@@ -193,7 +192,7 @@ public class SelectOneFriendFragment extends BaseFragment {
     }
 
     private void setShapes() {
-        GradientDrawable shape = ShapeUtil.getShape(getResources().getColor(R.color.LightSeaGreen, null),
+        GradientDrawable shape = ShapeUtil.getShape(getResources().getColor(R.color.LightSeaGreen),
                 0, GradientDrawable.OVAL, 50, 0);
         nextFab.setBackground(shape);
     }

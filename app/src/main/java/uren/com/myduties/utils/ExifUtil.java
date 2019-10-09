@@ -2,9 +2,8 @@ package uren.com.myduties.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
-import android.media.ExifInterface;
 
-import java.io.IOException;
+import androidx.exifinterface.media.ExifInterface;
 
 public class ExifUtil {
 

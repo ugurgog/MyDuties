@@ -44,10 +44,10 @@ public class SelectFriendHorizontalAdapter extends RecyclerView.Adapter<SelectFr
             this.context = context;
             this.clickCallback = clickCallback;
             activity = (Activity) context;
-            imageShape = ShapeUtil.getShape(context.getResources().getColor(R.color.DodgerBlue, null),
+            imageShape = ShapeUtil.getShape(context.getResources().getColor(R.color.DodgerBlue),
                     0, GradientDrawable.OVAL, 50, 0);
-            deleteImgvShape = ShapeUtil.getShape(context.getResources().getColor(R.color.White, null),
-                    context.getResources().getColor(R.color.White, null), GradientDrawable.OVAL, 50, 0);
+            deleteImgvShape = ShapeUtil.getShape(context.getResources().getColor(R.color.White),
+                    context.getResources().getColor(R.color.White), GradientDrawable.OVAL, 50, 0);
         EventBus.getDefault().register(this);
     }
 

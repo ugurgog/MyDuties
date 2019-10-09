@@ -58,7 +58,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter {
         this.mContext = context;
         this.friendList = new ArrayList<>();
         this.fragmentNavigation = fragmentNavigation;
-        imageShape = ShapeUtil.getShape(context.getResources().getColor(R.color.DodgerBlue, null),
+        imageShape = ShapeUtil.getShape(context.getResources().getColor(R.color.DodgerBlue),
                 0, GradientDrawable.OVAL, 50, 0);
         EventBus.getDefault().register(this);
     }
@@ -197,10 +197,10 @@ public class SearchResultAdapter extends RecyclerView.Adapter {
                     .setUser(friend.getUser())
                     .setNegativeBtnVisibility(View.VISIBLE)
                     .setNegativeBtnText(mContext.getResources().getString(R.string.cancel))
-                    .setNegativeBtnBackground(mContext.getResources().getColor(R.color.Silver, null))
+                    .setNegativeBtnBackground(mContext.getResources().getColor(R.color.Silver))
                     .setPositiveBtnVisibility(View.VISIBLE)
                     .setPositiveBtnText(mContext.getResources().getString(R.string.lowerYes))
-                    .setPositiveBtnBackground(mContext.getResources().getColor(R.color.bg_screen1, null))
+                    .setPositiveBtnBackground(mContext.getResources().getColor(R.color.bg_screen1))
                     .setDurationTime(0)
                     .isCancellable(true)
                     .setEditTextVisibility(View.GONE)

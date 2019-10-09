@@ -109,9 +109,7 @@ public class BitmapConversion extends AppCompatActivity {
         int maxByteValue;
 
         if (photoSelectUtil != null) {
-            if (photoSelectUtil.getScreeanShotBitmap() != null)
-                mBitmap = photoSelectUtil.getScreeanShotBitmap();
-            else if (photoSelectUtil.getBitmap() != null)
+            if (photoSelectUtil.getBitmap() != null)
                 mBitmap = photoSelectUtil.getBitmap();
         } else
             return null;
@@ -172,9 +170,6 @@ public class BitmapConversion extends AppCompatActivity {
     public static Bitmap compressImage(Context context, PhotoSelectUtil photoSelectUtil) {
 
         if (photoSelectUtil != null) {
-            if (photoSelectUtil.getScreeanShotBitmap() != null)
-                return null;
-
             if (photoSelectUtil.getMediaUri() == null)
                 return null;
         }

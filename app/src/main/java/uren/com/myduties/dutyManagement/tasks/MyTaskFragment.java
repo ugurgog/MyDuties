@@ -1,21 +1,15 @@
 package uren.com.myduties.dutyManagement.tasks;
 
 
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.ToxicBakery.viewpager.transforms.RotateUpTransformer;
@@ -31,10 +25,6 @@ import uren.com.myduties.R;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.dutyManagement.tasks.adapters.FeedPagerAdapter;
 import uren.com.myduties.dutyManagement.tasks.helper.TaskHelper;
-import uren.com.myduties.models.TaskSelectionFilter;
-import uren.com.myduties.utils.ResizeAnimation;
-
-import static uren.com.myduties.constants.StringConstants.URGENT;
 
 public class MyTaskFragment extends BaseFragment implements View.OnClickListener {
 
@@ -94,21 +84,21 @@ public class MyTaskFragment extends BaseFragment implements View.OnClickListener
         final ArrayList<NavigationTabBar.Model> models = new ArrayList<>();
         models.add(
                 new NavigationTabBar.Model.Builder(
-                        getResources().getDrawable(R.drawable.icon_waiting_task, null),
+                        getResources().getDrawable(R.drawable.icon_waiting_task),
                         Color.parseColor("#d1395c"))
                         .title(Objects.requireNonNull(getContext()).getResources().getString(R.string.waiting_task))
                         .build()
         );
         models.add(
                 new NavigationTabBar.Model.Builder(
-                        getResources().getDrawable(R.drawable.icon_completed_task, null),
+                        getResources().getDrawable(R.drawable.icon_completed_task),
                         Color.parseColor("#02c754"))
                         .title(getContext().getResources().getString(R.string.completed_task))
                         .build()
         );
         models.add(
                 new NavigationTabBar.Model.Builder(
-                        getResources().getDrawable(R.drawable.ic_group_white_24dp, null),
+                        getResources().getDrawable(R.drawable.ic_group_white_24dp),
                         Color.parseColor("#FF861F"))
                         .title(getContext().getResources().getString(R.string.group_task))
                         .build()

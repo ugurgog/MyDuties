@@ -9,20 +9,16 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.provider.Settings;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -32,8 +28,6 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.snackbar.Snackbar;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -51,7 +45,6 @@ import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import uren.com.myduties.R;
-import uren.com.myduties.models.TaskType;
 
 import static uren.com.myduties.constants.NumericConstants.VIEW_NO_POST_FOUND;
 import static uren.com.myduties.constants.NumericConstants.VIEW_SERVER_ERROR;
@@ -68,11 +61,6 @@ public class CommonUtils {
     public static void showToastLong(Context context, String message) {
 
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-    }
-
-    public static String getDeviceID(Context context) {
-        return Settings.Secure.getString(context.getContentResolver(),
-                Settings.Secure.ANDROID_ID);
     }
 
     public static int getPaddingInPixels(Context context, float dpSize) {
@@ -234,18 +222,18 @@ public class CommonUtils {
                 context.getResources().getString(R.string.CHECK_YOUR_INTERNET_CONNECTION),
                 Snackbar.LENGTH_SHORT);
         View snackBarView = snackbar.getView();
-        snackBarView.setBackgroundColor(context.getResources().getColor(R.color.Red, null));
+        snackBarView.setBackgroundColor(context.getResources().getColor(R.color.Red));
         TextView tv = snackBarView.findViewById(R.id.snackbar_text);
-        tv.setTextColor(context.getResources().getColor(R.color.White, null));
+        tv.setTextColor(context.getResources().getColor(R.color.White));
         snackbar.show();
     }
 
     public static void snackbarShow(View view, Context context, String message, int colorId) {
         Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_SHORT);
         View snackBarView = snackbar.getView();
-        snackBarView.setBackgroundColor(context.getResources().getColor(colorId, null));
+        snackBarView.setBackgroundColor(context.getResources().getColor(colorId));
         TextView tv = snackBarView.findViewById(R.id.snackbar_text);
-        tv.setTextColor(context.getResources().getColor(R.color.White, null));
+        tv.setTextColor(context.getResources().getColor(R.color.White));
         snackbar.show();
     }
 

@@ -3,7 +3,6 @@ package uren.com.myduties.utils;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
@@ -203,9 +202,9 @@ public class MyDutiesUtil {
         }
 
         if(urgencyVal)
-            view.setBackgroundColor(mContext.getResources().getColor(R.color.urgentColor, null));
+            view.setBackgroundColor(mContext.getResources().getColor(R.color.urgentColor));
         else
-            view.setBackgroundColor(mContext.getResources().getColor(R.color.White, null));
+            view.setBackgroundColor(mContext.getResources().getColor(R.color.White));
     }
 
     public static void setClosedTv(boolean closed, TextView tvClosed) {
@@ -219,9 +218,9 @@ public class MyDutiesUtil {
 
     public static void setCompletedImgv(Context context, boolean completed, ImageView completedImgv) {
         if (completed)
-            completedImgv.setColorFilter(context.getResources().getColor(R.color.Green, null), PorterDuff.Mode.SRC_IN);
+            completedImgv.setColorFilter(context.getResources().getColor(R.color.Green), PorterDuff.Mode.SRC_IN);
         else
-            completedImgv.setColorFilter(context.getResources().getColor(R.color.Red, null), PorterDuff.Mode.SRC_IN);
+            completedImgv.setColorFilter(context.getResources().getColor(R.color.Red), PorterDuff.Mode.SRC_IN);
     }
 
     public static void setProblemPicture(Context context, String url, ImageView imageView) {

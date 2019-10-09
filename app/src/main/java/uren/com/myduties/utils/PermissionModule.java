@@ -4,6 +4,7 @@ package uren.com.myduties.utils;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.os.Build;
 
 import androidx.core.app.ActivityCompat;
 
@@ -56,7 +57,10 @@ public class PermissionModule {
     //READ_PHONE_NUMBERS permission =================================================
     public boolean checkReadPhoneNumbersPermission(){
 
-        return ActivityCompat.checkSelfPermission(mContext, Manifest.permission.READ_PHONE_NUMBERS) == PackageManager.PERMISSION_GRANTED;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return ActivityCompat.checkSelfPermission(mContext, Manifest.permission.READ_PHONE_NUMBERS) == PackageManager.PERMISSION_GRANTED;
+        }
+        return false;
     }
 
     //READ_CONTACTS permission =================================================

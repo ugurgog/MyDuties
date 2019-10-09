@@ -36,7 +36,6 @@ import static uren.com.myduties.constants.StringConstants.fb_child_grouptask;
 import static uren.com.myduties.constants.StringConstants.fb_child_taskdesc;
 import static uren.com.myduties.constants.StringConstants.fb_child_type;
 import static uren.com.myduties.constants.StringConstants.fb_child_urgency;
-import static uren.com.myduties.constants.StringConstants.fb_child_users;
 import static uren.com.myduties.constants.StringConstants.fb_child_whocompletedid;
 
 public class GroupTaskDBHelper {

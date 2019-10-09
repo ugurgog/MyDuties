@@ -40,9 +40,9 @@ public class FriendGridListAdapter extends RecyclerView.Adapter<FriendGridListAd
         layoutInflater = LayoutInflater.from(context);
         this.context = context;
         this.returnCallback = returnCallback;
-        imageShape = ShapeUtil.getShape(context.getResources().getColor(R.color.DodgerBlue, null),
+        imageShape = ShapeUtil.getShape(context.getResources().getColor(R.color.DodgerBlue),
                 0, GradientDrawable.OVAL, 50, 0);
-        deleteShape = ShapeUtil.getShape(context.getResources().getColor(R.color.White, null),
+        deleteShape = ShapeUtil.getShape(context.getResources().getColor(R.color.White),
                 0, GradientDrawable.OVAL, 50, 0);
         EventBus.getDefault().register(this);
     }

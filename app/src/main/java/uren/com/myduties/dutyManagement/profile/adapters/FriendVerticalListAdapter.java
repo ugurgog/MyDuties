@@ -10,7 +10,6 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -152,10 +151,10 @@ public class FriendVerticalListAdapter extends RecyclerView.Adapter implements F
         }
 
         private void setShapes() {
-            profilePicImgView.setBackground(ShapeUtil.getShape(context.getResources().getColor(R.color.DodgerBlue, null),
-                    context.getResources().getColor(R.color.Orange, null), GradientDrawable.OVAL, 50, 0));
-            tickImgv.setBackground(ShapeUtil.getShape(context.getResources().getColor(R.color.DarkTurquoise, null),
-                    context.getResources().getColor(R.color.White, null), GradientDrawable.OVAL, 50, 3));
+            profilePicImgView.setBackground(ShapeUtil.getShape(context.getResources().getColor(R.color.DodgerBlue),
+                    context.getResources().getColor(R.color.Orange), GradientDrawable.OVAL, 50, 0));
+            tickImgv.setBackground(ShapeUtil.getShape(context.getResources().getColor(R.color.DarkTurquoise),
+                    context.getResources().getColor(R.color.White), GradientDrawable.OVAL, 50, 3));
         }
 
         public void setData(User user, int position) {
@@ -173,11 +172,11 @@ public class FriendVerticalListAdapter extends RecyclerView.Adapter implements F
         private void updateItemEnableValue() {
             if (isInParticipantList(user)) {
                 specialListLinearLayout.setEnabled(false);
-                specialListLinearLayout.setBackgroundColor(context.getResources().getColor(R.color.AliceBlue, null));
+                specialListLinearLayout.setBackgroundColor(context.getResources().getColor(R.color.AliceBlue));
                 inGroupTv.setVisibility(View.VISIBLE);
             } else {
                 specialListLinearLayout.setEnabled(true);
-                specialListLinearLayout.setBackgroundColor(context.getResources().getColor(R.color.White, null));
+                specialListLinearLayout.setBackgroundColor(context.getResources().getColor(R.color.White));
                 inGroupTv.setVisibility(View.GONE);
             }
         }

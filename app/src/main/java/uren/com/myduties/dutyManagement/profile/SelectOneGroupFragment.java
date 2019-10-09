@@ -189,7 +189,7 @@ public class SelectOneGroupFragment extends BaseFragment {
     }
 
     private void setShapes() {
-        GradientDrawable shape = ShapeUtil.getShape(getResources().getColor(R.color.LightSeaGreen, null),
+        GradientDrawable shape = ShapeUtil.getShape(getResources().getColor(R.color.LightSeaGreen),
                 0, GradientDrawable.OVAL, 50, 0);
         nextFab.setBackground(shape);
     }

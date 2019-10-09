@@ -12,23 +12,15 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 import uren.com.myduties.MainActivity;
@@ -36,8 +28,6 @@ import uren.com.myduties.R;
 import uren.com.myduties.dbManagement.TokenDBHelper;
 import uren.com.myduties.utils.BitmapConversion;
 
-import static uren.com.myduties.constants.StringConstants.FB_CHILD_DEVICE_TOKEN;
-import static uren.com.myduties.constants.StringConstants.FB_CHILD_TOKEN;
 import static uren.com.myduties.constants.StringConstants.FCM_CODE_PHOTO_URL;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
@@ -97,7 +87,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setContentIntent(pendingIntent);
 
         notificationBuilder.setSmallIcon(R.mipmap.app_notif_icon);
-        notificationBuilder.setColor(getResources().getColor(R.color.DodgerBlue, null));
+        notificationBuilder.setColor(getResources().getColor(R.color.DodgerBlue));
 
         if (messageTitle != null && !messageTitle.isEmpty())
             notificationBuilder.setContentTitle(messageTitle);

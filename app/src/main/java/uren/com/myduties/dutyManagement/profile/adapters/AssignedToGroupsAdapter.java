@@ -3,7 +3,6 @@ package uren.com.myduties.dutyManagement.profile.adapters;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +21,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import uren.com.myduties.R;
@@ -45,16 +43,14 @@ import uren.com.myduties.utils.dialogBoxUtil.Interfaces.CustomDialogReturnListen
 
 public class AssignedToGroupsAdapter extends RecyclerView.Adapter {
 
-    private Activity mActivity;
     private Context mContext;
     private List<GroupTask> taskList;
     private BaseFragment.FragmentNavigation fragmentNavigation;
     private TaskTypeHelper taskTypeHelper;
     private User accountholderUser;
 
-    public AssignedToGroupsAdapter(Activity activity, Context context,
+    public AssignedToGroupsAdapter(Context context,
                                    BaseFragment.FragmentNavigation fragmentNavigation) {
-        this.mActivity = activity;
         this.mContext = context;
         this.fragmentNavigation = fragmentNavigation;
         this.taskList = new ArrayList<>();
@@ -186,10 +182,10 @@ public class AssignedToGroupsAdapter extends RecyclerView.Adapter {
                                             .setMessage(mContext.getResources().getString(R.string.sureToChangeTaskText))
                                             .setNegativeBtnVisibility(View.VISIBLE)
                                             .setNegativeBtnText(mContext.getResources().getString(R.string.cancel))
-                                            .setNegativeBtnBackground(mContext.getResources().getColor(R.color.Silver, null))
+                                            .setNegativeBtnBackground(mContext.getResources().getColor(R.color.Silver))
                                             .setPositiveBtnVisibility(View.VISIBLE)
                                             .setPositiveBtnText(mContext.getResources().getString(R.string.ok))
-                                            .setPositiveBtnBackground(mContext.getResources().getColor(R.color.bg_screen1, null))
+                                            .setPositiveBtnBackground(mContext.getResources().getColor(R.color.bg_screen1))
                                             .setDurationTime(0)
                                             .isCancellable(true)
                                             .setEditTextVisibility(View.VISIBLE)

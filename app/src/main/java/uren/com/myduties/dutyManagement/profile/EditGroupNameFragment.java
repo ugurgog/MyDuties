@@ -103,8 +103,8 @@ public class EditGroupNameFragment extends BaseFragment {
     }
 
     private void setButtonShapes() {
-        buttonShape = ShapeUtil.getShape(getResources().getColor(R.color.White, null),
-                getResources().getColor(R.color.Gray, null), GradientDrawable.RECTANGLE, 15, 2);
+        buttonShape = ShapeUtil.getShape(getResources().getColor(R.color.White),
+                getResources().getColor(R.color.Gray), GradientDrawable.RECTANGLE, 15, 2);
         cancelButton.setBackground(buttonShape);
         approveButton.setBackground(buttonShape);
     }

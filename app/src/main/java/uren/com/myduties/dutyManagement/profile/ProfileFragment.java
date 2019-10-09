@@ -255,9 +255,9 @@ public class ProfileFragment extends BaseFragment {
     }
 
     private void initVariables() {
-        llFollowInfo.setBackground(ShapeUtil.getShape(getContext().getResources().getColor(R.color.White, null),
-                getContext().getResources().getColor(R.color.DarkGray, null), GradientDrawable.RECTANGLE, 30, 2));
-        rlOut.setBackground(ShapeUtil.getShape(getContext().getResources().getColor(R.color.White, null),
+        llFollowInfo.setBackground(ShapeUtil.getShape(getContext().getResources().getColor(R.color.White),
+                getContext().getResources().getColor(R.color.DarkGray), GradientDrawable.RECTANGLE, 30, 2));
+        rlOut.setBackground(ShapeUtil.getShape(getContext().getResources().getColor(R.color.White),
                 0, GradientDrawable.RECTANGLE, 30, 0));
 
         setNavViewItems();

@@ -84,7 +84,7 @@ public class SelectCountryFragment extends Fragment implements Filterable {
     }
 
     private void setShapes() {
-        GradientDrawable shape = ShapeUtil.getShape(getActivity().getResources().getColor(R.color.White, null),
+        GradientDrawable shape = ShapeUtil.getShape(getActivity().getResources().getColor(R.color.White),
                 0, GradientDrawable.RECTANGLE, 15, 0);
         mainLinearLayout.setBackground(shape);
     }

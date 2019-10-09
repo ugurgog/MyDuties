@@ -22,10 +22,6 @@ import uren.com.myduties.interfaces.OnCompleteCallback;
 import uren.com.myduties.models.Problem;
 import uren.com.myduties.models.User;
 
-import static uren.com.myduties.constants.StringConstants.fb_child_assignedfromid;
-import static uren.com.myduties.constants.StringConstants.fb_child_assignedtime;
-import static uren.com.myduties.constants.StringConstants.fb_child_closed;
-import static uren.com.myduties.constants.StringConstants.fb_child_completed;
 import static uren.com.myduties.constants.StringConstants.fb_child_completedtime;
 import static uren.com.myduties.constants.StringConstants.fb_child_createdat;
 import static uren.com.myduties.constants.StringConstants.fb_child_fixed;
@@ -33,10 +29,7 @@ import static uren.com.myduties.constants.StringConstants.fb_child_platform;
 import static uren.com.myduties.constants.StringConstants.fb_child_problemdesc;
 import static uren.com.myduties.constants.StringConstants.fb_child_problemphotourl;
 import static uren.com.myduties.constants.StringConstants.fb_child_problems;
-import static uren.com.myduties.constants.StringConstants.fb_child_taskdesc;
 import static uren.com.myduties.constants.StringConstants.fb_child_type;
-import static uren.com.myduties.constants.StringConstants.fb_child_urgency;
-import static uren.com.myduties.constants.StringConstants.fb_child_usertask;
 import static uren.com.myduties.constants.StringConstants.fb_child_whoopened;
 
 public class ProblemDBHelper {

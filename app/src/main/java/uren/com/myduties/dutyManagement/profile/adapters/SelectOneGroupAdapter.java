@@ -104,11 +104,11 @@ public class SelectOneGroupAdapter extends RecyclerView.Adapter<SelectOneGroupAd
         }
 
         private void setShapes() {
-            tickImgv.setBackground(ShapeUtil.getShape(context.getResources().getColor(R.color.DarkTurquoise, null),
-                    context.getResources().getColor(R.color.White, null), GradientDrawable.OVAL, 50, 3));
-            adminDisplayButton.setBackground(ShapeUtil.getShape(context.getResources().getColor(R.color.White, null),
-                    context.getResources().getColor(R.color.MediumSeaGreen, null), GradientDrawable.RECTANGLE, 15, 2));
-            groupPicImgView.setBackground(ShapeUtil.getShape(context.getResources().getColor(R.color.DodgerBlue, null),
+            tickImgv.setBackground(ShapeUtil.getShape(context.getResources().getColor(R.color.DarkTurquoise),
+                    context.getResources().getColor(R.color.White), GradientDrawable.OVAL, 50, 3));
+            adminDisplayButton.setBackground(ShapeUtil.getShape(context.getResources().getColor(R.color.White),
+                    context.getResources().getColor(R.color.MediumSeaGreen), GradientDrawable.RECTANGLE, 15, 2));
+            groupPicImgView.setBackground(ShapeUtil.getShape(context.getResources().getColor(R.color.DodgerBlue),
                     0, GradientDrawable.OVAL, 50, 0));
         }
 

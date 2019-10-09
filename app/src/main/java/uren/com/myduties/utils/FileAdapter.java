@@ -1,5 +1,6 @@
 package uren.com.myduties.utils;
 
+import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 
@@ -27,7 +28,9 @@ public class FileAdapter {
                 directoryChild = Environment.DIRECTORY_MOVIES;
                 break;
             case MEDIA_TYPE_AUDIO:
-                directoryChild = Environment.DIRECTORY_DOCUMENTS;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    directoryChild = Environment.DIRECTORY_DOCUMENTS;
+                }
                 break;
             default:
                 break;

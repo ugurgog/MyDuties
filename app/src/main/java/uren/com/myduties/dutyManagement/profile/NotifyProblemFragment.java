@@ -163,8 +163,8 @@ public class NotifyProblemFragment extends BaseFragment {
     }
 
     public void setShapes() {
-        GradientDrawable shape = ShapeUtil.getShape(getResources().getColor(R.color.White, null),
-                getResources().getColor(R.color.Gray, null), GradientDrawable.RECTANGLE, 15, 2);
+        GradientDrawable shape = ShapeUtil.getShape(getResources().getColor(R.color.White),
+                getResources().getColor(R.color.Gray), GradientDrawable.RECTANGLE, 15, 2);
         addPhotoImgv1.setBackground(shape);
     }
 
@@ -209,7 +209,7 @@ public class NotifyProblemFragment extends BaseFragment {
 
     public void setViewPadding() {
         addPhotoImgv1.setPadding(70, 70, 70, 70);
-        addPhotoImgv1.setColorFilter(Objects.requireNonNull(getActivity()).getResources().getColor(R.color.Gray, null), PorterDuff.Mode.SRC_IN);
+        addPhotoImgv1.setColorFilter(Objects.requireNonNull(getActivity()).getResources().getColor(R.color.Gray), PorterDuff.Mode.SRC_IN);
         addPhotoImgv1.setScaleType(ImageView.ScaleType.FIT_CENTER);
         imgDelete1.setVisibility(View.GONE);
     }

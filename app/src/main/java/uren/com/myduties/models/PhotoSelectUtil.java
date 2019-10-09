@@ -21,7 +21,6 @@ import static uren.com.myduties.constants.StringConstants.GALLERY_TEXT;
 public class PhotoSelectUtil {
 
     Bitmap bitmap = null;
-    Bitmap screeanShotBitmap = null;
     Uri mediaUri = null;
     String imageRealPath = null;
     Context context;
@@ -167,14 +166,6 @@ public class PhotoSelectUtil {
 
     public boolean isPortraitMode() {
         return portraitMode;
-    }
-
-    public Bitmap getScreeanShotBitmap() {
-        return screeanShotBitmap;
-    }
-
-    public void setScreeanShotBitmap(Bitmap screeanShotBitmap) {
-        this.screeanShotBitmap = screeanShotBitmap;
     }
 
     public String getType() {

@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -146,10 +145,10 @@ public class FriendsAdapter extends RecyclerView.Adapter implements Filterable {
                     .setUser(friend.getUser())
                     .setNegativeBtnVisibility(View.VISIBLE)
                     .setNegativeBtnText(mContext.getResources().getString(R.string.cancel))
-                    .setNegativeBtnBackground(mContext.getResources().getColor(R.color.Silver, null))
+                    .setNegativeBtnBackground(mContext.getResources().getColor(R.color.Silver))
                     .setPositiveBtnVisibility(View.VISIBLE)
                     .setPositiveBtnText(mContext.getResources().getString(R.string.REMOVE))
-                    .setPositiveBtnBackground(mContext.getResources().getColor(R.color.bg_screen1, null))
+                    .setPositiveBtnBackground(mContext.getResources().getColor(R.color.bg_screen1))
                     .setDurationTime(0)
                     .isCancellable(true)
                     .setEditTextVisibility(View.GONE)
@@ -174,10 +173,10 @@ public class FriendsAdapter extends RecyclerView.Adapter implements Filterable {
                     .setUser(friend.getUser())
                     .setNegativeBtnVisibility(View.VISIBLE)
                     .setNegativeBtnText(mContext.getResources().getString(R.string.cancel))
-                    .setNegativeBtnBackground(mContext.getResources().getColor(R.color.Silver, null))
+                    .setNegativeBtnBackground(mContext.getResources().getColor(R.color.Silver))
                     .setPositiveBtnVisibility(View.VISIBLE)
                     .setPositiveBtnText(mContext.getResources().getString(R.string.lowerYes))
-                    .setPositiveBtnBackground(mContext.getResources().getColor(R.color.bg_screen1, null))
+                    .setPositiveBtnBackground(mContext.getResources().getColor(R.color.bg_screen1))
                     .setDurationTime(0)
                     .isCancellable(true)
                     .setEditTextVisibility(View.GONE)
@@ -196,7 +195,7 @@ public class FriendsAdapter extends RecyclerView.Adapter implements Filterable {
         }
 
         public void setShapes() {
-            profileImage.setBackground(ShapeUtil.getShape(mContext.getResources().getColor(R.color.DodgerBlue, null),
+            profileImage.setBackground(ShapeUtil.getShape(mContext.getResources().getColor(R.color.DodgerBlue),
                     0, GradientDrawable.OVAL, 50, 0));
         }
 

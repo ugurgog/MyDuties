@@ -152,7 +152,7 @@ public class AddGroupFragment extends BaseFragment {
         setGroupTextSize();
         openPersonSelectionPage();
         permissionModule = new PermissionModule(getContext());
-        imageShape = ShapeUtil.getShape(getResources().getColor(R.color.LightGrey, null),
+        imageShape = ShapeUtil.getShape(getResources().getColor(R.color.LightGrey),
                 0, GradientDrawable.OVAL, 50, 0);
         groupPictureImgv.setBackground(imageShape);
         participantSize.setText(Integer.toString(selectedUsers.size()));

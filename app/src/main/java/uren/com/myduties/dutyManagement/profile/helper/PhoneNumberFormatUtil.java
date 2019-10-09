@@ -27,7 +27,7 @@ public class PhoneNumberFormatUtil {
                     country.getDialCode() != null && !country.getDialCode().isEmpty()) {
                 if (country.getCode().trim().equals(locale)) {
                     formatNumbersWithDialCode(country.getDialCode(), locale, contactList,
-                            completeCallback, context);
+                            completeCallback);
                     break;
                 }
             }
@@ -35,7 +35,7 @@ public class PhoneNumberFormatUtil {
     }
 
     public static void formatNumbersWithDialCode(String dialCode, String locale, final List<Contact> contactList,
-                                                 CompleteCallback completeCallback, Context context) {
+                                                 CompleteCallback completeCallback) {
         List<Contact> reformedContactList = new ArrayList<>();
 
         if (locale.equals("TR")) {

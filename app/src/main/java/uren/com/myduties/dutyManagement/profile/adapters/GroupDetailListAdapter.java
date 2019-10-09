@@ -70,10 +70,10 @@ public class GroupDetailListAdapter extends RecyclerView.Adapter<GroupDetailList
         this.itemClickListener = itemClickListener;
         this.context = context;
         activity = (Activity) context;
-        imageShape = ShapeUtil.getShape(context.getResources().getColor(R.color.DodgerBlue, null),
+        imageShape = ShapeUtil.getShape(context.getResources().getColor(R.color.DodgerBlue),
                 0, GradientDrawable.OVAL, 50, 0);
-        adminButtonShape = ShapeUtil.getShape(context.getResources().getColor(R.color.White, null),
-                context.getResources().getColor(R.color.MediumSeaGreen, null), GradientDrawable.RECTANGLE, 15, 2);
+        adminButtonShape = ShapeUtil.getShape(context.getResources().getColor(R.color.White),
+                context.getResources().getColor(R.color.MediumSeaGreen), GradientDrawable.RECTANGLE, 15, 2);
         EventBus.getDefault().register(this);
     }
 

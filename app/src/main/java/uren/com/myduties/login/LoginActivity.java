@@ -22,7 +22,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,7 +42,6 @@ import uren.com.myduties.MainActivity;
 import uren.com.myduties.R;
 import uren.com.myduties.login.utils.Validation;
 import uren.com.myduties.models.LoginUser;
-import uren.com.myduties.utils.BitmapConversion;
 import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.ShapeUtil;
 
@@ -93,16 +91,16 @@ public class LoginActivity extends AppCompatActivity
     }
 
     public void setShapes() {
-        emailET.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.transparent, null),
-                getResources().getColor(R.color.White, null), GradientDrawable.RECTANGLE, 20, 4));
-        passwordET.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.transparent, null),
-                getResources().getColor(R.color.White, null), GradientDrawable.RECTANGLE, 20, 4));
-        btnLogin.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.colorPrimary, null),
-                getResources().getColor(R.color.White, null), GradientDrawable.RECTANGLE, 20, 4));
-        forgetPasswordBtn.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.transparent, null),
-                getResources().getColor(R.color.White, null), GradientDrawable.RECTANGLE, 20, 4));
-        createAccBtn.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.transparent, null),
-                getResources().getColor(R.color.White, null), GradientDrawable.RECTANGLE, 20, 4));
+        emailET.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.transparent),
+                getResources().getColor(R.color.White), GradientDrawable.RECTANGLE, 20, 4));
+        passwordET.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.transparent),
+                getResources().getColor(R.color.White), GradientDrawable.RECTANGLE, 20, 4));
+        btnLogin.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.colorPrimary),
+                getResources().getColor(R.color.White), GradientDrawable.RECTANGLE, 20, 4));
+        forgetPasswordBtn.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.transparent),
+                getResources().getColor(R.color.White), GradientDrawable.RECTANGLE, 20, 4));
+        createAccBtn.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.transparent),
+                getResources().getColor(R.color.White), GradientDrawable.RECTANGLE, 20, 4));
     }
 
     private void initVariables() {
@@ -174,8 +172,8 @@ public class LoginActivity extends AppCompatActivity
         forgetPasText.setMovementMethod(LinkMovementMethod.getInstance());
         registerText.setHighlightColor(Color.TRANSPARENT);
         forgetPasText.setHighlightColor(Color.TRANSPARENT);
-        registerText.setLinkTextColor(getResources().getColor(R.color.White, null));
-        forgetPasText.setLinkTextColor(getResources().getColor(R.color.White, null));
+        registerText.setLinkTextColor(getResources().getColor(R.color.White));
+        forgetPasText.setLinkTextColor(getResources().getColor(R.color.White));
     }
 
     @Override

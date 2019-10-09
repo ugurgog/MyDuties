@@ -1,7 +1,5 @@
 package uren.com.myduties.admin.adapters;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -24,21 +22,15 @@ import java.util.List;
 
 import uren.com.myduties.R;
 import uren.com.myduties.common.ShowSelectedPhotoFragment;
-import uren.com.myduties.dbManagement.GroupTaskDBHelper;
 import uren.com.myduties.dbManagement.ProblemDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
-import uren.com.myduties.evetBusModels.TaskTypeBus;
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.OnCompleteCallback;
-import uren.com.myduties.messaging.NotificationHandler;
-import uren.com.myduties.models.GroupTask;
 import uren.com.myduties.models.Problem;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.MyDutiesUtil;
-import uren.com.myduties.utils.TaskTypeHelper;
-import uren.com.myduties.utils.dataModelUtil.GroupDataUtil;
 import uren.com.myduties.utils.dataModelUtil.UserDataUtil;
 
 public class ProblemAdapter extends RecyclerView.Adapter {

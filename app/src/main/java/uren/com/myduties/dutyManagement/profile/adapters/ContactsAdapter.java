@@ -52,7 +52,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
         this.contactFriendModelList = contactFriendModelList;
         this.orgContactFriendModelList = contactFriendModelList;
         this.contactFriendSelectCallback = contactFriendSelectCallback;
-        imageShape = ShapeUtil.getShape(context.getResources().getColor(R.color.DodgerBlue, null),
+        imageShape = ShapeUtil.getShape(context.getResources().getColor(R.color.DodgerBlue),
                 0, GradientDrawable.OVAL, 50, 0);
         EventBus.getDefault().register(this);
     }

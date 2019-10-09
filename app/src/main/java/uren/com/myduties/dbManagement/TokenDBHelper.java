@@ -11,27 +11,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.OnCompleteCallback;
-import uren.com.myduties.models.Group;
-import uren.com.myduties.models.User;
 
 import static uren.com.myduties.constants.StringConstants.CHAR_E;
 import static uren.com.myduties.constants.StringConstants.FB_CHILD_DEVICE_TOKEN;
 import static uren.com.myduties.constants.StringConstants.FB_CHILD_SIGNIN;
 import static uren.com.myduties.constants.StringConstants.FB_CHILD_TOKEN;
-import static uren.com.myduties.constants.StringConstants.fb_child_adminid;
-import static uren.com.myduties.constants.StringConstants.fb_child_createdat;
-import static uren.com.myduties.constants.StringConstants.fb_child_groupphotourl;
-import static uren.com.myduties.constants.StringConstants.fb_child_groups;
-import static uren.com.myduties.constants.StringConstants.fb_child_members;
-import static uren.com.myduties.constants.StringConstants.fb_child_name;
 
 public class TokenDBHelper {
 

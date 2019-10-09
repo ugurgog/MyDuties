@@ -25,9 +25,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.google.gson.JsonObject;
-
-import org.json.JSONObject;
 
 import java.util.Objects;
 
@@ -38,7 +35,6 @@ import uren.com.myduties.interfaces.OnCompleteCallback;
 import uren.com.myduties.login.utils.Validation;
 import uren.com.myduties.models.LoginUser;
 import uren.com.myduties.models.User;
-import uren.com.myduties.utils.BitmapConversion;
 import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.ShapeUtil;
 import uren.com.myduties.utils.dialogBoxUtil.DialogBoxUtil;
@@ -85,14 +81,14 @@ public class RegisterActivity extends AppCompatActivity
     }
 
     public void setShapes(){
-        usernameET.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.transparent, null),
-                getResources().getColor(R.color.White, null), GradientDrawable.RECTANGLE, 20, 4));
-        emailET.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.transparent, null),
-                getResources().getColor(R.color.White, null), GradientDrawable.RECTANGLE, 20, 4));
-        passwordET.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.transparent, null),
-                getResources().getColor(R.color.White, null), GradientDrawable.RECTANGLE, 20, 4));
-        btnRegister.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.colorPrimary, null),
-                getResources().getColor(R.color.White, null), GradientDrawable.RECTANGLE, 20, 4));
+        usernameET.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.transparent),
+                getResources().getColor(R.color.White), GradientDrawable.RECTANGLE, 20, 4));
+        emailET.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.transparent),
+                getResources().getColor(R.color.White), GradientDrawable.RECTANGLE, 20, 4));
+        passwordET.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.transparent),
+                getResources().getColor(R.color.White), GradientDrawable.RECTANGLE, 20, 4));
+        btnRegister.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.colorPrimary),
+                getResources().getColor(R.color.White), GradientDrawable.RECTANGLE, 20, 4));
     }
 
     private void init() {

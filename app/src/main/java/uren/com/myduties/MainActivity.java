@@ -4,7 +4,6 @@ package uren.com.myduties;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -32,10 +31,7 @@ import uren.com.myduties.evetBusModels.TaskTypeBus;
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.OnCompleteCallback;
-import uren.com.myduties.login.AccountHolderInfo;
 import uren.com.myduties.login.LoginActivity;
-import uren.com.myduties.messaging.MyFirebaseMessagingService;
-import uren.com.myduties.models.LoginUser;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.AnimationUtil;
 import uren.com.myduties.utils.CommonUtils;
@@ -43,7 +39,6 @@ import uren.com.myduties.utils.ShapeUtil;
 import uren.com.myduties.utils.TaskTypeHelper;
 
 import static uren.com.myduties.constants.StringConstants.CHAR_E;
-import static uren.com.myduties.constants.StringConstants.LOGIN_USER;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -82,8 +77,8 @@ public class MainActivity extends AppCompatActivity {
         networkTryDesc = findViewById(R.id.networkTryDesc);
         AnimationUtil.blink(MainActivity.this, appIconImgv);
 
-        tryAgainButton.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.DodgerBlue, null),
-                getResources().getColor(R.color.White, null), GradientDrawable.RECTANGLE, 50, 2));
+        tryAgainButton.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.DodgerBlue),
+                getResources().getColor(R.color.White), GradientDrawable.RECTANGLE, 50, 2));
 
         setPullToRefresh();
         addListeners();

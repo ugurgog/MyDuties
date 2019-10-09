@@ -86,14 +86,14 @@ public class TasksIAssignedFragment extends BaseFragment {
         final ArrayList<NavigationTabBar.Model> models = new ArrayList<>();
         models.add(
                 new NavigationTabBar.Model.Builder(
-                        getResources().getDrawable(R.drawable.ic_person_white_24dp, null),
+                        getResources().getDrawable(R.drawable.ic_person_white_24dp),
                         Color.parseColor("#d1395c"))
                         .title(Objects.requireNonNull(getContext()).getResources().getString(R.string.friends))
                         .build()
         );
         models.add(
                 new NavigationTabBar.Model.Builder(
-                        getResources().getDrawable(R.drawable.icon_user_groups, null),
+                        getResources().getDrawable(R.drawable.icon_user_groups),
                         Color.parseColor("#FF861F"))
                         .title(getContext().getResources().getString(R.string.groupsShareText))
                         .build()

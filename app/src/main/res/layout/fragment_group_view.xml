@@ -11,7 +11,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/searchToolbarLayout"
             android:visibility="visible">
 
             <include layout="@layout/toolbar_search2_layout" />

@@ -39,7 +39,8 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:clickable="true"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:focusable="true">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -96,7 +97,8 @@
                         android:layout_gravity="end"
                         android:layout_weight="1"
                         android:clickable="true"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:focusable="true">
 
                         <uren.com.myduties.utils.ClickableImage.ClickableImageView
                             android:id="@+id/imgUserEdit"

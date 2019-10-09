@@ -7,10 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -33,13 +31,10 @@ import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.models.GroupTask;
 import uren.com.myduties.models.User;
-import uren.com.myduties.utils.ClickableImage.ClickableImageView;
 import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.layoutManager.CustomLinearLayoutManager;
 
 import static uren.com.myduties.constants.NumericConstants.VIEW_NO_POST_FOUND;
-import static uren.com.myduties.constants.NumericConstants.VIEW_RETRY;
-import static uren.com.myduties.constants.NumericConstants.VIEW_SERVER_ERROR;
 
 public class GroupTaskFragment extends BaseFragment {
 

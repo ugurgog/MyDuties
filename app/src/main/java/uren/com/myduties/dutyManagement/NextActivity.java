@@ -1,17 +1,11 @@
 package uren.com.myduties.dutyManagement;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -46,7 +40,6 @@ import uren.com.myduties.dutyManagement.tasks.WaitingTaskFragment;
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.AdMobUtils;
-import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.ShapeUtil;
 
 import static uren.com.myduties.constants.StringConstants.ANIMATE_DOWN_TO_UP;
@@ -100,8 +93,8 @@ public class NextActivity extends FragmentActivity implements
         Fabric.with(this, new Crashlytics());
         thisActivity = this;
 
-        unSelectedTabColor = this.getResources().getColor(R.color.DarkGray, null);
-        selectedTabColor = this.getResources().getColor(R.color.White, null);
+        unSelectedTabColor = this.getResources().getColor(R.color.DarkGray);
+        selectedTabColor = this.getResources().getColor(R.color.White);
 
         initValues();
 
@@ -202,20 +195,10 @@ public class NextActivity extends FragmentActivity implements
     }
 
     public void setShapes() {
-        screenShotCancelBtn.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.Red, null),
-                getResources().getColor(R.color.White, null), GradientDrawable.RECTANGLE, 15, 4));
-        screenShotApproveBtn.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.MediumSeaGreen, null),
-                getResources().getColor(R.color.White, null), GradientDrawable.RECTANGLE, 15, 4));
-    }
-
-    private void setStatusBarTransparent() {
-
-        // Android 5.0
-        int visibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-        getWindow().getDecorView().setSystemUiVisibility(visibility);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        getWindow().setStatusBarColor(Color.TRANSPARENT);
-
+        screenShotCancelBtn.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.Red),
+                getResources().getColor(R.color.White), GradientDrawable.RECTANGLE, 15, 4));
+        screenShotApproveBtn.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.MediumSeaGreen),
+                getResources().getColor(R.color.White), GradientDrawable.RECTANGLE, 15, 4));
     }
 
     private void initTab() {
@@ -224,30 +207,14 @@ public class NextActivity extends FragmentActivity implements
                 bottomTabLayout.addTab(bottomTabLayout.newTab());
                 TabLayout.Tab tab = bottomTabLayout.getTabAt(i);
 
-
                 if(tab != null){
                     tab.setIcon(mTabIconsSelected[i]);
                     tab.setText(TABS[i]);
-
-                  /*  if(i == TAB1)
-                        tab.getIcon().setColorFilter(selectedTabColor, PorterDuff.Mode.SRC_IN);*/
                 }
-
-                /*if (tab != null) {
-                    tab.setCustomView(getTabView(i));
-                    tab.setText(TABS[i]);
-                }*/
             }
             Objects.requireNonNull(bottomTabLayout.getTabAt(0).getIcon()).setColorFilter(selectedTabColor, PorterDuff.Mode.SRC_IN);
             bottomTabLayout.setTabTextColors(unSelectedTabColor, selectedTabColor);
         }
-    }
-
-    private View getTabView(int position) {
-        View view = LayoutInflater.from(NextActivity.this).inflate(R.layout.tab_item_bottom, null);
-        ImageView icon = view.findViewById(R.id.tab_icon);
-        icon.setImageDrawable(CommonUtils.setDrawableSelector(NextActivity.this, mTabIconsSelected[position], mTabIconsSelected[position]));
-        return view;
     }
 
     public void clearStackGivenIndex(int index){
@@ -396,17 +363,7 @@ public class NextActivity extends FragmentActivity implements
 
     @Override
     public void onTabTransaction(Fragment fragment, int index) {
-        // If we have a backstack, show the back button
-        /*if (getSupportActionBar() != null && mNavController != null) {
 
-            //updateToolbar();
-        }*/
-    }
-
-    private void updateToolbar() {
-        /*getSupportActionBar().setDisplayHomeAsUpEnabled(!mNavController.isRootFragment());
-        getSupportActionBar().setDisplayShowHomeEnabled(!mNavController.isRootFragment());
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_18dp);*/
     }
 
     @Override
@@ -428,17 +385,6 @@ public class NextActivity extends FragmentActivity implements
 
     @Override
     public void onFragmentTransaction(Fragment fragment, FragNavController.TransactionType transactionType) {
-        //do fragmentty stuff. Maybe change title, I'm not going to tell you how to live your life
-        // If we have a backstack, show the back button
-        /*if (getSupportActionBar() != null && mNavController != null) {
 
-            //updateToolbar();
-        }*/
-    }
-
-    public void updateStatusBarColor(int colorCode){
-        Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(colorCode);
     }
 }

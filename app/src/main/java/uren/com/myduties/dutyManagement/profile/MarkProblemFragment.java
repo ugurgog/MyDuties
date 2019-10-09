@@ -93,7 +93,7 @@ public class MarkProblemFragment extends BaseFragment {
         toolbarTitleTv.setText(getResources().getString(R.string.CIRCLE_THE_PROBLEM));
         commonToolbarTickImgv.setVisibility(View.VISIBLE);
         markProblemLayout.setBackground(ShapeUtil.getShape(0,
-                getResources().getColor(R.color.DodgerBlue, null), GradientDrawable.RECTANGLE, 0, 2));
+                getResources().getColor(R.color.DodgerBlue), GradientDrawable.RECTANGLE, 0, 2));
     }
 
     public void addListeners() {

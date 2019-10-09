@@ -185,7 +185,7 @@ public class SettingsFragment extends BaseFragment {
                         .setNegativeBtnVisibility(View.GONE)
                         .setPositiveBtnVisibility(View.VISIBLE)
                         .setPositiveBtnText(getContext().getResources().getString(R.string.ok))
-                        .setPositiveBtnBackground(getContext().getResources().getColor(R.color.DodgerBlue, null))
+                        .setPositiveBtnBackground(getContext().getResources().getColor(R.color.DodgerBlue))
                         .setDurationTime(0)
                         .isCancellable(true)
                         .setEditTextVisibility(View.GONE)

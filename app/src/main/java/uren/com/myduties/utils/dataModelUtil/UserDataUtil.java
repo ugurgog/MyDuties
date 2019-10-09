@@ -148,17 +148,17 @@ public class UserDataUtil {
 
         if (circleColorVal) {
             if (picExist) {
-                imageShape = ShapeUtil.getShape(context.getResources().getColor(R.color.White, null),
-                        context.getResources().getColor(R.color.DodgerBlue, null),
+                imageShape = ShapeUtil.getShape(context.getResources().getColor(R.color.White),
+                        context.getResources().getColor(R.color.DodgerBlue),
                         GradientDrawable.OVAL, 50, 3);
             } else {
-                imageShape = ShapeUtil.getShape(context.getResources().getColor(R.color.DodgerBlue, null),
-                        context.getResources().getColor(R.color.DodgerBlue, null),
+                imageShape = ShapeUtil.getShape(context.getResources().getColor(R.color.DodgerBlue),
+                        context.getResources().getColor(R.color.DodgerBlue),
                         GradientDrawable.OVAL, 50, 3);
             }
         } else
-            imageShape = ShapeUtil.getShape(context.getResources().getColor(colorCode, null),
-                    context.getResources().getColor(R.color.White, null),
+            imageShape = ShapeUtil.getShape(context.getResources().getColor(colorCode),
+                    context.getResources().getColor(R.color.White),
                     GradientDrawable.OVAL, 50, 3);
 
         profilePicImgView.setBackground(imageShape);
@@ -179,27 +179,27 @@ public class UserDataUtil {
         if (followStatus.equals(fb_child_status_friend)) {
             //takip ediliyor
             displayButton.setText(context.getResources().getString(R.string.friend));
-            displayButton.setTextColor(context.getResources().getColor(R.color.Black, null));
-            buttonShape = ShapeUtil.getShape(context.getResources().getColor(R.color.White, null),
-                    context.getResources().getColor(R.color.Gray, null), GradientDrawable.RECTANGLE, 15, 2);
+            displayButton.setTextColor(context.getResources().getColor(R.color.Black));
+            buttonShape = ShapeUtil.getShape(context.getResources().getColor(R.color.White),
+                    context.getResources().getColor(R.color.Gray), GradientDrawable.RECTANGLE, 15, 2);
 
         } else if (followStatus.equals(fb_child_status_sendedrequest)) {
             //istek gonderildi
             displayButton.setText(context.getResources().getString(R.string.request_sended));
-            displayButton.setTextColor(context.getResources().getColor(R.color.White, null));
-            buttonShape = ShapeUtil.getShape(context.getResources().getColor(R.color.Silver, null),
+            displayButton.setTextColor(context.getResources().getColor(R.color.White));
+            buttonShape = ShapeUtil.getShape(context.getResources().getColor(R.color.Silver),
                     0, GradientDrawable.RECTANGLE, 15, 0);
         }else if(followStatus.equals(fb_child_status_waiting)){
             //istek bana gelmis
             displayButton.setText(context.getResources().getString(R.string.acceptReq));
-            displayButton.setTextColor(context.getResources().getColor(R.color.White, null));
-            buttonShape = ShapeUtil.getShape(context.getResources().getColor(R.color.Silver, null),
+            displayButton.setTextColor(context.getResources().getColor(R.color.White));
+            buttonShape = ShapeUtil.getShape(context.getResources().getColor(R.color.Silver),
                     0, GradientDrawable.RECTANGLE, 15, 0);
         }else {
             //arkadas degil bi bagimiz yok
             displayButton.setText(context.getResources().getString(R.string.addFriend));
-            displayButton.setTextColor(context.getResources().getColor(R.color.White, null));
-            buttonShape = ShapeUtil.getShape(context.getResources().getColor(R.color.DodgerBlue, null),
+            displayButton.setTextColor(context.getResources().getColor(R.color.White));
+            buttonShape = ShapeUtil.getShape(context.getResources().getColor(R.color.DodgerBlue),
                     0, GradientDrawable.RECTANGLE, 15, 0);
         }
 
@@ -212,9 +212,9 @@ public class UserDataUtil {
 
         GradientDrawable buttonShape;
         displayButton.setText(context.getResources().getString(R.string.invite));
-        displayButton.setTextColor(context.getResources().getColor(R.color.Coral, null));
-        buttonShape = ShapeUtil.getShape(context.getResources().getColor(R.color.White, null),
-                context.getResources().getColor(R.color.Coral, null), GradientDrawable.RECTANGLE, 15, 3);
+        displayButton.setTextColor(context.getResources().getColor(R.color.Coral));
+        buttonShape = ShapeUtil.getShape(context.getResources().getColor(R.color.White),
+                context.getResources().getColor(R.color.Coral), GradientDrawable.RECTANGLE, 15, 3);
 
         displayButton.setBackground(buttonShape);
     }
@@ -222,18 +222,18 @@ public class UserDataUtil {
     public static void updatePendingApproveButton(Context context, Button displayButton) {
         CommonUtils.hideKeyBoard(context);
         GradientDrawable buttonShape;
-        displayButton.setTextColor(context.getResources().getColor(R.color.White, null));
-        buttonShape = ShapeUtil.getShape(context.getResources().getColor(R.color.DodgerBlue, null),
-                context.getResources().getColor(R.color.White, null), GradientDrawable.RECTANGLE, 15, 1);
+        displayButton.setTextColor(context.getResources().getColor(R.color.White));
+        buttonShape = ShapeUtil.getShape(context.getResources().getColor(R.color.DodgerBlue),
+                context.getResources().getColor(R.color.White), GradientDrawable.RECTANGLE, 15, 1);
         displayButton.setBackground(buttonShape);
     }
 
     public static void updatePendingRejectButton(Context context, Button displayButton) {
         CommonUtils.hideKeyBoard(context);
         GradientDrawable buttonShape;
-        displayButton.setTextColor(context.getResources().getColor(R.color.Black, null));
-        buttonShape = ShapeUtil.getShape(context.getResources().getColor(R.color.White, null),
-                context.getResources().getColor(R.color.Gray, null), GradientDrawable.RECTANGLE, 15, 2);
+        displayButton.setTextColor(context.getResources().getColor(R.color.Black));
+        buttonShape = ShapeUtil.getShape(context.getResources().getColor(R.color.White),
+                context.getResources().getColor(R.color.Gray), GradientDrawable.RECTANGLE, 15, 2);
         displayButton.setBackground(buttonShape);
     }
 

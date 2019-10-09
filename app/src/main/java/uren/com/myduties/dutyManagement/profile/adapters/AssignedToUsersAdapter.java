@@ -3,9 +3,6 @@ package uren.com.myduties.dutyManagement.profile.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,12 +21,10 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import uren.com.myduties.R;
 import uren.com.myduties.common.ShowSelectedPhotoFragment;
-import uren.com.myduties.dbManagement.GroupTaskDBHelper;
 import uren.com.myduties.dbManagement.UserTaskDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.evetBusModels.TaskTypeBus;
@@ -194,10 +189,10 @@ public class AssignedToUsersAdapter extends RecyclerView.Adapter {
                                             .setMessage(mContext.getResources().getString(R.string.sureToChangeTaskText))
                                             .setNegativeBtnVisibility(View.VISIBLE)
                                             .setNegativeBtnText(mContext.getResources().getString(R.string.cancel))
-                                            .setNegativeBtnBackground(mContext.getResources().getColor(R.color.Silver, null))
+                                            .setNegativeBtnBackground(mContext.getResources().getColor(R.color.Silver))
                                             .setPositiveBtnVisibility(View.VISIBLE)
                                             .setPositiveBtnText(mContext.getResources().getString(R.string.ok))
-                                            .setPositiveBtnBackground(mContext.getResources().getColor(R.color.bg_screen1, null))
+                                            .setPositiveBtnBackground(mContext.getResources().getColor(R.color.bg_screen1))
                                             .setDurationTime(0)
                                             .isCancellable(true)
                                             .setEditTextVisibility(View.VISIBLE)

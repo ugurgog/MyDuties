@@ -38,7 +38,6 @@ import uren.com.myduties.models.User;
 import uren.com.myduties.utils.ClickableImage.ClickableImageView;
 import uren.com.myduties.utils.CommonUtils;
 
-import static uren.com.myduties.constants.NumericConstants.DEFAULT_GET_FOLLOWER_PERPAGE_COUNT;
 import static uren.com.myduties.constants.StringConstants.ANIMATE_LEFT_TO_RIGHT;
 import static uren.com.myduties.constants.StringConstants.fb_child_status_friend;
 import static uren.com.myduties.constants.StringConstants.fb_child_status_sendedrequest;

@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
@@ -57,10 +56,10 @@ public class ForgetPasswordActivity extends AppCompatActivity implements View.On
     private void setShapes() {
      /*   lockImgv.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.transparentBlack, null),
                 0, GradientDrawable.OVAL, 50, 0));*/
-        emailET.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.transparent, null),
-                getResources().getColor(R.color.White, null), GradientDrawable.RECTANGLE, 20, 4));
-        btnSendLink.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.colorPrimary, null),
-                getResources().getColor(R.color.White, null), GradientDrawable.RECTANGLE, 20, 3));
+        emailET.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.transparent),
+                getResources().getColor(R.color.White), GradientDrawable.RECTANGLE, 20, 4));
+        btnSendLink.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.colorPrimary),
+                getResources().getColor(R.color.White), GradientDrawable.RECTANGLE, 20, 3));
     }
 
     private void init() {

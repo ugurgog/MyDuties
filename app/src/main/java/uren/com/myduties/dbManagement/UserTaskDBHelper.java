@@ -25,12 +25,8 @@ import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.OnCompleteCallback;
 import uren.com.myduties.interfaces.ReturnCallback;
 import uren.com.myduties.models.Task;
-import uren.com.myduties.models.TaskSelectionFilter;
 import uren.com.myduties.models.User;
 
-import static uren.com.myduties.constants.StringConstants.ALL_URGENT;
-import static uren.com.myduties.constants.StringConstants.NOT_URGENT;
-import static uren.com.myduties.constants.StringConstants.URGENT;
 import static uren.com.myduties.constants.StringConstants.fb_child_assignedfrom;
 import static uren.com.myduties.constants.StringConstants.fb_child_assignedfromid;
 import static uren.com.myduties.constants.StringConstants.fb_child_assignedtime;

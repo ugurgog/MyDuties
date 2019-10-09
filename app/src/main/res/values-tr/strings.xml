@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Görev Listem</string>
 
     <!-- App introduction variables-->
@@ -26,7 +26,6 @@
     <string name="selectLeastOneFriend">En az 1 kişi seçmelisiniz!</string>
     <string name="selectOneFriend">Lütfen 1 arkadaşınızı seçiniz!</string>
     <string name="selectOneGroup">Please select a group!</string>
-    <string name="selectLeastOneGroup">En az 1 grup seçmelisiniz!</string>
     <string name="addGroupName">Grup adı ekle</string>
     <string name="pleaseWriteGroupName">Grup adı boş olamaz!</string>
     <string name="deviceHasNoCamera">Cihazın kamerası yok!</string>
@@ -199,7 +198,6 @@
     <string name="there_is_no_group_task">Grup göreviniz bulunmuyor.</string>
 
     <string name="loading">Yükleniyor…</string>
-    <string name="swipeDownForRefresh">Yenilemek için aşağı sürükleyin.</string>
     <string name="delete">Sil</string>
     <string name="fixed">Fixed</string>
     <string name="rateus">Bizi Değerlendir</string>
@@ -235,7 +233,6 @@
     <string name="task_completed">Tamamlandı</string>
     <string name="call_user">Ara</string>
 
-    <string name="users_phone_not_defined">Kullanıcının telefonu tanımlı değil.</string>
     <string name="phone_not_defined">\'nın telefonu tanımlı değil.</string>
     <string name="notCallableItsYou">Görev atamasını yapan sizsiniz. Telefon araması yapamazsınız.</string>
     <string name="see_all_tasks">Tüm grup görevlerini gör</string>
@@ -252,11 +249,9 @@
     <string name="phoneNotDefined">Telefon bilgisi henüz tanımlanmadı.</string>
     <string name="thisTaskAssignedTo">Bu görev şu kişiye atandı</string>
     <string name="defaultHomeSelected">Görev tipi varsayılan Ev\'dir. Değiştirmek için resme tıklayın.</string>
-    <string name="whomorwhichgrouptask">Görev kime yada hangi gruba atanacak?. Lütfen seçiniz.</string>
+    <string name="whomorwhichgrouptask">Görev kime ya da hangi gruba atanacak?. Lütfen seçiniz.</string>
     <string name="remind">Hatırlat</string>
     <string name="urgent">Acil</string>
-    <string name="noturgent">Acil Değil</string>
-    <string name="all">Hepsi</string>
     <string name="closed">Kapalı</string>
     <string name="taskIsClosedAlready">Bu görev zaten kapatılmış.</string>
     <string name="markAsUrgent">Acil yap</string>
@@ -271,7 +266,7 @@
     <string name="chooseAFriend">Bir Arkadaş Seçin</string>
     <string name="chooseAGroup">Bir Grup Seçin</string>
     <string name="selectTaskType">Lütfen Görevin Tipini Seçiniz</string>
-    <string name="selectUserOrGroupToAssignTask">Görev ataması için lütfen kullanıcı yada grup seçin!</string>
+    <string name="selectUserOrGroupToAssignTask">Görev ataması için lütfen kullanıcı ya da grup seçin!</string>
     <string name="pleaseEnterTaskDesc">Lütfen görev açıkmasını yazın!</string>
     <string name="there_is_no_task_I_assigned">Benim atadığım bir görev henüz bulunmuyor.</string>
     <string name="there_is_no_task_I_assigned_to_groups">Henüz gruplara atadığım bir görev bulunmuyor.</string>
@@ -297,5 +292,8 @@
 
     <string name="FCM_SERVER_KEY">AAAA4JR4Gec:APA91bGLWhwgn6JuvSPzJVWUw-LTiu3rW48ihDO--ulWaWja8s8f6M9v4fy_Y2pMOx8cqrB8NwzT-XB9cqfMpsYpgQ8yAksP6xK8A9rG5nOpbwUJQkr04xgG9aI4Qbf4P16XxuzMYvWv</string>
 
+    <string name="ADMOB_APP_ID" tools:ignore="MissingTranslation">ca-app-pub-7227467199436307~5044253017</string>
+    <string name="ADMOB_BANNER_AD_UNIT_ID">ca-app-pub-7227467199436307/5419302311</string>
+    <string name="ADMOB_INTERSITITIAL_AD_UNIT_ID">ca-app-pub-7227467199436307/3914648950</string>
 
 </resources>

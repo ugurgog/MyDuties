@@ -9,7 +9,6 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -111,10 +110,10 @@ public class SelectOneFriendAdapter extends RecyclerView.Adapter implements Filt
         }
 
         private void setShapes() {
-            profilePicImgView.setBackground(ShapeUtil.getShape(context.getResources().getColor(R.color.DodgerBlue, null),
-                    context.getResources().getColor(R.color.Orange, null), GradientDrawable.OVAL, 50, 0));
-            tickImgv.setBackground(ShapeUtil.getShape(context.getResources().getColor(R.color.DarkTurquoise, null),
-                    context.getResources().getColor(R.color.White, null), GradientDrawable.OVAL, 50, 3));
+            profilePicImgView.setBackground(ShapeUtil.getShape(context.getResources().getColor(R.color.DodgerBlue),
+                    context.getResources().getColor(R.color.Orange), GradientDrawable.OVAL, 50, 0));
+            tickImgv.setBackground(ShapeUtil.getShape(context.getResources().getColor(R.color.DarkTurquoise),
+                    context.getResources().getColor(R.color.White), GradientDrawable.OVAL, 50, 3));
         }
 
         public void manageSelectedItem() {

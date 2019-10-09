@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,7 +20,6 @@ import uren.com.myduties.R;
 import uren.com.myduties.admin.adapters.ProblemAdapter;
 import uren.com.myduties.dbManagement.ProblemDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
-import uren.com.myduties.dutyManagement.NextActivity;
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.models.Problem;

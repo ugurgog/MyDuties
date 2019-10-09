@@ -20,7 +20,6 @@ import androidx.appcompat.widget.AppCompatTextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.crashlytics.android.core.UserMetaData;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.greenrobot.eventbus.EventBus;
@@ -339,14 +338,14 @@ public class AssignTaskFragment extends BaseFragment {
 
     public void fillUserSelectImgv() {
         personSelectImgv.setBackground(ShapeUtil.getShape(0,
-                Objects.requireNonNull(getContext()).getResources().getColor(R.color.RoyalBlue, null),
+                Objects.requireNonNull(getContext()).getResources().getColor(R.color.RoyalBlue),
                 GradientDrawable.OVAL, 50, 3));
         groupSelectImgv.setBackground(null);
     }
 
     public void fillGroupSelectImgv() {
         groupSelectImgv.setBackground(ShapeUtil.getShape(0,
-                Objects.requireNonNull(getContext()).getResources().getColor(R.color.RoyalBlue, null),
+                Objects.requireNonNull(getContext()).getResources().getColor(R.color.RoyalBlue),
                 GradientDrawable.OVAL, 50, 3));
         personSelectImgv.setBackground(null);
     }

@@ -181,7 +181,7 @@ public class ViewGroupDetailFragment extends BaseFragment {
     }
 
     public void setShapes() {
-        addFriendImgv.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.LimeGreen, null),
+        addFriendImgv.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.LimeGreen),
                 0, GradientDrawable.OVAL, 50, 0));
     }
 

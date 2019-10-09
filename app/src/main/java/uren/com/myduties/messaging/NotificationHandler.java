@@ -4,7 +4,6 @@ import android.content.Context;
 
 import uren.com.myduties.dbManagement.TokenDBHelper;
 import uren.com.myduties.interfaces.CompleteCallback;
-import uren.com.myduties.interfaces.OnCompleteCallback;
 import uren.com.myduties.messaging.interfaces.MessageSentFCMCallback;
 import uren.com.myduties.messaging.models.FCMItems;
 import uren.com.myduties.models.Group;

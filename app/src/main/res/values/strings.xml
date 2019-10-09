@@ -25,7 +25,6 @@
     <string name="selectLeastOneFriend">You must choose at least 1 person!</string>
     <string name="selectOneFriend">Please select a friend!</string>
     <string name="selectOneGroup">Please select a group!</string>
-    <string name="selectLeastOneGroup">You must choose at least 1 group!</string>
     <string name="addGroupName">Add group name</string>
     <string name="pleaseWriteGroupName">The group name cannot be empty!</string>
     <string name="deviceHasNoCamera">Device has no camera!</string>
@@ -206,7 +205,6 @@
 
     <string name="loading">Loading…</string>
     <string name="serverError">Server Error</string>
-    <string name="swipeDownForRefresh">Swipe down for refresh</string>
     <string name="delete">Delete</string>
     <string name="fixed">Fixed</string>
 
@@ -241,7 +239,6 @@
     <string name="task_completed">Completed</string>
     <string name="call_user">Call</string>
 
-    <string name="users_phone_not_defined">User\'s phone is not defined.</string>
     <string name="phone_not_defined">\'s phone is not defined.</string>
     <string name="notCallableItsYou">You\'re the one who made the assignment. You cannot make a phone call.</string>
     <string name="see_all_tasks">See all group tasks -></string>
@@ -261,8 +258,6 @@
     <string name="whomorwhichgrouptask">Whom or which group will the task be assigned to? Please select.</string>
     <string name="remind">Remind</string>
     <string name="urgent">Urgent</string>
-    <string name="noturgent">Not Urgent</string>
-    <string name="all">All</string>
     <string name="closed">Closed</string>
     <string name="taskIsClosedAlready">This task is already closed.</string>
     <string name="markAsUrgent">Mark as urgent</string>
@@ -305,12 +300,12 @@
     <string name="FCM_SERVER_KEY">AAAA4JR4Gec:APA91bGLWhwgn6JuvSPzJVWUw-LTiu3rW48ihDO--ulWaWja8s8f6M9v4fy_Y2pMOx8cqrB8NwzT-XB9cqfMpsYpgQ8yAksP6xK8A9rG5nOpbwUJQkr04xgG9aI4Qbf4P16XxuzMYvWv</string>
 
     <string name="ADMOB_APP_ID" tools:ignore="MissingTranslation">ca-app-pub-7227467199436307~5044253017</string>
-    <!--<string name="ADMOB_BANNER_AD_UNIT_ID">ca-app-pub-7227467199436307/5419302311</string>
-    <string name="ADMOB_INTERSITITIAL_AD_UNIT_ID">ca-app-pub-7227467199436307/3914648950</string>-->
+    <string name="ADMOB_BANNER_AD_UNIT_ID">ca-app-pub-7227467199436307/5419302311</string>
+    <string name="ADMOB_INTERSITITIAL_AD_UNIT_ID">ca-app-pub-7227467199436307/3914648950</string>
 
 
     <!--Test-->
-    <string name="ADMOB_BANNER_AD_UNIT_ID" tools:ignore="MissingTranslation">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="ADMOB_INTERSITITIAL_AD_UNIT_ID" tools:ignore="MissingTranslation">ca-app-pub-3940256099942544/1033173712</string>
+    <!--<string name="ADMOB_BANNER_AD_UNIT_ID" tools:ignore="MissingTranslation">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="ADMOB_INTERSITITIAL_AD_UNIT_ID" tools:ignore="MissingTranslation">ca-app-pub-3940256099942544/1033173712</string>-->
 
 </resources>

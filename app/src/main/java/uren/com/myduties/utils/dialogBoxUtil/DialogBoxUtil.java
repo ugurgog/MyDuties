@@ -109,7 +109,7 @@ public class DialogBoxUtil {
         CommonUtils.hideKeyBoard(context);
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(context.getResources().getString(R.string.errorUpper));
-        builder.setIcon(context.getResources().getDrawable(R.drawable.ic_error_white_24dp, null));
+        builder.setIcon(context.getResources().getDrawable(R.drawable.ic_error_white_24dp));
         builder.setMessage(errMessage);
 
         builder.setNeutralButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
@@ -127,7 +127,7 @@ public class DialogBoxUtil {
     public static void showInfoDialogBox(Context context, String message, String title, final InfoDialogBoxCallback infoDialogBoxCallback) {
         CommonUtils.hideKeyBoard(context);
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setIcon(context.getResources().getDrawable(R.drawable.ic_info_outline_white_24dp, null));
+        builder.setIcon(context.getResources().getDrawable(R.drawable.ic_info_outline_white_24dp));
         builder.setMessage(message);
 
         if (title != null && !title.trim().isEmpty())

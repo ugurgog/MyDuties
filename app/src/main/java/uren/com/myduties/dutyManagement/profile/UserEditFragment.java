@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -138,9 +137,9 @@ public class UserEditFragment extends BaseFragment
     }
 
     public void setShapes() {
-        addPhotoImgv.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.DodgerBlue, null),
-                getResources().getColor(R.color.White, null), GradientDrawable.OVAL, 50, 5));
-        imgProfile.setBackground(ShapeUtil.getShape(getActivity().getResources().getColor(R.color.DodgerBlue, null),
+        addPhotoImgv.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.DodgerBlue),
+                getResources().getColor(R.color.White), GradientDrawable.OVAL, 50, 5));
+        imgProfile.setBackground(ShapeUtil.getShape(getActivity().getResources().getColor(R.color.DodgerBlue),
                 0, GradientDrawable.OVAL, 50, 0));
     }
 
@@ -304,9 +303,11 @@ public class UserEditFragment extends BaseFragment
             UserPhotoDBHelper.uploadUserPhoto(getContext(), user.getUserid(), photoSelectUtil, new CompleteCallback() {
                 @Override
                 public void onComplete(Object object) {
-                    String downloadUrl = (String) object;
-                    user.setProfilePhotoUrl(downloadUrl);
-                    updateUserPersonalInfo();
+                    if (object != null) {
+                        String downloadUrl = (String) object;
+                        user.setProfilePhotoUrl(downloadUrl);
+                        updateUserPersonalInfo();
+                    }
                 }
 
                 @Override
@@ -315,9 +316,8 @@ public class UserEditFragment extends BaseFragment
                     progressDialogUtil.dialogDismiss();
                 }
             });
-        } else {
+        } else
             updateUserPersonalInfo();
-        }
     }
 
     private void updateUserPersonalInfo() {
