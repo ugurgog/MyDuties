@@ -253,9 +253,19 @@ public class GroupDBHelper {
 
                     Map<String, Object> map = (Map) dataSnapshot.getValue();
 
-                    String adminid = (String) map.get(fb_child_adminid);
+                    String adminid = null;
+                    try {
+                        adminid = (String) map.get(fb_child_adminid);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     long createdat = (long) map.get(fb_child_createdat);
-                    String groupPhotoUrl = (String) map.get(fb_child_groupphotourl);
+                    String groupPhotoUrl = null;
+                    try {
+                        groupPhotoUrl = (String) map.get(fb_child_groupphotourl);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     String name = (String) map.get(fb_child_name);
 
                     Map<String, Object> members = (Map) Objects.requireNonNull(map).get(fb_child_members);

@@ -64,11 +64,8 @@ public class CompletedTaskFragment extends BaseFragment {
     @BindView(R.id.txtNoItemFound)
     AppCompatTextView txtNoItemFound;
 
-    private int limitValue;
     private boolean loading = true;
-    private int pastVisibleItems, visibleItemCount, totalItemCount;
     private List<Task> taskList = new ArrayList<>();
-    private static final int RECYCLER_VIEW_CACHE_COUNT = 10;
     private boolean pulledToRefresh = false;
     private boolean isFirstFetch = false;
     User user;
@@ -85,8 +82,6 @@ public class CompletedTaskFragment extends BaseFragment {
         if (mView == null) {
             mView = inflater.inflate(R.layout.fragment_completed_task, container, false);
             ButterKnife.bind(this, mView);
-            initVariables();
-            initListeners();
             initRecyclerView();
             startGetPosts();
             loadingView.show();
@@ -99,14 +94,6 @@ public class CompletedTaskFragment extends BaseFragment {
     public void onStart() {
         Objects.requireNonNull(getActivity()).findViewById(R.id.tabMainLayout).setVisibility(View.VISIBLE);
         super.onStart();
-    }
-
-    private void initVariables() {
-        limitValue = REC_MAXITEM_LIMIT_COUNT;
-    }
-
-    private void initListeners() {
-
     }
 
     private void initRecyclerView() {

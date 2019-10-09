@@ -178,7 +178,11 @@ public class GifDialogBox {
                 });
             }
 
-            dialog.show();
+            try {
+                dialog.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             if (this.durationTime > 0) {
                 new Handler().postDelayed(new Runnable() {
