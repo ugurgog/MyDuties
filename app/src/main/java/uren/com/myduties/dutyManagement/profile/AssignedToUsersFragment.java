@@ -172,9 +172,8 @@ public class AssignedToUsersFragment extends BaseFragment {
         new Handler().postDelayed(() -> {
             if(assignedToUsersAdapter.getItemCount() == 0){
                 refresh_layout.setRefreshing(false);
-                //showExceptionLayout(true, VIEW_NO_POST_FOUND);
                 CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
-                        getResources().getString(R.string.there_is_no_task_I_assigned));
+                        getContext().getResources().getString(R.string.there_is_no_task_I_assigned));
             }
         }, 3000);
     }

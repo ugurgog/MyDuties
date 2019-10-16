@@ -230,10 +230,11 @@
 
                                 <!-- Friends -->
                                 <LinearLayout
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
-                                    android:id="@+id/friendsLayout">
+                                    android:id="@+id/friendsLayout"
+                                    android:layout_weight="1">
 
 
                                     <androidx.appcompat.widget.AppCompatTextView
@@ -243,7 +244,9 @@
                                         android:fontFamily="@font/amiko"
                                         android:text="@string/friends"
                                         android:textColor="@color/Gray"
-                                        android:textSize="13sp" />
+                                        android:textSize="13sp"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_marginEnd="10dp"/>
 
 
                                     <RelativeLayout
@@ -274,11 +277,11 @@
 
                                 <!-- Groups -->
                                 <LinearLayout
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
-                                    android:layout_marginStart="30dp"
-                                    android:id="@+id/groupsLayout">
+                                    android:id="@+id/groupsLayout"
+                                    android:layout_weight="1">
 
 
                                     <androidx.appcompat.widget.AppCompatTextView
@@ -288,7 +291,9 @@
                                         android:fontFamily="@font/amiko"
                                         android:text="@string/groupsShareText"
                                         android:textColor="@color/Gray"
-                                        android:textSize="13sp" />
+                                        android:textSize="13sp"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_marginEnd="10dp"/>
 
                                     <RelativeLayout
                                         android:layout_width="wrap_content"
@@ -317,11 +322,11 @@
 
                                 <!-- Tasks -->
                                 <LinearLayout
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
-                                    android:layout_marginStart="30dp"
-                                    android:id="@+id/tasksLayout">
+                                    android:id="@+id/tasksLayout"
+                                    android:layout_weight="1">
 
 
                                     <androidx.appcompat.widget.AppCompatTextView
@@ -331,7 +336,9 @@
                                         android:fontFamily="@font/amiko"
                                         android:text="@string/tasksmyassignedDesc"
                                         android:textColor="@color/Gray"
-                                        android:textSize="13sp" />
+                                        android:textSize="13sp"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_marginEnd="10dp"/>
 
                                     <RelativeLayout
                                         android:layout_width="wrap_content"
@@ -494,8 +501,6 @@
                                 android:layout_marginEnd="25dp"/>
 
                         </LinearLayout>
-
-
 
                     </LinearLayout>
 

@@ -3,6 +3,7 @@ package uren.com.myduties.dutyManagement.profile.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -224,6 +225,15 @@ public class AssignedToUsersAdapter extends RecyclerView.Adapter {
                                     if (task.isClosed()) {
                                         CommonUtils.showToastShort(mContext, mContext.getResources().getString(R.string.closedTaskNotEdited));
                                         break;
+                                    }
+
+                                    try {
+                                        if(task.getAssignedFrom().getUserid().equals(task.getAssignedTo().getUserid())){
+                                            CommonUtils.showToastShort(mContext, mContext.getResources().getString(R.string.cannotReminded));
+                                            break;
+                                        }
+                                    } catch (Resources.NotFoundException e) {
+                                        e.printStackTrace();
                                     }
 
                                     NotificationHandler.sendUserNotification(mContext, task.getAssignedFrom(), task.getAssignedTo(),

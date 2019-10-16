@@ -221,7 +221,7 @@ public class SettingsFragment extends BaseFragment {
 
 
     private void signOutClicked() {
-        SettingOperation.userSignOut(new CompleteCallback() {
+        SettingOperation.userSignOut(getContext(), accountHolderUser, new CompleteCallback() {
             @Override
             public void onComplete(Object object) {
                 Objects.requireNonNull(getActivity()).finish();

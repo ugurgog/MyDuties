@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,12 +23,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.core.content.FileProvider;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +47,7 @@ import uren.com.myduties.models.PhotoSelectUtil;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.ClickableImage.ClickableImageView;
 import uren.com.myduties.utils.CommonUtils;
+import uren.com.myduties.utils.FileAdapter;
 import uren.com.myduties.utils.IntentSelectUtil;
 import uren.com.myduties.utils.PermissionModule;
 import uren.com.myduties.utils.ProgressDialogUtil;
@@ -51,9 +56,12 @@ import uren.com.myduties.utils.dataModelUtil.UserDataUtil;
 import uren.com.myduties.utils.dialogBoxUtil.DialogBoxUtil;
 import uren.com.myduties.utils.dialogBoxUtil.Interfaces.PhotoChosenCallback;
 
+import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
+import static uren.com.myduties.constants.NumericConstants.MAX_IMAGE_SIZE_1MB;
 import static uren.com.myduties.constants.StringConstants.ANIMATE_LEFT_TO_RIGHT;
 import static uren.com.myduties.constants.StringConstants.ANIMATE_RIGHT_TO_LEFT;
 import static uren.com.myduties.constants.StringConstants.CAMERA_TEXT;
+import static uren.com.myduties.constants.StringConstants.FROM_FILE_TEXT;
 import static uren.com.myduties.constants.StringConstants.GALLERY_TEXT;
 
 public class UserEditFragment extends BaseFragment
@@ -94,6 +102,8 @@ public class UserEditFragment extends BaseFragment
     boolean photoExist = false;
 
     ProgressDialogUtil progressDialogUtil;
+    Uri photoUri;
+    String galleryOrCameraSelect = "";
 
     User user;
 
@@ -340,11 +350,13 @@ public class UserEditFragment extends BaseFragment
         PhotoChosenCallback photoChosenCallback = new PhotoChosenCallback() {
             @Override
             public void onGallerySelected() {
+                galleryOrCameraSelect = GALLERY_TEXT;
                 getGalleryPermission();
             }
 
             @Override
             public void onCameraSelected() {
+                galleryOrCameraSelect = CAMERA_TEXT;
                 checkCameraProcess();
             }
 
@@ -373,11 +385,27 @@ public class UserEditFragment extends BaseFragment
             return;
         }
 
-        if (permissionModule.checkCameraPermission()) {
-            startActivityForResult(IntentSelectUtil.getCameraIntent(), ACTIVITY_REQUEST_CODE_OPEN_CAMERA);
-        } else
+        if (permissionModule.checkCameraPermission() && permissionModule.checkWriteExternalStoragePermission())
+            openCameraForPhotoSelect();
+        else if (permissionModule.checkCameraPermission())
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    PermissionModule.PERMISSION_WRITE_EXTERNAL_STORAGE);
+        else if (permissionModule.checkWriteExternalStoragePermission())
             requestPermissions(new String[]{Manifest.permission.CAMERA},
                     PermissionModule.PERMISSION_CAMERA);
+        else
+            requestPermissions(new String[]{Manifest.permission.CAMERA},
+                    PermissionModule.PERMISSION_CAMERA);
+    }
+
+    public void openCameraForPhotoSelect() {
+        photoUri = FileProvider.getUriForFile(getContext(), Objects.requireNonNull(getContext()).getPackageName() + ".provider",
+                Objects.requireNonNull(FileAdapter.getOutputMediaFile(MEDIA_TYPE_IMAGE)));
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_SIZE_LIMIT, (long) MAX_IMAGE_SIZE_1MB);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+        startActivityForResult(intent, ACTIVITY_REQUEST_CODE_OPEN_CAMERA);
     }
 
     @Override
@@ -385,12 +413,26 @@ public class UserEditFragment extends BaseFragment
 
         if (requestCode == PermissionModule.PERMISSION_WRITE_EXTERNAL_STORAGE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startActivityForResult(Intent.createChooser(IntentSelectUtil.getGalleryIntent(),
-                        getResources().getString(R.string.selectPicture)), ACTIVITY_REQUEST_CODE_OPEN_GALLERY);
+
+                if (galleryOrCameraSelect.equals(CAMERA_TEXT)) {
+                    if (permissionModule.checkCameraPermission())
+                        openCameraForPhotoSelect();
+                    else
+                        requestPermissions(new String[]{Manifest.permission.CAMERA},
+                                PermissionModule.PERMISSION_CAMERA);
+                } else if (galleryOrCameraSelect.equals(GALLERY_TEXT)) {
+                    startActivityForResult(Intent.createChooser(IntentSelectUtil.getGalleryIntent(),
+                            Objects.requireNonNull(getContext()).getResources().getString(R.string.selectPicture)), ACTIVITY_REQUEST_CODE_OPEN_GALLERY);
+                }
             }
         } else if (requestCode == PermissionModule.PERMISSION_CAMERA) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startActivityForResult(IntentSelectUtil.getCameraIntent(), ACTIVITY_REQUEST_CODE_OPEN_CAMERA);
+
+                if (permissionModule.checkWriteExternalStoragePermission())
+                    openCameraForPhotoSelect();
+                else
+                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            PermissionModule.PERMISSION_WRITE_EXTERNAL_STORAGE);
             }
         }
     }
@@ -400,13 +442,17 @@ public class UserEditFragment extends BaseFragment
 
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == ACTIVITY_REQUEST_CODE_OPEN_GALLERY) {
-                photoSelectUtil = new PhotoSelectUtil(getActivity(), data, GALLERY_TEXT);
-                setUserPhoto(data.getData());
-                profilPicChanged = true;
+                photoSelectUtil = new PhotoSelectUtil(getContext(), data, GALLERY_TEXT);
+                if(data != null && data.getData() != null) {
+                    setUserPhoto(data.getData());
+                    profilPicChanged = true;
+                }
             } else if (requestCode == ACTIVITY_REQUEST_CODE_OPEN_CAMERA) {
-                photoSelectUtil = new PhotoSelectUtil(getActivity(), data, CAMERA_TEXT);
-                setUserPhoto(data.getData());
-                profilPicChanged = true;
+                photoSelectUtil = new PhotoSelectUtil(getContext(), data, CAMERA_TEXT);
+                if(data != null && data.getData() != null) {
+                    setUserPhoto(data.getData());
+                    profilPicChanged = true;
+                }
             }
         }
     }

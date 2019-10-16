@@ -6,6 +6,7 @@ import com.algolia.search.saas.Client;
 import com.algolia.search.saas.Index;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,10 +32,12 @@ import static uren.com.myduties.constants.StringConstants.ALGOLIA_APP_ID;
 import static uren.com.myduties.constants.StringConstants.ALGOLIA_INDEX_NAME;
 import static uren.com.myduties.constants.StringConstants.ALGOLIA_SEARCH_API_KEY;
 import static uren.com.myduties.constants.StringConstants.fb_child_admin;
+import static uren.com.myduties.constants.StringConstants.fb_child_assignedfrom;
 import static uren.com.myduties.constants.StringConstants.fb_child_countryCode;
 import static uren.com.myduties.constants.StringConstants.fb_child_dialCode;
 import static uren.com.myduties.constants.StringConstants.fb_child_email;
 import static uren.com.myduties.constants.StringConstants.fb_child_groups;
+import static uren.com.myduties.constants.StringConstants.fb_child_login_method;
 import static uren.com.myduties.constants.StringConstants.fb_child_name;
 import static uren.com.myduties.constants.StringConstants.fb_child_phone;
 import static uren.com.myduties.constants.StringConstants.fb_child_phoneNumber;
@@ -59,6 +62,14 @@ public class UserDBHelper {
             values.put(fb_child_email, user.getEmail());
         if (user.getUsername() != null)
             values.put(fb_child_username, user.getUsername());
+        if (user.getLoginMethod() != null)
+            values.put(fb_child_login_method, user.getLoginMethod());
+        if (user.getName() != null)
+            values.put(fb_child_name, user.getName());
+        if (user.getProfilePhotoUrl() != null)
+            values.put(fb_child_profilePhotoUrl, user.getProfilePhotoUrl());
+
+        values.put(fb_child_admin, user.isAdmin());
 
         databaseReference.updateChildren(values).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -103,6 +114,8 @@ public class UserDBHelper {
             values.put(fb_child_profilePhotoUrl, user.getProfilePhotoUrl());
         if (user.getUsername() != null)
             values.put(fb_child_username, user.getUsername());
+        if (user.getLoginMethod() != null)
+            values.put(fb_child_login_method, user.getLoginMethod());
 
         //Phone bilgisini ekleyelim
         if (user.getPhone() != null) {
@@ -124,7 +137,7 @@ public class UserDBHelper {
         if (user.getGroupIdList() != null) {
             Map<String, Object> groupMap = new HashMap<>();
 
-            for(String groupId : user.getGroupIdList())
+            for (String groupId : user.getGroupIdList())
                 groupMap.put(groupId, " ");
 
             values.put(fb_child_groups, groupMap);
@@ -211,7 +224,14 @@ public class UserDBHelper {
                         e.printStackTrace();
                     }
 
-                    User user = new User(userid, name, username, email, photoUrl, phone, groupList, admin);
+                    String loginMethod = null;
+                    try {
+                        loginMethod = (String) userMap.get(fb_child_login_method);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    User user = new User(userid, name, username, email, photoUrl, phone, groupList, admin, loginMethod);
                     user.setAdmin(admin);
                     completeCallback.onComplete(user);
                 } else
@@ -221,6 +241,21 @@ public class UserDBHelper {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 completeCallback.onFailed(databaseError.toString());
+            }
+        });
+    }
+
+    public static void deleteLoginMethod(String userid, OnCompleteCallback onCompleteCallback){
+        FirebaseDatabase.getInstance().getReference(fb_child_users).child(userid).child(fb_child_login_method)
+                .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                onCompleteCallback.OnCompleted();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                onCompleteCallback.OnFailed(e.getMessage());
             }
         });
     }

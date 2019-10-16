@@ -116,7 +116,7 @@ public class ProfileFragment extends BaseFragment {
     boolean mDrawerState;
     int assignedTaskCnt = 0;
 
-    User user;
+    User accountHolderUser;
 
     public ProfileFragment() {
     }
@@ -141,7 +141,7 @@ public class ProfileFragment extends BaseFragment {
 
     @Subscribe(sticky = true)
     public void accountHolderUserReceived(UserBus userBus) {
-        user = userBus.getUser();
+        accountHolderUser = userBus.getUser();
     }
 
     @Nullable
@@ -159,7 +159,7 @@ public class ProfileFragment extends BaseFragment {
 
     private void setFriendsCntTv() {
         //friendsCntTv.setText(Integer.toString(0));
-        FriendsDBHelper.getFriendCountByStatus(user.getUserid(), fb_child_status_friend, new CompleteCallback() {
+        FriendsDBHelper.getFriendCountByStatus(accountHolderUser.getUserid(), fb_child_status_friend, new CompleteCallback() {
             @Override
             public void onComplete(Object object) {
                 progressBar1.setVisibility(View.GONE);
@@ -176,11 +176,11 @@ public class ProfileFragment extends BaseFragment {
     }
 
     private void setGroupsCntTv() {
-        if (user.getGroupIdList() != null) {
+        if (accountHolderUser.getGroupIdList() != null) {
             progressBar2.setVisibility(View.GONE);
-            groupsCntTv.setText(Integer.toString(user.getGroupIdList().size()));
+            groupsCntTv.setText(Integer.toString(accountHolderUser.getGroupIdList().size()));
         }else {
-            GroupDBHelper.getUserGroupsCount(user.getUserid(), new ReturnCallback() {
+            GroupDBHelper.getUserGroupsCount(accountHolderUser.getUserid(), new ReturnCallback() {
                 @Override
                 public void OnReturn(Object object) {
                     progressBar2.setVisibility(View.GONE);
@@ -193,7 +193,7 @@ public class ProfileFragment extends BaseFragment {
 
     private void setTasksCntTv() {
         assignedTaskCnt = 0;
-        UserTaskDBHelper.getIAssignedTasksToUsersCount(user.getUserid(), new ReturnCallback() {
+        UserTaskDBHelper.getIAssignedTasksToUsersCount(accountHolderUser.getUserid(), new ReturnCallback() {
             @Override
             public void OnReturn(Object object) {
                 progressBar3.setVisibility(View.GONE);
@@ -203,7 +203,7 @@ public class ProfileFragment extends BaseFragment {
         });
 
 
-        GroupTaskDBHelper.getIAssignedTasksToGroupsCount(user.getUserid(), new ReturnCallback() {
+        GroupTaskDBHelper.getIAssignedTasksToGroupsCount(accountHolderUser.getUserid(), new ReturnCallback() {
             @Override
             public void OnReturn(Object object) {
                 progressBar3.setVisibility(View.GONE);
@@ -214,43 +214,43 @@ public class ProfileFragment extends BaseFragment {
     }
 
     private void setProfileDetails() {
-        if (user != null) {
-            UserDataUtil.setProfilePicture(getContext(), user.getProfilePhotoUrl(),
-                    user.getName(), user.getUsername(), txtProfile, imgProfile, true);
+        if (accountHolderUser != null) {
+            UserDataUtil.setProfilePicture(getContext(), accountHolderUser.getProfilePhotoUrl(),
+                    accountHolderUser.getName(), accountHolderUser.getUsername(), txtProfile, imgProfile, true);
             imgProfile.setPadding(7, 7, 7, 7);
 
             //Name
-            if (user.getName() != null && !user.getName().trim().isEmpty()) {
-                txtName.setText(user.getName());
-                navViewNameTv.setText(user.getName());
+            if (accountHolderUser.getName() != null && !accountHolderUser.getName().trim().isEmpty()) {
+                txtName.setText(accountHolderUser.getName());
+                navViewNameTv.setText(accountHolderUser.getName());
             } else {
                 txtName.setVisibility(View.GONE);
                 navViewNameTv.setVisibility(View.GONE);
             }
 
             //Username
-            if (user.getUsername() != null && !user.getUsername().trim().isEmpty())
-                txtUsername.setText(CHAR_AMPERSAND + user.getUsername());
+            if (accountHolderUser.getUsername() != null && !accountHolderUser.getUsername().trim().isEmpty())
+                txtUsername.setText(CHAR_AMPERSAND + accountHolderUser.getUsername());
             else
                 txtUsername.setVisibility(View.GONE);
 
-            if (user.getEmail() != null && !user.getEmail().trim().isEmpty()) {
-                navViewEmailTv.setText(user.getEmail());
-                emailTv.setText(user.getEmail());
+            if (accountHolderUser.getEmail() != null && !accountHolderUser.getEmail().trim().isEmpty()) {
+                navViewEmailTv.setText(accountHolderUser.getEmail());
+                emailTv.setText(accountHolderUser.getEmail());
             } else
                 navViewEmailTv.setVisibility(View.GONE);
 
             //profile picture
-            UserDataUtil.setProfilePicture(getContext(), user.getProfilePhotoUrl(),
-                    user.getName(), user.getUsername(), txtProfile, imgProfile, false);
+            UserDataUtil.setProfilePicture(getContext(), accountHolderUser.getProfilePhotoUrl(),
+                    accountHolderUser.getName(), accountHolderUser.getUsername(), txtProfile, imgProfile, false);
             imgProfile.setPadding(3, 3, 3, 3);
             //navigation profile picture
-            UserDataUtil.setProfilePicture(getContext(), user.getProfilePhotoUrl(),
-                    user.getName(), user.getUsername(), navViewShortenTextView, navImgProfile, false);
+            UserDataUtil.setProfilePicture(getContext(), accountHolderUser.getProfilePhotoUrl(),
+                    accountHolderUser.getName(), accountHolderUser.getUsername(), navViewShortenTextView, navImgProfile, false);
 
 
-            if (user.getPhone() != null && user.getPhone().getDialCode() != null && user.getPhone().getPhoneNumber() != 0)
-                phoneTv.setText(user.getPhone().getDialCode() + " " + user.getPhone().getPhoneNumber());
+            if (accountHolderUser.getPhone() != null && accountHolderUser.getPhone().getDialCode() != null && accountHolderUser.getPhone().getPhoneNumber() != 0)
+                phoneTv.setText(accountHolderUser.getPhone().getDialCode() + " " + accountHolderUser.getPhone().getPhoneNumber());
         }
     }
 
@@ -305,8 +305,8 @@ public class ProfileFragment extends BaseFragment {
         imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (user != null && user.getProfilePhotoUrl() != null && !user.getProfilePhotoUrl().isEmpty()) {
-                    mFragmentNavigation.pushFragment(new ShowSelectedPhotoFragment(user.getProfilePhotoUrl()));
+                if (accountHolderUser != null && accountHolderUser.getProfilePhotoUrl() != null && !accountHolderUser.getProfilePhotoUrl().isEmpty()) {
+                    mFragmentNavigation.pushFragment(new ShowSelectedPhotoFragment(accountHolderUser.getProfilePhotoUrl()));
                 }
             }
         });
@@ -426,7 +426,7 @@ public class ProfileFragment extends BaseFragment {
     }
 
     private void signOutClicked() {
-        SettingOperation.userSignOut(new CompleteCallback() {
+        SettingOperation.userSignOut(getContext(), accountHolderUser, new CompleteCallback() {
             @Override
             public void onComplete(Object object) {
                 Objects.requireNonNull(getActivity()).finish();

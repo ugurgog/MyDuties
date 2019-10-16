@@ -25,12 +25,14 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import uren.com.myduties.R;
+import uren.com.myduties.dbManagement.UserDBHelper;
 import uren.com.myduties.dbManagement.UserTaskDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.dutyManagement.tasks.adapters.CompletedTaskAdapter;
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.ReturnCallback;
+import uren.com.myduties.login.AccountHolderInfo;
 import uren.com.myduties.models.Task;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.CommonUtils;
@@ -83,7 +85,7 @@ public class CompletedTaskFragment extends BaseFragment {
             mView = inflater.inflate(R.layout.fragment_completed_task, container, false);
             ButterKnife.bind(this, mView);
             initRecyclerView();
-            startGetPosts();
+            startGetTasks();
             loadingView.show();
         }
 
@@ -116,9 +118,9 @@ public class CompletedTaskFragment extends BaseFragment {
             @Override
             public void OnReturn(Object object) {
                 List<Task> returnList = (ArrayList<Task>) object;
-                if (returnList != null && returnList.size() == 0 )
+                if (returnList != null && returnList.size() == 0)
                     CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
-                            getResources().getString(R.string.there_is_no_completed_task));
+                            getContext().getResources().getString(R.string.there_is_no_completed_task));
             }
         });
     }
@@ -134,7 +136,7 @@ public class CompletedTaskFragment extends BaseFragment {
 
     private void refreshFeed() {
         pulledToRefresh = true;
-        startGetPosts();
+        startGetTasks();
     }
 
     @Override
@@ -150,16 +152,36 @@ public class CompletedTaskFragment extends BaseFragment {
     }
 
     @Subscribe(sticky = true)
-    public void customEventReceived(UserBus userBus){
+    public void customEventReceived(UserBus userBus) {
         user = userBus.getUser();
     }
 
-    private void startGetPosts() {
+    private void startGetTasks() {
 
+        if (user == null || user.getUserid() == null) {
+            UserDBHelper.getUser(AccountHolderInfo.getUserIdFromFirebase(), new CompleteCallback() {
+                @Override
+                public void onComplete(Object object) {
+                    user = (User) object;
+                    getTasks();
+                }
+
+                @Override
+                public void onFailed(String message) {
+                    loadingView.hide();
+                    refresh_layout.setRefreshing(false);
+                    CommonUtils.showToastShort(getContext(), message);
+                }
+            });
+        }else
+            getTasks();
+    }
+
+    private void getTasks(){
         UserTaskDBHelper.getUserCompletedTasks(user, new CompleteCallback() {
             @Override
             public void onComplete(Object object) {
-                setFetchData((List<Task>)object);
+                setFetchData((List<Task>) object);
             }
 
             @Override
@@ -171,10 +193,10 @@ public class CompletedTaskFragment extends BaseFragment {
                     CommonUtils.showToastShort(getContext(),
                             Objects.requireNonNull(getContext()).getResources().getString(R.string.serverError));
                     CommonUtils.showExceptionLayout(false, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
-                            getResources().getString(R.string.there_is_no_completed_task));
+                            getContext().getResources().getString(R.string.there_is_no_completed_task));
                 } else {
                     CommonUtils.showExceptionLayout(true, VIEW_SERVER_ERROR, refresh_layout, loadingView, mainExceptionLayout,
-                            getResources().getString(R.string.there_is_no_completed_task));
+                            getContext().getResources().getString(R.string.there_is_no_completed_task));
                 }
             }
         });
@@ -188,12 +210,12 @@ public class CompletedTaskFragment extends BaseFragment {
         }
 
         if (taskList != null) {
-            if (taskList.size() == 0 ) {
+            if (taskList.size() == 0) {
                 CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
-                        getResources().getString(R.string.there_is_no_completed_task));
+                        getContext().getResources().getString(R.string.there_is_no_completed_task));
             } else {
                 CommonUtils.showExceptionLayout(false, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
-                        getResources().getString(R.string.there_is_no_completed_task));
+                        getContext().getResources().getString(R.string.there_is_no_completed_task));
             }
             setUpRecyclerView(taskList);
         }

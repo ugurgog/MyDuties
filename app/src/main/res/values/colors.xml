@@ -108,6 +108,8 @@
     <color name="Green">#008000</color>
     <color name="Black">#000000</color>
 
+    <color name="GoogleLogin">#b23424</color>
+
     <integer-array name="gplus_colors">
         <item>@color/gplus_color_1</item>
         <item>@color/gplus_color_2</item>

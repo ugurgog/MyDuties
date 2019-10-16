@@ -226,7 +226,7 @@ public class ChangePasswordFragment extends BaseFragment {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            SettingOperation.userSignOut(new CompleteCallback() {
+            SettingOperation.userSignOut(getContext(), accountHolderUser, new CompleteCallback() {
                 @Override
                 public void onComplete(Object object) {
                     progressDialogUtil.dialogDismiss();

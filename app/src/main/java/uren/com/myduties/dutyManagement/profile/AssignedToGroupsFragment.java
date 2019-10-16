@@ -163,7 +163,7 @@ public class AssignedToGroupsFragment extends BaseFragment {
             if(assignedToGroupsAdapter.getItemCount() == 0){
                 refresh_layout.setRefreshing(false);
                 CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
-                        getResources().getString(R.string.there_is_no_task_I_assigned_to_groups));
+                        getContext().getResources().getString(R.string.there_is_no_task_I_assigned_to_groups));
             }
         }, 3000);
     }
@@ -175,7 +175,7 @@ public class AssignedToGroupsFragment extends BaseFragment {
             loadingView.smoothToHide();
         }
         CommonUtils.showExceptionLayout(false, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
-                getResources().getString(R.string.there_is_no_task_I_assigned_to_groups));
+                getContext().getResources().getString(R.string.there_is_no_task_I_assigned_to_groups));
         setUpRecyclerView(task);
         refresh_layout.setRefreshing(false);
     }

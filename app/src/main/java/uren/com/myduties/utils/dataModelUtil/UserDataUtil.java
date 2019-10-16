@@ -52,14 +52,14 @@ public class UserDataUtil {
                 return CHAR_AMPERSAND + username.trim().substring(0, nameMaxLen) + "...";
             else
                 return CHAR_AMPERSAND + username;
-        }else
+        } else
             return "unknown";
     }
 
     public static String getNameOrUsernameFromUser(User user) {
         int nameMaxLen = 25;
 
-        if(user == null) return "unknown";
+        if (user == null) return "unknown";
 
         if (user.getName() != null && !user.getName().isEmpty()) {
             if (user.getName().length() > nameMaxLen)
@@ -71,7 +71,7 @@ public class UserDataUtil {
                 return CHAR_AMPERSAND + user.getUsername().trim().substring(0, nameMaxLen) + "...";
             else
                 return CHAR_AMPERSAND + user.getUsername();
-        }else
+        } else
             return "unknown";
     }
 
@@ -106,6 +106,18 @@ public class UserDataUtil {
             for (String word : seperatedName) {
                 if (returnValue.length() < 3)
                     returnValue.append(word.substring(0, 1).toUpperCase());
+            }
+        }
+
+        return returnValue.toString();
+    }
+
+    public static String getUsernameFromNameWhenLoginWithGoogle(String name) {
+        StringBuilder returnValue = new StringBuilder();
+        if (name != null && !name.trim().isEmpty()) {
+            String[] seperatedName = name.trim().split(" ");
+            for (String word : seperatedName) {
+                returnValue.append(word);
             }
         }
 
@@ -189,13 +201,13 @@ public class UserDataUtil {
             displayButton.setTextColor(context.getResources().getColor(R.color.White));
             buttonShape = ShapeUtil.getShape(context.getResources().getColor(R.color.Silver),
                     0, GradientDrawable.RECTANGLE, 15, 0);
-        }else if(followStatus.equals(fb_child_status_waiting)){
+        } else if (followStatus.equals(fb_child_status_waiting)) {
             //istek bana gelmis
             displayButton.setText(context.getResources().getString(R.string.acceptReq));
             displayButton.setTextColor(context.getResources().getColor(R.color.White));
             buttonShape = ShapeUtil.getShape(context.getResources().getColor(R.color.Silver),
                     0, GradientDrawable.RECTANGLE, 15, 0);
-        }else {
+        } else {
             //arkadas degil bi bagimiz yok
             displayButton.setText(context.getResources().getString(R.string.addFriend));
             displayButton.setTextColor(context.getResources().getColor(R.color.White));

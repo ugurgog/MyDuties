@@ -24,12 +24,14 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import uren.com.myduties.R;
+import uren.com.myduties.dbManagement.UserDBHelper;
 import uren.com.myduties.dbManagement.UserTaskDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.dutyManagement.tasks.adapters.WaitingTaskAdapter;
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.interfaces.ReturnCallback;
+import uren.com.myduties.login.AccountHolderInfo;
 import uren.com.myduties.models.Task;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.CommonUtils;
@@ -116,7 +118,7 @@ public class WaitingTaskFragment extends BaseFragment {
                 List<Task> returnList = (ArrayList<Task>) object;
                 if (returnList != null && returnList.size() == 0)
                     CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
-                            getResources().getString(R.string.emptyFeed));
+                            getContext().getResources().getString(R.string.emptyFeed));
             }
         });
     }
@@ -154,6 +156,26 @@ public class WaitingTaskFragment extends BaseFragment {
 
     private void getUserWaitingTasks() {
 
+        if (user == null || user.getUserid() == null) {
+            UserDBHelper.getUser(AccountHolderInfo.getUserIdFromFirebase(), new CompleteCallback() {
+                @Override
+                public void onComplete(Object object) {
+                    user = (User) object;
+                    getTasks();
+                }
+
+                @Override
+                public void onFailed(String message) {
+                    loadingView.hide();
+                    refresh_layout.setRefreshing(false);
+                    CommonUtils.showToastShort(getContext(), message);
+                }
+            });
+        }else
+            getTasks();
+    }
+
+    private void getTasks(){
         UserTaskDBHelper.getUserWaitingTasks(user, new CompleteCallback() {
             @Override
             public void onComplete(Object object) {
@@ -189,7 +211,7 @@ public class WaitingTaskFragment extends BaseFragment {
         if (taskList != null) {
             if (taskList.size() == 0) {
                 CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
-                        getResources().getString(R.string.emptyFeed));
+                        getContext().getResources().getString(R.string.emptyFeed));
             } else {
                 CommonUtils.showExceptionLayout(false, -1, refresh_layout, loadingView, mainExceptionLayout,
                         null);
@@ -197,7 +219,7 @@ public class WaitingTaskFragment extends BaseFragment {
             setUpRecyclerView(taskList);
         } else
             CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
-                    getResources().getString(R.string.emptyFeed));
+                    getContext().getResources().getString(R.string.emptyFeed));
 
         refresh_layout.setRefreshing(false);
     }

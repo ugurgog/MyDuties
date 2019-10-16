@@ -17,6 +17,8 @@ public class NotificationHandler {
         if (whoWillSend == null) return;
         if (title == null || title.trim().isEmpty()) return;
         if (body == null || body.trim().isEmpty()) return;
+        if (whoWillSend.getUserid().equals(whoMsgWillReceive.getUserid()))
+            return;
 
         TokenDBHelper.getUserTokenByuserId(whoMsgWillReceive.getUserid(), new CompleteCallback() {
             @Override

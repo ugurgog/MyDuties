@@ -77,8 +77,8 @@ public class MainActivity extends AppCompatActivity {
         networkTryDesc = findViewById(R.id.networkTryDesc);
         AnimationUtil.blink(MainActivity.this, appIconImgv);
 
-        tryAgainButton.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.DodgerBlue),
-                getResources().getColor(R.color.White), GradientDrawable.RECTANGLE, 50, 2));
+        tryAgainButton.setBackground(ShapeUtil.getShape(MainActivity.this.getResources().getColor(R.color.DodgerBlue),
+                MainActivity.this.getResources().getColor(R.color.White), GradientDrawable.RECTANGLE, 50, 2));
 
         setPullToRefresh();
         addListeners();

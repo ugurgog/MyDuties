@@ -84,7 +84,7 @@ public class EditGroupNameFragment extends BaseFragment {
             ButterKnife.bind(this, mView);
             addListeners();
             setGroupVariables();
-            toolbarTitleTv.setText(getResources().getString(R.string.giveNewName));
+            toolbarTitleTv.setText(getContext().getResources().getString(R.string.giveNewName));
             setButtonShapes();
         }
         return mView;
@@ -103,8 +103,8 @@ public class EditGroupNameFragment extends BaseFragment {
     }
 
     private void setButtonShapes() {
-        buttonShape = ShapeUtil.getShape(getResources().getColor(R.color.White),
-                getResources().getColor(R.color.Gray), GradientDrawable.RECTANGLE, 15, 2);
+        buttonShape = ShapeUtil.getShape(getContext().getResources().getColor(R.color.White),
+                getContext().getResources().getColor(R.color.Gray), GradientDrawable.RECTANGLE, 15, 2);
         cancelButton.setBackground(buttonShape);
         approveButton.setBackground(buttonShape);
     }
@@ -161,7 +161,7 @@ public class EditGroupNameFragment extends BaseFragment {
                 if (groupNameEditText.getText() != null && !groupNameEditText.getText().toString().trim().isEmpty())
                     updateGroup();
                 else {
-                    DialogBoxUtil.showInfoDialogBox(getContext(), getResources().getString(R.string.pleaseWriteGroupName), null, new InfoDialogBoxCallback() {
+                    DialogBoxUtil.showInfoDialogBox(getContext(), getContext().getResources().getString(R.string.pleaseWriteGroupName), null, new InfoDialogBoxCallback() {
                         @Override
                         public void okClick() {
 

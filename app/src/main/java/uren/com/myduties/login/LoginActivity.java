@@ -21,6 +21,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
@@ -28,23 +29,38 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.util.Objects;
 
 import io.fabric.sdk.android.Fabric;
 import uren.com.myduties.MainActivity;
 import uren.com.myduties.R;
+import uren.com.myduties.dbManagement.UserDBHelper;
+import uren.com.myduties.interfaces.CompleteCallback;
+import uren.com.myduties.interfaces.OnCompleteCallback;
 import uren.com.myduties.login.utils.Validation;
 import uren.com.myduties.models.LoginUser;
+import uren.com.myduties.models.Phone;
+import uren.com.myduties.models.User;
 import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.ShapeUtil;
+import uren.com.myduties.utils.dataModelUtil.UserDataUtil;
 
+import static uren.com.myduties.constants.StringConstants.LOGIN_METHOD_GOOGLE;
 import static uren.com.myduties.constants.StringConstants.LOGIN_USER;
 
 public class LoginActivity extends AppCompatActivity
@@ -58,11 +74,11 @@ public class LoginActivity extends AppCompatActivity
     Button btnLogin;
     Button forgetPasswordBtn;
     Button createAccBtn;
+    LinearLayout llGoogleSignIn;
     private CheckBox rememberMeCheckBox;
     private SharedPreferences.Editor loginPrefsEditor;
 
-    private boolean fbLoginClicked = false;
-    private boolean twLoginClicked = false;
+    private static final int RC_SIGN_IN = 9001;
 
     //Local
     String userEmail;
@@ -72,22 +88,26 @@ public class LoginActivity extends AppCompatActivity
 
     //Firebase
     private FirebaseAuth mAuth;
+    private GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        // Making notification bar transparent
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
 
         setContentView(R.layout.activity_login);
         Fabric.with(this, new Crashlytics());
 
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
         initVariables();
         setShapes();
-        //BitmapConversion.setBlurBitmap(LoginActivity.this, backgroundLayout,
-        //        R.drawable.login_background, 0.3f, 15f, null);
     }
 
     public void setShapes() {
@@ -96,6 +116,8 @@ public class LoginActivity extends AppCompatActivity
         passwordET.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.transparent),
                 getResources().getColor(R.color.White), GradientDrawable.RECTANGLE, 20, 4));
         btnLogin.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.colorPrimary),
+                getResources().getColor(R.color.White), GradientDrawable.RECTANGLE, 20, 4));
+        llGoogleSignIn.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.GoogleLogin),
                 getResources().getColor(R.color.White), GradientDrawable.RECTANGLE, 20, 4));
         forgetPasswordBtn.setBackground(ShapeUtil.getShape(getResources().getColor(R.color.transparent),
                 getResources().getColor(R.color.White), GradientDrawable.RECTANGLE, 20, 4));
@@ -133,6 +155,7 @@ public class LoginActivity extends AppCompatActivity
         rememberMeCheckBox = findViewById(R.id.rememberMeCb);
         forgetPasswordBtn = findViewById(R.id.forgetPasswordBtn);
         createAccBtn = findViewById(R.id.createAccBtn);
+        llGoogleSignIn = findViewById(R.id.llGoogleSignIn);
     }
 
     private void initUIListeners() {
@@ -140,6 +163,7 @@ public class LoginActivity extends AppCompatActivity
         emailET.setOnClickListener(this);
         passwordET.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
+        llGoogleSignIn.setOnClickListener(this);
     }
 
     private void setClickableTexts(Activity act) {
@@ -187,9 +211,14 @@ public class LoginActivity extends AppCompatActivity
                 loginBtnClicked();
         } else if (view == rememberMeCheckBox) {
             saveLoginInformation();
-        } else {
-
+        } else if (view == llGoogleSignIn){
+            googleSignIn();
         }
+    }
+
+    private void googleSignIn() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     public boolean checkNetworkConnection() {
@@ -342,4 +371,89 @@ public class LoginActivity extends AppCompatActivity
         finish();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firebaseAuthWithGoogle(account);
+            } catch (ApiException e) {
+                CommonUtils.showToastShort(LoginActivity.this, getResources().getString(R.string.googleSignInFailed));
+            }
+        }
+    }
+
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            FirebaseUser user = mAuth.getCurrentUser();
+
+                            UserDBHelper.getUser(user.getUid(), new CompleteCallback() {
+                                @Override
+                                public void onComplete(Object object) {
+                                    if(object == null || ((User) object).getUserid() == null){
+                                        String username = UserDataUtil.getUsernameFromNameWhenLoginWithGoogle(user.getDisplayName());
+                                        User newUser = new User(user.getUid(), user.getDisplayName(), username,
+                                                user.getEmail(), user.getPhotoUrl().toString(), null, null, false, LOGIN_METHOD_GOOGLE);
+
+                                        UserDBHelper.addUser(newUser, new OnCompleteCallback() {
+                                            @Override
+                                            public void OnCompleted() {
+                                                setUserInfo(username, user.getEmail());
+                                                startAppIntroPage();
+                                            }
+
+                                            @Override
+                                            public void OnFailed(String message) {
+                                                CommonUtils.showToastShort(LoginActivity.this, message);
+                                            }
+                                        });
+                                    }else {
+                                        User user1 = (User) object;
+                                        user1.setLoginMethod(LOGIN_METHOD_GOOGLE);
+
+                                        UserDBHelper.updateUser(user1, false, new OnCompleteCallback() {
+                                            @Override
+                                            public void OnCompleted() {
+                                                setUserInfo("", user.getEmail());
+                                                startMainPage();
+                                            }
+
+                                            @Override
+                                            public void OnFailed(String message) {
+
+                                            }
+                                        });
+                                    }
+                                }
+
+                                @Override
+                                public void onFailed(String message) {
+                                    CommonUtils.showToastShort(LoginActivity.this, message);
+                                }
+                            });
+
+                        } else {
+                            CommonUtils.showToastShort(LoginActivity.this, task.getException().toString());
+                        }
+                    }
+                });
+    }
+
+    public void startAppIntroPage() {
+        Intent intent = new Intent(LoginActivity.this, AppIntroductionActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.putExtra(LOGIN_USER, loginUser);
+        startActivity(intent);
+    }
 }

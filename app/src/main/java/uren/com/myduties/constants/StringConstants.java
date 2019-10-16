@@ -24,6 +24,9 @@ public class StringConstants {
     public static final String GALLERY_TEXT = "GALLERY";
     public static final String FROM_FILE_TEXT = "FROM_FILE";
 
+    public static final String LOGIN_METHOD_GOOGLE = "google";
+    public static final String LOGIN_METHOD_NORMAL = "normal";
+
     public static final String fb_child_users = "Users";
     public static final String fb_child_name = "name";
     public static final String fb_child_userid = "userid";
@@ -40,6 +43,7 @@ public class StringConstants {
     public static final String fb_child_whocompletedid = "whoCompletedId";
     public static final String fb_child_urgency = "urgency";
     public static final String fb_child_admin = "admin";
+    public static final String fb_child_login_method = "loginMethod";
 
     public static final String fb_child_problems = "Problems";
     public static final String fb_child_fixed = "fixed";

@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -52,14 +54,18 @@ import uren.com.myduties.models.PhotoSelectUtil;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.ClickableImage.ClickableImageView;
 import uren.com.myduties.utils.CommonUtils;
+import uren.com.myduties.utils.FileAdapter;
 import uren.com.myduties.utils.IntentSelectUtil;
 import uren.com.myduties.utils.PermissionModule;
 import uren.com.myduties.utils.ShapeUtil;
 import uren.com.myduties.utils.dialogBoxUtil.DialogBoxUtil;
 import uren.com.myduties.utils.dialogBoxUtil.Interfaces.PhotoChosenCallback;
 
+import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
 import static uren.com.myduties.constants.NumericConstants.GROUP_NAME_MAX_LENGTH;
+import static uren.com.myduties.constants.NumericConstants.MAX_IMAGE_SIZE_1MB;
 import static uren.com.myduties.constants.StringConstants.CAMERA_TEXT;
+import static uren.com.myduties.constants.StringConstants.FROM_FILE_TEXT;
 import static uren.com.myduties.constants.StringConstants.GALLERY_TEXT;
 import static uren.com.myduties.constants.StringConstants.fb_child_groups;
 import static uren.com.myduties.constants.StringConstants.photo_upload_new;
@@ -101,6 +107,9 @@ public class AddGroupFragment extends BaseFragment {
 
     private List<User> selectedUsers;
     private User accountholderUser;
+
+    Uri photoUri;
+    String galleryOrCameraSelect = "";
 
     private static final int CODE_GALLERY_REQUEST = 665;
     private static final int CODE_CAMERA_REQUEST = 662;
@@ -219,11 +228,13 @@ public class AddGroupFragment extends BaseFragment {
                 getString(R.string.chooseProfilePhoto), groupPhotoExist, new PhotoChosenCallback() {
             @Override
             public void onGallerySelected() {
+                galleryOrCameraSelect = GALLERY_TEXT;
                 startGalleryProcess();
             }
 
             @Override
             public void onCameraSelected() {
+                galleryOrCameraSelect = CAMERA_TEXT;
                 startCameraProcess();
             }
 
@@ -250,10 +261,27 @@ public class AddGroupFragment extends BaseFragment {
             return;
         }
 
-        if (!permissionModule.checkCameraPermission())
-            requestPermissions(new String[]{Manifest.permission.CAMERA}, PermissionModule.PERMISSION_CAMERA);
+        if (permissionModule.checkCameraPermission() && permissionModule.checkWriteExternalStoragePermission())
+            openCameraForPhotoSelect();
+        else if (permissionModule.checkCameraPermission())
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    PermissionModule.PERMISSION_WRITE_EXTERNAL_STORAGE);
+        else if (permissionModule.checkWriteExternalStoragePermission())
+            requestPermissions(new String[]{Manifest.permission.CAMERA},
+                    PermissionModule.PERMISSION_CAMERA);
         else
-            startActivityForResult(IntentSelectUtil.getCameraIntent(), CODE_CAMERA_REQUEST);
+            requestPermissions(new String[]{Manifest.permission.CAMERA},
+                    PermissionModule.PERMISSION_CAMERA);
+    }
+
+    public void openCameraForPhotoSelect() {
+        photoUri = FileProvider.getUriForFile(getContext(), Objects.requireNonNull(getContext()).getPackageName() + ".provider",
+                Objects.requireNonNull(FileAdapter.getOutputMediaFile(MEDIA_TYPE_IMAGE)));
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_SIZE_LIMIT, (long) MAX_IMAGE_SIZE_1MB);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+        startActivityForResult(intent, CODE_CAMERA_REQUEST);
     }
 
     private void setGroupTextSize() {
@@ -334,12 +362,11 @@ public class AddGroupFragment extends BaseFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (resultCode == Activity.RESULT_OK) {
-
-            if (requestCode == CODE_CAMERA_REQUEST) {
-                photoSelectUtil = new PhotoSelectUtil(getContext(), data, CAMERA_TEXT);
-                setGroupPhoto(photoSelectUtil.getMediaUri());
-            } else if (requestCode == CODE_GALLERY_REQUEST) {
+            if (requestCode == CODE_GALLERY_REQUEST) {
                 photoSelectUtil = new PhotoSelectUtil(getContext(), data, GALLERY_TEXT);
+                setGroupPhoto(photoSelectUtil.getMediaUri());
+            } else if (requestCode == CODE_CAMERA_REQUEST) {
+                photoSelectUtil = new PhotoSelectUtil(getContext(), photoUri, FROM_FILE_TEXT);
                 setGroupPhoto(photoSelectUtil.getMediaUri());
             }
         }
@@ -368,15 +395,27 @@ public class AddGroupFragment extends BaseFragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
         if (requestCode == PermissionModule.PERMISSION_WRITE_EXTERNAL_STORAGE) {
-
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startActivityForResult(Intent.createChooser(IntentSelectUtil.getGalleryIntent(),
-                        getResources().getString(R.string.selectPicture)), CODE_GALLERY_REQUEST);
+
+                if (galleryOrCameraSelect.equals(CAMERA_TEXT)) {
+                    if (permissionModule.checkCameraPermission())
+                        openCameraForPhotoSelect();
+                    else
+                        requestPermissions(new String[]{Manifest.permission.CAMERA},
+                                PermissionModule.PERMISSION_CAMERA);
+                } else if (galleryOrCameraSelect.equals(GALLERY_TEXT)) {
+                    startActivityForResult(Intent.createChooser(IntentSelectUtil.getGalleryIntent(),
+                            Objects.requireNonNull(getContext()).getResources().getString(R.string.selectPicture)), CODE_GALLERY_REQUEST);
+                }
             }
         } else if (requestCode == PermissionModule.PERMISSION_CAMERA) {
-
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startActivityForResult(IntentSelectUtil.getCameraIntent(), CODE_CAMERA_REQUEST);
+
+                if (permissionModule.checkWriteExternalStoragePermission())
+                    openCameraForPhotoSelect();
+                else
+                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            PermissionModule.PERMISSION_WRITE_EXTERNAL_STORAGE);
             }
         }
     }

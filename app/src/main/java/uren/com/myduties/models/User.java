@@ -13,12 +13,13 @@ public class User {
     private Phone phone;
     private List<String> groupIdList;
     private boolean admin;
+    private String loginMethod;
 
     public User() {
     }
 
     public User(String userid, String name, String username, String email, String profilePhotoUrl,
-                Phone phone, List<String> groupIdList) {
+                Phone phone, List<String> groupIdList, boolean admin, String loginMethod) {
         this.userid = userid;
         this.name = name;
         this.username = username;
@@ -26,6 +27,8 @@ public class User {
         this.profilePhotoUrl = profilePhotoUrl;
         this.phone = phone;
         this.groupIdList = groupIdList;
+        this.admin = admin;
+        this.loginMethod = loginMethod;
     }
 
     public User(String userid) {
@@ -38,7 +41,7 @@ public class User {
         this.profilePhotoUrl = profilePhotoUrl;
     }
 
-    public User(String userid, String name, String username, String email, String photoUrl,
+    /*public User(String userid, String name, String username, String email, String photoUrl,
                 Phone phone, List<String> groupList, boolean admin) {
         this.userid = userid;
         this.name = name;
@@ -48,7 +51,7 @@ public class User {
         this.phone = phone;
         this.groupIdList = groupList;
         this.admin = admin;
-    }
+    }*/
 
     public String getUserid() {
         return this.userid;
@@ -112,5 +115,13 @@ public class User {
 
     public void setAdmin(boolean admin) {
         this.admin = admin;
+    }
+
+    public String getLoginMethod() {
+        return loginMethod;
+    }
+
+    public void setLoginMethod(String loginMethod) {
+        this.loginMethod = loginMethod;
     }
 }

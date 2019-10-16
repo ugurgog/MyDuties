@@ -126,6 +126,8 @@
         or suggestions about the application, please write to us.
     </string>
     <string name="authoremail">mydutiess@gmail.com</string> 
+    <string name="signInWithGoogle">Sign in with Google</string>
+    <string name="googleSignInFailed">Google sign in failed</string>
 
     <!-- Change Password variables-->
     <string name="CURRENT_PASSWORD">Current password</string>
@@ -280,6 +282,7 @@
     <string name="THERE_IS_NO_GROUP_CREATE_OR_INCLUDE">There is no group you created or included</string>
     <string name="sureToChangeTaskText">Are you sure you want to change the task description?</string>
     <string name="closedTaskNotEdited">This cannot be done for closed tasks.</string>
+    <string name="cannotReminded">You cannot remind for this task!</string>
 
     <string name="assignedTaskToYou">has assigned you a task</string>
     <string name="assignedTaskTo">has assigned a task</string>

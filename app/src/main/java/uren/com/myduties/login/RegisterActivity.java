@@ -263,6 +263,7 @@ public class RegisterActivity extends AppCompatActivity
         user.setUserid(mAuth.getCurrentUser().getUid());
         user.setUsername(username);
         user.setEmail(email);
+        user.setAdmin(false);
         UserDBHelper.addUser(user, new OnCompleteCallback() {
             @Override
             public void OnCompleted() {

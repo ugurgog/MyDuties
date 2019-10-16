@@ -25,6 +25,7 @@ import uren.com.myduties.interfaces.CompleteCallback;
 import uren.com.myduties.models.Problem;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.ClickableImage.ClickableImageView;
+import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.layoutManager.CustomLinearLayoutManager;
 
 public class InCompleteProblemsFragment extends BaseFragment {
@@ -131,7 +132,7 @@ public class InCompleteProblemsFragment extends BaseFragment {
 
             @Override
             public void onFailed(String message) {
-
+                CommonUtils.showToastShort(getContext(), message);
             }
         });
     }

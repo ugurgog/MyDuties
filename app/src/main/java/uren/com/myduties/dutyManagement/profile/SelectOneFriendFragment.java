@@ -199,6 +199,8 @@ public class SelectOneFriendFragment extends BaseFragment {
 
     private void getFriendSelectionPage() {
 
+        selectOneFriendAdapter.addUser(accountholderUser);
+
         FriendsDBHelper.getFriendsByStatus(accountholderUser.getUserid(), fb_child_status_friend, new CompleteCallback() {
             @Override
             public void onComplete(Object object) {

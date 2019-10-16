@@ -38,7 +38,12 @@ public class AccountHolderInfo {
     }
 
     public static String getUserIdFromFirebase() {
-        return firebaseAuth.getCurrentUser().getUid();
+        if (firebaseAuth != null && firebaseAuth.getCurrentUser() != null)
+            return firebaseAuth.getCurrentUser().getUid();
+        else {
+            firebaseAuth = FirebaseAuth.getInstance();
+            return firebaseAuth.getCurrentUser().getUid();
+        }
     }
 
     public static void setInstance(AccountHolderInfo instance) {
@@ -56,7 +61,7 @@ public class AccountHolderInfo {
             public void onComplete(Object object) {
                 User user = (User) object;
 
-                if(user != null)
+                if (user != null)
                     mCompleteCallback.onComplete(user);
                 else
                     mCompleteCallback.onComplete(null);

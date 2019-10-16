@@ -132,6 +132,8 @@
         bir sorunuz ya da öneriniz var ise lütfen bize yazın.
     </string>
     <string name="authoremail">mydutiess@gmail.com</string> 
+    <string name="signInWithGoogle">Google ile giriş yap</string>
+    <string name="googleSignInFailed">Google oturum açma başarısız oldu</string>
 
     <!-- Change Password variables-->
     <string name="CURRENT_PASSWORD">Mevcut şifre</string>
@@ -274,6 +276,7 @@
     <string name="THERE_IS_NO_GROUP_CREATE_OR_INCLUDE">Oluşturduğunuz veya dahil olduğunuz bir grup bulunmamaktadır</string>
     <string name="sureToChangeTaskText">Görev açıklamasını değiştirmek istediğinize emin misiniz?</string>
     <string name="closedTaskNotEdited">Kapalı görevler için bu işlem yapılamaz.</string>
+    <string name="cannotReminded">Bu görev için hatırlatma yapılamaz!</string>
 
     <string name="assignedTaskToYou">size bir görev atadı</string>
     <string name="assignedTaskTo">bu gruba bir görev atadı</string>

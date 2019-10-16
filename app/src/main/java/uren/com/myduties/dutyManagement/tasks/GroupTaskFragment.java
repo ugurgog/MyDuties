@@ -23,12 +23,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import uren.com.myduties.R;
 import uren.com.myduties.dbManagement.GroupTaskDBHelper;
+import uren.com.myduties.dbManagement.UserDBHelper;
 import uren.com.myduties.dutyManagement.BaseFragment;
 import uren.com.myduties.dutyManagement.tasks.adapters.GroupTaskAdapter;
 import uren.com.myduties.dutyManagement.tasks.helper.TaskHelper;
 import uren.com.myduties.dutyManagement.tasks.interfaces.TaskRefreshCallback;
 import uren.com.myduties.evetBusModels.UserBus;
 import uren.com.myduties.interfaces.CompleteCallback;
+import uren.com.myduties.login.AccountHolderInfo;
 import uren.com.myduties.models.GroupTask;
 import uren.com.myduties.models.User;
 import uren.com.myduties.utils.CommonUtils;
@@ -98,7 +100,7 @@ public class GroupTaskFragment extends BaseFragment {
 
     private void initVariables() {
         CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
-                getResources().getString(R.string.there_is_no_group_task));
+                getContext().getResources().getString(R.string.there_is_no_group_task));
     }
 
     private void initListeners() {
@@ -139,7 +141,7 @@ public class GroupTaskFragment extends BaseFragment {
             public void onRefresh() {
                 groupTaskAdapter.updatePostListItems();
                 CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
-                        getResources().getString(R.string.there_is_no_group_task));
+                        getContext().getResources().getString(R.string.there_is_no_group_task));
                 refreshFeed();
             }
         });
@@ -169,6 +171,26 @@ public class GroupTaskFragment extends BaseFragment {
 
     private void startGetGroupTasks() {
 
+        if (user == null || user.getUserid() == null) {
+            UserDBHelper.getUser(AccountHolderInfo.getUserIdFromFirebase(), new CompleteCallback() {
+                @Override
+                public void onComplete(Object object) {
+                    user = (User) object;
+                    getTasks();
+                }
+
+                @Override
+                public void onFailed(String message) {
+                    loadingView.hide();
+                    refresh_layout.setRefreshing(false);
+                    CommonUtils.showToastShort(getContext(), message);
+                }
+            });
+        }else
+            getTasks();
+    }
+
+    private void getTasks(){
         GroupTaskDBHelper.getGroupAllTasks(user, new CompleteCallback() {
             @Override
             public void onComplete(Object object) {
@@ -180,7 +202,7 @@ public class GroupTaskFragment extends BaseFragment {
                 loadingView.hide();
                 refresh_layout.setRefreshing(false);
                 CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
-                        getResources().getString(R.string.there_is_no_group_task));
+                        getContext().getResources().getString(R.string.there_is_no_group_task));
             }
         });
     }
@@ -197,7 +219,7 @@ public class GroupTaskFragment extends BaseFragment {
 
     private void setUpRecyclerView(GroupTask groupTask) {
         CommonUtils.showExceptionLayout(false, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
-                getResources().getString(R.string.there_is_no_group_task));
+                getContext().getResources().getString(R.string.there_is_no_group_task));
         loading = true;
         groupTaskAdapter.addGroupTask(groupTask);
     }

@@ -132,7 +132,7 @@ public class BitmapConversion extends AppCompatActivity {
                     break;
             }
         } else {
-            if (!photoSelectUtil.getType().equals(GALLERY_TEXT)) {
+            if (photoSelectUtil.getType() != null && !photoSelectUtil.getType().equals(GALLERY_TEXT)) {
                 for (float i = 1.2f; i < 20f; i = i + 1.2f) {
                     resizedBitmap = Bitmap.createScaledBitmap(mBitmap,
                             (int) (mBitmap.getWidth() * i),
