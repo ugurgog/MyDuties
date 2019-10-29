@@ -3,6 +3,7 @@ package uren.com.myduties.dutyManagement.profile;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -43,6 +44,7 @@ import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.ProgressDialogUtil;
 import uren.com.myduties.utils.ShapeUtil;
 
+import static uren.com.myduties.constants.NumericConstants.VIEW_NO_POST_FOUND;
 import static uren.com.myduties.constants.StringConstants.fb_child_status_friend;
 
 public class SelectOneFriendFragment extends BaseFragment {
@@ -216,12 +218,18 @@ public class SelectOneFriendFragment extends BaseFragment {
                 CommonUtils.showToastShort(getContext(), message);
             }
         });
+
+        new Handler().postDelayed(() -> {
+            if(selectOneFriendAdapter.getItemCount() == 1){
+                progressDialogUtil.dialogDismiss();
+            }
+        }, 3000);
     }
 
     public void setAdapter() {
         linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
-        selectOneFriendAdapter = new SelectOneFriendAdapter(getContext(), new ReturnCallback() {
+        selectOneFriendAdapter = new SelectOneFriendAdapter(getContext(), accountholderUser, new ReturnCallback() {
             @Override
             public void OnReturn(Object object) {
                 selectedUser = (User) object;

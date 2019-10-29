@@ -204,6 +204,7 @@
     <string name="emptyFeed">There is no waiting task.</string>
     <string name="there_is_no_completed_task">There is no completed task.</string>
     <string name="there_is_no_group_task">There is no group task.</string>
+    <string name="you_dont_have_any_friend">You have no friend.</string>
 
     <string name="loading">Loading…</string>
     <string name="serverError">Server Error</string>
@@ -283,6 +284,7 @@
     <string name="sureToChangeTaskText">Are you sure you want to change the task description?</string>
     <string name="closedTaskNotEdited">This cannot be done for closed tasks.</string>
     <string name="cannotReminded">You cannot remind for this task!</string>
+    <string name="you">You</string>
 
     <string name="assignedTaskToYou">has assigned you a task</string>
     <string name="assignedTaskTo">has assigned a task</string>

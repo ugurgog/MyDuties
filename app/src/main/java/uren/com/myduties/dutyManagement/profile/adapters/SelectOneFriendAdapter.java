@@ -5,6 +5,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -42,9 +43,11 @@ public class SelectOneFriendAdapter extends RecyclerView.Adapter implements Filt
     private int beforeSelectedPosition = -1;
     private ReturnCallback returnCallback;
     private ReturnObjectListener returnObjectListener;
+    private User accountHolder;
 
-    public SelectOneFriendAdapter(Context context, ReturnCallback returnCallback) {
+    public SelectOneFriendAdapter(Context context, User accountHolder, ReturnCallback returnCallback) {
         this.context = context;
+        this.accountHolder = accountHolder;
         this.friendList = new ArrayList<>();
         this.orginalFriendList = new ArrayList<>();
         this.returnCallback = returnCallback;
@@ -85,6 +88,7 @@ public class SelectOneFriendAdapter extends RecyclerView.Adapter implements Filt
         ImageView profilePicImgView;
         ImageView tickImgv;
         LinearLayout specialListLinearLayout;
+        Button youBtn;
         User user;
         int position = 0;
 
@@ -98,6 +102,7 @@ public class SelectOneFriendAdapter extends RecyclerView.Adapter implements Filt
             specialListLinearLayout = view.findViewById(R.id.specialListLinearLayout);
             shortUserNameTv = view.findViewById(R.id.shortUserNameTv);
             tickImgv = view.findViewById(R.id.tickImgv);
+            youBtn = view.findViewById(R.id.youBtn);
             setShapes();
 
             specialListLinearLayout.setOnClickListener(new View.OnClickListener() {
@@ -114,6 +119,8 @@ public class SelectOneFriendAdapter extends RecyclerView.Adapter implements Filt
                     context.getResources().getColor(R.color.Orange), GradientDrawable.OVAL, 50, 0));
             tickImgv.setBackground(ShapeUtil.getShape(context.getResources().getColor(R.color.DarkTurquoise),
                     context.getResources().getColor(R.color.White), GradientDrawable.OVAL, 50, 3));
+            youBtn.setBackground(ShapeUtil.getShape(context.getResources().getColor(R.color.White),
+                    context.getResources().getColor(R.color.bg_screen1), GradientDrawable.RECTANGLE, 15, 2));
         }
 
         public void manageSelectedItem() {
@@ -136,6 +143,7 @@ public class SelectOneFriendAdapter extends RecyclerView.Adapter implements Filt
                     user.getName(), user.getUsername(), shortUserNameTv, profilePicImgView
                     , false);
             updateTickImgv();
+            setYouButton();
         }
 
 
@@ -147,6 +155,18 @@ public class SelectOneFriendAdapter extends RecyclerView.Adapter implements Filt
                     tickImgv.setVisibility(View.GONE);
             } else
                 tickImgv.setVisibility(View.GONE);
+        }
+
+        private void setYouButton() {
+            try {
+                if(user.getUserid().equals(accountHolder.getUserid()))
+                    youBtn.setVisibility(View.VISIBLE);
+                else
+                    youBtn.setVisibility(View.GONE);
+            } catch (Exception e) {
+                youBtn.setVisibility(View.GONE);
+                e.printStackTrace();
+            }
         }
     }
 

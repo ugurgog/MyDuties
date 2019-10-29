@@ -378,25 +378,27 @@ public class CommonUtils {
         }
     }
 
-    public static void showExceptionLayout(boolean showException, int viewType, SwipeRefreshLayout swipeRefreshLayout, AVLoadingIndicatorView loadingView,
-                                     RelativeLayout mainExceptionLayout, String errText) {
-        if (showException) {
+    public static void showExceptionLayout(int viewType, SwipeRefreshLayout swipeRefreshLayout, AVLoadingIndicatorView loadingView,
+                                           RelativeLayout mainExceptionLayout, String errText) {
+        if (swipeRefreshLayout != null)
             swipeRefreshLayout.setRefreshing(false);
+
+        if (loadingView != null)
             loadingView.hide();
-            mainExceptionLayout.setVisibility(View.VISIBLE);
+        mainExceptionLayout.setVisibility(View.VISIBLE);
 
-            if (viewType == VIEW_NO_POST_FOUND) {
-                LinearLayout noPostFoundLayout = mainExceptionLayout.findViewById(R.id.noPostFoundLayout);
-                AppCompatTextView txtNoItemFound = mainExceptionLayout.findViewById(R.id.txtNoItemFound);
-                noPostFoundLayout.setVisibility(View.VISIBLE);
-                txtNoItemFound.setText(errText);
-            }  else if (viewType == VIEW_SERVER_ERROR) {
-                LinearLayout serverError = mainExceptionLayout.findViewById(R.id.serverError);
-                serverError.setVisibility(View.VISIBLE);
-            }
-
-        } else {
-            mainExceptionLayout.setVisibility(View.GONE);
+        if (viewType == VIEW_NO_POST_FOUND) {
+            LinearLayout noPostFoundLayout = mainExceptionLayout.findViewById(R.id.noPostFoundLayout);
+            AppCompatTextView txtNoItemFound = mainExceptionLayout.findViewById(R.id.txtNoItemFound);
+            noPostFoundLayout.setVisibility(View.VISIBLE);
+            txtNoItemFound.setText(errText);
+        } else if (viewType == VIEW_SERVER_ERROR) {
+            LinearLayout serverError = mainExceptionLayout.findViewById(R.id.serverError);
+            serverError.setVisibility(View.VISIBLE);
         }
+    }
+
+    public static void hideExceptionLayout(RelativeLayout mainExceptionLayout) {
+        mainExceptionLayout.setVisibility(View.GONE);
     }
 }

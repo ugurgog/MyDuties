@@ -54,16 +54,17 @@
 
             </FrameLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="5"
                 android:gravity="center_vertical">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_weight="4">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:fontFamily="@font/amiko"
@@ -84,7 +85,27 @@
 
                 </LinearLayout>
 
-            </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <Button
+                        android:id="@+id/youBtn"
+                        android:layout_height="30dp"
+                        android:layout_width="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_marginRight="5dp"
+                        android:text="@string/you"
+                        android:textAllCaps="false"
+                        android:textColor="@color/bg_screen1"
+                        android:textSize="10sp" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
 
 
 

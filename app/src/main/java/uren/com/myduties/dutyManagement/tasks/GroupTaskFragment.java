@@ -2,6 +2,7 @@ package uren.com.myduties.dutyManagement.tasks;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,7 @@ import uren.com.myduties.utils.CommonUtils;
 import uren.com.myduties.utils.layoutManager.CustomLinearLayoutManager;
 
 import static uren.com.myduties.constants.NumericConstants.VIEW_NO_POST_FOUND;
+import static uren.com.myduties.constants.NumericConstants.VIEW_SERVER_ERROR;
 
 public class GroupTaskFragment extends BaseFragment {
 
@@ -55,18 +57,7 @@ public class GroupTaskFragment extends BaseFragment {
 
     @BindView(R.id.mainExceptionLayout)
     RelativeLayout mainExceptionLayout;
-    @BindView(R.id.noPostFoundLayout)
-    LinearLayout noPostFoundLayout;
-    @BindView(R.id.serverError)
-    LinearLayout serverError;
-    @BindView(R.id.txtNoItemFound)
-    AppCompatTextView txtNoItemFound;
 
-    private boolean loading = true;
-    private int pastVisibleItems, visibleItemCount, totalItemCount;
-    //private List<GroupTask> taskList = new ArrayList<>();
-    private static final int RECYCLER_VIEW_CACHE_COUNT = 10;
-    private boolean pulledToRefresh = false;
     private boolean isFirstFetch = false;
     User user;
 
@@ -99,8 +90,7 @@ public class GroupTaskFragment extends BaseFragment {
     }
 
     private void initVariables() {
-        CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
-                getContext().getResources().getString(R.string.there_is_no_group_task));
+
     }
 
     private void initListeners() {
@@ -140,7 +130,7 @@ public class GroupTaskFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 groupTaskAdapter.updatePostListItems();
-                CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
+                CommonUtils.showExceptionLayout(VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
                         getContext().getResources().getString(R.string.there_is_no_group_task));
                 refreshFeed();
             }
@@ -148,7 +138,6 @@ public class GroupTaskFragment extends BaseFragment {
     }
 
     private void refreshFeed() {
-        pulledToRefresh = true;
         startGetGroupTasks();
     }
 
@@ -201,10 +190,18 @@ public class GroupTaskFragment extends BaseFragment {
             public void onFailed(String message) {
                 loadingView.hide();
                 refresh_layout.setRefreshing(false);
-                CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
+                CommonUtils.showExceptionLayout(VIEW_SERVER_ERROR, refresh_layout, loadingView, mainExceptionLayout,
                         getContext().getResources().getString(R.string.there_is_no_group_task));
             }
         });
+
+        new Handler().postDelayed(() -> {
+            if(groupTaskAdapter.getItemCount() == 0){
+                refresh_layout.setRefreshing(false);
+                CommonUtils.showExceptionLayout(VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
+                        getContext().getResources().getString(R.string.there_is_no_group_task));
+            }
+        }, 3000);
     }
 
     private void setFetchData(GroupTask groupTask) {
@@ -218,9 +215,7 @@ public class GroupTaskFragment extends BaseFragment {
     }
 
     private void setUpRecyclerView(GroupTask groupTask) {
-        CommonUtils.showExceptionLayout(false, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
-                getContext().getResources().getString(R.string.there_is_no_group_task));
-        loading = true;
+        CommonUtils.hideExceptionLayout(mainExceptionLayout);
         groupTaskAdapter.addGroupTask(groupTask);
     }
 

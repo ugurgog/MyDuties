@@ -163,7 +163,7 @@ public class GroupAllTasksFragment extends BaseFragment {
         refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
+                CommonUtils.showExceptionLayout(VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
                         getContext().getResources().getString(R.string.there_is_no_group_task));
                 refreshFeed();
             }
@@ -204,7 +204,7 @@ public class GroupAllTasksFragment extends BaseFragment {
             public void onFailed(String message) {
                 loadingView.hide();
                 refresh_layout.setRefreshing(false);
-                CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
+                CommonUtils.showExceptionLayout(VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
                         getContext().getResources().getString(R.string.there_is_no_group_task));
             }
         });

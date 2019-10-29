@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
+import uren.com.myduties.MainActivity;
 import uren.com.myduties.R;
 import uren.com.myduties.models.GroupTask;
 import uren.com.myduties.models.Problem;
@@ -22,14 +23,14 @@ import uren.com.myduties.utils.dataModelUtil.UserDataUtil;
 public class MyDutiesUtil {
 
     public static void callAssignedFromTaskUser(Context mContext, Task task, User accountHolderUser) {
-        if(task.getAssignedFrom().getUserid().equals(accountHolderUser.getUserid())){
+        if (task.getAssignedFrom().getUserid().equals(accountHolderUser.getUserid())) {
             CommonUtils.showToastShort(mContext, mContext.getResources().getString(R.string.notCallableItsYou));
             return;
         }
 
-        if(task.getAssignedFrom().getPhone() == null || task.getAssignedFrom().getPhone().getPhoneNumber() == 0 ||
-                task.getAssignedFrom().getPhone().getDialCode() == null){
-            CommonUtils.showToastShort(mContext, UserDataUtil.getNameOrUsernameFromUser(task.getAssignedFrom())  +
+        if (task.getAssignedFrom().getPhone() == null || task.getAssignedFrom().getPhone().getPhoneNumber() == 0 ||
+                task.getAssignedFrom().getPhone().getDialCode() == null) {
+            CommonUtils.showToastShort(mContext, UserDataUtil.getNameOrUsernameFromUser(task.getAssignedFrom()) +
                     mContext.getResources().getString(R.string.phone_not_defined));
             return;
         }
@@ -49,14 +50,14 @@ public class MyDutiesUtil {
     }
 
     public static void callAssignedToTaskUser(Context mContext, Task task, User accountHolderUser) {
-        if(task.getAssignedTo().getUserid().equals(accountHolderUser.getUserid())){
+        if (task.getAssignedTo().getUserid().equals(accountHolderUser.getUserid())) {
             CommonUtils.showToastShort(mContext, mContext.getResources().getString(R.string.notCallableItsYou));
             return;
         }
 
-        if(task.getAssignedTo().getPhone() == null || task.getAssignedTo().getPhone().getPhoneNumber() == 0 ||
-                task.getAssignedTo().getPhone().getDialCode() == null){
-            CommonUtils.showToastShort(mContext, UserDataUtil.getNameOrUsernameFromUser(task.getAssignedTo())  +
+        if (task.getAssignedTo().getPhone() == null || task.getAssignedTo().getPhone().getPhoneNumber() == 0 ||
+                task.getAssignedTo().getPhone().getDialCode() == null) {
+            CommonUtils.showToastShort(mContext, UserDataUtil.getNameOrUsernameFromUser(task.getAssignedTo()) +
                     mContext.getResources().getString(R.string.phone_not_defined));
             return;
         }
@@ -69,21 +70,21 @@ public class MyDutiesUtil {
                         Uri.fromParts("tel", phoneNumber, null)));
             }
         } catch (Exception e) {
-            CommonUtils.showToastShort(mContext, UserDataUtil.getNameOrUsernameFromUser(task.getAssignedTo())  +
+            CommonUtils.showToastShort(mContext, UserDataUtil.getNameOrUsernameFromUser(task.getAssignedTo()) +
                     mContext.getResources().getString(R.string.phone_not_defined));
             e.printStackTrace();
         }
     }
 
     public static void callAssignedFromGroupTaskUser(Context mContext, GroupTask groupTask, User accountHolderUser) {
-        if(groupTask.getAssignedFrom().getUserid().equals(accountHolderUser.getUserid())){
+        if (groupTask.getAssignedFrom().getUserid().equals(accountHolderUser.getUserid())) {
             CommonUtils.showToastShort(mContext, mContext.getResources().getString(R.string.notCallableItsYou));
             return;
         }
 
-        if(groupTask.getAssignedFrom().getPhone() == null || groupTask.getAssignedFrom().getPhone().getPhoneNumber() == 0 ||
-                groupTask.getAssignedFrom().getPhone().getDialCode() == null){
-            CommonUtils.showToastShort(mContext, UserDataUtil.getNameOrUsernameFromUser(groupTask.getAssignedFrom())  +
+        if (groupTask.getAssignedFrom().getPhone() == null || groupTask.getAssignedFrom().getPhone().getPhoneNumber() == 0 ||
+                groupTask.getAssignedFrom().getPhone().getDialCode() == null) {
+            CommonUtils.showToastShort(mContext, UserDataUtil.getNameOrUsernameFromUser(groupTask.getAssignedFrom()) +
                     mContext.getResources().getString(R.string.phone_not_defined));
             return;
         }
@@ -96,7 +97,7 @@ public class MyDutiesUtil {
                         Uri.fromParts("tel", phoneNumber, null)));
             }
         } catch (Exception e) {
-            CommonUtils.showToastShort(mContext, UserDataUtil.getNameOrUsernameFromUser(groupTask.getAssignedFrom())  +
+            CommonUtils.showToastShort(mContext, UserDataUtil.getNameOrUsernameFromUser(groupTask.getAssignedFrom()) +
                     mContext.getResources().getString(R.string.phone_not_defined));
             e.printStackTrace();
         }
@@ -158,7 +159,7 @@ public class MyDutiesUtil {
         if (problem.getCompletedTime() != 0) {
             llcompleted.setVisibility(View.VISIBLE);
             txtCompletedTime.setText(CommonUtils.getMessageTime(mContext, problem.getCompletedTime()));
-        }else
+        } else
             llcompleted.setVisibility(View.GONE);
     }
 
@@ -181,6 +182,9 @@ public class MyDutiesUtil {
         if (type == null || type.isEmpty()) return;
         int typeVal = 0;
 
+        if(taskTypeHelper == null || taskTypeHelper.getTypes() == null)
+            taskTypeHelper = new TaskTypeHelper(context);
+
         for (TaskType taskType : taskTypeHelper.getTypes())
             if (taskType.getKey().equals(type)) {
                 typeVal = taskType.getImgId();
@@ -201,7 +205,7 @@ public class MyDutiesUtil {
                 tvUrgency.setVisibility(View.GONE);
         }
 
-        if(urgencyVal)
+        if (urgencyVal)
             view.setBackgroundColor(mContext.getResources().getColor(R.color.urgentColor));
         else
             view.setBackgroundColor(mContext.getResources().getColor(R.color.White));
@@ -232,7 +236,7 @@ public class MyDutiesUtil {
                     .load(url)
                     .apply(RequestOptions.centerInsideTransform())
                     .into(imageView);
-        }else
+        } else
             imageView.setVisibility(View.GONE);
     }
 }

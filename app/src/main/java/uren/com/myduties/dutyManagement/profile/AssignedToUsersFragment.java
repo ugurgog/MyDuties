@@ -66,7 +66,7 @@ public class AssignedToUsersFragment extends BaseFragment {
     private boolean isFirstFetch = false;
     User user;
 
-    public AssignedToUsersFragment(){
+    public AssignedToUsersFragment() {
 
     }
 
@@ -148,7 +148,7 @@ public class AssignedToUsersFragment extends BaseFragment {
     }
 
     @Subscribe(sticky = true)
-    public void customEventReceived(UserBus userBus){
+    public void customEventReceived(UserBus userBus) {
         user = userBus.getUser();
     }
 
@@ -170,9 +170,9 @@ public class AssignedToUsersFragment extends BaseFragment {
         });
 
         new Handler().postDelayed(() -> {
-            if(assignedToUsersAdapter.getItemCount() == 0){
+            if (assignedToUsersAdapter.getItemCount() == 0) {
                 refresh_layout.setRefreshing(false);
-                CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
+                CommonUtils.showExceptionLayout(VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
                         getContext().getResources().getString(R.string.there_is_no_task_I_assigned));
             }
         }, 3000);
@@ -184,8 +184,7 @@ public class AssignedToUsersFragment extends BaseFragment {
             isFirstFetch = false;
             loadingView.smoothToHide();
         }
-        CommonUtils.showExceptionLayout(false, -1, refresh_layout, loadingView, mainExceptionLayout,
-                null);
+        CommonUtils.hideExceptionLayout(mainExceptionLayout);
         setUpRecyclerView(task);
         refresh_layout.setRefreshing(false);
     }

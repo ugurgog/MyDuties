@@ -2,6 +2,7 @@ package uren.com.myduties.dutyManagement.profile;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -10,7 +11,9 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -22,6 +25,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,6 +42,7 @@ import uren.com.myduties.models.User;
 import uren.com.myduties.utils.ClickableImage.ClickableImageView;
 import uren.com.myduties.utils.CommonUtils;
 
+import static uren.com.myduties.constants.NumericConstants.VIEW_NO_POST_FOUND;
 import static uren.com.myduties.constants.StringConstants.ANIMATE_LEFT_TO_RIGHT;
 import static uren.com.myduties.constants.StringConstants.fb_child_status_friend;
 import static uren.com.myduties.constants.StringConstants.fb_child_status_sendedrequest;
@@ -62,6 +67,9 @@ public class FriendsFragment extends BaseFragment {
     ImageView searchCancelImgv;
     @BindView(R.id.searchResultTv)
     AppCompatTextView searchResultTv;
+
+    @BindView(R.id.mainExceptionLayout)
+    RelativeLayout mainExceptionLayout;
 
     private LinearLayoutManager mLayoutManager;
     private FriendsAdapter friendsAdapter;
@@ -130,6 +138,7 @@ public class FriendsFragment extends BaseFragment {
         statusList.add(fb_child_status_friend);
         statusList.add(fb_child_status_sendedrequest);
         progressBar.setVisibility(View.VISIBLE);
+        mainExceptionLayout.setVisibility(View.GONE);
     }
 
     private void setListeners() {
@@ -208,6 +217,7 @@ public class FriendsFragment extends BaseFragment {
                 if(object != null){
                     progressBar.setVisibility(View.GONE);
                     friendsAdapter.addFriend((Friend) object);
+                    CommonUtils.hideExceptionLayout(mainExceptionLayout);
                 }
             }
 
@@ -218,5 +228,12 @@ public class FriendsFragment extends BaseFragment {
             }
         });
 
+        new Handler().postDelayed(() -> {
+            if(friendsAdapter.getItemCount() == 0){
+                progressBar.setVisibility(View.GONE);
+                CommonUtils.showExceptionLayout(VIEW_NO_POST_FOUND, null, null, mainExceptionLayout,
+                        getContext().getResources().getString(R.string.you_dont_have_any_friend));
+            }
+        }, 3000);
     }
 }

@@ -68,8 +68,6 @@ public class WaitingTaskFragment extends BaseFragment {
     private boolean isFirstFetch = false;
     User user;
 
-    private View filterLayout;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,7 +115,7 @@ public class WaitingTaskFragment extends BaseFragment {
             public void OnReturn(Object object) {
                 List<Task> returnList = (ArrayList<Task>) object;
                 if (returnList != null && returnList.size() == 0)
-                    CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
+                    CommonUtils.showExceptionLayout(VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
                             getContext().getResources().getString(R.string.emptyFeed));
             }
         });
@@ -171,11 +169,11 @@ public class WaitingTaskFragment extends BaseFragment {
                     CommonUtils.showToastShort(getContext(), message);
                 }
             });
-        }else
+        } else
             getTasks();
     }
 
-    private void getTasks(){
+    private void getTasks() {
         UserTaskDBHelper.getUserWaitingTasks(user, new CompleteCallback() {
             @Override
             public void onComplete(Object object) {
@@ -190,11 +188,10 @@ public class WaitingTaskFragment extends BaseFragment {
                 if (taskList.size() > 0) {
                     CommonUtils.showToastShort(getContext(),
                             Objects.requireNonNull(getContext()).getResources().getString(R.string.serverError));
-                    CommonUtils.showExceptionLayout(false, -1, refresh_layout, loadingView, mainExceptionLayout,
-                            null);
+                    CommonUtils.hideExceptionLayout(mainExceptionLayout);
 
                 } else {
-                    CommonUtils.showExceptionLayout(true, VIEW_SERVER_ERROR, refresh_layout, loadingView, mainExceptionLayout,
+                    CommonUtils.showExceptionLayout(VIEW_SERVER_ERROR, refresh_layout, loadingView, mainExceptionLayout,
                             null);
                 }
             }
@@ -210,15 +207,14 @@ public class WaitingTaskFragment extends BaseFragment {
 
         if (taskList != null) {
             if (taskList.size() == 0) {
-                CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
+                CommonUtils.showExceptionLayout(VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
                         getContext().getResources().getString(R.string.emptyFeed));
             } else {
-                CommonUtils.showExceptionLayout(false, -1, refresh_layout, loadingView, mainExceptionLayout,
-                        null);
+                CommonUtils.hideExceptionLayout(mainExceptionLayout);
             }
             setUpRecyclerView(taskList);
         } else
-            CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
+            CommonUtils.showExceptionLayout(VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
                     getContext().getResources().getString(R.string.emptyFeed));
 
         refresh_layout.setRefreshing(false);

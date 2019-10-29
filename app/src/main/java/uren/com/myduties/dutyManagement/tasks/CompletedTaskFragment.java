@@ -119,7 +119,7 @@ public class CompletedTaskFragment extends BaseFragment {
             public void OnReturn(Object object) {
                 List<Task> returnList = (ArrayList<Task>) object;
                 if (returnList != null && returnList.size() == 0)
-                    CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
+                    CommonUtils.showExceptionLayout(VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
                             getContext().getResources().getString(R.string.there_is_no_completed_task));
             }
         });
@@ -173,11 +173,11 @@ public class CompletedTaskFragment extends BaseFragment {
                     CommonUtils.showToastShort(getContext(), message);
                 }
             });
-        }else
+        } else
             getTasks();
     }
 
-    private void getTasks(){
+    private void getTasks() {
         UserTaskDBHelper.getUserCompletedTasks(user, new CompleteCallback() {
             @Override
             public void onComplete(Object object) {
@@ -192,10 +192,9 @@ public class CompletedTaskFragment extends BaseFragment {
                 if (taskList.size() > 0) {
                     CommonUtils.showToastShort(getContext(),
                             Objects.requireNonNull(getContext()).getResources().getString(R.string.serverError));
-                    CommonUtils.showExceptionLayout(false, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
-                            getContext().getResources().getString(R.string.there_is_no_completed_task));
+                    CommonUtils.hideExceptionLayout(mainExceptionLayout);
                 } else {
-                    CommonUtils.showExceptionLayout(true, VIEW_SERVER_ERROR, refresh_layout, loadingView, mainExceptionLayout,
+                    CommonUtils.showExceptionLayout(VIEW_SERVER_ERROR, refresh_layout, loadingView, mainExceptionLayout,
                             getContext().getResources().getString(R.string.there_is_no_completed_task));
                 }
             }
@@ -211,11 +210,10 @@ public class CompletedTaskFragment extends BaseFragment {
 
         if (taskList != null) {
             if (taskList.size() == 0) {
-                CommonUtils.showExceptionLayout(true, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
+                CommonUtils.showExceptionLayout(VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
                         getContext().getResources().getString(R.string.there_is_no_completed_task));
             } else {
-                CommonUtils.showExceptionLayout(false, VIEW_NO_POST_FOUND, refresh_layout, loadingView, mainExceptionLayout,
-                        getContext().getResources().getString(R.string.there_is_no_completed_task));
+                CommonUtils.hideExceptionLayout(mainExceptionLayout);
             }
             setUpRecyclerView(taskList);
         }

@@ -198,6 +198,7 @@
     <string name="emptyFeed">Henüz size atanan bir görev bulunmuyor..</string>
     <string name="there_is_no_completed_task">Tamamlanan göreviniz bulunmuyor..</string>
     <string name="there_is_no_group_task">Grup göreviniz bulunmuyor.</string>
+    <string name="you_dont_have_any_friend">Henüz arkadaşınız bulunmuyor.</string>
 
     <string name="loading">Yükleniyor…</string>
     <string name="delete">Sil</string>
@@ -277,6 +278,7 @@
     <string name="sureToChangeTaskText">Görev açıklamasını değiştirmek istediğinize emin misiniz?</string>
     <string name="closedTaskNotEdited">Kapalı görevler için bu işlem yapılamaz.</string>
     <string name="cannotReminded">Bu görev için hatırlatma yapılamaz!</string>
+    <string name="you">Sen</string>
 
     <string name="assignedTaskToYou">size bir görev atadı</string>
     <string name="assignedTaskTo">bu gruba bir görev atadı</string>

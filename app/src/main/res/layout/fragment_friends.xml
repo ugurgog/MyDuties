@@ -22,6 +22,8 @@
 
     </LinearLayout>
 
+    <include layout="@layout/task_exception_layout" />
+
     <include layout="@layout/layout_progress_bar" />
 
 </RelativeLayout>
